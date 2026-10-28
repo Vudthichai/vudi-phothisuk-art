@@ -33,8 +33,12 @@ Page titles and descriptions update on navigation, with default HTML metadata. T
 
 ## Netlify deployment
 
-Create a separate development site or use a Deploy Preview for this branch. Do not connect the existing live domain, alter DNS, or change Squarespace. `netlify.toml` sets Node 24, `npm run build`, `dist`, and an SPA rewrite so direct collection URLs load successfully. No environment variables are needed.
+Use Deploy Previews on the existing Netlify site for this repository. Do not create a second site. Do not connect the existing live domain, alter DNS, or change Squarespace. `netlify.toml` sets Node 24, `npm run build`, `dist`, and an SPA rewrite so direct collection URLs load successfully. No environment variables are needed.
 
 After deploying a preview, open a collection URL directly and refresh it; check navigation, mobile layout, keyboard focus and metadata. The wildcard rewrite serves the SPA for unknown URLs too; React displays its not-found screen (HTTP status remains 200).
 
 Review the draft PR before merging. Publishing to the live domain and replacing Squarespace are separate future approvals.
+
+## Automated development pipeline
+
+See [Development and deployment](docs/development.md) for CI, human review, existing-site Netlify settings, and Codex/GitHub permissions. Every PR runs TypeScript, tests and a production build; Netlify handles deployment through its existing Git integration. CI success does not constitute visual design approval.
