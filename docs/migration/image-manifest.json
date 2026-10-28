@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "status": "not-populated-source-unavailable",
+  "images": [],
+  "matches": [],
+  "unmatchedImages": [],
+  "note": "Empty arrays mean no images could be inspected or enumerated, not that every image is matched. No image files downloaded."
+}

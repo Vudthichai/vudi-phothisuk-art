@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "status": "pending-page-discovery",
+  "entries": [],
+  "note": "Record exact observed source URLs, including original case, encoded paths and query strings. New app routes are not evidence of Squarespace paths. No redirects have been configured."
+}

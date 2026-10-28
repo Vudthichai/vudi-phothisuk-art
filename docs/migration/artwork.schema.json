@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Proposed artwork migration record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "collectionIds",
+    "title",
+    "descriptionSources",
+    "dimensions",
+    "medium",
+    "sales",
+    "imageIds",
+    "sourceUrls",
+    "reviewStatus"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^art_[0-9a-f-]{36}$",
+      "description": "Assign a UUID once; never derive identity from mutable titles or filenames."
+    },
+    "collectionIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^col_[0-9a-f-]{36}$"
+      }
+    },
+    "title": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "descriptionSources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/source"
+      }
+    },
+    "approvedDescriptionSourceId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "dimensions": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "sourceText"
+      ],
+      "properties": {
+        "sourceText": {
+          "type": "string"
+        },
+        "width": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "height": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "depth": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "unit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "orientationConfirmed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "medium": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sales": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "additionalProperties": false,
+      "required": [
+        "priceSourceText",
+        "amount",
+        "currency",
+        "availabilitySourceText",
+        "status",
+        "observedAt"
+      ],
+      "properties": {
+        "priceSourceText": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "amount": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "currency": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "availabilitySourceText": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "status": {
+          "enum": [
+            "available",
+            "sold",
+            "reserved",
+            "not-for-sale",
+            "unknown"
+          ]
+        },
+        "observedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "imageIds": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^img_[0-9a-f-]{36}$"
+      }
+    },
+    "sourceUrls": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "fieldEvidence": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/source"
+        }
+      }
+    },
+    "reviewStatus": {
+      "enum": [
+        "unreviewed",
+        "needs-evidence",
+        "ready-for-owner-review",
+        "approved"
+      ]
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sourceId",
+        "locator",
+        "verbatimText",
+        "observedAt"
+      ],
+      "properties": {
+        "sourceId": {
+          "type": "string"
+        },
+        "locator": {
+          "type": "string",
+          "description": "URL plus section/selector, or approved document reference plus page/paragraph."
+        },
+        "verbatimText": {
+          "type": "string"
+        },
+        "observedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  }
+}

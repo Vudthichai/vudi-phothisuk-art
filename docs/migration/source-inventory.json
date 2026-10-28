@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "status": "blocked-source-access",
+  "observedDate": "2026-10-28",
+  "scope": {
+    "requestedSource": "https://vudiphothisukart.com",
+    "coverage": "No source pages retrieved; no completeness claim is possible.",
+    "expectedCollectionsFromBrief": [
+      "Forest & Flowers",
+      "Oceans",
+      "Regal Collection",
+      "Canvas Collaborations"
+    ],
+    "note": "Collection names above come from the project brief, not website inspection."
+  },
+  "accessEvidence": [
+    {
+      "url": "https://vudiphothisukart.com",
+      "method": "HEAD",
+      "result": "Proxy CONNECT 403 before TLS; server envoy; source site response not obtained."
+    }
+  ],
+  "pages": [],
+  "collections": [],
+  "artworks": [],
+  "authoritativeDescriptions": {
+    "status": "not-provided",
+    "records": []
+  },
+  "originalPhotographs": {
+    "status": "none-discovered-in-accessible-workspace",
+    "records": []
+  }
+}
