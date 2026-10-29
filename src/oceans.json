@@ -341,25 +341,25 @@
       "slug": "sunset-waves",
       "title": "Sunset Waves",
       "image": {
-        "src": "/artworks/oceans/sunset-waves-42-1200.webp",
+        "src": "/artworks/oceans/sunset-waves-artist-selection-1200.webp",
         "alt": "Sculpted blue waves beneath a smooth orange, pink, and violet sunset sky.",
         "width": 1200,
-        "height": 1798,
-        "srcSet": "/artworks/oceans/sunset-waves-42-600.webp 600w, /artworks/oceans/sunset-waves-42-1200.webp 1200w, /artworks/oceans/sunset-waves-42-1800.webp 1800w",
+        "height": 1820,
+        "srcSet": "/artworks/oceans/sunset-waves-artist-selection-600.webp 600w, /artworks/oceans/sunset-waves-artist-selection-1200.webp 1200w, /artworks/oceans/sunset-waves-artist-selection-1800.webp 1800w",
         "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
         "role": "artwork",
-        "sourceFile": "VPA Website Update/The Oceans/IMG_8742.JPG"
+        "sourceFile": "Artist-supplied Sunset Waves photograph, October 29 2026"
       },
       "images": [
         {
-          "src": "/artworks/oceans/sunset-waves-42-1200.webp",
+          "src": "/artworks/oceans/sunset-waves-artist-selection-1200.webp",
           "alt": "Sculpted blue waves beneath a smooth orange, pink, and violet sunset sky.",
           "width": 1200,
-          "height": 1798,
-          "srcSet": "/artworks/oceans/sunset-waves-42-600.webp 600w, /artworks/oceans/sunset-waves-42-1200.webp 1200w, /artworks/oceans/sunset-waves-42-1800.webp 1800w",
+          "height": 1820,
+          "srcSet": "/artworks/oceans/sunset-waves-artist-selection-600.webp 600w, /artworks/oceans/sunset-waves-artist-selection-1200.webp 1200w, /artworks/oceans/sunset-waves-artist-selection-1800.webp 1800w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8742.JPG"
+          "sourceFile": "Artist-supplied Sunset Waves photograph, October 29 2026"
         }
       ],
       "description": [
