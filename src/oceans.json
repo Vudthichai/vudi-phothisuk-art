@@ -117,17 +117,6 @@
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
           "sourceFile": "VPA Website Update/The Oceans/IMG_7494.JPG"
-        },
-        {
-          "src": "/artworks/oceans/dark-scales-18-detail-1200.webp",
-          "alt": "Dark Scales: sculpted scales and metallic highlights.",
-          "width": 829,
-          "height": 2235,
-          "srcSet": "/artworks/oceans/dark-scales-18-detail-600.webp 600w, /artworks/oceans/dark-scales-18-detail-1200.webp 829w, /artworks/oceans/dark-scales-18-detail-1800.webp 829w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "detail",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 2.JPG",
-          "caption": "Sculpted scales and metallic highlights"
         }
       ],
       "description": [
@@ -144,36 +133,25 @@
       "slug": "mermaid-tail",
       "title": "Mermaid Tail",
       "image": {
-        "src": "/artworks/oceans/mermaid-tail-47-1200.webp",
+        "src": "/artworks/oceans/mermaid-tail-artist-selection-1200.webp",
         "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents.",
         "width": 1200,
-        "height": 1824,
-        "srcSet": "/artworks/oceans/mermaid-tail-47-600.webp 600w, /artworks/oceans/mermaid-tail-47-1200.webp 1200w, /artworks/oceans/mermaid-tail-47-1800.webp 1800w",
+        "height": 1805,
+        "srcSet": "/artworks/oceans/mermaid-tail-artist-selection-600.webp 600w, /artworks/oceans/mermaid-tail-artist-selection-1200.webp 1200w, /artworks/oceans/mermaid-tail-artist-selection-1800.webp 1800w",
         "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
         "role": "artwork",
-        "sourceFile": "VPA Website Update/The Oceans/IMG_8881.jpeg"
+        "sourceFile": "Artist-provided cropped photograph, October 29 2026"
       },
       "images": [
         {
-          "src": "/artworks/oceans/mermaid-tail-47-1200.webp",
+          "src": "/artworks/oceans/mermaid-tail-artist-selection-1200.webp",
           "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents.",
           "width": 1200,
-          "height": 1824,
-          "srcSet": "/artworks/oceans/mermaid-tail-47-600.webp 600w, /artworks/oceans/mermaid-tail-47-1200.webp 1200w, /artworks/oceans/mermaid-tail-47-1800.webp 1800w",
+          "height": 1805,
+          "srcSet": "/artworks/oceans/mermaid-tail-artist-selection-600.webp 600w, /artworks/oceans/mermaid-tail-artist-selection-1200.webp 1200w, /artworks/oceans/mermaid-tail-artist-selection-1800.webp 1800w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8881.jpeg"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-28-detail-1200.webp",
-          "alt": "Mermaid Tail: sculpted scales in close detail.",
-          "width": 1200,
-          "height": 3181,
-          "srcSet": "/artworks/oceans/mermaid-tail-28-detail-600.webp 600w, /artworks/oceans/mermaid-tail-28-detail-1200.webp 1200w, /artworks/oceans/mermaid-tail-28-detail-1800.webp 1556w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "detail",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8180.JPG",
-          "caption": "Sculpted scales in close detail"
+          "sourceFile": "Artist-provided cropped photograph, October 29 2026"
         }
       ],
       "description": [
