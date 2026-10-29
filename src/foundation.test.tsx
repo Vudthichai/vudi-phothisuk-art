@@ -4,7 +4,7 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
-import { CollectionPage, Home } from './pages/Pages';
+import { ArtworkPage, CollectionPage, Home } from './pages/Pages';
 import { Gallery } from './components/Gallery';
 afterEach(cleanup);
 describe('portfolio foundation', () => {
@@ -37,5 +37,38 @@ describe('portfolio foundation', () => {
     expect(image.getAttribute('loading')).toBe('lazy');
     expect(image.getAttribute('width')).toBe('800');
     expect(screen.getByText('Test fixture only')).toBeTruthy();
+  });
+});
+
+describe('The Oceans portfolio', () => {
+  function openOceans(path = '/collections/oceans') {
+    return render(<MemoryRouter initialEntries={[path]}><Routes><Route path="collections/:slug" element={<CollectionPage/>}/><Route path="collections/:slug/:artworkSlug" element={<ArtworkPage/>}/></Routes></MemoryRouter>);
+  }
+  it('opens a painting from the gallery and shows its approved narrative', async () => {
+    const user = userEvent.setup();
+    openOceans();
+    expect(screen.getAllByRole('img')).toHaveLength(11);
+    await user.click(screen.getByRole('link', { name: 'View Manta' }));
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Manta');
+    expect(screen.getByText(/A spotted ray glides/)).toBeTruthy();
+    expect(screen.getByText('Sold')).toBeTruthy();
+    expect(screen.queryByText('Inquire about this artwork →')).toBeNull();
+  });
+  it('loads a direct artwork URL and distinguishes illustrative room views', () => {
+    openOceans('/collections/oceans/golden-sand-beach');
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Golden Sand Beach');
+    expect(screen.getByText('Room visualization · scale is illustrative')).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Inquire about/ }).getAttribute('href')).toContain('Golden%20Sand%20Beach');
+    expect(screen.queryByText('Available')).toBeNull();
+    expect(screen.getAllByRole('img')[0].getAttribute('fetchpriority')).toBe('high');
+  });
+  it('does not confuse an artwork with the identically named collection', () => {
+    openOceans('/collections/oceans/the-oceans');
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('The Oceans');
+    expect(screen.getByText(/A wide shoreline unfolds/)).toBeTruthy();
+  });
+  it('shows not-found for a painting outside its collection', () => {
+    openOceans('/collections/regal-collection/manta');
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Page not found.');
   });
 });
