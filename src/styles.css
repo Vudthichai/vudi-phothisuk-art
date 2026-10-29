@@ -14,7 +14,6 @@
 /* Photographs sit directly on the gallery background, without added panel frames. */
 .artwork-page .artwork-more{background:transparent;padding:0}
 .artwork-theme-arctic-waves .artwork-primary{clip-path:inset(.4% 0 .6%)}
-.artwork-theme-sunset-waves .artwork-primary{clip-path:inset(0 0 .5%)}
 @media(max-width:700px){.artwork-page .artwork-more{padding:0}}
 
 /* Room studies use intentional copy/image balance; Beach Day overlays the real photo. */
