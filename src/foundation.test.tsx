@@ -6,6 +6,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { ArtworkPage, CollectionPage, Home } from './pages/Pages';
 import { Gallery } from './components/Gallery';
+import { findCollection } from './data';
 afterEach(cleanup);
 describe('portfolio foundation', () => {
   it('renders a directly opened collection and updates metadata', async () => {
@@ -53,14 +54,14 @@ describe('The Oceans portfolio', () => {
     expect(screen.getByText(/A spotted ray glides/)).toBeTruthy();
     expect(screen.getByText('Sold')).toBeTruthy();
     expect(screen.queryByText('Inquire about this artwork →')).toBeNull();
-    expect(screen.getAllByRole('img')).toHaveLength(1);
+    expect(screen.getAllByRole('img')).toHaveLength(2);
     expect(screen.queryByRole('heading', { name: 'Details' })).toBeNull();
   });
   it('loads a direct artwork URL and distinguishes illustrative room views', () => {
     openOceans('/collections/oceans/golden-sand-beach');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Golden Sand Beach');
     expect(screen.getByText(/Room study · illustrative scale/)).toBeTruthy();
-    expect(screen.getByRole('region', { name: 'In a room' })).toBeTruthy();
+    expect(screen.getByRole('region', { name: 'Golden Sand Beach, at home.' })).toBeTruthy();
     expect(screen.getAllByRole('img')).toHaveLength(2);
     expect(screen.getByRole('link', { name: /Inquire about/ }).getAttribute('href')).toContain('Golden%20Sand%20Beach');
     expect(screen.queryByText('Available')).toBeNull();
@@ -90,20 +91,39 @@ describe('The Oceans portfolio', () => {
   it('uses the selected Beach Day photo in both its hero and room study without repainting it', () => {
     const { container } = openOceans('/collections/oceans/beach-day');
     const hero = container.querySelector('.artwork-primary')!;
-    const staged = container.querySelector('.beach-room-art')!;
+    const staged = container.querySelector('.curated-room-art')!;
     expect(hero.getAttribute('src')).toContain('beach-day-artist-selection');
     expect(staged.getAttribute('src')).toBe(hero.getAttribute('src'));
     expect(screen.queryByRole('region', { name: 'Details' })).toBeNull();
     expect(screen.getByText('Room study · illustrative scale')).toBeTruthy();
+  });
+  it('gives every Oceans painting a real room asset using its exact hero and the approved section order', () => {
+    const backgrounds = new Set<string>();
+    for (const artwork of findCollection('oceans')!.artworks) {
+      const view = openOceans(`/collections/oceans/${artwork.slug}`);
+      const room = view.container.querySelector('.curated-room-study')!;
+      const hero = view.container.querySelector('.artwork-primary')!;
+      const staged = room.querySelector('.curated-room-art')!;
+      expect(staged.getAttribute('src')).toBe(hero.getAttribute('src'));
+      const background = room.querySelector('.curated-room-background')!.getAttribute('src')!;
+      backgrounds.add(background);
+      expect(hero.compareDocumentPosition(room) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      const detail = view.container.querySelector('.craftsmanship-study');
+      if (detail) expect(room.compareDocumentPosition(detail) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      const navigation = view.container.querySelector('.artwork-pagination')!;
+      expect((detail ?? room).compareDocumentPosition(navigation) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      view.unmount();
+    }
+    expect(backgrounds.size).toBe(11);
   });
   it('shows not-found for a painting outside its collection', () => {
     openOceans('/collections/regal-collection/manta');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Page not found.');
   });
   it('presents the artist-selected Mermaid Tail photograph without weak supplementary shots', () => {
-    openOceans('/collections/oceans/mermaid-tail');
-    expect(screen.getAllByRole('img')).toHaveLength(1);
-    expect(screen.getByRole('img').getAttribute('src')).toContain('artist-selection');
+    const { container } = openOceans('/collections/oceans/mermaid-tail');
+    expect(screen.getAllByRole('img')).toHaveLength(2);
+    expect(container.querySelector('.artwork-primary')?.getAttribute('src')).toContain('artist-selection');
     expect(screen.queryByRole('region', { name: 'Details' })).toBeNull();
   });
 });
