@@ -38,8 +38,8 @@ describe('cinematic Oceans entrance', () => {
   it('features the wide painting first without repeating it in the remaining gallery', () => {
     const { container } = openCollection();
     expect(container.querySelector('.ocean-exhibit h3')?.textContent).toBe('The Oceans');
-    expect(container.querySelectorAll('.ocean-exhibit')).toHaveLength(3);
-    expect(container.querySelectorAll('.ocean-remaining .artwork-card')).toHaveLength(8);
+    expect(container.querySelectorAll('.ocean-exhibit')).toHaveLength(11);
+    expect(container.querySelectorAll('.ocean-remaining .artwork-card')).toHaveLength(0);
     expect(screen.queryByRole('button', { name: /motion/i })).toBeNull();
     expect(container.querySelector('.ocean-shore')).toBeNull();
   });

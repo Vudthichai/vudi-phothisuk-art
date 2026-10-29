@@ -35,12 +35,16 @@ artwork detail pages retain their existing layout.
   and moves keyboard focus to the gallery. Navigation remains reachable on
   desktop and via the mobile menu. No automatic audio.
 
-## Exhibition layout study
+## Exhibition layout
 
-The Oceans (36” X 72”) appears first across the available gallery width. Summer
-Swells and Manta follow in separate portrait sections with alternating placement
-on desktop. Mobile places the complete artwork above its caption. Natural scroll
-is preserved; no fixed screen height or mandatory scroll snapping is imposed.
-Existing descriptions and dimensions supply the captions without editorial edits.
-The remaining eight artworks remain in an overview grid for this layout preview.
-No artwork is repeated. Individual artwork pages remain unchanged.
+The Oceans (36” X 72”) appears first across the available gallery width. All ten
+other works follow in alternating portrait sections on desktop. Mobile places
+each complete artwork above its caption. Natural scroll is preserved. Existing
+opening paragraphs and dimensions supply the captions without editorial edits.
+No artwork is repeated or cropped further.
+
+Artwork pages share quiet accent colors, broad detail previews (cropped in display only),
+links to inspect each complete supplementary image, and previous/next navigation following
+the collection sequence. Dark Scales is marked sold per the artist's correction.
+Room images retain a concise illustrative-scale caption. Artwork photos and color
+corrections are outside this pass; no pixels have been altered.
