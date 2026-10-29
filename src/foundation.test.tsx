@@ -59,7 +59,7 @@ describe('The Oceans portfolio', () => {
   it('loads a direct artwork URL and distinguishes illustrative room views', () => {
     openOceans('/collections/oceans/golden-sand-beach');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Golden Sand Beach');
-    expect(screen.getByText('Room visualization · scale is illustrative')).toBeTruthy();
+    expect(screen.getByText(/Room study · illustrative scale/)).toBeTruthy();
     expect(screen.getByRole('region', { name: 'In a room' })).toBeTruthy();
     expect(screen.getAllByRole('img')).toHaveLength(2);
     expect(screen.getByRole('link', { name: /Inquire about/ }).getAttribute('href')).toContain('Golden%20Sand%20Beach');
@@ -70,6 +70,22 @@ describe('The Oceans portfolio', () => {
     openOceans('/collections/oceans/the-oceans');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('The Oceans');
     expect(screen.getByText(/A wide shoreline unfolds/)).toBeTruthy();
+  });
+  it('keeps previous and next navigation in exhibition order and marks Dark Scales sold', async () => {
+    const user = userEvent.setup();
+    openOceans('/collections/oceans/dark-scales');
+    expect(screen.getByText('Sold')).toBeTruthy();
+    expect(screen.queryByRole('link', { name: /Inquire about/ })).toBeNull();
+    expect(screen.getByRole('link', { name: /Previous painting: Manta/ }).getAttribute('href')).toBe('/collections/oceans/manta');
+    await user.click(screen.getByRole('link', { name: /Next painting.*Mermaid Tail/ }));
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Mermaid Tail');
+  });
+  it('has no previous link on the first painting and no next link on the last', () => {
+    const first = openOceans('/collections/oceans/the-oceans');
+    expect(screen.queryByRole('link', { name: /Previous painting/ })).toBeNull();
+    first.unmount();
+    openOceans('/collections/oceans/arctic-ocean');
+    expect(screen.queryByRole('link', { name: /Next painting/ })).toBeNull();
   });
   it('shows not-found for a painting outside its collection', () => {
     openOceans('/collections/regal-collection/manta');
