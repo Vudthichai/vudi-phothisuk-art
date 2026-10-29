@@ -14,9 +14,8 @@ function prefersStill() {
 export function OceanCollection({ collection }: { collection: Collection }) {
   const scene = useRef<HTMLDivElement>(null);
   const gallery = useRef<HTMLElement>(null);
-  const [paused, setPaused] = useState(false);
   const [stillPreferred, setStillPreferred] = useState(prefersStill);
-  const moving = !paused && !stillPreferred;
+  const moving = !stillPreferred;
 
   useEffect(() => {
     const preference = window.matchMedia?.(reducedQuery);
@@ -35,8 +34,6 @@ export function OceanCollection({ collection }: { collection: Collection }) {
       element?.style.removeProperty('--image-scale');
       element?.style.removeProperty('--title-y');
       element?.style.removeProperty('--title-opacity');
-      element?.style.removeProperty('--shore-y');
-      element?.style.removeProperty('--shore-opacity');
       return;
     }
     let frame = 0;
@@ -51,8 +48,6 @@ export function OceanCollection({ collection }: { collection: Collection }) {
       element.style.setProperty('--image-scale', `${1.025 + progress * (compact ? .025 : .045)}`);
       element.style.setProperty('--title-y', `${-progress * (compact ? 32 : 85)}px`);
       element.style.setProperty('--title-opacity', `${1 - progress * .85}`);
-      element.style.setProperty('--shore-y', `${(1 - progress) * 85}%`);
-      element.style.setProperty('--shore-opacity', `${progress}`);
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     update();
@@ -79,6 +74,10 @@ export function OceanCollection({ collection }: { collection: Collection }) {
     return () => { observer.disconnect(); cards.forEach(card => card.removeAttribute('data-reveal')); };
   }, [moving]);
 
+  const featuredSlugs = ['the-oceans', 'summer-swells', 'manta'];
+  const featured = featuredSlugs.flatMap(slug => collection.artworks.filter(artwork => artwork.slug === slug));
+  const remaining = collection.artworks.filter(artwork => !featuredSlugs.includes(artwork.slug ?? ''));
+
   return <div className="ocean-experience" data-motion={moving ? 'on' : 'off'}>
     <div ref={scene} className="ocean-scene" data-in-view="true">
       <section className="ocean-stage" aria-labelledby="ocean-title">
@@ -88,8 +87,6 @@ export function OceanCollection({ collection }: { collection: Collection }) {
             <img src="/atmosphere/oceans/wide-1440.webp" srcSet="/atmosphere/oceans/wide-960.webp 960w, /atmosphere/oceans/wide-1440.webp 1440w, /atmosphere/oceans/wide-1774.webp 1774w" sizes="100vw" width="1774" height="887" alt="" fetchPriority="high" loading="eager" decoding="async"/>
           </picture>
           <div className="ocean-shade"/>
-          <div className="ocean-mist ocean-mist-near"/>
-          <div className="ocean-mist ocean-mist-far"/>
         </div>
         <div className="ocean-title-block">
           <p className="ocean-eyebrow">A tribute to our deep blue waters</p>
@@ -101,13 +98,16 @@ export function OceanCollection({ collection }: { collection: Collection }) {
             gallery.current?.focus({ preventScroll: true });
           }}>Explore the collection <span aria-hidden="true">↓</span></a>
         </div>
-        <div className="ocean-bottom-bar"><span className="ocean-scroll-note" aria-hidden="true">Scroll toward the shore <span>↓</span></span><button className="ocean-motion-toggle" type="button" aria-pressed={moving} disabled={stillPreferred} onClick={() => setPaused(value => !value)}>{stillPreferred ? 'Still view' : paused ? 'Enable motion' : 'Pause motion'}</button></div>
-        <svg className="ocean-shore" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true"><path d="M0 100 C220 50 360 145 620 90 S1060 42 1440 95 V180 H0Z"/></svg>
+
       </section>
     </div>
     <section ref={gallery} id="oceans-gallery" className="section ocean-gallery" aria-labelledby="ocean-gallery-title" tabIndex={-1}>
       <div className="ocean-gallery-intro"><div><Link className="text-link" to="/collections">← All collections</Link><p className="eyebrow">The collection</p><h2 id="ocean-gallery-title">The sea,<br/><em>held in texture.</em></h2></div><p className="page-intro">{collection.summary}</p></div>
-      <Gallery artworks={collection.artworks}/>
+      <div className="ocean-exhibition">{featured.map((artwork, index) => <article key={artwork.id} className={`ocean-exhibit artwork-card ${index === 0 ? 'ocean-exhibit-wide' : 'ocean-exhibit-portrait'}`} aria-labelledby={`exhibit-${artwork.id}`}>
+        <Link className="ocean-exhibit-image" to={artwork.slug!} aria-label={`View ${artwork.title}`}><img src={artwork.image.src} srcSet={artwork.image.srcSet} sizes={index === 0 ? '86vw' : '(max-width: 700px) 86vw, 55vw'} alt={artwork.image.alt} width={artwork.image.width} height={artwork.image.height} loading="lazy" decoding="async"/></Link>
+        <div className="ocean-exhibit-caption"><div><p className="eyebrow">{String(index + 1).padStart(2, '0')} / The Oceans</p><h3 id={`exhibit-${artwork.id}`}><Link to={artwork.slug!}>{artwork.title}</Link></h3><p className="ocean-exhibit-meta">{artwork.dimensions}{artwork.availability === 'sold' && <span>Sold</span>}</p></div><div><p>{artwork.description?.[0]}</p><Link className="text-link" to={artwork.slug!}>Explore the painting <span aria-hidden="true">↗</span></Link></div></div>
+      </article>)}</div>
+      <section className="ocean-remaining" aria-labelledby="ocean-remaining-title"><p className="eyebrow">Continue exploring</p><h2 id="ocean-remaining-title">More from the collection</h2><Gallery artworks={remaining}/></section>
     </section>
   </div>;
 }

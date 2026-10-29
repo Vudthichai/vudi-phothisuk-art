@@ -15,20 +15,17 @@ artwork detail pages retain their existing layout.
   960/1440/1774-pixel landscape variants. The browser selects a source before
   loading; the hero has high fetch priority and reserves its own layout space.
 - Passive scroll events schedule one animation-frame update. A short sticky
-  entrance gently moves the ocean image and title, revealing a paper-colored
-  shore before the gallery. Desktop uses a 55%-viewport travel distance;
+  entrance gently moves the ocean image and title, leading to a straight edge before the cream gallery. Desktop uses a 55%-viewport travel distance;
   mobile uses 26%. Scrolling remains native, with no wheel/touch interception.
-- Low-opacity CSS mist moves slowly only while the entrance is on screen.
-  This prototype animates layered still imagery; it is not fluid simulation or
-  filmed wave footage. No sound or video downloads are included.
+- Motion is scroll-driven only. There is no continuous mist animation, motion
+  button, decorative wave divider, sound, or video download.
 - The collection's artwork figures reveal once with a small upward movement.
   Their pixels, white borders, colors, captions, descriptions and sales metadata
   are unchanged. They remain still after appearing.
 
 ## Accessibility and fallbacks
 
-- A visible motion control pauses atmospheric and scroll motion. The browser's
-  reduced-motion preference and data-saving/2G connection hints select the still
+- The browser's reduced-motion preference and data-saving/2G connection hints select the still
   experience automatically. Preference changes are observed during the visit.
 - Reduced/still mode removes the additional sticky travel distance and reveals
   all artwork immediately. The same readable poster and page content remain.
@@ -38,6 +35,12 @@ artwork detail pages retain their existing layout.
   and moves keyboard focus to the gallery. Navigation remains reachable on
   desktop and via the mobile menu. No automatic audio.
 
-Existing PR #4 retains the preceding clean canvas crops and curated photo pages.
-No merge, production publication, DNS or Squarespace changes are part of this
-implementation. Physical-device checking remains useful before production.
+## Exhibition layout study
+
+The Oceans (36” X 72”) appears first across the available gallery width. Summer
+Swells and Manta follow in separate portrait sections with alternating placement
+on desktop. Mobile places the complete artwork above its caption. Natural scroll
+is preserved; no fixed screen height or mandatory scroll snapping is imposed.
+Existing descriptions and dimensions supply the captions without editorial edits.
+The remaining eight artworks remain in an overview grid for this layout preview.
+No artwork is repeated. Individual artwork pages remain unchanged.

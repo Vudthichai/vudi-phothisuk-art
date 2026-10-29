@@ -35,20 +35,18 @@ describe('cinematic Oceans entrance', () => {
     expect(container.querySelectorAll('.artwork-card')).toHaveLength(11);
     expect(container.querySelector('video')).toBeNull();
   });
-  it('pauses and re-enables atmospheric and scroll motion', async () => {
-    const user = userEvent.setup();
+  it('features the wide painting first without repeating it in the remaining gallery', () => {
     const { container } = openCollection();
-    await user.click(screen.getByRole('button', { name: 'Pause motion' }));
-    expect(container.querySelector('.ocean-experience')?.getAttribute('data-motion')).toBe('off');
-    expect(container.querySelector('[data-reveal="waiting"]')).toBeNull();
-    await user.click(screen.getByRole('button', { name: 'Enable motion' }));
-    expect(container.querySelector('.ocean-experience')?.getAttribute('data-motion')).toBe('on');
+    expect(container.querySelector('.ocean-exhibit h3')?.textContent).toBe('The Oceans');
+    expect(container.querySelectorAll('.ocean-exhibit')).toHaveLength(3);
+    expect(container.querySelectorAll('.ocean-remaining .artwork-card')).toHaveLength(8);
+    expect(screen.queryByRole('button', { name: /motion/i })).toBeNull();
+    expect(container.querySelector('.ocean-shore')).toBeNull();
   });
   it('uses a still entrance for reduced motion and responds to preference changes', () => {
     reduced = true;
     const { container } = openCollection();
     expect(container.querySelector('.ocean-experience')?.getAttribute('data-motion')).toBe('off');
-    expect(screen.getByRole('button', { name: 'Still view' }).hasAttribute('disabled')).toBe(true);
     reduced = false;
     act(() => changePreference?.());
     expect(container.querySelector('.ocean-experience')?.getAttribute('data-motion')).toBe('on');
