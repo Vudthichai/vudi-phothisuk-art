@@ -1,0 +1,770 @@
+{
+  "introduction": "The Oceans explores the sea through sculptural texture, shifting color, and personal memory. Shorelines, rolling waves, and imagined scales connect the pleasure of a beach day with curiosity about life beneath the surface. Across the collection, familiar coastal experiences open into questions of endurance, adventure, and responsibility. Each painting approaches the water differently, preserving both the intimacy of an individual encounter and the sense of a world extending beyond what we can see.",
+  "artworks": [
+    {
+      "id": "art_5a5cfe77-e92a-5d3d-a8e7-49ed5036d58e",
+      "slug": "summer-swells",
+      "title": "Summer Swells",
+      "image": {
+        "src": "/artworks/oceans/summer-swells-44-1200.webp",
+        "alt": "Turquoise and blue water with raised white surf beside bands of terracotta and pale sand.",
+        "width": 1200,
+        "height": 1501,
+        "srcSet": "/artworks/oceans/summer-swells-44-600.webp 600w, /artworks/oceans/summer-swells-44-1200.webp 1200w, /artworks/oceans/summer-swells-44-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/IMG_8834.JPG"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/summer-swells-44-1200.webp",
+          "alt": "Turquoise and blue water with raised white surf beside bands of terracotta and pale sand.",
+          "width": 1200,
+          "height": 1501,
+          "srcSet": "/artworks/oceans/summer-swells-44-600.webp 600w, /artworks/oceans/summer-swells-44-1200.webp 1200w, /artworks/oceans/summer-swells-44-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8834.JPG"
+        },
+        {
+          "src": "/artworks/oceans/summer-swells-24-1200.webp",
+          "alt": "Room visualization of Summer Swells; scale is illustrative.",
+          "width": 1200,
+          "height": 1501,
+          "srcSet": "/artworks/oceans/summer-swells-24-600.webp 600w, /artworks/oceans/summer-swells-24-1200.webp 1200w, /artworks/oceans/summer-swells-24-1800.webp 1687w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "room-visualization",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7612.JPG"
+        },
+        {
+          "src": "/artworks/oceans/summer-swells-25-1200.webp",
+          "alt": "Room visualization of Summer Swells; scale is illustrative.",
+          "width": 1200,
+          "height": 1800,
+          "srcSet": "/artworks/oceans/summer-swells-25-600.webp 600w, /artworks/oceans/summer-swells-25-1200.webp 1200w, /artworks/oceans/summer-swells-25-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "room-visualization",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7736.JPG"
+        },
+        {
+          "src": "/artworks/oceans/summer-swells-43-1200.webp",
+          "alt": "Turquoise and blue water with raised white surf beside bands of terracotta and pale sand. Alternate view or detail.",
+          "width": 1200,
+          "height": 1600,
+          "srcSet": "/artworks/oceans/summer-swells-43-600.webp 600w, /artworks/oceans/summer-swells-43-1200.webp 1200w, /artworks/oceans/summer-swells-43-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8834 2.JPG"
+        },
+        {
+          "src": "/artworks/oceans/summer-swells-45-1200.webp",
+          "alt": "Turquoise and blue water with raised white surf beside bands of terracotta and pale sand. Alternate view or detail.",
+          "width": 1200,
+          "height": 1600,
+          "srcSet": "/artworks/oceans/summer-swells-45-600.webp 600w, /artworks/oceans/summer-swells-45-1200.webp 1200w, /artworks/oceans/summer-swells-45-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8843.JPG"
+        }
+      ],
+      "description": [
+        "Summer Swells gathers the pleasures of a beach day into bands of turquoise, white surf, and warm sand. Raised edges give the waves a physical presence, while passages of green and blue suggest water shifting as it approaches the shore. The composition holds the movement of the sea within a clear, open arrangement of color.",
+        "The painting draws on the many ways an ocean visit becomes a lasting memory: a romantic afternoon, a welcome escape from a desk, or a surf session whose best moments are difficult to describe afterward. These summer swells carry the warmth and nostalgia of time spent beside the water."
+      ],
+      "dimensions": "24” X 30”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "sold",
+      "sourceUrl": "https://www.vudiphothisukart.com/summer-swells"
+    },
+    {
+      "id": "art_0abfd506-4f21-5735-a4f1-4e14a9da89ac",
+      "slug": "manta",
+      "title": "Manta",
+      "image": {
+        "src": "/artworks/oceans/manta-26-1200.webp",
+        "alt": "A spotted ray in layered blue and aqua water crossed by pale lines of reflected light.",
+        "width": 1200,
+        "height": 1514,
+        "srcSet": "/artworks/oceans/manta-26-600.webp 600w, /artworks/oceans/manta-26-1200.webp 1200w, /artworks/oceans/manta-26-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/IMG_7785 2.JPG"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/manta-26-1200.webp",
+          "alt": "A spotted ray in layered blue and aqua water crossed by pale lines of reflected light.",
+          "width": 1200,
+          "height": 1514,
+          "srcSet": "/artworks/oceans/manta-26-600.webp 600w, /artworks/oceans/manta-26-1200.webp 1200w, /artworks/oceans/manta-26-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7785 2.JPG"
+        },
+        {
+          "src": "/artworks/oceans/manta-27-1200.webp",
+          "alt": "A spotted ray in layered blue and aqua water crossed by pale lines of reflected light. Alternate view or detail.",
+          "width": 1200,
+          "height": 1600,
+          "srcSet": "/artworks/oceans/manta-27-600.webp 600w, /artworks/oceans/manta-27-1200.webp 1200w, /artworks/oceans/manta-27-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7785.JPG"
+        }
+      ],
+      "description": [
+        "A spotted ray glides through layered blues, beneath a network of pale lines that recalls light moving across water. The surface shifts from deeper tones to luminous aqua, while sculptural texture gives the surrounding water a sense of depth and motion. Against this active field, the ray appears poised and unhurried.",
+        "Manta grew from an admiration for the effortless movement of rays, from spotted eagle rays to mantas and stingrays. The painting holds that fascination in a single encounter, allowing the small figure to give scale and direction to the seascape. Its quiet passage becomes the focus of a much larger world."
+      ],
+      "dimensions": "24” X 30”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "sold",
+      "sourceUrl": "https://www.vudiphothisukart.com/manta"
+    },
+    {
+      "id": "art_69cd4989-bb14-5268-8abf-96f54cc1bf96",
+      "slug": "dark-scales",
+      "title": "Dark Scales",
+      "image": {
+        "src": "/artworks/oceans/dark-scales-22-1200.webp",
+        "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights.",
+        "width": 1200,
+        "height": 2134,
+        "srcSet": "/artworks/oceans/dark-scales-22-600.webp 600w, /artworks/oceans/dark-scales-22-1200.webp 1200w, /artworks/oceans/dark-scales-22-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/IMG_7494.JPG"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/dark-scales-22-1200.webp",
+          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights.",
+          "width": 1200,
+          "height": 2134,
+          "srcSet": "/artworks/oceans/dark-scales-22-600.webp 600w, /artworks/oceans/dark-scales-22-1200.webp 1200w, /artworks/oceans/dark-scales-22-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7494.JPG"
+        },
+        {
+          "src": "/artworks/oceans/dark-scales-08-1200.webp",
+          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights. Alternate view or detail.",
+          "width": 1200,
+          "height": 1809,
+          "srcSet": "/artworks/oceans/dark-scales-08-600.webp 600w, /artworks/oceans/dark-scales-08-1200.webp 1200w, /artworks/oceans/dark-scales-08-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6849.JPG"
+        },
+        {
+          "src": "/artworks/oceans/dark-scales-18-1200.webp",
+          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights. Alternate view or detail.",
+          "width": 1200,
+          "height": 2134,
+          "srcSet": "/artworks/oceans/dark-scales-18-600.webp 600w, /artworks/oceans/dark-scales-18-1200.webp 1200w, /artworks/oceans/dark-scales-18-1800.webp 1271w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 2.JPG"
+        },
+        {
+          "src": "/artworks/oceans/dark-scales-19-1200.webp",
+          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights. Alternate view or detail.",
+          "width": 1200,
+          "height": 2134,
+          "srcSet": "/artworks/oceans/dark-scales-19-600.webp 600w, /artworks/oceans/dark-scales-19-1200.webp 1200w, /artworks/oceans/dark-scales-19-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 3.JPG"
+        },
+        {
+          "src": "/artworks/oceans/dark-scales-20-1200.webp",
+          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights. Alternate view or detail.",
+          "width": 1200,
+          "height": 2134,
+          "srcSet": "/artworks/oceans/dark-scales-20-600.webp 600w, /artworks/oceans/dark-scales-20-1200.webp 1200w, /artworks/oceans/dark-scales-20-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 4.JPG"
+        },
+        {
+          "src": "/artworks/oceans/dark-scales-21-1200.webp",
+          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights. Alternate view or detail.",
+          "width": 842,
+          "height": 1497,
+          "srcSet": "/artworks/oceans/dark-scales-21-600.webp 600w, /artworks/oceans/dark-scales-21-1200.webp 842w, /artworks/oceans/dark-scales-21-1800.webp 842w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 5.JPG"
+        }
+      ],
+      "description": [
+        "Rows of raised scales cover the canvas, catching silver, green, blue, and gold within a darkened surface. Repeated forms create a flowing rhythm, but small variations in their contours and color prevent the pattern from becoming uniform. Light reveals individual marks before drawing them back into the whole.",
+        "Dark Scales considers the lives concealed beneath the ocean’s surface. In the original narrative, scales and scars become records of a creature’s journey, carrying evidence of experience and survival. The painting brings that idea close enough to examine: an imagined fragment of marine life that invites reflection on endurance, accumulated experience, and the uncertainty of what lies ahead."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/dark-scales"
+    },
+    {
+      "id": "art_6ee75f26-09bc-5943-9657-1cb9fb724ded",
+      "slug": "mermaid-tail",
+      "title": "Mermaid Tail",
+      "image": {
+        "src": "/artworks/oceans/mermaid-tail-47-1200.webp",
+        "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents.",
+        "width": 1200,
+        "height": 1824,
+        "srcSet": "/artworks/oceans/mermaid-tail-47-600.webp 600w, /artworks/oceans/mermaid-tail-47-1200.webp 1200w, /artworks/oceans/mermaid-tail-47-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/IMG_8881.jpeg"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/mermaid-tail-47-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents.",
+          "width": 1200,
+          "height": 1824,
+          "srcSet": "/artworks/oceans/mermaid-tail-47-600.webp 600w, /artworks/oceans/mermaid-tail-47-1200.webp 1200w, /artworks/oceans/mermaid-tail-47-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8881.jpeg"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-02-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 1600,
+          "srcSet": "/artworks/oceans/mermaid-tail-02-600.webp 600w, /artworks/oceans/mermaid-tail-02-1200.webp 1200w, /artworks/oceans/mermaid-tail-02-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6645.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-09-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 1600,
+          "srcSet": "/artworks/oceans/mermaid-tail-09-600.webp 600w, /artworks/oceans/mermaid-tail-09-1200.webp 1200w, /artworks/oceans/mermaid-tail-09-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6890.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-23-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 1500,
+          "srcSet": "/artworks/oceans/mermaid-tail-23-600.webp 600w, /artworks/oceans/mermaid-tail-23-1200.webp 1200w, /artworks/oceans/mermaid-tail-23-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7495.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-28-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/mermaid-tail-28-600.webp 600w, /artworks/oceans/mermaid-tail-28-1200.webp 1200w, /artworks/oceans/mermaid-tail-28-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8180.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-29-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/mermaid-tail-29-600.webp 600w, /artworks/oceans/mermaid-tail-29-1200.webp 1200w, /artworks/oceans/mermaid-tail-29-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8181.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-30-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/mermaid-tail-30-600.webp 600w, /artworks/oceans/mermaid-tail-30-1200.webp 1200w, /artworks/oceans/mermaid-tail-30-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8182.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-31-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 2132,
+          "srcSet": "/artworks/oceans/mermaid-tail-31-600.webp 600w, /artworks/oceans/mermaid-tail-31-1200.webp 1200w, /artworks/oceans/mermaid-tail-31-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8183.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-32-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/mermaid-tail-32-600.webp 600w, /artworks/oceans/mermaid-tail-32-1200.webp 1200w, /artworks/oceans/mermaid-tail-32-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8207.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-33-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/mermaid-tail-33-600.webp 600w, /artworks/oceans/mermaid-tail-33-1200.webp 1200w, /artworks/oceans/mermaid-tail-33-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8214.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-34-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/mermaid-tail-34-600.webp 600w, /artworks/oceans/mermaid-tail-34-1200.webp 1200w, /artworks/oceans/mermaid-tail-34-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8215.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-35-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/mermaid-tail-35-600.webp 600w, /artworks/oceans/mermaid-tail-35-1200.webp 1200w, /artworks/oceans/mermaid-tail-35-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8216.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-36-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/mermaid-tail-36-600.webp 600w, /artworks/oceans/mermaid-tail-36-1200.webp 1200w, /artworks/oceans/mermaid-tail-36-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8217.JPG"
+        },
+        {
+          "src": "/artworks/oceans/mermaid-tail-37-1200.webp",
+          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/mermaid-tail-37-600.webp 600w, /artworks/oceans/mermaid-tail-37-1200.webp 1200w, /artworks/oceans/mermaid-tail-37-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8218.JPG"
+        }
+      ],
+      "description": [
+        "Pale, iridescent scales extend across Mermaid Tail, their sculpted contours gathering soft greens, blues, pinks, and metallic light. The repeated pattern changes subtly across the surface, creating a shimmer that depends as much on texture as on color. From one passage to another, the painting moves between delicacy and a more tangible, almost armored presence.",
+        "The work begins with an imaginative possibility: if mermaids exist, their personalities might be as luminous as their scales. It carries the artist’s dedication to the beautiful mermaids hidden in everyday life, preserving a playful sense of admiration and mystery. Its shifting surface gives that thought a physical form."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/mermaid-tail"
+    },
+    {
+      "id": "art_20d88166-5831-5243-a003-408d0f3b34c1",
+      "slug": "beach-day",
+      "title": "Beach Day",
+      "image": {
+        "src": "/artworks/oceans/beach-day-46-1200.webp",
+        "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand.",
+        "width": 1200,
+        "height": 1820,
+        "srcSet": "/artworks/oceans/beach-day-46-600.webp 600w, /artworks/oceans/beach-day-46-1200.webp 1200w, /artworks/oceans/beach-day-46-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/IMG_8879.jpeg"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/beach-day-46-1200.webp",
+          "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand.",
+          "width": 1200,
+          "height": 1820,
+          "srcSet": "/artworks/oceans/beach-day-46-600.webp 600w, /artworks/oceans/beach-day-46-1200.webp 1200w, /artworks/oceans/beach-day-46-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8879.jpeg"
+        },
+        {
+          "src": "/artworks/oceans/beach-day-38-1200.webp",
+          "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/beach-day-38-600.webp 600w, /artworks/oceans/beach-day-38-1200.webp 1200w, /artworks/oceans/beach-day-38-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8241.JPG"
+        },
+        {
+          "src": "/artworks/oceans/beach-day-39-1200.webp",
+          "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/beach-day-39-600.webp 600w, /artworks/oceans/beach-day-39-1200.webp 1200w, /artworks/oceans/beach-day-39-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8242.JPG"
+        },
+        {
+          "src": "/artworks/oceans/beach-day-40-1200.webp",
+          "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/beach-day-40-600.webp 600w, /artworks/oceans/beach-day-40-1200.webp 1200w, /artworks/oceans/beach-day-40-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8243.JPG"
+        },
+        {
+          "src": "/artworks/oceans/beach-day-41-1200.webp",
+          "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/beach-day-41-600.webp 600w, /artworks/oceans/beach-day-41-1200.webp 1200w, /artworks/oceans/beach-day-41-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8244.JPG"
+        }
+      ],
+      "description": [
+        "Broad diagonal waves cross a bright blue sea, their raised white edges breaking toward a warm stretch of sand. Fine marks scatter through the water, while the sculpted surf gives the composition a strong, rolling rhythm. Beach Day brings the anticipation of reaching the coast into a close view of the shoreline itself.",
+        "The painting draws on the artist’s memories of beaches along the East and West Coasts, in Hawaii, and around Thailand’s Phi Phi Islands. Each place has its own character, yet the expanding ocean horizon offers a familiar excitement. Among those memories, the sands around Phuket hold a particular affection: one shoreline within a much wider history of waves that took his breath away."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/beach-day"
+    },
+    {
+      "id": "art_1168c63e-8d93-5379-b706-ed131bc5fefd",
+      "slug": "arctic-waves",
+      "title": "Arctic Waves",
+      "image": {
+        "src": "/artworks/oceans/arctic-waves-14-1200.webp",
+        "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore.",
+        "width": 1200,
+        "height": 2134,
+        "srcSet": "/artworks/oceans/arctic-waves-14-600.webp 600w, /artworks/oceans/arctic-waves-14-1200.webp 1200w, /artworks/oceans/arctic-waves-14-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (1).JPG"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/arctic-waves-14-1200.webp",
+          "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore.",
+          "width": 1200,
+          "height": 2134,
+          "srcSet": "/artworks/oceans/arctic-waves-14-600.webp 600w, /artworks/oceans/arctic-waves-14-1200.webp 1200w, /artworks/oceans/arctic-waves-14-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (1).JPG"
+        },
+        {
+          "src": "/artworks/oceans/arctic-waves-15-1200.webp",
+          "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore. Alternate view or detail.",
+          "width": 1200,
+          "height": 2134,
+          "srcSet": "/artworks/oceans/arctic-waves-15-600.webp 600w, /artworks/oceans/arctic-waves-15-1200.webp 1200w, /artworks/oceans/arctic-waves-15-1800.webp 1309w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (2).JPG"
+        },
+        {
+          "src": "/artworks/oceans/arctic-waves-16-1200.webp",
+          "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore. Alternate view or detail.",
+          "width": 1200,
+          "height": 2134,
+          "srcSet": "/artworks/oceans/arctic-waves-16-600.webp 600w, /artworks/oceans/arctic-waves-16-1200.webp 1200w, /artworks/oceans/arctic-waves-16-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (3).JPG"
+        },
+        {
+          "src": "/artworks/oceans/arctic-waves-17-1200.webp",
+          "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore. Alternate view or detail.",
+          "width": 721,
+          "height": 1282,
+          "srcSet": "/artworks/oceans/arctic-waves-17-600.webp 600w, /artworks/oceans/arctic-waves-17-1200.webp 721w, /artworks/oceans/arctic-waves-17-1800.webp 721w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7493.JPG"
+        },
+        {
+          "src": "/artworks/oceans/arctic-waves-49-1200.webp",
+          "alt": "Room visualization of Arctic Waves; scale is illustrative.",
+          "width": 1200,
+          "height": 1800,
+          "srcSet": "/artworks/oceans/arctic-waves-49-600.webp 600w, /artworks/oceans/arctic-waves-49-1200.webp 1200w, /artworks/oceans/arctic-waves-49-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "room-visualization",
+          "sourceFile": "VPA Website Update/The Oceans/Untitled design.png.png"
+        }
+      ],
+      "description": [
+        "A narrow line of white surf separates dark, textured water from a bronze-toned shore. Blue gathers along the breaking edge, where small raised marks catch the light and interrupt the darker field. Arctic Waves balances a strong division of color with the restless detail of its surface.",
+        "Its narrative connects the rise and fall of waves with the changing course of a life. Moments of confidence, difficulty, and reflection belong to the same continuing movement. The painting gives that idea a restrained visual rhythm, allowing light and shadow to move through the textured water. It offers a place to consider how calm and uncertainty can exist within a single experience."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/arctic-waves"
+    },
+    {
+      "id": "art_3069371f-c31d-5497-9c10-07b6ddca7b39",
+      "slug": "water-s-edge",
+      "title": "Water’s Edge",
+      "image": {
+        "src": "/artworks/oceans/water-s-edge-12-1200.webp",
+        "alt": "Blue water meeting a warm sandy shoreline along a sculpted white wave.",
+        "width": 1200,
+        "height": 1837,
+        "srcSet": "/artworks/oceans/water-s-edge-12-600.webp 600w, /artworks/oceans/water-s-edge-12-1200.webp 1200w, /artworks/oceans/water-s-edge-12-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/IMG_7489 (1).JPG"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/water-s-edge-12-1200.webp",
+          "alt": "Blue water meeting a warm sandy shoreline along a sculpted white wave.",
+          "width": 1200,
+          "height": 1837,
+          "srcSet": "/artworks/oceans/water-s-edge-12-600.webp 600w, /artworks/oceans/water-s-edge-12-1200.webp 1200w, /artworks/oceans/water-s-edge-12-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7489 (1).JPG"
+        },
+        {
+          "src": "/artworks/oceans/water-s-edge-13-1200.webp",
+          "alt": "Blue water meeting a warm sandy shoreline along a sculpted white wave. Alternate view or detail.",
+          "width": 1200,
+          "height": 2134,
+          "srcSet": "/artworks/oceans/water-s-edge-13-600.webp 600w, /artworks/oceans/water-s-edge-13-1200.webp 1200w, /artworks/oceans/water-s-edge-13-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7489.JPG"
+        }
+      ],
+      "description": [
+        "Blue water meets a warm shoreline along a raised white edge, where the surf seems to gather before spreading over the sand. Fine streaks and metallic accents animate the sea, while the simpler bands of the beach give the composition a quieter counterpoint. The meeting of these surfaces becomes the painting’s central event.",
+        "Water’s Edge draws on a feeling the artist associates with standing beside the ocean: peace accompanied by energy, and stillness touched by the prospect of adventure. It leaves room for the viewer’s own shoreline memories, whether close to home or far away. The painting holds that familiar threshold between watching the water and wanting to follow it."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/waters-edge"
+    },
+    {
+      "id": "art_a98ac901-e6db-528f-84be-9f768cc8bbd7",
+      "slug": "golden-sand-beach",
+      "title": "Golden Sand Beach",
+      "image": {
+        "src": "/artworks/oceans/golden-sand-beach-05-1200.webp",
+        "alt": "Diagonal turquoise waves with raised white edges beside metallic golden sand.",
+        "width": 1200,
+        "height": 1809,
+        "srcSet": "/artworks/oceans/golden-sand-beach-05-600.webp 600w, /artworks/oceans/golden-sand-beach-05-1200.webp 1200w, /artworks/oceans/golden-sand-beach-05-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/IMG_6672 (1).JPG"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/golden-sand-beach-05-1200.webp",
+          "alt": "Diagonal turquoise waves with raised white edges beside metallic golden sand.",
+          "width": 1200,
+          "height": 1809,
+          "srcSet": "/artworks/oceans/golden-sand-beach-05-600.webp 600w, /artworks/oceans/golden-sand-beach-05-1200.webp 1200w, /artworks/oceans/golden-sand-beach-05-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6672 (1).JPG"
+        },
+        {
+          "src": "/artworks/oceans/golden-sand-beach-04-1200.webp",
+          "alt": "Diagonal turquoise waves with raised white edges beside metallic golden sand. Alternate view or detail.",
+          "width": 1200,
+          "height": 1600,
+          "srcSet": "/artworks/oceans/golden-sand-beach-04-600.webp 600w, /artworks/oceans/golden-sand-beach-04-1200.webp 1200w, /artworks/oceans/golden-sand-beach-04-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6671.JPG"
+        },
+        {
+          "src": "/artworks/oceans/golden-sand-beach-06-1200.webp",
+          "alt": "Diagonal turquoise waves with raised white edges beside metallic golden sand. Alternate view or detail.",
+          "width": 1200,
+          "height": 2134,
+          "srcSet": "/artworks/oceans/golden-sand-beach-06-600.webp 600w, /artworks/oceans/golden-sand-beach-06-1200.webp 1200w, /artworks/oceans/golden-sand-beach-06-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6672.JPG"
+        },
+        {
+          "src": "/artworks/oceans/golden-sand-beach-48-1200.webp",
+          "alt": "Room visualization of Golden Sand Beach; scale is illustrative.",
+          "width": 1200,
+          "height": 2136,
+          "srcSet": "/artworks/oceans/golden-sand-beach-48-600.webp 600w, /artworks/oceans/golden-sand-beach-48-1200.webp 1200w, /artworks/oceans/golden-sand-beach-48-1800.webp 1791w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "room-visualization",
+          "sourceFile": "VPA Website Update/The Oceans/Untitled design.jpg.jpg"
+        }
+      ],
+      "description": [
+        "Turquoise waves move diagonally toward a broad field of gold, their sculpted white edges catching light above the textured sand. Metallic passages run through the shoreline, bringing the beach’s surface into focus alongside the movement of the water.",
+        "Golden Sand Beach recalls the brief transformation of a coast at golden hour, when the angle of sunlight brings an unexpected shimmer to ordinary grains of sand. The artist’s attention rests on that small encounter between material and light, and on how differently it appears from one beach to another. Through layered texture and reflective color, the painting gives a fleeting observation a lasting physical presence."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/golden-sand-beach"
+    },
+    {
+      "id": "art_322fc982-05dc-57d0-848e-f2348965a0dd",
+      "slug": "sunset-waves",
+      "title": "Sunset Waves",
+      "image": {
+        "src": "/artworks/oceans/sunset-waves-42-1200.webp",
+        "alt": "Sculpted blue waves beneath a smooth orange, pink, and violet sunset sky.",
+        "width": 1200,
+        "height": 1600,
+        "srcSet": "/artworks/oceans/sunset-waves-42-600.webp 600w, /artworks/oceans/sunset-waves-42-1200.webp 1200w, /artworks/oceans/sunset-waves-42-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/IMG_8742.JPG"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/sunset-waves-42-1200.webp",
+          "alt": "Sculpted blue waves beneath a smooth orange, pink, and violet sunset sky.",
+          "width": 1200,
+          "height": 1600,
+          "srcSet": "/artworks/oceans/sunset-waves-42-600.webp 600w, /artworks/oceans/sunset-waves-42-1200.webp 1200w, /artworks/oceans/sunset-waves-42-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8742.JPG"
+        },
+        {
+          "src": "/artworks/oceans/sunset-waves-10-1200.webp",
+          "alt": "Sculpted blue waves beneath a smooth orange, pink, and violet sunset sky. Alternate view or detail.",
+          "width": 1200,
+          "height": 1600,
+          "srcSet": "/artworks/oceans/sunset-waves-10-600.webp 600w, /artworks/oceans/sunset-waves-10-1200.webp 1200w, /artworks/oceans/sunset-waves-10-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7180.JPG"
+        }
+      ],
+      "description": [
+        "An orange sky fades through pink and violet into deep blue above a mass of sculpted waves. Closely drawn ridges curl and overlap across the lower canvas, catching pale and metallic highlights. The smooth transition of the sky contrasts with the dense movement of the water below.",
+        "Sunset Waves reflects on the sea as a witness to lives and histories far longer than our own. Its original narrative looks beyond the setting sun to the sunrise occurring elsewhere, connecting an ending in one place with a beginning in another. Beneath the warmth of the sky is a question about exchange: what is received here, and what is given elsewhere?"
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "sold",
+      "sourceUrl": "https://www.vudiphothisukart.com/sunset-waves"
+    },
+    {
+      "id": "art_8089058f-6b28-5849-8793-f013133a5bb6",
+      "slug": "arctic-ocean",
+      "title": "Arctic Ocean",
+      "image": {
+        "src": "/artworks/oceans/arctic-ocean-01-1200.webp",
+        "alt": "Diagonal white surf and green water meeting a deeply textured dark shore.",
+        "width": 1200,
+        "height": 1812,
+        "srcSet": "/artworks/oceans/arctic-ocean-01-600.webp 600w, /artworks/oceans/arctic-ocean-01-1200.webp 1200w, /artworks/oceans/arctic-ocean-01-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/FullSizeRender.jpeg"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/arctic-ocean-01-1200.webp",
+          "alt": "Diagonal white surf and green water meeting a deeply textured dark shore.",
+          "width": 1200,
+          "height": 1812,
+          "srcSet": "/artworks/oceans/arctic-ocean-01-600.webp 600w, /artworks/oceans/arctic-ocean-01-1200.webp 1200w, /artworks/oceans/arctic-ocean-01-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/FullSizeRender.jpeg"
+        },
+        {
+          "src": "/artworks/oceans/arctic-ocean-03-1200.webp",
+          "alt": "Diagonal white surf and green water meeting a deeply textured dark shore. Alternate view or detail.",
+          "width": 1200,
+          "height": 1600,
+          "srcSet": "/artworks/oceans/arctic-ocean-03-600.webp 600w, /artworks/oceans/arctic-ocean-03-1200.webp 1200w, /artworks/oceans/arctic-ocean-03-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6665.JPG"
+        },
+        {
+          "src": "/artworks/oceans/arctic-ocean-11-1200.webp",
+          "alt": "Diagonal white surf and green water meeting a deeply textured dark shore. Alternate view or detail.",
+          "width": 1200,
+          "height": 2133,
+          "srcSet": "/artworks/oceans/arctic-ocean-11-600.webp 600w, /artworks/oceans/arctic-ocean-11-1200.webp 1200w, /artworks/oceans/arctic-ocean-11-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7488.JPG"
+        }
+      ],
+      "description": [
+        "White waves sweep diagonally through green water toward a dark, deeply textured shore. The strong contrasts give Arctic Ocean an immediate graphic presence, while finer marks within the surf suggest the irregular movement of breaking water. Raised ridges bring light into the composition’s darkest passages.",
+        "Inspired by northern seas, the painting expresses the artist’s concern for the polar regions and their place within a larger, connected world. The original narrative links admiration for these waters with a desire to protect them. That concern remains at the heart of the work: a landscape can feel distant from everyday experience and still matter deeply to the lives we lead."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/arctic-ocean"
+    },
+    {
+      "id": "art_5b38bc6b-ea27-514e-9d7e-728620ff9df9",
+      "slug": "the-oceans",
+      "title": "The Oceans",
+      "image": {
+        "src": "/artworks/oceans/the-oceans-07-1200.webp",
+        "alt": "A panoramic shoreline of pale aqua water, white breaking surf, and layered warm sand.",
+        "width": 1200,
+        "height": 592,
+        "srcSet": "/artworks/oceans/the-oceans-07-600.webp 600w, /artworks/oceans/the-oceans-07-1200.webp 1200w, /artworks/oceans/the-oceans-07-1800.webp 1800w",
+        "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+        "role": "artwork",
+        "sourceFile": "VPA Website Update/The Oceans/IMG_6774.jpeg"
+      },
+      "images": [
+        {
+          "src": "/artworks/oceans/the-oceans-07-1200.webp",
+          "alt": "A panoramic shoreline of pale aqua water, white breaking surf, and layered warm sand.",
+          "width": 1200,
+          "height": 592,
+          "srcSet": "/artworks/oceans/the-oceans-07-600.webp 600w, /artworks/oceans/the-oceans-07-1200.webp 1200w, /artworks/oceans/the-oceans-07-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "artwork",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6774.jpeg"
+        }
+      ],
+      "description": [
+        "A wide shoreline unfolds across The Oceans, with pale aqua water, layered white surf, and bands of warm sand. Its horizontal format allows the eye to travel along the coast, following small variations in the breaking waves. Sculptural texture gives substance to a scene associated with continuous change.",
+        "The painting draws on the humility the artist feels before an expansive ocean horizon, and on his fascination with its unknown depths. Stories of people who have crossed these waters in search of a better life also inform the work. Admiration, human experience, and a sense of responsibility meet within the seascape, giving its gentle palette a broader emotional reach."
+      ],
+      "dimensions": "36” X 72”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/the-oceans-painting"
+    }
+  ]
+}

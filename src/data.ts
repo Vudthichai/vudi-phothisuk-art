@@ -1,12 +1,24 @@
+import oceans from './oceans.json';
+export type ArtworkImage = {
+  src: string; alt: string; width: number; height: number; srcSet?: string; sizes?: string;
+  role?: string; sourceFile?: string;
+};
 export type Artwork = {
   id: string;
+  slug?: string;
   title: string;
-  image: { src: string; alt: string; width: number; height: number; srcSet?: string; sizes?: string };
+  image: ArtworkImage;
+  images?: ArtworkImage[];
+  description?: string[];
+  dimensions?: string;
+  medium?: string;
+  availability?: string;
+  sourceUrl?: string;
 };
 export type Collection = { slug: string; name: string; summary: string; artworks: Artwork[] };
 export const collections: Collection[] = [
   { slug: 'forest-and-flowers', name: 'Forest & Flowers', summary: 'The first collection being prepared for this new portfolio.', artworks: [] },
-  { slug: 'oceans', name: 'Oceans', summary: 'A future home for ocean-inspired artwork.', artworks: [] },
+  { slug: 'oceans', name: 'The Oceans', summary: oceans.introduction, artworks: oceans.artworks },
   { slug: 'regal-collection', name: 'Regal Collection', summary: 'Collection presentation in preparation.', artworks: [] },
   { slug: 'canvas-collaborations', name: 'Canvas Collaborations', summary: 'Collection presentation in preparation.', artworks: [] },
 ];
