@@ -13,5 +13,9 @@ publishing production changes, switching domains or DNS, modifying Squarespace,
 changing commerce/payment settings, or deleting original assets.
 
 Keep original photographs unchanged. Generate optimized copies for the website.
+For clean artwork hero photographs, preserve the entire canvas and its white
+border; crop out only the surrounding room/easel, with minor perspective
+straightening when needed. Summer Swells is the reference for this presentation
+and must not be cropped to its painted surface.
 Label room visualizations separately; do not imply that their scale is verified.
 Do not change unrelated collections or projects.

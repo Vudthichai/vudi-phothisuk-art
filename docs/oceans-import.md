@@ -29,3 +29,13 @@ Routine development and editorial changes can proceed to draft PR previews
 without another editorial approval stop. Main-branch merges, production
 publication, domain/DNS changes, Squarespace changes, and commerce configuration
 still require the artist's explicit approval. No Netlify settings were changed.
+
+## Clean hero photographs
+
+Following the artist's clarification, hero photographs for Dark Scales, Arctic
+Waves, and Sunset Waves remove the room and easel while retaining the white
+canvas border. A corner-based perspective correction makes the canvas edges
+rectangular, using only source-photo pixels and interpolation. No generative
+retouching, color adjustment, or alteration of the painted composition is used.
+Summer Swells and the other eight hero photographs remain unchanged. Original
+source photographs, detail views, and room visualizations remain unchanged.
