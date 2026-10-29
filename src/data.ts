@@ -1,7 +1,7 @@
 import oceans from './oceans.json';
 export type ArtworkImage = {
   src: string; alt: string; width: number; height: number; srcSet?: string; sizes?: string;
-  role?: string; sourceFile?: string;
+  role?: string; sourceFile?: string; caption?: string;
 };
 export type Artwork = {
   id: string;

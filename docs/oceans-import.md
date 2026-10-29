@@ -39,3 +39,23 @@ rectangular, using only source-photo pixels and interpolation. No generative
 retouching, color adjustment, or alteration of the painted composition is used.
 Summer Swells and the other eight hero photographs remain unchanged. Original
 source photographs, detail views, and room visualizations remain unchanged.
+
+## Curated artwork pages
+
+The collection and every artwork page use the clean full-canvas presentation.
+Only one full view is displayed per painting. Additional artwork photographs are
+five distinct close details, cropped to show the artwork without room/easel
+backgrounds. Room visualizations are grouped separately and labeled as
+illustrative. One repeated Summer Swells room rendering is omitted.
+
+This reduces displayed photos from 49 to 19 (11 full canvases, 5 details, 3 room
+visualizations). Unselected photo assets and the artist's original ZIP remain
+intact. `oceans-photo-curation.json` records the selection and omissions. No
+artwork description, title, sales status, or dimensions change in this pass.
+
+A separate Sunset Waves white-balance comparison was prepared outside the
+website. It estimates a small color-cast correction from photographed white
+canvas patches, with channel gains limited to ±4%. This is an unverified test,
+not a calibrated reproduction. No color adjustments are applied to site assets.
+Accurate reproduction should be checked against the physical painting and a
+neutral/color-reference photograph when new photography is available.

@@ -8,3 +8,12 @@ export function Gallery({ artworks }: { artworks: Artwork[] }) {
   if (!artworks.length) return <div className="gallery-empty"><span className="eyebrow">Portfolio in preparation</span><h2>Space for the artwork.</h2><p>Verified images and artwork details will appear here. No artwork is shown in this prototype.</p></div>;
   return <div className="gallery">{artworks.map(artwork => <ArtworkCard key={artwork.id} artwork={artwork}/>)}</div>;
 }
+
+export function ArtworkViews({ artwork }: { artwork: Artwork }) {
+  const additional = artwork.images?.filter(image => image.src !== artwork.image.src) ?? [];
+  const groups = [
+    { title: 'Details', images: additional.filter(image => image.role === 'detail') },
+    { title: 'In a room', images: additional.filter(image => image.role === 'room-visualization') },
+  ];
+  return <>{groups.filter(group => group.images.length).map(group => <section className="artwork-more" key={group.title} aria-label={group.title}><h2>{group.title}</h2><div className="artwork-views">{group.images.map(image => <figure key={image.src}><img src={image.src} srcSet={image.srcSet} sizes="(max-width: 700px) 86vw, 40vw" alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async"/><figcaption>{image.caption}</figcaption></figure>)}</div></section>)}</>;
+}

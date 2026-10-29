@@ -53,11 +53,15 @@ describe('The Oceans portfolio', () => {
     expect(screen.getByText(/A spotted ray glides/)).toBeTruthy();
     expect(screen.getByText('Sold')).toBeTruthy();
     expect(screen.queryByText('Inquire about this artwork →')).toBeNull();
+    expect(screen.getAllByRole('img')).toHaveLength(1);
+    expect(screen.queryByRole('heading', { name: 'Details' })).toBeNull();
   });
   it('loads a direct artwork URL and distinguishes illustrative room views', () => {
     openOceans('/collections/oceans/golden-sand-beach');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Golden Sand Beach');
     expect(screen.getByText('Room visualization · scale is illustrative')).toBeTruthy();
+    expect(screen.getByRole('region', { name: 'In a room' })).toBeTruthy();
+    expect(screen.getAllByRole('img')).toHaveLength(2);
     expect(screen.getByRole('link', { name: /Inquire about/ }).getAttribute('href')).toContain('Golden%20Sand%20Beach');
     expect(screen.queryByText('Available')).toBeNull();
     expect(screen.getAllByRole('img')[0].getAttribute('fetchpriority')).toBe('high');
@@ -70,5 +74,12 @@ describe('The Oceans portfolio', () => {
   it('shows not-found for a painting outside its collection', () => {
     openOceans('/collections/regal-collection/manta');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Page not found.');
+  });
+  it('shows one distinct detail instead of repetitive full-canvas views', () => {
+    openOceans('/collections/oceans/mermaid-tail');
+    expect(screen.getAllByRole('img')).toHaveLength(2);
+    expect(screen.getByRole('region', { name: 'Details' })).toBeTruthy();
+    expect(screen.getByText('Sculpted scales in close detail')).toBeTruthy();
+    expect(screen.queryByRole('region', { name: 'In a room' })).toBeNull();
   });
 });

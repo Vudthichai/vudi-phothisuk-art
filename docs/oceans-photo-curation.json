@@ -1,0 +1,218 @@
+{
+  "scope": "The Oceans collection and all 11 artwork pages",
+  "before": 49,
+  "after": 19,
+  "colorEditsApplied": false,
+  "artworks": [
+    {
+      "title": "Summer Swells",
+      "primary": "VPA Website Update/The Oceans/IMG_8834.JPG",
+      "selectedAdditional": [
+        "VPA Website Update/The Oceans/IMG_8843.JPG",
+        "VPA Website Update/The Oceans/IMG_7612.JPG"
+      ],
+      "notDisplayed": [
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7736.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8834 2.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        }
+      ]
+    },
+    {
+      "title": "Manta",
+      "primary": "VPA Website Update/The Oceans/IMG_7785 2.JPG",
+      "selectedAdditional": [],
+      "notDisplayed": [
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7785.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        }
+      ]
+    },
+    {
+      "title": "Dark Scales",
+      "primary": "VPA Website Update/The Oceans/IMG_7494.JPG",
+      "selectedAdditional": [
+        "VPA Website Update/The Oceans/IMG_7494 2.JPG"
+      ],
+      "notDisplayed": [
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6849.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 3.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 4.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 5.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        }
+      ]
+    },
+    {
+      "title": "Mermaid Tail",
+      "primary": "VPA Website Update/The Oceans/IMG_8881.jpeg",
+      "selectedAdditional": [
+        "VPA Website Update/The Oceans/IMG_8180.JPG"
+      ],
+      "notDisplayed": [
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6645.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6890.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7495.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8181.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8182.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8183.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8207.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8214.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8215.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8216.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8217.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8218.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        }
+      ]
+    },
+    {
+      "title": "Beach Day",
+      "primary": "VPA Website Update/The Oceans/IMG_8879.jpeg",
+      "selectedAdditional": [
+        "VPA Website Update/The Oceans/IMG_8242.JPG"
+      ],
+      "notDisplayed": [
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8241.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8243.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8244.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        }
+      ]
+    },
+    {
+      "title": "Arctic Waves",
+      "primary": "VPA Website Update/The Oceans/IMG_7493 (1).JPG",
+      "selectedAdditional": [
+        "VPA Website Update/The Oceans/IMG_7493 (2).JPG",
+        "VPA Website Update/The Oceans/Untitled design.png.png"
+      ],
+      "notDisplayed": [
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (3).JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7493.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        }
+      ]
+    },
+    {
+      "title": "Water’s Edge",
+      "primary": "VPA Website Update/The Oceans/IMG_7489 (1).JPG",
+      "selectedAdditional": [],
+      "notDisplayed": [
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7489.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        }
+      ]
+    },
+    {
+      "title": "Golden Sand Beach",
+      "primary": "VPA Website Update/The Oceans/IMG_6672 (1).JPG",
+      "selectedAdditional": [
+        "VPA Website Update/The Oceans/Untitled design.jpg.jpg"
+      ],
+      "notDisplayed": [
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6671.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6672.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        }
+      ]
+    },
+    {
+      "title": "Sunset Waves",
+      "primary": "VPA Website Update/The Oceans/IMG_8742.JPG",
+      "selectedAdditional": [],
+      "notDisplayed": [
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7180.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        }
+      ]
+    },
+    {
+      "title": "Arctic Ocean",
+      "primary": "VPA Website Update/The Oceans/FullSizeRender.jpeg",
+      "selectedAdditional": [],
+      "notDisplayed": [
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_6665.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        },
+        {
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7488.JPG",
+          "reason": "Repetitive full view, alternate framing, excess detail, or duplicate staging; original retained."
+        }
+      ]
+    },
+    {
+      "title": "The Oceans",
+      "primary": "VPA Website Update/The Oceans/IMG_6774.jpeg",
+      "selectedAdditional": [],
+      "notDisplayed": []
+    }
+  ]
+}
