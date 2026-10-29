@@ -1,0 +1,1031 @@
+{
+  "schemaVersion": 1,
+  "status": "partial-rate-limited",
+  "collections": [
+    {
+      "id": "col_a73d2e49-c9e3-5503-9641-c9d0f5492dae",
+      "name": "Forest & Flowers",
+      "sourceUrl": null,
+      "status": "not-found-in-inspected-navigation-and-sitemap",
+      "descriptionBlocksVerbatim": [],
+      "artworkIds": []
+    },
+    {
+      "id": "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2",
+      "name": "The Oceans",
+      "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+      "status": "observed",
+      "descriptionBlocksVerbatim": [
+        "The Oceans: The Oceans is inspired by our vast seas and its mysteries. While water covers 70% of our planet, over 80% of it has been left unexplored. Our science has gotten us to the surface of Mars and the moon, yet we know less about the alien-like environment of our oceans. This work is a dedication to the beauty of our deep blue seas, all of its beaches, its life forms and its quirks. Without our waters, our home would scorch from the sun's energy. The oceans absorb massive amounts of heat without increasing the overall climate of our planet. That in itself, is worth protecting."
+      ],
+      "artworkIds": [
+        "art_5a5cfe77-e92a-5d3d-a8e7-49ed5036d58e",
+        "art_0abfd506-4f21-5735-a4f1-4e14a9da89ac",
+        "art_69cd4989-bb14-5268-8abf-96f54cc1bf96",
+        "art_6ee75f26-09bc-5943-9657-1cb9fb724ded",
+        "art_20d88166-5831-5243-a003-408d0f3b34c1",
+        "art_1168c63e-8d93-5379-b706-ed131bc5fefd",
+        "art_3069371f-c31d-5497-9c10-07b6ddca7b39",
+        "art_a98ac901-e6db-528f-84be-9f768cc8bbd7",
+        "art_322fc982-05dc-57d0-848e-f2348965a0dd",
+        "art_8089058f-6b28-5849-8793-f013133a5bb6",
+        "art_5b38bc6b-ea27-514e-9d7e-728620ff9df9"
+      ]
+    },
+    {
+      "id": "col_e71f4dfa-536d-5bc5-a077-1b035aac7ecb",
+      "name": "The Regal Collection",
+      "sourceUrl": "https://www.vudiphothisukart.com/the-regal-collection",
+      "status": "observed",
+      "descriptionBlocksVerbatim": [
+        "This collection is a journey through memory and emotion. Each piece is a singular moment—an invitation to step into worlds of refined texture, shadows, and color. These are not just paintings, but lived experiences and learned values.The Regal Collection is where presence meets purpose: luxury without distance, intimacy without attachment. It’s sovereignty framed in paint and texture."
+      ],
+      "artworkIds": [
+        "art_ffab50bc-adff-522b-acb4-e34234c0aa9b",
+        "art_73b27f0e-875c-5aba-9873-f668ecf70303",
+        "art_a2303493-8cb3-584c-9f16-02c5a4a885ba",
+        "art_04190788-1cbd-5804-b39e-1806de10ae85",
+        "art_71e7e08e-bf89-5c0b-8a25-bdf301d00ca4"
+      ]
+    },
+    {
+      "id": "col_ca657d06-613c-594b-8c3c-a8fd0aa2fbc9",
+      "name": "Canvas Collaborations",
+      "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+      "status": "observed",
+      "descriptionBlocksVerbatim": [
+        "Canvas collaborations brings people together through the power of art. I often times hear the phrase “I’m not creative enough to make art”.  In this series, I invite the world around me to make something beautiful, together. The art is in the collaboration. "
+      ],
+      "artworkIds": [
+        "art_4ad504a7-66b2-5c73-9c7c-ea20aa415de9",
+        "art_61978f55-8fb7-52d6-ae8f-6c996266af68",
+        "art_60b15447-950f-5d19-834b-d746ff76c634",
+        "art_75b5e5ea-effd-527e-b298-0de7071406a6",
+        "art_5ac22bc9-3829-5b92-aba2-d29db8ed0226",
+        "art_d7e66f15-be2f-5056-82d2-9d82866c3370",
+        "art_9f04a4a3-99d5-50d4-b47d-5a5f933dadff"
+      ]
+    }
+  ],
+  "artworks": [
+    {
+      "id": "art_5a5cfe77-e92a-5d3d-a8e7-49ed5036d58e",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "Summer Swells",
+      "sourceUrl": "https://www.vudiphothisukart.com/summer-swells",
+      "originalPath": "/summer-swells",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/summer-swells",
+        "titleText": "Summer Swells"
+      },
+      "descriptionParagraphsVerbatim": [
+        "When summer is in full swing, nothing cools you off like a beach day by the ocean. Our oceans bring us joy in many forms. Whether it's a romantic date spot that eventually leads to that destination wedding, a peaceful getaway from the daily desk job or surfing the sets that no one believes happened these summer swells are magical moments that give nostalgia to all."
+      ],
+      "technicalTextVerbatim": "24” X 30” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 30”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": "Sold.",
+        "status": "sold",
+        "inquiryTextVerbatim": [],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_c35aa5c6-2658-557f-837c-54b0c17429bd",
+        "img_92860c0e-09d3-5b90-b972-e7761db473e4",
+        "img_2b710b3a-5427-5135-82fb-0ae48b20caed"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_0abfd506-4f21-5735-a4f1-4e14a9da89ac",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "Manta",
+      "sourceUrl": "https://www.vudiphothisukart.com/manta",
+      "originalPath": "/manta",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/manta",
+        "titleText": "Manta"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Manta: There's something so majestic about batoids and how they effortlessly glide through water. From spotted eagle rays to manta and sting rays, all have that smooth movement that gives a seascape an even more pronounced picture. "
+      ],
+      "technicalTextVerbatim": "24” X 30” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 30”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": "Sold.",
+        "status": "sold",
+        "inquiryTextVerbatim": [],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_706b1b52-423d-5f12-8ad4-485edb33c0e6",
+        "img_b1118c57-bf19-56d5-94b4-482a8e0ac4d4",
+        "img_a9992731-dfe3-5180-b2a6-2c21a63a69e4"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_69cd4989-bb14-5268-8abf-96f54cc1bf96",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "Dark Scales",
+      "sourceUrl": "https://www.vudiphothisukart.com/dark-scales",
+      "originalPath": "/dark-scales",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/dark-scales",
+        "titleText": "Dark Scales"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Dark Scales: The ocean is full of mysterious creatures. There are millions of undiscovered species under the surface. Strange, beautiful yet mysterious fish, each with their own story. Scales and scars timestamp their journey through life. Having over half an eon to their belt maybe we can learn the wisdom of what it takes to swim through life and continue to what unfolds tomorrow."
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [
+          "For serious inquiries please email vudiphothisukart@gmail.com"
+        ],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_f25380c6-c60d-57d3-b592-339caf06f230",
+        "img_29d36b5d-b182-5280-82ec-65475b3877fd",
+        "img_118497a7-8f24-5de1-bc0a-706c1cc9d98f",
+        "img_339ffc8c-3024-5b29-accc-344a73c6c1fa",
+        "img_c19fc933-f226-50a6-a8a1-4c5f9067001d"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_6ee75f26-09bc-5943-9657-1cb9fb724ded",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "Mermaid Tail",
+      "sourceUrl": "https://www.vudiphothisukart.com/mermaid-tail",
+      "originalPath": "/mermaid-tail",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/mermaid-tail",
+        "titleText": "Mermaid Tail"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Mermaid Tail: I don't know if mermaids are real but if they are, I'd like to think they have iridescent scales with a personality that matches. The shimmer from their scales and the glistening aura of their nature has captivated story-tellers since the beginning of storytelling. This work is dedicated to all the beautiful mermaids hidden in life."
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [
+          "For serious inquiries please email vudiphothisukart@gmail.com"
+        ],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_232dbb0b-f2dc-55f3-b5ab-9d52065b6fac",
+        "img_42e4692f-37ab-51a4-8bcc-3a657fd555a8",
+        "img_87584314-1aee-593d-bfa3-633552445b00",
+        "img_13046ea7-68d5-5264-99db-af1ea7629306",
+        "img_10978e50-4d03-585b-8491-629a1b7eecc1"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_20d88166-5831-5243-a003-408d0f3b34c1",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "Beach Day",
+      "sourceUrl": "https://www.vudiphothisukart.com/beach-day",
+      "originalPath": "/beach-day",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/beach-day",
+        "titleText": "Beach Day"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Beach Day From the hot summer heat and bustling boardwalks to cool ocean breezes and soft sands. If you were fortunate enough to spend summers at a beach, you know the euphoric feeling of seeing that endless ocean horizon growing into view as you drive up to the shoreline. Beach Day is for all the waves that took my breath away. Whether it was the East Coast or West Coast and Hawaiian Islands to Phi Phi Islands it's hard to pick a favorite beach as every place has its own feel. If I had to widdle it down to one wave my vote is towards the sands somewhere in Phuket."
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [
+          "For serious inquiries please email vudiphothisukart@gmail.com"
+        ],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_eae19743-bf8a-55ae-ac1c-7d99df23a22b",
+        "img_9b8d561c-3d9f-5220-aa32-7e6e86345f7e",
+        "img_feb21e0b-871f-5f55-b98c-16b30d0c2367"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_1168c63e-8d93-5379-b706-ed131bc5fefd",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "Arctic Waves",
+      "sourceUrl": "https://www.vudiphothisukart.com/arctic-waves",
+      "originalPath": "/arctic-waves",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/arctic-waves",
+        "titleText": "Arctic Waves"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Arctic Waves: Arctic waves are like the essence of life's journey, embodying the unseen currents that shape our existence. Their ceaseless rise and fall capture the ebb and flow of our experiences, where each crest symbolizes fleeting moments of triumph, and each trough reflects the quiet depths of introspection and challenge. The delicate dance of light and shadow upon the waves mirrors the ever-shifting landscape of our emotions and thoughts, revealing the hidden beauty in both chaos and calm. In their rhythmic passage, Arctic waves remind us of the intricate, interconnected patterns that define our lives, urging us to find harmony in the perpetual motion of being."
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [
+          "For serious inquiries please email vudiphothisukart@gmail.com"
+        ],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_c274e01d-ab43-5506-9db4-f6389c4e03bd",
+        "img_07690325-8e75-59ea-aedf-9bd4d10c5b86",
+        "img_4709b714-a560-5567-846b-a27ac957e85b",
+        "img_fb5a07cd-06d7-5da7-b5bd-7f4dbafeef69"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_3069371f-c31d-5497-9c10-07b6ddca7b39",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "Water’s Edge",
+      "sourceUrl": "https://www.vudiphothisukart.com/waters-edge",
+      "originalPath": "/waters-edge",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/waters-edge",
+        "titleText": "Water’s Edge"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Water's Edge: Have you ever been to the water's edge? Maybe there's one in your hometown. I feel at peace but energized at the same time. Ready for adventure. The ocean has a way with waves to make us all feel something. How does the ocean make you feel?"
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [
+          "For serious inquiries please email vudiphothisukart@gmail.com"
+        ],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_d040e607-191d-52f5-90e0-648a91034d49",
+        "img_fb53ec66-e564-58d2-b3ba-4bdfbcaf9eb3"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_a98ac901-e6db-528f-84be-9f768cc8bbd7",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "Golden Sand Beach",
+      "sourceUrl": "https://www.vudiphothisukart.com/golden-sand-beach",
+      "originalPath": "/golden-sand-beach",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/golden-sand-beach",
+        "titleText": "Golden Sand Beach"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Golden Sand Beach: If you are patient enough to catch a golden hour along the coast, you'll notice that the sand has a shimmer unlike any other time of day. Light hitting the sands at just the right angle gives it this glistening effect that is uniquely different depending on what beach you are on. This work is a tribute to those special grains of sands making golden hour more special."
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [
+          "For serious inquiries please email vudiphothisukart@gmail.com"
+        ],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_8d233efa-428d-50be-adbb-09dd0aec2f5a",
+        "img_9408e365-cebc-5204-88ba-ea981af12b8a",
+        "img_5c110402-d670-5254-ada7-a8473299b52f",
+        "img_1c987604-5cd6-5e9e-877c-f186b903fec4"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_322fc982-05dc-57d0-848e-f2348965a0dd",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "Sunset Waves",
+      "sourceUrl": "https://www.vudiphothisukart.com/sunset-waves",
+      "originalPath": "/sunset-waves",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/sunset-waves",
+        "titleText": "Sunset Waves"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Sunset Waves: Sunsets and rolling ocean waves are a combination older than man himself. Our waters have seen the evolution of species, the growth of mankind and the fall of civilizations one sunset at a time. But for every sunset that dips below the aqua horizon lies a sunrise reaching for a new day somewhere else in the world. It's a reminder that something that's given away is taken from somewhere else. "
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": "Sold",
+        "status": "sold",
+        "inquiryTextVerbatim": [],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_0a0a5d29-3bda-5fc0-ba0a-06c51c9bf465",
+        "img_e6298c8e-c639-5f08-b4e7-4ab7ff681d04",
+        "img_b36b5c2c-7baa-5498-b23a-bb29061c7729",
+        "img_78fcb4a3-5148-5aab-badb-a1fab31790b6"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_8089058f-6b28-5849-8793-f013133a5bb6",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "Arctic Ocean",
+      "sourceUrl": "https://www.vudiphothisukart.com/arctic-ocean",
+      "originalPath": "/arctic-ocean",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/arctic-ocean",
+        "titleText": "Arctic Ocean"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Arctic Ocean: Inspired by the cold Arctic swells in the northern region of our globe this piece is a tribute to the importance of our polar regions. The icy blue hues are not just home to fleeting wildlife and Indigenous cultures but also play a role in regulating our global climate. The ice and snow create an albedo effect reflecting massive amounts of radiation energy back into space keeping our planet at livable temperatures. What happens here can have profound effects anywhere across the globe as the Arctic is an integral part of global ocean circulation patterns. Thermohaline circulation distributes heat around the planet by circulating water currents through the region and back out throughout the Earth. Today, The Arctic faces many threats that counteract all the above and more. While sea levels keep rising and permafrost keeps melting more CO2 gets released into the ocean which creates a more acidic habitat for the ecosystem. This causes a chain reaction of loss of sea life. The Arctic might not be a place to live but it is a place worth protecting."
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [
+          "For serious inquiries please email vudiphothisukart@gmail.com"
+        ],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_bc2e9cfd-ffd2-5db4-b05d-40b3faedcbee",
+        "img_fdb1adfb-e74f-5874-b5fb-57b60dcf948c",
+        "img_e0323061-7c64-5a33-80fd-d095744a88f1"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_5b38bc6b-ea27-514e-9d7e-728620ff9df9",
+      "collectionIds": [
+        "col_7933cf54-1f28-5dd7-a764-39cbdba0a2e2"
+      ],
+      "title": "The Oceans",
+      "sourceUrl": "https://www.vudiphothisukart.com/the-oceans-painting",
+      "originalPath": "/the-oceans-painting",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-oceans",
+        "linkedPath": "/the-oceans-painting",
+        "titleText": "The Oceans"
+      },
+      "descriptionParagraphsVerbatim": [
+        "The Oceans: Our oceans act as the great protector of our world. Regulating global temperatures and scrubbing 25% of human made CO2 emissions. The liquid seascape is also home to Phytoplankton, tiny plant-like organisms in the ocean, producing at least 50% of the Earth's oxygen through photosynthesis. Standing in front of an endless horizon of water has always made me feel humbled. The amount of unknown mystery coupled with the daring stories of those who braved the currents for a better life has always inspired me. Our oceans aren’t just a body of armor but a signature of life. It’s our duty to respect our oceans and learn from it before it no longer cares to protect us."
+      ],
+      "technicalTextVerbatim": "36” X 72” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "36” X 72”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [
+          "For serious inquiries please email vudiphothisukart@gmail.com"
+        ],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_339a8812-d48c-5fbf-aa1b-6bae832c6bd5",
+        "img_ad0b1bd2-c717-5d67-960a-1c66a2f99af3",
+        "img_e9284119-1465-5adc-8afc-6535e6bc77a0",
+        "img_96f15b38-0e64-5941-b09a-0f4b825bdf76"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_ffab50bc-adff-522b-acb4-e34234c0aa9b",
+      "collectionIds": [
+        "col_e71f4dfa-536d-5bc5-a077-1b035aac7ecb"
+      ],
+      "title": "Carnations",
+      "sourceUrl": "https://www.vudiphothisukart.com/carnations",
+      "originalPath": "/carnations",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-regal-collection",
+        "linkedPath": "/carnations",
+        "titleText": "Carnations"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Carnations: If there is one emotion that can transcend the boundaries of time, it’s Love. Carnations are the symbol of deep affection and commitment. They are also recognized as God’s Flower. Most people strive to reach a point in their lives where they find happiness in a loving partner. It’s rare to see people find love in themselves and in the work they do. If carnations are a symbol of love, this piece is a reminder to find joy in your actions and everyone you meet. Only then can you find the love within yourself."
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": "Sold",
+        "status": "sold",
+        "inquiryTextVerbatim": [],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_cdefd729-6d97-52be-94ef-859637278467",
+        "img_53e8fe99-785f-5e9f-86e0-e112ac29f41b",
+        "img_4a15121e-c59f-5664-bc33-d1990c3536e5",
+        "img_1e1c3833-89d8-54ac-ad63-39af3bef20fe"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_73b27f0e-875c-5aba-9873-f668ecf70303",
+      "collectionIds": [
+        "col_e71f4dfa-536d-5bc5-a077-1b035aac7ecb"
+      ],
+      "title": "Navy",
+      "sourceUrl": "https://www.vudiphothisukart.com/navy",
+      "originalPath": "/navy",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-regal-collection",
+        "linkedPath": "/navy",
+        "titleText": "Navy"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Navy: Navy is a powerful color that carries the weight of many aqua hues. This work is a tribute to the power of water in all its forms and just how important it is to keep us alive. Water gives us life, grows our food and regulates our global temperature. Without it, Earth would not be known as the “Pale Blue Dot”. The relationship we have with this necessary commodity changes depending where we stand. Here in America, it’s given out for free on a hot day but priced at a premium in entertainment. 35 gallons of water is used in the process for a single cup of coffee. Water can spark wars when in low supply. Water can take away land at a moment's notice. Water is the elixir of life but without proper respect, water can destroy us. What is your relationship with water?"
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": "Sold.",
+        "status": "sold",
+        "inquiryTextVerbatim": [],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_c1c01d65-1466-5034-8afa-661715104b7f",
+        "img_5a6c89ca-8b76-5115-88ed-c50c7f5f60f4",
+        "img_96b3104c-d32f-55f0-86ba-b2fe1b36b458",
+        "img_3cd92092-7cc0-58e9-9b38-472003c2234c",
+        "img_8498656e-cf18-510d-b4ec-7afe9b264889"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_a2303493-8cb3-584c-9f16-02c5a4a885ba",
+      "collectionIds": [
+        "col_e71f4dfa-536d-5bc5-a077-1b035aac7ecb"
+      ],
+      "title": "Sahara",
+      "sourceUrl": "https://www.vudiphothisukart.com/sahara",
+      "originalPath": "/sahara",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-regal-collection",
+        "linkedPath": "/sahara",
+        "titleText": "Sahara"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Sahara: What was once covered by water is now a dry and arid desert. The mysteries of the Sahara are endless. Rumors of a lost city are deep within the adventure community but the ancient ruins of Ubar has still yet to be found. The great desert is a reminder that even oceans have a death. But there is a story in every skeleton."
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [
+          "Please email me at vudiphothisukart@gmail.com for serious inquiries."
+        ],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_f3e0bc24-b14d-5dfd-9445-4be4044b6ae9",
+        "img_82c6169a-80c2-5bf9-babb-7773124f518f",
+        "img_10626dc0-134e-544b-a235-f67814425e03",
+        "img_8790f396-ada4-5845-a051-f72a1138869f"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_04190788-1cbd-5804-b39e-1806de10ae85",
+      "collectionIds": [
+        "col_e71f4dfa-536d-5bc5-a077-1b035aac7ecb"
+      ],
+      "title": "Verdant",
+      "sourceUrl": "https://www.vudiphothisukart.com/verdant",
+      "originalPath": "/verdant",
+      "sourceStatus": "retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-regal-collection",
+        "linkedPath": "/verdant",
+        "titleText": "Verdant"
+      },
+      "descriptionParagraphsVerbatim": [
+        "Verdant: How does one feel when walking into a lush garden? One filled with opulent shades of green, trees that shoot branches into the heavens, only to have a canopy of emerald green filtering a golden hour evening with ethereal rays of sunlight. I spent many days in my backyard woods pondering about world travel as a kid. I would rush to the hidden fire pit I made under such a canopy when the sun was setting just right. This work is a representation of those childhood summer memories."
+      ],
+      "technicalTextVerbatim": "24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.",
+      "dimensionsVerbatim": "24” X 36”",
+      "mediumVerbatim": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [
+          "Please email me at vudiphothisukart@gmail.com for serious inquiries."
+        ],
+        "observedAt": "2026-10-29T03:09:49.241186+00:00"
+      },
+      "imageIds": [
+        "img_6b11e376-e19f-588a-a45c-fc3d91b66f50",
+        "img_55e21905-289b-5dc5-9729-3cdfaec80337",
+        "img_294d3dad-4e87-5b52-bb51-da1e20f46e49"
+      ],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_71e7e08e-bf89-5c0b-8a25-bdf301d00ca4",
+      "collectionIds": [
+        "col_e71f4dfa-536d-5bc5-a077-1b035aac7ecb"
+      ],
+      "title": "Ciaran",
+      "sourceUrl": "https://www.vudiphothisukart.com/ciaran",
+      "originalPath": "/ciaran",
+      "sourceStatus": "rate-limited-not-retrieved",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/the-regal-collection",
+        "linkedPath": "/ciaran",
+        "titleText": "Ciaran"
+      },
+      "descriptionParagraphsVerbatim": [],
+      "technicalTextVerbatim": null,
+      "dimensionsVerbatim": null,
+      "mediumVerbatim": null,
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [],
+        "observedAt": null
+      },
+      "imageIds": [],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "displayed price not found",
+        "original photograph match and placement approval",
+        "approved exhibition description",
+        "explicit availability confirmation",
+        "artwork page text, dimensions, medium and photographs"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_4ad504a7-66b2-5c73-9c7c-ea20aa415de9",
+      "collectionIds": [
+        "col_ca657d06-613c-594b-8c3c-a8fd0aa2fbc9"
+      ],
+      "title": "Ultra Collab",
+      "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+      "originalPath": "/collaborations",
+      "sourceStatus": "prior-public-inspection-caption-recapture-needed",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+        "linkedPath": null,
+        "titleText": "Ultra Collab",
+        "note": "Named project in preceding public-page inspection transcript; no standalone page in sitemap. May represent multiple canvases, not one physical work."
+      },
+      "descriptionParagraphsVerbatim": [],
+      "technicalTextVerbatim": null,
+      "dimensionsVerbatim": null,
+      "mediumVerbatim": null,
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [],
+        "observedAt": null
+      },
+      "imageIds": [],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "exact caption HTML/text recapture after HTTP 429",
+        "physical artwork count (project may include multiple canvases)",
+        "dimensions, medium, price and availability",
+        "still-photo references / video-to-artwork association",
+        "original photograph match and placement approval"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_61978f55-8fb7-52d6-ae8f-6c996266af68",
+      "collectionIds": [
+        "col_ca657d06-613c-594b-8c3c-a8fd0aa2fbc9"
+      ],
+      "title": "Kenny Chesney Collab",
+      "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+      "originalPath": "/collaborations",
+      "sourceStatus": "prior-public-inspection-caption-recapture-needed",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+        "linkedPath": null,
+        "titleText": "Kenny Chesney Collab",
+        "note": "Named project in preceding public-page inspection transcript; no standalone page in sitemap. May represent multiple canvases, not one physical work."
+      },
+      "descriptionParagraphsVerbatim": [],
+      "technicalTextVerbatim": null,
+      "dimensionsVerbatim": null,
+      "mediumVerbatim": null,
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [],
+        "observedAt": null
+      },
+      "imageIds": [],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "exact caption HTML/text recapture after HTTP 429",
+        "physical artwork count (project may include multiple canvases)",
+        "dimensions, medium, price and availability",
+        "still-photo references / video-to-artwork association",
+        "original photograph match and placement approval"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_60b15447-950f-5d19-834b-d746ff76c634",
+      "collectionIds": [
+        "col_ca657d06-613c-594b-8c3c-a8fd0aa2fbc9"
+      ],
+      "title": "Thailand Collab",
+      "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+      "originalPath": "/collaborations",
+      "sourceStatus": "prior-public-inspection-caption-recapture-needed",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+        "linkedPath": null,
+        "titleText": "Thailand Collab",
+        "note": "Named project in preceding public-page inspection transcript; no standalone page in sitemap. May represent multiple canvases, not one physical work."
+      },
+      "descriptionParagraphsVerbatim": [],
+      "technicalTextVerbatim": null,
+      "dimensionsVerbatim": null,
+      "mediumVerbatim": null,
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [],
+        "observedAt": null
+      },
+      "imageIds": [],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "exact caption HTML/text recapture after HTTP 429",
+        "physical artwork count (project may include multiple canvases)",
+        "dimensions, medium, price and availability",
+        "still-photo references / video-to-artwork association",
+        "original photograph match and placement approval"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_75b5e5ea-effd-527e-b298-0de7071406a6",
+      "collectionIds": [
+        "col_ca657d06-613c-594b-8c3c-a8fd0aa2fbc9"
+      ],
+      "title": "PGH Marathon Collab",
+      "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+      "originalPath": "/collaborations",
+      "sourceStatus": "prior-public-inspection-caption-recapture-needed",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+        "linkedPath": null,
+        "titleText": "PGH Marathon Collab",
+        "note": "Named project in preceding public-page inspection transcript; no standalone page in sitemap. May represent multiple canvases, not one physical work."
+      },
+      "descriptionParagraphsVerbatim": [],
+      "technicalTextVerbatim": null,
+      "dimensionsVerbatim": null,
+      "mediumVerbatim": null,
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [],
+        "observedAt": null
+      },
+      "imageIds": [],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "exact caption HTML/text recapture after HTTP 429",
+        "physical artwork count (project may include multiple canvases)",
+        "dimensions, medium, price and availability",
+        "still-photo references / video-to-artwork association",
+        "original photograph match and placement approval"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_5ac22bc9-3829-5b92-aba2-d29db8ed0226",
+      "collectionIds": [
+        "col_ca657d06-613c-594b-8c3c-a8fd0aa2fbc9"
+      ],
+      "title": "PIER PRESSURE Collab",
+      "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+      "originalPath": "/collaborations",
+      "sourceStatus": "prior-public-inspection-caption-recapture-needed",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+        "linkedPath": null,
+        "titleText": "PIER PRESSURE Collab",
+        "note": "Named project in preceding public-page inspection transcript; no standalone page in sitemap. May represent multiple canvases, not one physical work."
+      },
+      "descriptionParagraphsVerbatim": [],
+      "technicalTextVerbatim": null,
+      "dimensionsVerbatim": null,
+      "mediumVerbatim": null,
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [],
+        "observedAt": null
+      },
+      "imageIds": [],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "exact caption HTML/text recapture after HTTP 429",
+        "physical artwork count (project may include multiple canvases)",
+        "dimensions, medium, price and availability",
+        "still-photo references / video-to-artwork association",
+        "original photograph match and placement approval"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_d7e66f15-be2f-5056-82d2-9d82866c3370",
+      "collectionIds": [
+        "col_ca657d06-613c-594b-8c3c-a8fd0aa2fbc9"
+      ],
+      "title": "JUICE with a twist Collab",
+      "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+      "originalPath": "/collaborations",
+      "sourceStatus": "prior-public-inspection-caption-recapture-needed",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+        "linkedPath": null,
+        "titleText": "JUICE with a twist Collab",
+        "note": "Named project in preceding public-page inspection transcript; no standalone page in sitemap. May represent multiple canvases, not one physical work."
+      },
+      "descriptionParagraphsVerbatim": [],
+      "technicalTextVerbatim": null,
+      "dimensionsVerbatim": null,
+      "mediumVerbatim": null,
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [],
+        "observedAt": null
+      },
+      "imageIds": [],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "exact caption HTML/text recapture after HTTP 429",
+        "physical artwork count (project may include multiple canvases)",
+        "dimensions, medium, price and availability",
+        "still-photo references / video-to-artwork association",
+        "original photograph match and placement approval"
+      ],
+      "reviewStatus": "needs-owner-review"
+    },
+    {
+      "id": "art_9f04a4a3-99d5-50d4-b47d-5a5f933dadff",
+      "collectionIds": [
+        "col_ca657d06-613c-594b-8c3c-a8fd0aa2fbc9"
+      ],
+      "title": "Vietnam Collab",
+      "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+      "originalPath": "/collaborations",
+      "sourceStatus": "prior-public-inspection-caption-recapture-needed",
+      "membershipEvidence": {
+        "sourceUrl": "https://www.vudiphothisukart.com/collaborations",
+        "linkedPath": null,
+        "titleText": "Vietnam Collab",
+        "note": "Named project in preceding public-page inspection transcript; no standalone page in sitemap. May represent multiple canvases, not one physical work."
+      },
+      "descriptionParagraphsVerbatim": [],
+      "technicalTextVerbatim": null,
+      "dimensionsVerbatim": null,
+      "mediumVerbatim": null,
+      "sales": {
+        "displayedPrice": null,
+        "currency": null,
+        "availabilityText": null,
+        "status": "unknown",
+        "inquiryTextVerbatim": [],
+        "observedAt": null
+      },
+      "imageIds": [],
+      "approvedExhibitionDescription": null,
+      "missing": [
+        "exact caption HTML/text recapture after HTTP 429",
+        "physical artwork count (project may include multiple canvases)",
+        "dimensions, medium, price and availability",
+        "still-photo references / video-to-artwork association",
+        "original photograph match and placement approval"
+      ],
+      "reviewStatus": "needs-owner-review"
+    }
+  ]
+}
