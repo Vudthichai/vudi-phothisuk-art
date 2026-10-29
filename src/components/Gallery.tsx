@@ -15,5 +15,7 @@ export function ArtworkViews({ artwork }: { artwork: Artwork }) {
     { title: 'Details', images: additional.filter(image => image.role === 'detail') },
     { title: 'In a room', images: additional.filter(image => image.role === 'room-visualization') },
   ];
-  return <>{groups.filter(group => group.images.length).map(group => <section className="artwork-more" key={group.title} aria-label={group.title}><h2>{group.title}</h2><div className="artwork-views">{group.images.map(image => <figure key={image.src}><img src={image.src} srcSet={image.srcSet} sizes="(max-width: 700px) 86vw, 40vw" alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async"/><figcaption>{image.caption}</figcaption></figure>)}</div></section>)}</>;
+  const visible = groups.filter(group => group.images.length);
+  if (!visible.length) return null;
+  return <div className={`artwork-view-groups${visible.length === 1 ? ' single' : ''}`}>{visible.map(group => <section className="artwork-more" key={group.title} aria-label={group.title}><h2>{group.title}</h2><div className="artwork-views">{group.images.map(image => <figure key={image.src}><img src={image.src} srcSet={image.srcSet} sizes="(max-width: 700px) 86vw, 40vw" alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async"/><figcaption>{image.caption}</figcaption></figure>)}</div></section>)}</div>;
 }
