@@ -27,6 +27,17 @@
           "sourceFile": "VPA Website Update/The Oceans/IMG_8834.JPG"
         },
         {
+          "src": "/artworks/oceans/summer-swells-45-detail-1200.webp",
+          "alt": "Summer Swells: raised surf and layered shoreline texture.",
+          "width": 1200,
+          "height": 1800,
+          "srcSet": "/artworks/oceans/summer-swells-45-detail-600.webp 600w, /artworks/oceans/summer-swells-45-detail-1200.webp 1200w, /artworks/oceans/summer-swells-45-detail-1800.webp 1800w",
+          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
+          "role": "detail",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8843.JPG",
+          "caption": "Raised surf and layered shoreline texture"
+        },
+        {
           "src": "/artworks/oceans/summer-swells-24-1200.webp",
           "alt": "Room visualization of Summer Swells; scale is illustrative.",
           "width": 1200,
@@ -34,37 +45,8 @@
           "srcSet": "/artworks/oceans/summer-swells-24-600.webp 600w, /artworks/oceans/summer-swells-24-1200.webp 1200w, /artworks/oceans/summer-swells-24-1800.webp 1687w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "room-visualization",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7612.JPG"
-        },
-        {
-          "src": "/artworks/oceans/summer-swells-25-1200.webp",
-          "alt": "Room visualization of Summer Swells; scale is illustrative.",
-          "width": 1200,
-          "height": 1800,
-          "srcSet": "/artworks/oceans/summer-swells-25-600.webp 600w, /artworks/oceans/summer-swells-25-1200.webp 1200w, /artworks/oceans/summer-swells-25-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "room-visualization",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7736.JPG"
-        },
-        {
-          "src": "/artworks/oceans/summer-swells-43-1200.webp",
-          "alt": "Turquoise and blue water with raised white surf beside bands of terracotta and pale sand. Alternate view or detail.",
-          "width": 1200,
-          "height": 1600,
-          "srcSet": "/artworks/oceans/summer-swells-43-600.webp 600w, /artworks/oceans/summer-swells-43-1200.webp 1200w, /artworks/oceans/summer-swells-43-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8834 2.JPG"
-        },
-        {
-          "src": "/artworks/oceans/summer-swells-45-1200.webp",
-          "alt": "Turquoise and blue water with raised white surf beside bands of terracotta and pale sand. Alternate view or detail.",
-          "width": 1200,
-          "height": 1600,
-          "srcSet": "/artworks/oceans/summer-swells-45-600.webp 600w, /artworks/oceans/summer-swells-45-1200.webp 1200w, /artworks/oceans/summer-swells-45-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8843.JPG"
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7612.JPG",
+          "caption": "Room visualization · scale is illustrative"
         }
       ],
       "description": [
@@ -100,16 +82,6 @@
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
           "sourceFile": "VPA Website Update/The Oceans/IMG_7785 2.JPG"
-        },
-        {
-          "src": "/artworks/oceans/manta-27-1200.webp",
-          "alt": "A spotted ray in layered blue and aqua water crossed by pale lines of reflected light. Alternate view or detail.",
-          "width": 1200,
-          "height": 1600,
-          "srcSet": "/artworks/oceans/manta-27-600.webp 600w, /artworks/oceans/manta-27-1200.webp 1200w, /artworks/oceans/manta-27-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7785.JPG"
         }
       ],
       "description": [
@@ -129,7 +101,7 @@
         "src": "/artworks/oceans/dark-scales-22-1200.webp",
         "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights.",
         "width": 1200,
-        "height": 2134,
+        "height": 1799,
         "srcSet": "/artworks/oceans/dark-scales-22-600.webp 600w, /artworks/oceans/dark-scales-22-1200.webp 1200w, /artworks/oceans/dark-scales-22-1800.webp 1800w",
         "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
         "role": "artwork",
@@ -140,61 +112,22 @@
           "src": "/artworks/oceans/dark-scales-22-1200.webp",
           "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights.",
           "width": 1200,
-          "height": 2134,
+          "height": 1799,
           "srcSet": "/artworks/oceans/dark-scales-22-600.webp 600w, /artworks/oceans/dark-scales-22-1200.webp 1200w, /artworks/oceans/dark-scales-22-1800.webp 1800w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
           "sourceFile": "VPA Website Update/The Oceans/IMG_7494.JPG"
         },
         {
-          "src": "/artworks/oceans/dark-scales-08-1200.webp",
-          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights. Alternate view or detail.",
-          "width": 1200,
-          "height": 1809,
-          "srcSet": "/artworks/oceans/dark-scales-08-600.webp 600w, /artworks/oceans/dark-scales-08-1200.webp 1200w, /artworks/oceans/dark-scales-08-1800.webp 1800w",
+          "src": "/artworks/oceans/dark-scales-18-detail-1200.webp",
+          "alt": "Dark Scales: sculpted scales and metallic highlights.",
+          "width": 829,
+          "height": 2235,
+          "srcSet": "/artworks/oceans/dark-scales-18-detail-600.webp 600w, /artworks/oceans/dark-scales-18-detail-1200.webp 829w, /artworks/oceans/dark-scales-18-detail-1800.webp 829w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_6849.JPG"
-        },
-        {
-          "src": "/artworks/oceans/dark-scales-18-1200.webp",
-          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights. Alternate view or detail.",
-          "width": 1200,
-          "height": 2134,
-          "srcSet": "/artworks/oceans/dark-scales-18-600.webp 600w, /artworks/oceans/dark-scales-18-1200.webp 1200w, /artworks/oceans/dark-scales-18-1800.webp 1271w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 2.JPG"
-        },
-        {
-          "src": "/artworks/oceans/dark-scales-19-1200.webp",
-          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights. Alternate view or detail.",
-          "width": 1200,
-          "height": 2134,
-          "srcSet": "/artworks/oceans/dark-scales-19-600.webp 600w, /artworks/oceans/dark-scales-19-1200.webp 1200w, /artworks/oceans/dark-scales-19-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 3.JPG"
-        },
-        {
-          "src": "/artworks/oceans/dark-scales-20-1200.webp",
-          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights. Alternate view or detail.",
-          "width": 1200,
-          "height": 2134,
-          "srcSet": "/artworks/oceans/dark-scales-20-600.webp 600w, /artworks/oceans/dark-scales-20-1200.webp 1200w, /artworks/oceans/dark-scales-20-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 4.JPG"
-        },
-        {
-          "src": "/artworks/oceans/dark-scales-21-1200.webp",
-          "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights. Alternate view or detail.",
-          "width": 842,
-          "height": 1497,
-          "srcSet": "/artworks/oceans/dark-scales-21-600.webp 600w, /artworks/oceans/dark-scales-21-1200.webp 842w, /artworks/oceans/dark-scales-21-1800.webp 842w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 5.JPG"
+          "role": "detail",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7494 2.JPG",
+          "caption": "Sculpted scales and metallic highlights"
         }
       ],
       "description": [
@@ -232,134 +165,15 @@
           "sourceFile": "VPA Website Update/The Oceans/IMG_8881.jpeg"
         },
         {
-          "src": "/artworks/oceans/mermaid-tail-02-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
+          "src": "/artworks/oceans/mermaid-tail-28-detail-1200.webp",
+          "alt": "Mermaid Tail: sculpted scales in close detail.",
           "width": 1200,
-          "height": 1600,
-          "srcSet": "/artworks/oceans/mermaid-tail-02-600.webp 600w, /artworks/oceans/mermaid-tail-02-1200.webp 1200w, /artworks/oceans/mermaid-tail-02-1800.webp 1800w",
+          "height": 3181,
+          "srcSet": "/artworks/oceans/mermaid-tail-28-detail-600.webp 600w, /artworks/oceans/mermaid-tail-28-detail-1200.webp 1200w, /artworks/oceans/mermaid-tail-28-detail-1800.webp 1556w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_6645.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-09-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 1600,
-          "srcSet": "/artworks/oceans/mermaid-tail-09-600.webp 600w, /artworks/oceans/mermaid-tail-09-1200.webp 1200w, /artworks/oceans/mermaid-tail-09-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_6890.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-23-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 1500,
-          "srcSet": "/artworks/oceans/mermaid-tail-23-600.webp 600w, /artworks/oceans/mermaid-tail-23-1200.webp 1200w, /artworks/oceans/mermaid-tail-23-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7495.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-28-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/mermaid-tail-28-600.webp 600w, /artworks/oceans/mermaid-tail-28-1200.webp 1200w, /artworks/oceans/mermaid-tail-28-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8180.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-29-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/mermaid-tail-29-600.webp 600w, /artworks/oceans/mermaid-tail-29-1200.webp 1200w, /artworks/oceans/mermaid-tail-29-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8181.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-30-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/mermaid-tail-30-600.webp 600w, /artworks/oceans/mermaid-tail-30-1200.webp 1200w, /artworks/oceans/mermaid-tail-30-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8182.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-31-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 2132,
-          "srcSet": "/artworks/oceans/mermaid-tail-31-600.webp 600w, /artworks/oceans/mermaid-tail-31-1200.webp 1200w, /artworks/oceans/mermaid-tail-31-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8183.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-32-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/mermaid-tail-32-600.webp 600w, /artworks/oceans/mermaid-tail-32-1200.webp 1200w, /artworks/oceans/mermaid-tail-32-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8207.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-33-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/mermaid-tail-33-600.webp 600w, /artworks/oceans/mermaid-tail-33-1200.webp 1200w, /artworks/oceans/mermaid-tail-33-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8214.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-34-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/mermaid-tail-34-600.webp 600w, /artworks/oceans/mermaid-tail-34-1200.webp 1200w, /artworks/oceans/mermaid-tail-34-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8215.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-35-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/mermaid-tail-35-600.webp 600w, /artworks/oceans/mermaid-tail-35-1200.webp 1200w, /artworks/oceans/mermaid-tail-35-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8216.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-36-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/mermaid-tail-36-600.webp 600w, /artworks/oceans/mermaid-tail-36-1200.webp 1200w, /artworks/oceans/mermaid-tail-36-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8217.JPG"
-        },
-        {
-          "src": "/artworks/oceans/mermaid-tail-37-1200.webp",
-          "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/mermaid-tail-37-600.webp 600w, /artworks/oceans/mermaid-tail-37-1200.webp 1200w, /artworks/oceans/mermaid-tail-37-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8218.JPG"
+          "role": "detail",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8180.JPG",
+          "caption": "Sculpted scales in close detail"
         }
       ],
       "description": [
@@ -397,44 +211,15 @@
           "sourceFile": "VPA Website Update/The Oceans/IMG_8879.jpeg"
         },
         {
-          "src": "/artworks/oceans/beach-day-38-1200.webp",
-          "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand. Alternate view or detail.",
+          "src": "/artworks/oceans/beach-day-39-detail-1200.webp",
+          "alt": "Beach Day: raised wave edge and surface texture.",
           "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/beach-day-38-600.webp 600w, /artworks/oceans/beach-day-38-1200.webp 1200w, /artworks/oceans/beach-day-38-1800.webp 1800w",
+          "height": 1954,
+          "srcSet": "/artworks/oceans/beach-day-39-detail-600.webp 600w, /artworks/oceans/beach-day-39-detail-1200.webp 1200w, /artworks/oceans/beach-day-39-detail-1800.webp 1800w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8241.JPG"
-        },
-        {
-          "src": "/artworks/oceans/beach-day-39-1200.webp",
-          "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/beach-day-39-600.webp 600w, /artworks/oceans/beach-day-39-1200.webp 1200w, /artworks/oceans/beach-day-39-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8242.JPG"
-        },
-        {
-          "src": "/artworks/oceans/beach-day-40-1200.webp",
-          "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/beach-day-40-600.webp 600w, /artworks/oceans/beach-day-40-1200.webp 1200w, /artworks/oceans/beach-day-40-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8243.JPG"
-        },
-        {
-          "src": "/artworks/oceans/beach-day-41-1200.webp",
-          "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/beach-day-41-600.webp 600w, /artworks/oceans/beach-day-41-1200.webp 1200w, /artworks/oceans/beach-day-41-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8244.JPG"
+          "role": "detail",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_8242.JPG",
+          "caption": "Raised wave edge and surface texture"
         }
       ],
       "description": [
@@ -454,7 +239,7 @@
         "src": "/artworks/oceans/arctic-waves-14-1200.webp",
         "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore.",
         "width": 1200,
-        "height": 2134,
+        "height": 1816,
         "srcSet": "/artworks/oceans/arctic-waves-14-600.webp 600w, /artworks/oceans/arctic-waves-14-1200.webp 1200w, /artworks/oceans/arctic-waves-14-1800.webp 1800w",
         "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
         "role": "artwork",
@@ -465,41 +250,22 @@
           "src": "/artworks/oceans/arctic-waves-14-1200.webp",
           "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore.",
           "width": 1200,
-          "height": 2134,
+          "height": 1816,
           "srcSet": "/artworks/oceans/arctic-waves-14-600.webp 600w, /artworks/oceans/arctic-waves-14-1200.webp 1200w, /artworks/oceans/arctic-waves-14-1800.webp 1800w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
           "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (1).JPG"
         },
         {
-          "src": "/artworks/oceans/arctic-waves-15-1200.webp",
-          "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore. Alternate view or detail.",
-          "width": 1200,
-          "height": 2134,
-          "srcSet": "/artworks/oceans/arctic-waves-15-600.webp 600w, /artworks/oceans/arctic-waves-15-1200.webp 1200w, /artworks/oceans/arctic-waves-15-1800.webp 1309w",
+          "src": "/artworks/oceans/arctic-waves-15-detail-1200.webp",
+          "alt": "Arctic Waves: water texture and reflected highlights.",
+          "width": 815,
+          "height": 2302,
+          "srcSet": "/artworks/oceans/arctic-waves-15-detail-600.webp 600w, /artworks/oceans/arctic-waves-15-detail-1200.webp 815w, /artworks/oceans/arctic-waves-15-detail-1800.webp 815w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (2).JPG"
-        },
-        {
-          "src": "/artworks/oceans/arctic-waves-16-1200.webp",
-          "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore. Alternate view or detail.",
-          "width": 1200,
-          "height": 2134,
-          "srcSet": "/artworks/oceans/arctic-waves-16-600.webp 600w, /artworks/oceans/arctic-waves-16-1200.webp 1200w, /artworks/oceans/arctic-waves-16-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (3).JPG"
-        },
-        {
-          "src": "/artworks/oceans/arctic-waves-17-1200.webp",
-          "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore. Alternate view or detail.",
-          "width": 721,
-          "height": 1282,
-          "srcSet": "/artworks/oceans/arctic-waves-17-600.webp 600w, /artworks/oceans/arctic-waves-17-1200.webp 721w, /artworks/oceans/arctic-waves-17-1800.webp 721w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7493.JPG"
+          "role": "detail",
+          "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (2).JPG",
+          "caption": "Water texture and reflected highlights"
         },
         {
           "src": "/artworks/oceans/arctic-waves-49-1200.webp",
@@ -509,7 +275,8 @@
           "srcSet": "/artworks/oceans/arctic-waves-49-600.webp 600w, /artworks/oceans/arctic-waves-49-1200.webp 1200w, /artworks/oceans/arctic-waves-49-1800.webp 1800w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "room-visualization",
-          "sourceFile": "VPA Website Update/The Oceans/Untitled design.png.png"
+          "sourceFile": "VPA Website Update/The Oceans/Untitled design.png.png",
+          "caption": "Room visualization · scale is illustrative"
         }
       ],
       "description": [
@@ -545,16 +312,6 @@
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
           "sourceFile": "VPA Website Update/The Oceans/IMG_7489 (1).JPG"
-        },
-        {
-          "src": "/artworks/oceans/water-s-edge-13-1200.webp",
-          "alt": "Blue water meeting a warm sandy shoreline along a sculpted white wave. Alternate view or detail.",
-          "width": 1200,
-          "height": 2134,
-          "srcSet": "/artworks/oceans/water-s-edge-13-600.webp 600w, /artworks/oceans/water-s-edge-13-1200.webp 1200w, /artworks/oceans/water-s-edge-13-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7489.JPG"
         }
       ],
       "description": [
@@ -592,26 +349,6 @@
           "sourceFile": "VPA Website Update/The Oceans/IMG_6672 (1).JPG"
         },
         {
-          "src": "/artworks/oceans/golden-sand-beach-04-1200.webp",
-          "alt": "Diagonal turquoise waves with raised white edges beside metallic golden sand. Alternate view or detail.",
-          "width": 1200,
-          "height": 1600,
-          "srcSet": "/artworks/oceans/golden-sand-beach-04-600.webp 600w, /artworks/oceans/golden-sand-beach-04-1200.webp 1200w, /artworks/oceans/golden-sand-beach-04-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_6671.JPG"
-        },
-        {
-          "src": "/artworks/oceans/golden-sand-beach-06-1200.webp",
-          "alt": "Diagonal turquoise waves with raised white edges beside metallic golden sand. Alternate view or detail.",
-          "width": 1200,
-          "height": 2134,
-          "srcSet": "/artworks/oceans/golden-sand-beach-06-600.webp 600w, /artworks/oceans/golden-sand-beach-06-1200.webp 1200w, /artworks/oceans/golden-sand-beach-06-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_6672.JPG"
-        },
-        {
           "src": "/artworks/oceans/golden-sand-beach-48-1200.webp",
           "alt": "Room visualization of Golden Sand Beach; scale is illustrative.",
           "width": 1200,
@@ -619,7 +356,8 @@
           "srcSet": "/artworks/oceans/golden-sand-beach-48-600.webp 600w, /artworks/oceans/golden-sand-beach-48-1200.webp 1200w, /artworks/oceans/golden-sand-beach-48-1800.webp 1791w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "room-visualization",
-          "sourceFile": "VPA Website Update/The Oceans/Untitled design.jpg.jpg"
+          "sourceFile": "VPA Website Update/The Oceans/Untitled design.jpg.jpg",
+          "caption": "Room visualization · scale is illustrative"
         }
       ],
       "description": [
@@ -639,7 +377,7 @@
         "src": "/artworks/oceans/sunset-waves-42-1200.webp",
         "alt": "Sculpted blue waves beneath a smooth orange, pink, and violet sunset sky.",
         "width": 1200,
-        "height": 1600,
+        "height": 1798,
         "srcSet": "/artworks/oceans/sunset-waves-42-600.webp 600w, /artworks/oceans/sunset-waves-42-1200.webp 1200w, /artworks/oceans/sunset-waves-42-1800.webp 1800w",
         "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
         "role": "artwork",
@@ -650,21 +388,11 @@
           "src": "/artworks/oceans/sunset-waves-42-1200.webp",
           "alt": "Sculpted blue waves beneath a smooth orange, pink, and violet sunset sky.",
           "width": 1200,
-          "height": 1600,
+          "height": 1798,
           "srcSet": "/artworks/oceans/sunset-waves-42-600.webp 600w, /artworks/oceans/sunset-waves-42-1200.webp 1200w, /artworks/oceans/sunset-waves-42-1800.webp 1800w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
           "sourceFile": "VPA Website Update/The Oceans/IMG_8742.JPG"
-        },
-        {
-          "src": "/artworks/oceans/sunset-waves-10-1200.webp",
-          "alt": "Sculpted blue waves beneath a smooth orange, pink, and violet sunset sky. Alternate view or detail.",
-          "width": 1200,
-          "height": 1600,
-          "srcSet": "/artworks/oceans/sunset-waves-10-600.webp 600w, /artworks/oceans/sunset-waves-10-1200.webp 1200w, /artworks/oceans/sunset-waves-10-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7180.JPG"
         }
       ],
       "description": [
@@ -700,26 +428,6 @@
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
           "sourceFile": "VPA Website Update/The Oceans/FullSizeRender.jpeg"
-        },
-        {
-          "src": "/artworks/oceans/arctic-ocean-03-1200.webp",
-          "alt": "Diagonal white surf and green water meeting a deeply textured dark shore. Alternate view or detail.",
-          "width": 1200,
-          "height": 1600,
-          "srcSet": "/artworks/oceans/arctic-ocean-03-600.webp 600w, /artworks/oceans/arctic-ocean-03-1200.webp 1200w, /artworks/oceans/arctic-ocean-03-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_6665.JPG"
-        },
-        {
-          "src": "/artworks/oceans/arctic-ocean-11-1200.webp",
-          "alt": "Diagonal white surf and green water meeting a deeply textured dark shore. Alternate view or detail.",
-          "width": 1200,
-          "height": 2133,
-          "srcSet": "/artworks/oceans/arctic-ocean-11-600.webp 600w, /artworks/oceans/arctic-ocean-11-1200.webp 1200w, /artworks/oceans/arctic-ocean-11-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_7488.JPG"
         }
       ],
       "description": [
