@@ -91,11 +91,10 @@ describe('The Oceans portfolio', () => {
     openOceans('/collections/regal-collection/manta');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Page not found.');
   });
-  it('shows one distinct detail instead of repetitive full-canvas views', () => {
+  it('presents the artist-selected Mermaid Tail photograph without weak supplementary shots', () => {
     openOceans('/collections/oceans/mermaid-tail');
-    expect(screen.getAllByRole('img')).toHaveLength(2);
-    expect(screen.getByRole('region', { name: 'Details' })).toBeTruthy();
-    expect(screen.getByText('Sculpted scales in close detail')).toBeTruthy();
-    expect(screen.queryByRole('region', { name: 'In a room' })).toBeNull();
+    expect(screen.getAllByRole('img')).toHaveLength(1);
+    expect(screen.getByRole('img').getAttribute('src')).toContain('artist-selection');
+    expect(screen.queryByRole('region', { name: 'Details' })).toBeNull();
   });
 });

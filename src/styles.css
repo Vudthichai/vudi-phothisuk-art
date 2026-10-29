@@ -11,3 +11,8 @@
 @media(max-width:700px){.artwork-page .artwork-view-groups{margin-top:55px;gap:35px}.artwork-page .artwork-more{padding:24px;flex-basis:100%}.artwork-page .artwork-view-groups.single .artwork-more{display:block}.artwork-page .artwork-views img{max-height:70svh}.artwork-page .artwork-views figcaption{flex-direction:column;gap:12px}.artwork-pagination{grid-template-columns:1fr 1fr;gap:25px}.artwork-pagination>.text-link{grid-column:1/-1;grid-row:2;text-align:center}.artwork-pagination strong{font-size:22px}}
 .artwork-page .artwork-more[aria-label="Details"] img{width:100%;height:clamp(300px,38vw,520px);max-height:none;object-fit:cover;object-position:center}
 @media(max-width:700px){.artwork-page .artwork-more[aria-label="Details"] img{height:330px}}
+/* Photographs sit directly on the gallery background, without added panel frames. */
+.artwork-page .artwork-more{background:transparent;padding:0}
+.artwork-theme-arctic-waves .artwork-primary{clip-path:inset(.4% 0 .6%)}
+.artwork-theme-sunset-waves .artwork-primary{clip-path:inset(0 0 .5%)}
+@media(max-width:700px){.artwork-page .artwork-more{padding:0}}
