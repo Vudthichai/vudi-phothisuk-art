@@ -168,36 +168,25 @@
       "slug": "beach-day",
       "title": "Beach Day",
       "image": {
-        "src": "/artworks/oceans/beach-day-46-1200.webp",
+        "src": "/artworks/oceans/beach-day-artist-selection-1200.webp",
         "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand.",
         "width": 1200,
-        "height": 1820,
-        "srcSet": "/artworks/oceans/beach-day-46-600.webp 600w, /artworks/oceans/beach-day-46-1200.webp 1200w, /artworks/oceans/beach-day-46-1800.webp 1800w",
+        "height": 1819,
+        "srcSet": "/artworks/oceans/beach-day-artist-selection-600.webp 600w, /artworks/oceans/beach-day-artist-selection-1200.webp 1200w, /artworks/oceans/beach-day-artist-selection-1800.webp 1800w",
         "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
         "role": "artwork",
-        "sourceFile": "VPA Website Update/The Oceans/IMG_8879.jpeg"
+        "sourceFile": "Artist-selected IMG_7497.jpeg crop, October 29 2026"
       },
       "images": [
         {
-          "src": "/artworks/oceans/beach-day-46-1200.webp",
+          "src": "/artworks/oceans/beach-day-artist-selection-1200.webp",
           "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand.",
           "width": 1200,
-          "height": 1820,
-          "srcSet": "/artworks/oceans/beach-day-46-600.webp 600w, /artworks/oceans/beach-day-46-1200.webp 1200w, /artworks/oceans/beach-day-46-1800.webp 1800w",
+          "height": 1819,
+          "srcSet": "/artworks/oceans/beach-day-artist-selection-600.webp 600w, /artworks/oceans/beach-day-artist-selection-1200.webp 1200w, /artworks/oceans/beach-day-artist-selection-1800.webp 1800w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8879.jpeg"
-        },
-        {
-          "src": "/artworks/oceans/beach-day-39-detail-1200.webp",
-          "alt": "Beach Day: raised wave edge and surface texture.",
-          "width": 1200,
-          "height": 1954,
-          "srcSet": "/artworks/oceans/beach-day-39-detail-600.webp 600w, /artworks/oceans/beach-day-39-detail-1200.webp 1200w, /artworks/oceans/beach-day-39-detail-1800.webp 1800w",
-          "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
-          "role": "detail",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_8242.JPG",
-          "caption": "Raised wave edge and surface texture"
+          "sourceFile": "Artist-selected IMG_7497.jpeg crop, October 29 2026"
         }
       ],
       "description": [

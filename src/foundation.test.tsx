@@ -87,6 +87,15 @@ describe('The Oceans portfolio', () => {
     openOceans('/collections/oceans/arctic-ocean');
     expect(screen.queryByRole('link', { name: /Next painting/ })).toBeNull();
   });
+  it('uses the selected Beach Day photo in both its hero and room study without repainting it', () => {
+    const { container } = openOceans('/collections/oceans/beach-day');
+    const hero = container.querySelector('.artwork-primary')!;
+    const staged = container.querySelector('.beach-room-art')!;
+    expect(hero.getAttribute('src')).toContain('beach-day-artist-selection');
+    expect(staged.getAttribute('src')).toBe(hero.getAttribute('src'));
+    expect(screen.queryByRole('region', { name: 'Details' })).toBeNull();
+    expect(screen.getByText('Room study · illustrative scale')).toBeTruthy();
+  });
   it('shows not-found for a painting outside its collection', () => {
     openOceans('/collections/regal-collection/manta');
     expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Page not found.');

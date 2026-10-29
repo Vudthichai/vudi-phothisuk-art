@@ -16,3 +16,10 @@
 .artwork-theme-arctic-waves .artwork-primary{clip-path:inset(.4% 0 .6%)}
 .artwork-theme-sunset-waves .artwork-primary{clip-path:inset(0 0 .5%)}
 @media(max-width:700px){.artwork-page .artwork-more{padding:0}}
+
+/* Room studies use intentional copy/image balance; Beach Day overlays the real photo. */
+.artwork-theme-arctic-waves .artwork-more[aria-label="Details"] img{width:100%;height:640px;max-height:none;object-fit:contain}
+.artwork-theme-golden-sand-beach .artwork-view-groups.single .artwork-more{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9%;align-items:center}
+.artwork-view-copy>p{max-width:350px;font-size:16px;line-height:1.8}.room-study-note{font-size:12px!important;color:#63705e}.artwork-theme-golden-sand-beach .artwork-views img{width:100%;max-height:760px}
+.beach-room-study{display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,1.4fr);gap:6%;align-items:center;margin-top:85px}.room-study-copy h2{font-size:clamp(32px,3.5vw,48px)}.room-study-copy>p:not(.eyebrow){font-size:16px;line-height:1.8}.beach-room-scene{position:relative;isolation:isolate;overflow:hidden}.beach-room-background{display:block;width:100%;height:auto}.beach-room-art{position:absolute;width:22%;height:auto;left:39%;top:7%;box-shadow:3px 6px 8px #30261835}
+@media(max-width:700px){.beach-room-study{grid-template-columns:1fr;gap:28px;margin-top:55px}.artwork-theme-arctic-waves .artwork-more[aria-label="Details"] img{height:500px}.artwork-theme-golden-sand-beach .artwork-view-groups.single .artwork-more{display:block}.artwork-view-copy>p{max-width:none}.beach-room-scene{margin-inline:-3%}.room-study-copy h2{font-size:36px}}
