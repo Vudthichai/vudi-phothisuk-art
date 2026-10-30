@@ -411,25 +411,25 @@
       "slug": "the-oceans",
       "title": "The Oceans",
       "image": {
-        "src": "/artworks/oceans/the-oceans-07-1200.webp",
+        "src": "/artworks/oceans/the-oceans-dng-preview-1200.webp",
         "alt": "A panoramic shoreline of pale aqua water, white breaking surf, and layered warm sand.",
         "width": 1200,
-        "height": 592,
-        "srcSet": "/artworks/oceans/the-oceans-07-600.webp 600w, /artworks/oceans/the-oceans-07-1200.webp 1200w, /artworks/oceans/the-oceans-07-1800.webp 1800w",
+        "height": 600,
+        "srcSet": "/artworks/oceans/the-oceans-dng-preview-600.webp 600w, /artworks/oceans/the-oceans-dng-preview-1200.webp 1200w, /artworks/oceans/the-oceans-dng-preview-1800.webp 1800w, /artworks/oceans/the-oceans-dng-preview-2400.webp 2400w",
         "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
         "role": "artwork",
-        "sourceFile": "VPA Website Update/The Oceans/IMG_6774.jpeg"
+        "sourceFile": "Artist upload 2026-10-30/IMG_6773.dng (embedded full-resolution JPEG preview)"
       },
       "images": [
         {
-          "src": "/artworks/oceans/the-oceans-07-1200.webp",
+          "src": "/artworks/oceans/the-oceans-dng-preview-1200.webp",
           "alt": "A panoramic shoreline of pale aqua water, white breaking surf, and layered warm sand.",
           "width": 1200,
-          "height": 592,
-          "srcSet": "/artworks/oceans/the-oceans-07-600.webp 600w, /artworks/oceans/the-oceans-07-1200.webp 1200w, /artworks/oceans/the-oceans-07-1800.webp 1800w",
+          "height": 600,
+          "srcSet": "/artworks/oceans/the-oceans-dng-preview-600.webp 600w, /artworks/oceans/the-oceans-dng-preview-1200.webp 1200w, /artworks/oceans/the-oceans-dng-preview-1800.webp 1800w, /artworks/oceans/the-oceans-dng-preview-2400.webp 2400w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
-          "sourceFile": "VPA Website Update/The Oceans/IMG_6774.jpeg"
+          "sourceFile": "Artist upload 2026-10-30/IMG_6773.dng (embedded full-resolution JPEG preview)"
         }
       ],
       "description": [
