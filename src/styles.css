@@ -42,4 +42,3 @@
 .room-canvas::before{content:none}
 .room-canvas>.curated-room-art{position:relative;display:block;inset:auto;width:100%;height:auto;box-shadow:none;filter:brightness(var(--room-art-exposure,1))}
 .room-canvas::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(var(--room-light-angle),transparent 12%,rgba(34,31,27,var(--room-art-shade)) 100%);mix-blend-mode:multiply}
-
