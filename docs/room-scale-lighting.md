@@ -63,3 +63,22 @@ The Oceans uses an explicitly assumed 96-inch sofa reference. Its recorded
 72-inch width is modeled at 75% of the sofa span; its recorded height and original
 photo aspect ratio are preserved. The generated sofa is not a measured real-world
 object, so this remains illustrative, as labeled.
+
+## Final styling and straight-on room pass
+
+Sunset Waves keeps its 24 × 36-inch record and photo aspect ratio. Its room scale
+now uses a modeled 84-inch sofa occupying 52% of the scene width; the painting is
+24/84 of that span (about 11% smaller than the previous shared-wall placement).
+The caption names the assumed sofa reference. The Oceans keeps its approved
+36 × 72-inch proportions with a thinner simulated edge and smaller shadow offset.
+
+Dark Scales adds a low bookcase, books, ceramics and a floor cushion; Mermaid Tail
+adds small accessories, a cushion and a basket. Their mounts move slightly upward
+to clear the additions. Golden Sand Beach adds grouped vessels and greenery at
+both sides while retaining clear space around the art. Beach Day retains the
+café with diffuse neutral daylight and no direct sun/leaf shadows, plus reduced
+mockup face shading. Water’s Edge receives a new front-facing breakfast corner:
+the hanging wall stays square to the camera and the artwork is not skewed.
+
+New backgrounds are versioned as `-room-v4-1440.webp`; prior assets remain.
+Built-in generation/edit prompts are recorded in `room-v4-prompts.json`.
