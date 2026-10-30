@@ -128,13 +128,11 @@ describe('The Oceans portfolio', () => {
     expect(panorama.widthPercent / portrait.widthPercent).toBeCloseTo(3);
     expect(roomPlacement({ ...artworks[0], dimensions: undefined })).toBeNull();
   });
-  it('keeps the six-foot Oceans canvas beyond the direct window-light boundary', () => {
+  it('calibrates the six-foot Oceans canvas to three quarters of its modeled eight-foot sofa', () => {
     const artwork = findCollection('oceans')!.artworks.find(item => item.slug === 'the-oceans')!;
     const placement = roomPlacement(artwork, roomDirections['the-oceans'])!;
-    expect(placement.widthInches).toBe(72);
-    expect(placement.leftPercent).toBeGreaterThan(35);
-    expect(placement.leftPercent + placement.widthPercent).toBeLessThan(95);
-    expect(roomDirections['the-oceans'].shade).toBe(0);
+    expect(placement.widthPercent / 88).toBeCloseTo(72 / 96);
+    expect(placement.leftPercent + placement.widthPercent / 2).toBe(50);
   });
   it('keeps Sunset Waves at 24 by 36 inches above its illustrative console', () => {
     const artwork = findCollection('oceans')!.artworks.find(item => item.slug === 'sunset-waves')!;
