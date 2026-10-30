@@ -33,12 +33,13 @@
 /* Relit backgrounds include their own directional illumination and falloff. */
 .room-lighting-integrated::before{content:none}
 
-/* A shallow canvas volume, contact shadow, and room-specific incident light.
+/* A clean front-facing canvas, contact shadow, and room-specific incident light.
    These are presentation layers on the mockup only; hero photographs stay untouched. */
 .curated-room-scene{container-type:inline-size}
 .curated-room-background{filter:none}
 .curated-room-scene::before{content:none}
 .room-canvas{position:absolute;isolation:isolate;width:var(--room-art-width);left:var(--room-art-left);top:var(--room-art-top);z-index:2;box-shadow:var(--room-shadow-x) .28cqw .48cqw -.12cqw #29231c4a,0 .06cqw .1cqw #29231c38}
-.room-canvas::before{content:"";position:absolute;inset:0;z-index:-1;transform:translate(var(--room-edge-offset),var(--room-edge-y,.12cqw));background:linear-gradient(135deg,#e7e4dc,#b4b0a6);box-shadow:0 .04cqw .08cqw #28221e38}
+.room-canvas::before{content:none}
 .room-canvas>.curated-room-art{position:relative;display:block;inset:auto;width:100%;height:auto;box-shadow:none;filter:brightness(var(--room-art-exposure,1))}
 .room-canvas::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(var(--room-light-angle),transparent 12%,rgba(34,31,27,var(--room-art-shade)) 100%);mix-blend-mode:multiply}
+

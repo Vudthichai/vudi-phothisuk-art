@@ -82,3 +82,22 @@ the hanging wall stays square to the camera and the artwork is not skewed.
 
 New backgrounds are versioned as `-room-v4-1440.webp`; prior assets remain.
 Built-in generation/edit prompts are recorded in `room-v4-prompts.json`.
+
+## Clean silhouettes and visitor-facing captions
+
+Remove all modeled wall/sofa labels from visible copy and accessible descriptions;
+retain actual artwork dimensions and the short illustrative-scale note. Geometry
+assumptions remain documented internally. The Oceans keeps its existing sofa and
+proportions, with no furniture measurements in its room description.
+
+Remove the simulated side-face pseudo-element, which produced stepped/doubled
+corners at browser zoom. Front-facing photos now have one silhouette and only a
+small directional hanging shadow; no side view is invented from a front photo.
+Mermaid Tail is centered over the bench, its upright cushion is removed, and its
+accessories simplified to restore separation between painting and furnishings.
+
+New Beach Day garden lounge, Arctic Waves library lounge and Sunset Waves coral
+salon replace their prior scenes. Sunset's 24-inch width remains calibrated to an
+assumed 96-inch sofa spanning 72% of the new image. Golden Sand Beach retains its
+styling with more neutral diffuse light. All new backgrounds remain empty and
+versioned `-room-v5-1440.webp`; prompts are in `room-v5-prompts.json`.
