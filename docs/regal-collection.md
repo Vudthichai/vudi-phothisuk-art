@@ -36,3 +36,7 @@ Five new empty rooms use abundant diffuse neutral daylight and brighter walls to
 
 ## Integrated texture detail
 Each Regal page places its authentic close-up in the lower-right space beneath the story and facts, using a soft CSS radial mask to fade into the page. The separate texture section is removed. Source photos are untouched; the mask is presentation only. On narrow screens the detail follows the facts in normal flow, before the room study.
+
+
+## Close-ups removed
+Per the artist’s final direction, all five Regal artwork pages omit close-up images and Closer Look labels entirely, including the faded story accents. Hero photos and room studies remain. Original detail assets are retained in the archive.

@@ -12,16 +12,17 @@ it('presents all five Regal works with working collection-scoped links', () => {
   expect(screen.getAllByText('Sold')).toHaveLength(2);
   expect(screen.queryByRole('navigation',{name:'Paintings in the Regal Collection'})).toBeNull();
 });
-it('opens every Regal detail with an authentic close-up and correct neighboring works', () => {
+it('opens every Regal detail without close-ups and with correct neighboring works', () => {
   const arts=findCollection('regal-collection')!.artworks;
   for (const [i,art] of arts.entries()) {
     const view=render(<MemoryRouter initialEntries={[`/collections/regal-collection/${art.slug}`]}><Routes><Route path="/collections/:slug/:artworkSlug" element={<ArtworkPage/>}/></Routes></MemoryRouter>);
     expect(screen.getByRole('heading',{level:1}).textContent).toBe(art.title);
-    expect(screen.getAllByRole('img')).toHaveLength(3);
-    expect(screen.getByRole('region',{name:`${art.title} texture detail`})).toBeTruthy();
+    expect(screen.getAllByRole('img')).toHaveLength(2);
+    expect(screen.queryByRole('region',{name:`${art.title} texture detail`})).toBeNull();
+    expect(screen.queryByText('A closer look')).toBeNull();
     if(i>0)expect(screen.getByRole('link',{name:`Previous painting: ${arts[i-1].title}`})).toBeTruthy();
     if(i<arts.length-1)expect(screen.getByRole('link',{name:`Next painting: ${arts[i+1].title}`})).toBeTruthy();
-    expect(view.container.querySelector('.artwork-story .regal-inline-detail')).toBeTruthy();
+    expect(view.container.querySelector('.regal-inline-detail')).toBeNull();
     expect(view.container.querySelector('.regal-detail-texture')).toBeNull();
     expect(view.container.querySelector('.curated-room-scene')).toBeTruthy();
     expect(view.container.querySelector('.curated-room-art')?.getAttribute('src')).toBe(art.image.src);
