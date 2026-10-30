@@ -1,0 +1,7 @@
+# The Oceans photo and loading refinement
+
+Source: artist-supplied IMG_6773.dng, received October 30, 2026. Uses the largest embedded camera JPEG preview (8064 × 6048), not a custom RAW development. Other supplied originals (IMG_6777.mov, IMG_6778.jpeg, IMG_6788.jpeg, IMG_6789.jpeg) are preserved in the local source archive. The two front-on JPEGs and DNG preview were compared with the existing IMG_6774 derivative; the DNG preview retains stronger texture and a clearer tonal range without invented color corrections. No generated painting pixels, color, contrast, or exposure adjustments are applied.
+
+Only the surrounding room is cropped away and the four canvas corners gently straightened into the 72:36 format. Normalized extraction corners, measured against an 1824 × 1368 review image: (122,374), (1752,360), (1750,1169), (119,1170). White canvas border on all four sides and signature retained. Derivatives: 600, 1200, 1800, 2400 pixels wide. Existing source assets are preserved. Updated hero reference is shared by collection, artwork page, and room study.
+
+The reported temporary broken-image state could not be reproduced. Both production asset URLs returned HTTP 200 and image/webp on inspection. Room images now retry once using the base source URL; persistent failures show an explicit reload option instead of broken-image icons. This mitigates transient image failures without asserting their original cause.
