@@ -40,3 +40,7 @@ Each Regal page places its authentic close-up in the lower-right space beneath t
 
 ## Close-ups removed
 Per the artist’s final direction, all five Regal artwork pages omit close-up images and Closer Look labels entirely, including the faded story accents. Hero photos and room studies remain. Original detail assets are retained in the archive.
+
+
+## Closing navigation
+Replaced the large closing statement with a compact row linking to artwork inquiries and all collections. Artist authorized merging after this final refinement on October 30, 2026.
