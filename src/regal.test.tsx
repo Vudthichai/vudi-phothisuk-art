@@ -21,6 +21,8 @@ it('opens every Regal detail with an authentic close-up and correct neighboring 
     expect(screen.getByRole('region',{name:`${art.title} texture detail`})).toBeTruthy();
     if(i>0)expect(screen.getByRole('link',{name:`Previous painting: ${arts[i-1].title}`})).toBeTruthy();
     if(i<arts.length-1)expect(screen.getByRole('link',{name:`Next painting: ${arts[i+1].title}`})).toBeTruthy();
+    expect(view.container.querySelector('.artwork-story .regal-inline-detail')).toBeTruthy();
+    expect(view.container.querySelector('.regal-detail-texture')).toBeNull();
     expect(view.container.querySelector('.curated-room-scene')).toBeTruthy();
     expect(view.container.querySelector('.curated-room-art')?.getAttribute('src')).toBe(art.image.src);
     view.unmount();

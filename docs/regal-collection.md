@@ -32,3 +32,7 @@ The collection opens with an atmospheric crop of the authentic Navy detail photo
 Replaced the five hero references with the supplied PAINTING2.png, Navy.jpeg, Sahara.jpeg, Verdan.jpeg, and Ciaran.jpeg. The whole uploaded composition, orientation, and white border are retained; responsive WebP copies apply no color or exposure correction. The same approved image is used in each room. Earlier derivatives and original source records remain available.
 
 Five new empty rooms use abundant diffuse neutral daylight and brighter walls to match the supplied photographs. No extra shading or exposure filter is applied to these Regal artwork layers. Room backgrounds use versioned bright filenames; complete prompts are in regal-bright-room-prompts.json.
+
+
+## Integrated texture detail
+Each Regal page places its authentic close-up in the lower-right space beneath the story and facts, using a soft CSS radial mask to fade into the page. The separate texture section is removed. Source photos are untouched; the mask is presentation only. On narrow screens the detail follows the facts in normal flow, before the room study.
