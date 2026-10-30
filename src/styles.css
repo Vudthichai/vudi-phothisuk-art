@@ -29,3 +29,6 @@
 
 /* Dimension-based room placement; lighting affects generated surroundings only. */
 .curated-room-background{filter:brightness(var(--room-brightness,1))}.curated-room-scene::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 32%,rgba(255,249,235,.13),transparent 48%)}.curated-room-art{top:var(--room-art-top);z-index:2;box-shadow:1px 2px 3px #201b1838,0 0 1px #201b1840}
+
+/* Relit backgrounds include their own directional illumination and falloff. */
+.room-lighting-integrated::before{content:none}

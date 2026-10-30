@@ -20,3 +20,23 @@ Waves), add a subtle wall wash, and reduce the oversized hanging shadows. Lighti
 styles affect generated surroundings only. Artwork image pixels, colors and files
 remain unchanged; photographed glare and original lighting cannot be corrected by
 these room-only adjustments.
+
+## Lighting revision from the artist’s video references
+
+Reviewed three frames (10%, 50%, 90%) from each of the seven supplied videos.
+Dark Scales and Mermaid Tail show localized silvery/gold/green highlights that
+change with viewing angle; a still room study cannot reproduce this movement.
+Videos remain reference material and are not published.
+
+Five empty room backgrounds were edited with the built-in image-generation tool.
+Dark Scales and Sunset Waves now have visible brass picture lights with downward
+wall illumination. Mermaid Tail, Arctic Waves and Arctic Ocean receive softer,
+brighter reflected daylight. Their new assets use `-room-relit-1440.webp` names;
+previous backgrounds are retained. Exact prompts are in
+`room-relighting-prompts.json`.
+
+Remove the synthetic CSS wall wash and brightness boost from these five scenes:
+lighting is now part of the generated background. The same original artwork photo
+is still overlaid without filters, recoloring, generated texture or faux shimmer.
+The approved dimension-based position and size remain unchanged. These are
+illustrative lighting proposals, not measured simulations of paint reflectance.
