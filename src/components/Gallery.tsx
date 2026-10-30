@@ -12,6 +12,6 @@ export function Gallery({ artworks }: { artworks: Artwork[] }) {
 
 export function ArtworkViews({ artwork }: { artwork: Artwork }) {
   const detail = artwork.images?.find(image => image.role === 'detail');
-  if (artwork.image.src.startsWith('/artworks/regal/') && detail) return <section className="regal-detail-texture" aria-label={`${artwork.title} texture detail`}><div><p className="eyebrow">A closer look</p><h2>The surface,<br/><em>up close.</em></h2><p>Raised contours, layered color, and the marks that give {artwork.title} its texture.</p></div><img src={detail.src} srcSet={detail.srcSet} sizes="(max-width:700px) 86vw, 55vw" alt={detail.alt} width={detail.width} height={detail.height} loading="lazy" decoding="async"/></section>;
+  if (artwork.image.src.startsWith('/artworks/regal/') && detail) return <><RoomStudy artwork={artwork}/><section className="regal-detail-texture" aria-label={`${artwork.title} texture detail`}><div><p className="eyebrow">A closer look</p><h2>The surface,<br/><em>up close.</em></h2><p>Raised contours, layered color, and the marks that give {artwork.title} its texture.</p></div><img src={detail.src} srcSet={detail.srcSet} sizes="(max-width:700px) 86vw, 55vw" alt={detail.alt} width={detail.width} height={detail.height} loading="lazy" decoding="async"/></section></>;
   return <RoomStudy artwork={artwork}/>;
 }

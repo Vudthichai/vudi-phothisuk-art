@@ -22,3 +22,7 @@ copy for artist review. No production merge is implied.
 
 Validation: TypeScript, 23 tests, production build, asset existence and dimensions,
 desktop collection/detail visual review, and 390px collection layout review.
+
+
+## Refined presentation
+The collection opens with an atmospheric crop of the authentic Navy detail photograph. Added cream mats and the five-work index have been removed. Each individual work now includes a separately labeled room study ahead of its smaller authentic texture detail. Five generated empty rooms are paired with original artwork photos through RoomStudy; artwork pixels are never generated. Complete generation prompts are recorded in regal-room-prompts.json. Scale remains illustrative.
