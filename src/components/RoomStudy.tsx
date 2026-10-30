@@ -1,51 +1,61 @@
 import type { CSSProperties } from 'react';
 import type { Artwork } from '../data';
 
-type RoomDirection = { copy: string; setting: string; roomBrightness?: number; relit?: boolean };
+type RoomDirection = {
+  copy: string; setting: string; background?: string;
+  centerX?: number; centerY?: number; wallWidthInches?: number;
+  lightFrom?: 'left' | 'right'; exposure?: number; shade?: number;
+};
 export const roomDirections: Record<string, RoomDirection> = {
-  'the-oceans': { setting: 'a spacious coastal living room', copy: 'The wide shoreline has room to unfold above a low ivory sofa. Pale oak, linen, and stone echo the painting’s sand and surf, while the broad composition sets the rhythm of the room.' },
-  'summer-swells': { setting: 'an airy coastal entry hall', copy: 'Pale wood and woven textures pick up the warmth of the sand. Against a quiet wall, the turquoise water and sculpted surf bring a brighter note to the entrance.' },
-  manta: { setting: 'a contemporary reading room', copy: 'Walnut and deep navy give the blues of Manta a quieter setting. The ray and its surrounding field of water become a point of focus beside a comfortable reading chair.' },
-  'dark-scales': { relit: true, setting: 'a charcoal and walnut study', copy: 'A charcoal wall and dark walnut give the metallic scales a restrained setting. Bronze and olive accents draw on the painting’s warmer passages without competing with its textured surface. A dedicated picture light gives the silvery passages a source of illumination.' },
-  'mermaid-tail': { relit: true, setting: 'a luminous sitting area', copy: 'Ivory upholstery, pale brass, and a trace of blush sit alongside the painting’s iridescent greens and pinks. Soft light and rounded furnishings complement the repeated contours of the scales.' },
-  'beach-day': { setting: 'a boho sitting room', copy: 'The painting’s blue water and warm sand sit alongside linen, woven textures, and pale wood in this boho room study.' },
-  'arctic-waves': { relit: true, setting: 'a cool coastal lounge', copy: 'Cool gray, dark oak, and a bronze accent echo the contrast between deep water and the metallic shore. The narrow white surf gives the composition a clear presence against the quiet wall.' },
-  'water-s-edge': { setting: 'a relaxed coastal sitting room', copy: 'Rattan, honey-colored wood, and pale terracotta draw out the shoreline’s warmth. The blue water provides a cooler counterpoint within a relaxed arrangement of natural materials.' },
-  'golden-sand-beach': { setting: 'a warm coastal dining nook', copy: 'Travertine, oak, and a small brass accent respond to the metallic shoreline. The turquoise water and raised white surf bring contrast to the warm stone setting.' },
-  'sunset-waves': { relit: true, setting: 'an evening lounge', copy: 'Rust upholstery and walnut connect with the warmth of the sky, while a muted plum-gray wall gives the darker water room to register. A picture light illuminates the painting above the quieter evening setting, bringing its warm sky and cool water into focus.' },
-  'arctic-ocean': { relit: true, setting: 'a contemporary architectural sitting room', copy: 'Blackened oak and gray stone echo the dark shoreline, with oatmeal wool softening the setting. The green water and white surf provide the room’s strongest contrast.' },
+  'the-oceans': { background: 'the-oceans-room-v3', wallWidthInches: 96 / .88, centerX: 50, centerY: 35, shade: .09, setting: 'a spacious coastal living room', copy: 'A six-foot shoreline anchors the seating area above an eight-foot sofa. Ivory linen, pale oak, and stone leave room for its broad bands of sand and surf. Daylight from the left connects the textured canvas with the room’s softer surfaces.' },
+  'summer-swells': { exposure: 1.1, shade: .06, setting: 'an airy coastal entry hall', copy: 'Pale wood and woven textures pick up the warmth of the sand. Against a quiet wall, the turquoise water and sculpted surf bring a brighter note to the entrance.' },
+  manta: { shade: .09, setting: 'a contemporary reading room', copy: 'Walnut and deep navy give the blues of Manta a quieter setting. The ray and its surrounding field of water become a point of focus beside a comfortable reading chair.' },
+  'dark-scales': { background: 'dark-scales-room-v3', centerX: 48, centerY: 35, shade: .12, setting: 'a beach house reading alcove', copy: 'Sea-glass blue, woven rattan, and weathered oak give the metallic scales a coastal setting. Broad window light approaches from the left, letting the silvery passages sit alongside the quieter natural materials.' },
+  'mermaid-tail': { background: 'mermaid-tail-room-v3', centerX: 58, lightFrom: 'right', shade: .09, setting: 'a beach house sitting corner', copy: 'Pale mint, blush linen, and bleached wood echo the painting’s delicate shifts of color. Filtered daylight from the right brings a soft direction to the setting, while the curved bench and mirror answer the rounded contours of the scales.' },
+  'beach-day': { background: 'beach-day-room-v3', centerX: 53, centerY: 32, lightFrom: 'right', shade: .1, setting: 'a boho garden café', copy: 'Garden greenery, woven café chairs, and a terracotta banquette give Beach Day a lively setting. Blue water and warm sand become a focal point among the plants and natural materials, with soft daylight entering from the garden.' },
+  'arctic-waves': { background: 'arctic-waves-room-v3', centerX: 32, lightFrom: 'right', shade: .1, setting: 'a coastal dining room', copy: 'A round dark-oak table and sculptural cream chairs give Arctic Waves a different rhythm. Cool daylight from the right meets the painting’s deep water and bronze shore, while the open wall keeps its narrow line of surf clearly in view.' },
+  'water-s-edge': { shade: .09, setting: 'a relaxed coastal sitting room', copy: 'Rattan, honey-colored wood, and pale terracotta draw out the shoreline’s warmth. The blue water provides a cooler counterpoint within a relaxed arrangement of natural materials.' },
+  'golden-sand-beach': { background: 'golden-sand-beach-room-v3', shade: .055, setting: 'a warm coastal dining nook', copy: 'Travertine, oak, and a small brass accent respond to the metallic shoreline. Soft, diffuse window light keeps the setting calm and even, allowing the turquoise water and raised white surf to bring their own contrast.' },
+  'sunset-waves': { background: 'sunset-waves-room-v3', centerX: 51, centerY: 32, shade: .12, setting: 'a colorful beach house music lounge', copy: 'Cobalt seating, a tangerine chair, and pale lilac walls give Sunset Waves a playful room to inhabit. Broad daylight keeps the vivid sky connected to its surroundings, while the sculpted blue water answers the room’s cooler colors.' },
+  'arctic-ocean': { background: 'arctic-ocean-room-relit', shade: .12, setting: 'a contemporary architectural sitting room', copy: 'Blackened oak and gray stone echo the dark shoreline, with oatmeal wool softening the setting. Daylight enters beside the left pillar and falls across the canvas, with a quieter shadow along its right edge.' },
 };
 
-// Room images have no measured real-world geometry. Use an explicit model wall
-// reference rather than claiming that generated furniture has verified dimensions.
+// Geometry is an explicit illustrative model, not a measured generated room.
 export const modelWallWidthInches = 144;
-export function roomPlacement(artwork: Artwork) {
+export function roomPlacement(artwork: Artwork, room: Pick<RoomDirection, 'wallWidthInches' | 'centerX' | 'centerY'> = {}) {
   const dimensions = artwork.dimensions?.match(/\d+(?:\.\d+)?/g)?.map(Number);
   if (!dimensions || dimensions.length !== 2 || dimensions.some(value => value <= 0)) return null;
   const [short, long] = [...dimensions].sort((a, b) => a - b);
   const widthInches = artwork.image.width > artwork.image.height ? long : short;
-  const widthPercent = widthInches / modelWallWidthInches * 100;
-  // All generated backgrounds are 3:2. Preserve the photo's own aspect ratio.
+  const widthPercent = widthInches / (room.wallWidthInches ?? modelWallWidthInches) * 100;
   const imageHeightPercent = widthPercent * (artwork.image.height / artwork.image.width) * 1.5;
-  return { widthInches, widthPercent, leftPercent: (100 - widthPercent) / 2, topPercent: 34 - imageHeightPercent / 2 };
+  return { widthInches, widthPercent, leftPercent: (room.centerX ?? 50) - widthPercent / 2, topPercent: (room.centerY ?? 34) - imageHeightPercent / 2 };
 }
 
 export function RoomStudy({ artwork }: { artwork: Artwork }) {
   const direction = roomDirections[artwork.slug ?? ''];
-  const measured = roomPlacement(artwork);
+  const measured = roomPlacement(artwork, direction);
   if (!direction || !measured) return null;
-  const background = artwork.slug === 'beach-day' ? 'beach-day-boho' : `${artwork.slug}-room${direction.relit ? '-relit' : ''}`;
+  const background = direction.background ?? (artwork.slug === 'beach-day' ? 'beach-day-boho' : `${artwork.slug}-room`);
+  const fromRight = direction.lightFrom === 'right';
   const placement = {
     '--room-art-width': `${measured.widthPercent}%`,
     '--room-art-left': `${measured.leftPercent}%`,
     '--room-art-top': `${measured.topPercent}%`,
-    '--room-brightness': direction.relit ? 1 : direction.roomBrightness ?? 1.03,
+    '--room-art-exposure': direction.exposure ?? 1,
+    '--room-art-shade': direction.shade ?? .09,
+    '--room-light-angle': fromRight ? '250deg' : '110deg',
+    '--room-shadow-x': fromRight ? '-.38cqw' : '.38cqw',
+    '--room-edge-offset': fromRight ? '-.2cqw' : '.2cqw',
   } as CSSProperties;
+  const scaleNote = artwork.slug === 'the-oceans' ? 'modeled 96-inch sofa' : 'modeled 12 ft wall';
   return <section className="curated-room-study" aria-label={`${artwork.title}, at home.`}>
-    <div className="room-study-copy"><p className="eyebrow">A different perspective</p><h2 id={`room-title-${artwork.id}`}>{artwork.title},<br/>at home.</h2><p>{direction.copy}</p><p className="room-study-note">{artwork.dimensions} · modeled 12 ft wall</p><p className="room-study-note">Room study · illustrative scale</p></div>
-    <div className={`curated-room-scene${direction.relit ? ' room-lighting-integrated' : ''}`} style={placement} role="img" aria-label={`Illustrative room study showing the actual ${artwork.title} photograph in ${direction.setting}; painting dimensions ${artwork.dimensions}, modeled wall width 12 feet`}>
-      <img className="curated-room-background" src={`/atmosphere/rooms/${background}-1440.webp`} width="1536" height="1024" alt="" loading="lazy" decoding="async"/>
-      <img className="curated-room-art" src={artwork.image.src} srcSet={artwork.image.srcSet} sizes={measured.widthPercent >= 40 ? '(max-width: 700px) 43vw, 28vw' : '(max-width: 700px) 15vw, 10vw'} width={artwork.image.width} height={artwork.image.height} alt="" loading="lazy" decoding="async"/>
+    <div className="room-study-copy"><p className="eyebrow">A different perspective</p><h2 id={`room-title-${artwork.id}`}>{artwork.title},<br/>at home.</h2><p>{direction.copy}</p><p className="room-study-note">{artwork.dimensions} · {scaleNote}</p><p className="room-study-note">Room study · illustrative scale</p></div>
+    <div className="curated-room-scene room-lighting-integrated" style={placement} role="img" aria-label={`Illustrative room study showing ${artwork.title} in ${direction.setting}; painting dimensions ${artwork.dimensions}, ${scaleNote}.`}>
+      <img className="curated-room-background" src={`/atmosphere/rooms/${background}-1440.webp`} width="1440" height="960" alt="" loading="lazy" decoding="async"/>
+      <div className="room-canvas">
+        <img className="curated-room-art" src={artwork.image.src} srcSet={artwork.image.srcSet} sizes={measured.widthPercent >= 40 ? '(max-width: 700px) 55vw, 40vw' : '(max-width: 700px) 15vw, 10vw'} width={artwork.image.width} height={artwork.image.height} alt="" loading="lazy" decoding="async"/>
+      </div>
     </div>
   </section>;
 }

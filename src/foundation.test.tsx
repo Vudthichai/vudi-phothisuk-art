@@ -7,7 +7,7 @@ import { Layout } from './components/Layout';
 import { ArtworkPage, CollectionPage, Home } from './pages/Pages';
 import { Gallery } from './components/Gallery';
 import { findCollection } from './data';
-import { roomPlacement } from './components/RoomStudy';
+import { roomPlacement, roomDirections } from './components/RoomStudy';
 afterEach(cleanup);
 describe('portfolio foundation', () => {
   it('renders a directly opened collection and updates metadata', async () => {
@@ -125,6 +125,12 @@ describe('The Oceans portfolio', () => {
     expect(portrait.widthInches).toBe(24);
     expect(panorama.widthPercent / portrait.widthPercent).toBeCloseTo(3);
     expect(roomPlacement({ ...artworks[0], dimensions: undefined })).toBeNull();
+  });
+  it('calibrates the six-foot Oceans canvas to three quarters of its modeled eight-foot sofa', () => {
+    const artwork = findCollection('oceans')!.artworks.find(item => item.slug === 'the-oceans')!;
+    const placement = roomPlacement(artwork, roomDirections['the-oceans'])!;
+    expect(placement.widthPercent / 88).toBeCloseTo(72 / 96);
+    expect(placement.leftPercent + placement.widthPercent / 2).toBe(50);
   });
   it('shows not-found for a painting outside its collection', () => {
     openOceans('/collections/regal-collection/manta');

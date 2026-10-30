@@ -40,3 +40,26 @@ lighting is now part of the generated background. The same original artwork phot
 is still overlaid without filters, recoloring, generated texture or faux shimmer.
 The approved dimension-based position and size remain unchanged. These are
 illustrative lighting proposals, not measured simulations of paint reflectance.
+
+## Physical canvas and distinct interiors revision
+
+The artist authorized applying room-specific light to the mockup canvas rather
+than displaying a uniformly exposed photo in every room. The original hero photo
+and its source assets remain unchanged. A shallow edge behind the photograph,
+small contact/cast shadows, a directional neutral shading layer, and a modest
+Summer Swells mockup-only exposure lift now connect the canvas to its scene.
+Shadow direction reverses for right-window rooms. Container-relative units keep
+edge thickness and shadow size proportional as the scene resizes. No generated
+paint texture or simulated animated iridescence is added.
+
+Dark Scales, Mermaid Tail, Beach Day, Arctic Waves, and Sunset Waves receive
+new distinct interiors: a coastal rattan alcove, mint/blush beach-house corner,
+garden café, coastal dining room, and colorful music lounge. Golden Sand Beach
+uses diffuse overcast daylight instead of strong warm shadows. Prior scene assets
+are retained. All new backgrounds are empty; the original artwork remains a
+separate image. Built-in image-generation prompts are in `room-v3-prompts.json`.
+
+The Oceans uses an explicitly assumed 96-inch sofa reference. Its recorded
+72-inch width is modeled at 75% of the sofa span; its recorded height and original
+photo aspect ratio are preserved. The generated sofa is not a measured real-world
+object, so this remains illustrative, as labeled.
