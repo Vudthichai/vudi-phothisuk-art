@@ -54,3 +54,6 @@
 .artwork-theme-dark-scales .room-canvas::after{background:linear-gradient(120deg,rgba(27,42,54,.08) 0%,rgba(27,42,54,.13) 42%,rgba(27,42,54,.22) 100%)}
 .artwork-theme-dark-scales .room-canvas::before{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at 0% 100%,rgba(255,249,230,.11),transparent 65%);mix-blend-mode:soft-light}
 .artwork-theme-dark-scales .room-canvas{box-shadow:.08cqw .1cqw .15cqw #15232b38,.2cqw .25cqw .4cqw -.08cqw #15232b35}
+
+/* Crop the complete room and photograph together, preserving their relative scale. */
+.room-scene-composition{position:relative;transform:scale(var(--room-view-scale,1));transform-origin:var(--room-view-origin,50% 50%)}

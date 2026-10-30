@@ -5,6 +5,7 @@ type RoomDirection = {
   copy: string; setting: string; background?: string;
   centerX?: number; centerY?: number; wallWidthInches?: number;
   lightFrom?: 'left' | 'right'; exposure?: number; shade?: number;
+  viewScale?: number; viewOrigin?: string;
 };
 export const roomDirections: Record<string, RoomDirection> = {
   'carnations': { background: 'carnations-room-bright', centerY: 32, lightFrom: 'left', shade: 0, setting: 'a contemporary sitting room', copy: 'Pale blush plaster, oak, and ivory upholstery give Carnations a quiet setting. A deep green cushion and blush ceramics pick up its colors, with soft daylight from the left.' },
@@ -19,9 +20,9 @@ export const roomDirections: Record<string, RoomDirection> = {
   'dark-scales': { background: 'dark-scales-luxury-ocean-v3', wallWidthInches: 24 / .1125, centerX: 46, centerY: 35, shade: .16, setting: 'a luxury oceanfront salon', copy: 'Petrol-blue velvet, charcoal oak, and silver-gray stone give Dark Scales a deeper ocean setting. A sculptural nickel lamp and loose green branches balance the painting above the rippled console, while daylight from the left catches the room’s silvery surfaces.' },
   'mermaid-tail': { background: 'mermaid-tail-luxury-ocean-v2', wallWidthInches: 24 / .1125, centerX: 41.5, centerY: 33, lightFrom: 'right', shade: .025, setting: 'a pearlescent oceanfront sitting room', copy: 'Sea-glass plaster, pale limestone, and ivory upholstery give Mermaid Tail a luminous ocean setting. The painting and an iridescent vase form an off-center grouping, with blush glass, flowing curves, and soft daylight echoing its shifting colors.' },
   'beach-day': { wallWidthInches: 96 / .66, background: 'beach-day-room-v7', centerX: 50, centerY: 32, lightFrom: 'left', shade: .035, setting: 'a coastal entry', copy: 'Pale oak, woven textures, and warm white plaster give Beach Day an airy coastal setting. Broad daylight from the left brings the bright water and sculpted surf into a room of soft natural surfaces.' },
-  'arctic-waves': { background: 'arctic-waves-room-v7', centerX: 50, centerY: 32, lightFrom: 'right', shade: .11, setting: 'a sea-glass coastal study', copy: 'Sea-glass walls, weathered oak, and woven seating give Arctic Waves a coastal study setting. Soft daylight from the right falls across the quiet wall, while books, baskets, and a bronze accent echo the painting’s natural textures.' },
-  'water-s-edge': { background: 'water-s-edge-room-v4', centerX: 51.5, centerY: 33.5, lightFrom: 'right', shade: .055, setting: 'a relaxed coastal sitting room', copy: 'Rattan, honey-colored wood, and pale terracotta draw out the shoreline’s warmth. The blue water provides a cooler counterpoint above the breakfast table, with a straight-on view and soft daylight from the right.' },
-  'golden-sand-beach': { background: 'golden-sand-beach-room-v7', shade: .025, setting: 'a warm coastal dining nook', copy: 'Travertine, oak, and a small brass accent respond to the metallic shoreline. Soft, diffuse window light keeps the setting calm and even, allowing the turquoise water and raised white surf to bring their own contrast.' },
+  'arctic-waves': { background: 'arctic-waves-room-v8', centerX: 50, centerY: 32, lightFrom: 'right', shade: .11, setting: 'a sea-glass coastal study', copy: 'Sea-glass walls, weathered oak, and woven seating give Arctic Waves a coastal study setting. Soft daylight from the right falls across the quiet wall, with a few books, a stone bowl, and a single basket giving the shelves room to breathe.' },
+  'water-s-edge': { background: 'water-s-edge-room-v4', viewScale: 1.22, viewOrigin: '56% 35%', centerX: 51.5, centerY: 33.5, lightFrom: 'right', shade: .055, setting: 'a relaxed coastal sitting room', copy: 'Rattan, honey-colored wood, and pale terracotta draw out the shoreline’s warmth. A closer view brings the painting forward while keeping a glimpse of the breakfast table and soft daylight from the right.' },
+  'golden-sand-beach': { background: 'golden-sand-beach-room-v8', shade: .025, setting: 'a warm coastal dining nook', copy: 'Travertine, oak, and a small brass accent respond to the metallic shoreline. Soft, diffuse window light keeps the setting calm and even, allowing the turquoise water and raised white surf to bring their own contrast.' },
   'sunset-waves': { wallWidthInches: 84 / .67, background: 'sunset-waves-room-v7', centerX: 53, centerY: 30, shade: .06, setting: 'an intimate coastal entry', copy: 'A narrow oak console, coral chair, and cobalt ceramics give Sunset Waves an intimate coastal setting. Soft daylight and pale cream walls leave room for its vivid sky, while the woven materials sit alongside the sculpted blue water.' },
   'arctic-ocean': { background: 'arctic-ocean-room-relit', shade: .12, setting: 'a contemporary architectural sitting room', copy: 'Blackened oak and gray stone echo the dark shoreline, with oatmeal wool softening the setting. Daylight enters beside the left pillar and falls across the canvas, with a quieter shadow along its right edge.' },
 };
@@ -58,6 +59,8 @@ export function RoomStudy({ artwork }: { artwork: Artwork }) {
   const background = direction.background ?? (artwork.slug === 'beach-day' ? 'beach-day-boho' : `${artwork.slug}-room`);
   const fromRight = direction.lightFrom === 'right';
   const placement = {
+    '--room-view-scale': direction.viewScale ?? 1,
+    '--room-view-origin': direction.viewOrigin ?? '50% 50%',
     '--room-art-width': `${measured.widthPercent}%`,
     '--room-art-left': `${measured.leftPercent}%`,
     '--room-art-top': `${measured.topPercent}%`,
@@ -69,7 +72,7 @@ export function RoomStudy({ artwork }: { artwork: Artwork }) {
   return <section className="curated-room-study" aria-label={`${artwork.title}, at home.`}>
     <div className="room-study-copy"><p className="eyebrow">A different perspective</p><h2 id={`room-title-${artwork.id}`}>{artwork.title},<br/>at home.</h2><p>{direction.copy}</p><p className="room-study-note">{artwork.dimensions}</p><p className="room-study-note">Room study · illustrative scale</p></div>
     <div className="curated-room-scene room-lighting-integrated" style={placement} role={sceneFailed ? undefined : "img"} aria-label={`Illustrative room study showing ${artwork.title} in ${direction.setting}; painting dimensions ${artwork.dimensions}.`}>
-      {sceneFailed ? <div className="room-study-unavailable"><p role="status">The room image couldn’t load.</p><button type="button" onClick={() => { setSceneFailed(false); setSceneAttempt(value => value + 1); }}>Reload room image</button></div> : <div key={sceneAttempt}>
+      {sceneFailed ? <div className="room-study-unavailable"><p role="status">The room image couldn’t load.</p><button type="button" onClick={() => { setSceneFailed(false); setSceneAttempt(value => value + 1); }}>Reload room image</button></div> : <div key={sceneAttempt} className="room-scene-composition">
       <img onError={retryImage} onLoad={showImage} className="curated-room-background" src={`/atmosphere/rooms/${background}-1440.webp`} width="1440" height="960" alt="" loading="lazy" decoding="async"/>
       <div className="room-canvas">
         <img onError={retryImage} onLoad={showImage} className="curated-room-art" src={artwork.image.src} srcSet={artwork.image.srcSet} sizes={measured.widthPercent >= 40 ? '(max-width: 700px) 55vw, 40vw' : '(max-width: 700px) 15vw, 10vw'} width={artwork.image.width} height={artwork.image.height} alt="" loading="lazy" decoding="async"/>
