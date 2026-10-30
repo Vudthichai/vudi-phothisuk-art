@@ -45,6 +45,6 @@
 
 .artwork-theme-the-oceans .room-canvas,.artwork-theme-dark-scales .room-canvas{box-shadow:.12cqw .16cqw .22cqw #29231c30,.38cqw .42cqw .65cqw -.1cqw #29231c42}
 /* Window-cast shade stays on the staged canvas, including its white border. */
-.artwork-theme-dark-scales .room-canvas::after,.artwork-theme-beach-day .room-canvas::after{background:linear-gradient(42deg,rgba(55,49,40,.19) 0%,rgba(55,49,40,.13) 6%,rgba(55,49,40,.025) 12%,transparent 17%),linear-gradient(var(--room-light-angle),transparent 12%,rgba(34,31,27,var(--room-art-shade)) 100%)}
+.artwork-theme-beach-day .room-canvas::after{background:linear-gradient(42deg,rgba(55,49,40,.19) 0%,rgba(55,49,40,.13) 6%,rgba(55,49,40,.025) 12%,transparent 17%),linear-gradient(var(--room-light-angle),transparent 12%,rgba(34,31,27,var(--room-art-shade)) 100%)}
 
 .room-study-unavailable{aspect-ratio:3/2;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#efeee8;color:#586351;gap:12px}.room-study-unavailable p{margin:0}.room-study-unavailable button{background:transparent;border:1px solid #b9c1af;padding:10px 16px;cursor:pointer}
