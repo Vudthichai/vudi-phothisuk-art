@@ -26,3 +26,23 @@
 /* Shared artwork sequence: painting, curated space, optional craftsmanship, navigation. */
 .curated-room-study{display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,1.4fr);gap:6%;align-items:center;margin-top:85px;padding-top:75px;border-top:1px solid #d5d7cd}.curated-room-scene{position:relative;isolation:isolate;overflow:hidden}.curated-room-background{display:block;width:100%;height:auto}.curated-room-art{position:absolute;width:var(--room-art-width);left:var(--room-art-left);top:7%;height:auto;box-shadow:3px 6px 8px #30261835}.craftsmanship-study{display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,1.4fr);gap:6%;align-items:start;margin-top:75px}.craftsmanship-heading h2{font-size:32px}.craftsmanship-images figure{margin:0}.craftsmanship-images img{display:block;width:auto;max-width:100%;height:auto;max-height:620px;margin:auto}.craftsmanship-images figcaption{display:flex;justify-content:space-between;gap:20px;margin-top:20px;font-size:12px;color:#63705e}
 @media(max-width:700px){.curated-room-study{grid-template-columns:1fr;gap:28px;margin-top:55px;padding-top:45px}.craftsmanship-study{grid-template-columns:1fr;gap:20px;margin-top:55px}.craftsmanship-images img{max-height:500px}.craftsmanship-images figcaption{flex-direction:column;gap:12px}}
+
+/* Dimension-based room placement; lighting affects generated surroundings only. */
+.curated-room-background{filter:brightness(var(--room-brightness,1))}.curated-room-scene::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 32%,rgba(255,249,235,.13),transparent 48%)}.curated-room-art{top:var(--room-art-top);z-index:2;box-shadow:1px 2px 3px #201b1838,0 0 1px #201b1840}
+
+/* Relit backgrounds include their own directional illumination and falloff. */
+.room-lighting-integrated::before{content:none}
+
+/* A clean front-facing canvas, contact shadow, and room-specific incident light.
+   These are presentation layers on the mockup only; hero photographs stay untouched. */
+.curated-room-scene{container-type:inline-size}
+.curated-room-background{filter:none}
+.curated-room-scene::before{content:none}
+.room-canvas{position:absolute;isolation:isolate;width:var(--room-art-width);left:var(--room-art-left);top:var(--room-art-top);z-index:2;box-shadow:var(--room-shadow-x) .28cqw .48cqw -.12cqw #29231c4a,0 .06cqw .1cqw #29231c38}
+.room-canvas::before{content:none}
+.room-canvas>.curated-room-art{position:relative;display:block;inset:auto;width:100%;height:auto;box-shadow:none;filter:brightness(var(--room-art-exposure,1))}
+.room-canvas::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(var(--room-light-angle),transparent 12%,rgba(34,31,27,var(--room-art-shade)) 100%);mix-blend-mode:multiply}
+
+.artwork-theme-the-oceans .room-canvas,.artwork-theme-dark-scales .room-canvas{box-shadow:.12cqw .16cqw .22cqw #29231c30,.38cqw .42cqw .65cqw -.1cqw #29231c42}
+/* Window-cast shade stays on the staged canvas, including its white border. */
+.artwork-theme-dark-scales .room-canvas::after,.artwork-theme-beach-day .room-canvas::after{background:linear-gradient(42deg,rgba(55,49,40,.19) 0%,rgba(55,49,40,.13) 6%,rgba(55,49,40,.025) 12%,transparent 17%),linear-gradient(var(--room-light-angle),transparent 12%,rgba(34,31,27,var(--room-art-shade)) 100%)}

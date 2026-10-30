@@ -7,6 +7,7 @@ import { Layout } from './components/Layout';
 import { ArtworkPage, CollectionPage, Home } from './pages/Pages';
 import { Gallery } from './components/Gallery';
 import { findCollection } from './data';
+import { roomPlacement, roomDirections } from './components/RoomStudy';
 afterEach(cleanup);
 describe('portfolio foundation', () => {
   it('renders a directly opened collection and updates metadata', async () => {
@@ -107,14 +108,38 @@ describe('The Oceans portfolio', () => {
       expect(staged.getAttribute('src')).toBe(hero.getAttribute('src'));
       const background = room.querySelector('.curated-room-background')!.getAttribute('src')!;
       backgrounds.add(background);
+      expect(room.textContent).not.toMatch(/modeled|12 ft|96-inch|84-inch/);
+      expect(room.querySelector('[role="img"]')!.getAttribute('aria-label')).not.toMatch(/modeled|12 ft|sofa/);
       expect(hero.compareDocumentPosition(room) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       const detail = view.container.querySelector('.craftsmanship-study');
-      if (detail) expect(room.compareDocumentPosition(detail) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(detail).toBeNull();
       const navigation = view.container.querySelector('.artwork-pagination')!;
       expect((detail ?? room).compareDocumentPosition(navigation) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       view.unmount();
     }
     expect(backgrounds.size).toBe(11);
+  });
+  it('scales the 72-inch-wide painting three times wider than a 24-inch portrait on the same model wall', () => {
+    const artworks = findCollection('oceans')!.artworks;
+    const panorama = roomPlacement(artworks.find(item => item.slug === 'the-oceans')!)!;
+    const portrait = roomPlacement(artworks.find(item => item.slug === 'summer-swells')!)!;
+    expect(panorama.widthInches).toBe(72);
+    expect(portrait.widthInches).toBe(24);
+    expect(panorama.widthPercent / portrait.widthPercent).toBeCloseTo(3);
+    expect(roomPlacement({ ...artworks[0], dimensions: undefined })).toBeNull();
+  });
+  it('calibrates the six-foot Oceans canvas to three quarters of its modeled eight-foot sofa', () => {
+    const artwork = findCollection('oceans')!.artworks.find(item => item.slug === 'the-oceans')!;
+    const placement = roomPlacement(artwork, roomDirections['the-oceans'])!;
+    expect(placement.widthPercent / 88).toBeCloseTo(72 / 96);
+    expect(placement.leftPercent + placement.widthPercent / 2).toBe(50);
+  });
+  it('keeps Sunset Waves at 24 by 36 inches above its illustrative console', () => {
+    const artwork = findCollection('oceans')!.artworks.find(item => item.slug === 'sunset-waves')!;
+    const placement = roomPlacement(artwork, roomDirections['sunset-waves'])!;
+    expect(placement.widthInches).toBe(24);
+    expect(placement.widthPercent / 67).toBeCloseTo(24 / 84);
+    expect(placement.widthPercent).toBeCloseTo(24 / 84 * 67);
   });
   it('shows not-found for a painting outside its collection', () => {
     openOceans('/collections/regal-collection/manta');
