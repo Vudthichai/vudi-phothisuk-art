@@ -1,0 +1,12 @@
+[
+  {
+    "name": "arctic",
+    "file": "arctic-waves-room-v7",
+    "prompt": "Use case: precise-object-edit. Edit target: this empty coastal study room. Change ONLY the styling inside the far-left built-in shelves: remove the large driftwood object from the top shelf and the white coral ornament from the middle shelf. Retain the trailing plant, a few books, the stone bowl, and just one large basket on the bottom shelf (remove small basket). Leave generous empty shelf space. Preserve exact camera, architecture, desk, chair, lamp, tree, light, wall texture, and all positions. Central wall must remain completely empty, no painting or frames. No added decor. Photorealistic, same 3:2 image."
+  },
+  {
+    "name": "golden",
+    "file": "golden-sand-beach-room-v7",
+    "prompt": "Use case: precise-object-edit. Edit target: this empty dining room background. Remove ONLY the smallest round cream vase and its leafy branches from the left grouping (the small round vessel immediately right of the medium vase). Keep the two taller cream vases and their own branches. Fill removed area naturally with existing cream wall and travertine cabinet top. Preserve exact camera, furniture, sconces, lighting, all right-hand vessels, plants, and all remaining objects unchanged. Central wall stays completely empty, no artwork or frames. Same 3:2 image."
+  }
+]

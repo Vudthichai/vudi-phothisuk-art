@@ -203,22 +203,22 @@
       "slug": "arctic-waves",
       "title": "Arctic Waves",
       "image": {
-        "src": "/artworks/oceans/arctic-waves-14-1200.webp",
+        "src": "/artworks/oceans/arctic-waves-canvas-v2-1200.webp",
         "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore.",
         "width": 1200,
-        "height": 1816,
-        "srcSet": "/artworks/oceans/arctic-waves-14-600.webp 600w, /artworks/oceans/arctic-waves-14-1200.webp 1200w, /artworks/oceans/arctic-waves-14-1800.webp 1800w",
+        "height": 1798,
+        "srcSet": "/artworks/oceans/arctic-waves-canvas-v2-600.webp 600w, /artworks/oceans/arctic-waves-canvas-v2-1200.webp 1200w, /artworks/oceans/arctic-waves-canvas-v2-1800.webp 1800w",
         "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
         "role": "artwork",
         "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (1).JPG"
       },
       "images": [
         {
-          "src": "/artworks/oceans/arctic-waves-14-1200.webp",
+          "src": "/artworks/oceans/arctic-waves-canvas-v2-1200.webp",
           "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore.",
           "width": 1200,
-          "height": 1816,
-          "srcSet": "/artworks/oceans/arctic-waves-14-600.webp 600w, /artworks/oceans/arctic-waves-14-1200.webp 1200w, /artworks/oceans/arctic-waves-14-1800.webp 1800w",
+          "height": 1798,
+          "srcSet": "/artworks/oceans/arctic-waves-canvas-v2-600.webp 600w, /artworks/oceans/arctic-waves-canvas-v2-1200.webp 1200w, /artworks/oceans/arctic-waves-canvas-v2-1800.webp 1800w",
           "sizes": "(max-width: 700px) 86vw, (max-width: 1100px) 44vw, 600px",
           "role": "artwork",
           "sourceFile": "VPA Website Update/The Oceans/IMG_7493 (1).JPG"

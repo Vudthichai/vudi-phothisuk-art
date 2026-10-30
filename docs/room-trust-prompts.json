@@ -1,0 +1,70 @@
+[
+  {
+    "name": "the-oceans",
+    "src": "the-oceans-room-v3",
+    "prompt": "Use case: precise-object-edit. Edit target: empty coastal living room. Preserve this room's existing diagonal window sunlight and shadow boundary on the left wall EXACTLY; do not soften, erase or move the light patch. Extend the usable cream wall horizontally between the left curtain and the sofa/art-hanging zone: reposition the same sofa toward the right, making it occupy about x=29% to94% of the image; keep the left window and curtain at x=0% to16%, leaving a larger empty wall buffer between window and sofa. Same sofa, cushions, tree at far right, plaster and coastal materials, same daylight. The entire empty wall area x=35% to92%, y=12% to58% must be evenly shaded, outside the diagonal direct sunlight. Leave it completely empty with no art/frame. Frontal architectural photograph, 3:2 landscape. Keep believable furniture proportions."
+  },
+  {
+    "name": "dark-scales",
+    "src": "dark-scales-luxury-ocean-v3",
+    "prompt": "Use case: precise-object-edit. Change ONLY all book spines and covers on the left console stack AND foreground coffee table stack to plain unlettered linen/cloth covers. Completely remove every title, letter, logo, numeral and glyph; retain physical book shapes, thickness, colors, page edges, placement and objects above them. Preserve all architecture, blank center wall, furniture, lamp, plants, light, shadows and camera exactly. Do not add art. Same 3:2 landscape."
+  },
+  {
+    "name": "mermaid-tail",
+    "src": "mermaid-tail-luxury-ocean-v2",
+    "prompt": "Use case: precise-object-edit. Change ONLY every book in the console stack at left and coffee table stack in foreground to completely unlettered cloth/linen covers and spines. Remove all titles, letters, logos, numerals or glyphs. Keep book dimensions, cream colors, page edges and locations exactly. Preserve all other objects, empty wall, architecture, light, camera, flowers, vase and furniture. No artwork or frames. Same 3:2 landscape."
+  },
+  {
+    "name": "arctic-waves",
+    "src": "arctic-waves-room-v8",
+    "prompt": "Use case: precise-object-edit. Change ONLY any lettering on every book spine and book cover in this empty room scene to completely plain unlettered linen/cloth surfaces. Remove every word, tiny glyph, numeral, logo and title. Retain book physical shapes, colors, natural fabric grain and page edges. Preserve every other object, furniture, architecture, light, shadows, blank wall, composition, and camera exactly. Do not add artwork or frames. Same 3:2 landscape."
+  },
+  {
+    "name": "golden-sand-beach",
+    "src": "golden-sand-beach-room-v8",
+    "prompt": "Use case: precise-object-edit. Change ONLY any lettering on every book spine and book cover in this empty room scene to completely plain unlettered linen/cloth surfaces. Remove every word, tiny glyph, numeral, logo and title. Retain book physical shapes, colors, natural fabric grain and page edges. Preserve every other object, furniture, architecture, light, shadows, blank wall, composition, and camera exactly. Do not add artwork or frames. Same 3:2 landscape."
+  },
+  {
+    "name": "carnations",
+    "src": "carnations-room-bright",
+    "prompt": "Use case: precise-object-edit. Edit ONLY all book spines and covers in this empty room photograph, including foreground coffee/side tables, back console, upright books and shelves if present. Remove ALL writing, letters, titles, logos, numbers and glyphs. Give each a completely plain unlettered cloth cover in its existing color; retain page edges, book size, position, natural grain, and every object resting on it. Keep all furniture, plants, architecture, light, camera and empty wall unchanged. No painting or new decor. Same 3:2 landscape."
+  },
+  {
+    "name": "navy",
+    "src": "navy-room-bright",
+    "prompt": "Use case: precise-object-edit. Edit ONLY all book spines and covers in this empty room photograph, including foreground coffee/side tables, back console, upright books and shelves if present. Remove ALL writing, letters, titles, logos, numbers and glyphs. Give each a completely plain unlettered cloth cover in its existing color; retain page edges, book size, position, natural grain, and every object resting on it. Keep all furniture, plants, architecture, light, camera and empty wall unchanged. No painting or new decor. Same 3:2 landscape."
+  },
+  {
+    "name": "sahara",
+    "src": "sahara-room-bright",
+    "prompt": "Use case: precise-object-edit. Edit ONLY all book spines and covers in this empty room photograph, including foreground coffee/side tables, back console, upright books and shelves if present. Remove ALL writing, letters, titles, logos, numbers and glyphs. Give each a completely plain unlettered cloth cover in its existing color; retain page edges, book size, position, natural grain, and every object resting on it. Keep all furniture, plants, architecture, light, camera and empty wall unchanged. No painting or new decor. Same 3:2 landscape."
+  },
+  {
+    "name": "verdant",
+    "src": "verdant-room-bright",
+    "prompt": "Use case: precise-object-edit. Edit ONLY all book spines and covers in this empty room photograph, including foreground coffee/side tables, back console, upright books and shelves if present. Remove ALL writing, letters, titles, logos, numbers and glyphs. Give each a completely plain unlettered cloth cover in its existing color; retain page edges, book size, position, natural grain, and every object resting on it. Keep all furniture, plants, architecture, light, camera and empty wall unchanged. No painting or new decor. Same 3:2 landscape."
+  },
+  {
+    "name": "ciaran",
+    "src": "ciaran-room-bright",
+    "prompt": "Use case: precise-object-edit. Edit ONLY all book spines and covers in this empty room photograph, including foreground coffee/side tables, back console, upright books and shelves if present. Remove ALL writing, letters, titles, logos, numbers and glyphs. Give each a completely plain unlettered cloth cover in its existing color; retain page edges, book size, position, natural grain, and every object resting on it. Keep all furniture, plants, architecture, light, camera and empty wall unchanged. No painting or new decor. Same 3:2 landscape."
+  },
+  {
+    "name": "manta",
+    "src": "manta-room",
+    "prompt": "Use case: precise-object-edit. Edit ONLY the book covers and spines on all stacks in this empty room. Remove all titles, letters, logos, numbers, dots resembling writing, and glyphs. Replace with plain unlettered linen/cloth in existing colors. Preserve size, location, page edges, objects above, and all other details, lighting, camera, furniture and empty wall. No artwork or frames. Same 3:2 landscape."
+  },
+  {
+    "name": "beach-day",
+    "src": "beach-day-room-v7",
+    "prompt": "Use case: precise-object-edit. Edit ONLY the book covers and spines on all stacks in this empty room. Remove all titles, letters, logos, numbers, dots resembling writing, and glyphs. Replace with plain unlettered linen/cloth in existing colors. Preserve size, location, page edges, objects above, and all other details, lighting, camera, furniture and empty wall. No artwork or frames. Same 3:2 landscape."
+  },
+  {
+    "name": "ciaran",
+    "prompt": "Remove the entire stack of two books on the left of the console, beside the red bowl. Leave that part of the wood console completely empty. Preserve everything else exactly, empty wall and all lighting. No new objects, no lettering, no artwork."
+  },
+  {
+    "name": "beach-day",
+    "prompt": "Remove ALL books: both small stacks on the left under the vase AND on the right under the bowl/coral. Set the same vase, bowl and coral directly onto the wood console surface. Preserve all other room details, camera, furniture, empty wall and lighting. No text, no new objects, no artwork."
+  }
+]
