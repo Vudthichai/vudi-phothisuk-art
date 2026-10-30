@@ -12,3 +12,5 @@ User requested the earlier centered Oceans room again and subtler painting expos
 These are reversible CSS presentation layers on staged copies, including canvas borders. No source image, hero, collection photograph, room background or artwork texture was regenerated or color-corrected. The layers approximate ambient exposure; they cannot reconstruct the microscopic relief shadows already recorded in a photograph.
 
 Validation: 24 tests, TypeScript and production build passed; visually inspected all six room pages in the browser.
+
+Follow-up: Summer Swells was slightly too dim in review. Raised exposure from 0.96 to 1.00 and eased maximum shading from 0.10 to 0.08. All other room lighting retained as approved; Mermaid Tail unchanged.
