@@ -7,6 +7,7 @@ import { Layout } from './components/Layout';
 import { ArtworkPage, CollectionPage, Home } from './pages/Pages';
 import { Gallery } from './components/Gallery';
 import { findCollection } from './data';
+import { roomPlacement } from './components/RoomStudy';
 afterEach(cleanup);
 describe('portfolio foundation', () => {
   it('renders a directly opened collection and updates metadata', async () => {
@@ -109,12 +110,21 @@ describe('The Oceans portfolio', () => {
       backgrounds.add(background);
       expect(hero.compareDocumentPosition(room) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       const detail = view.container.querySelector('.craftsmanship-study');
-      if (detail) expect(room.compareDocumentPosition(detail) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+      expect(detail).toBeNull();
       const navigation = view.container.querySelector('.artwork-pagination')!;
       expect((detail ?? room).compareDocumentPosition(navigation) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
       view.unmount();
     }
     expect(backgrounds.size).toBe(11);
+  });
+  it('scales the 72-inch-wide painting three times wider than a 24-inch portrait on the same model wall', () => {
+    const artworks = findCollection('oceans')!.artworks;
+    const panorama = roomPlacement(artworks.find(item => item.slug === 'the-oceans')!)!;
+    const portrait = roomPlacement(artworks.find(item => item.slug === 'summer-swells')!)!;
+    expect(panorama.widthInches).toBe(72);
+    expect(portrait.widthInches).toBe(24);
+    expect(panorama.widthPercent / portrait.widthPercent).toBeCloseTo(3);
+    expect(roomPlacement({ ...artworks[0], dimensions: undefined })).toBeNull();
   });
   it('shows not-found for a painting outside its collection', () => {
     openOceans('/collections/regal-collection/manta');

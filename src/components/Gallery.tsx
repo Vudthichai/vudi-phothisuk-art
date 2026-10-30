@@ -11,6 +11,5 @@ export function Gallery({ artworks }: { artworks: Artwork[] }) {
 }
 
 export function ArtworkViews({ artwork }: { artwork: Artwork }) {
-  const details = artwork.images?.filter(image => image.role === 'detail' && image.src !== artwork.image.src) ?? [];
-  return <><RoomStudy artwork={artwork}/>{details.length > 0 && <section className="craftsmanship-study" aria-label="Craftsmanship"><div className="craftsmanship-heading"><p className="eyebrow">A closer look</p><h2>Craftsmanship</h2></div><div className="craftsmanship-images">{details.map(image => <figure key={image.src}><a href={image.src} target="_blank" rel="noreferrer" aria-label={`Open ${artwork.title} detail image`}><img src={image.src} srcSet={image.srcSet} sizes="(max-width: 700px) 86vw, 45vw" alt={image.alt} width={image.width} height={image.height} loading="lazy" decoding="async"/></a><figcaption>{image.caption}<a className="detail-open" href={image.src} target="_blank" rel="noreferrer">View image ↗</a></figcaption></figure>)}</div></section>}</>;
+  return <RoomStudy artwork={artwork}/>;
 }
