@@ -1,0 +1,59 @@
+{
+  "method": "Artist-selected hero uploads received 2026-10-30. Whole images resized to WebP without cropping, perspective correction, rotation of composition, or color/exposure changes. Earlier hero derivatives retained.",
+  "artworks": [
+    {
+      "slug": "carnations",
+      "sourceFile": "Artist-selected upload 2026-10-30/PAINTING2.png",
+      "cornersAt900px": null,
+      "detail": "Carnations (Close Up).jpg",
+      "originalStory": [
+        "Carnations: If there is one emotion that can transcend the boundaries of time, it’s Love. Carnations are the symbol of deep affection and commitment. They are also recognized as God’s Flower. Most people strive to reach a point in their lives where they find happiness in a loving partner. It’s rare to see people find love in themselves and in the work they do. If carnations are a symbol of love, this piece is a reminder to find joy in your actions and everyone you meet. Only then can you find the love within yourself."
+      ],
+      "previousSourceFile": "IMG_4270.JPG",
+      "heroProcessing": "Whole uploaded image rotated 180 degrees at artist request on 2026-10-30 and resized only; white border, colors and exposure preserved."
+    },
+    {
+      "slug": "navy",
+      "sourceFile": "Artist-selected upload 2026-10-30/Navy.jpeg",
+      "cornersAt900px": null,
+      "detail": "Navy (Close Up).jpg",
+      "originalStory": [
+        "Navy: Navy is a powerful color that carries the weight of many aqua hues. This work is a tribute to the power of water in all its forms and just how important it is to keep us alive. Water gives us life, grows our food and regulates our global temperature. Without it, Earth would not be known as the “Pale Blue Dot”. The relationship we have with this necessary commodity changes depending where we stand. Here in America, it’s given out for free on a hot day but priced at a premium in entertainment. 35 gallons of water is used in the process for a single cup of coffee. Water can spark wars when in low supply. Water can take away land at a moment's notice. Water is the elixir of life but without proper respect, water can destroy us. What is your relationship with water?"
+      ],
+      "previousSourceFile": "IMG_4276.JPG",
+      "heroProcessing": "Whole uploaded image resized only; original orientation, white border, colors and exposure preserved."
+    },
+    {
+      "slug": "sahara",
+      "sourceFile": "Artist-selected upload 2026-10-30/Sahara.jpeg",
+      "cornersAt900px": null,
+      "detail": "Sahara Close (Up).jpg",
+      "originalStory": [
+        "Sahara: What was once covered by water is now a dry and arid desert. The mysteries of the Sahara are endless. Rumors of a lost city are deep within the adventure community but the ancient ruins of Ubar has still yet to be found. The great desert is a reminder that even oceans have a death. But there is a story in every skeleton."
+      ],
+      "previousSourceFile": "IMG_4273.JPG",
+      "heroProcessing": "Whole uploaded image resized only; original orientation, white border, colors and exposure preserved."
+    },
+    {
+      "slug": "verdant",
+      "sourceFile": "Artist-selected upload 2026-10-30/Verdan.jpeg",
+      "cornersAt900px": null,
+      "detail": "Verdant (Close Up).jpg",
+      "originalStory": [
+        "Verdant: How does one feel when walking into a lush garden? One filled with opulent shades of green, trees that shoot branches into the heavens, only to have a canopy of emerald green filtering a golden hour evening with ethereal rays of sunlight. I spent many days in my backyard woods pondering about world travel as a kid. I would rush to the hidden fire pit I made under such a canopy when the sun was setting just right. This work is a representation of those childhood summer memories."
+      ],
+      "previousSourceFile": "IMG_4281.JPG",
+      "heroProcessing": "Whole uploaded image resized only; original orientation, white border, colors and exposure preserved."
+    },
+    {
+      "slug": "ciaran",
+      "sourceFile": "Artist-selected upload 2026-10-30/Ciaran.jpeg",
+      "cornersAt900px": null,
+      "detail": "Ciaran (Close Up).jpg",
+      "originalStory": [],
+      "previousSourceFile": "Ciaran.jpg",
+      "heroProcessing": "Whole uploaded image resized only; original orientation, white border, colors and exposure preserved."
+    }
+  ],
+  "ciaranSource": "https://www.vudiphothisukart.com/ciaran, inspected October 29 2026; dimensions and medium confirmed on live page."
+}

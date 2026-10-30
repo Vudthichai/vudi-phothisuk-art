@@ -1,0 +1,215 @@
+{
+  "introduction": "A journey through memory and emotion, expressed in sculptural texture, shifting color, and metallic light.",
+  "artworks": [
+    {
+      "id": "art_ffab50bc-adff-522b-acb4-e34234c0aa9b",
+      "slug": "carnations",
+      "title": "Carnations",
+      "image": {
+        "src": "/artworks/regal/carnations-hero-upright-1200.webp",
+        "srcSet": "/artworks/regal/carnations-hero-upright-600.webp 600w, /artworks/regal/carnations-hero-upright-1200.webp 1200w, /artworks/regal/carnations-hero-upright-1800.webp 1800w",
+        "width": 1200,
+        "height": 1800,
+        "alt": "Pink, ivory, green, and gold curls carved into a richly textured surface.",
+        "role": "artwork",
+        "sourceFile": "Artist-selected upload 2026-10-30/PAINTING2.png"
+      },
+      "images": [
+        {
+          "src": "/artworks/regal/carnations-hero-upright-1200.webp",
+          "srcSet": "/artworks/regal/carnations-hero-upright-600.webp 600w, /artworks/regal/carnations-hero-upright-1200.webp 1200w, /artworks/regal/carnations-hero-upright-1800.webp 1800w",
+          "width": 1200,
+          "height": 1800,
+          "alt": "Pink, ivory, green, and gold curls carved into a richly textured surface.",
+          "role": "artwork",
+          "sourceFile": "Artist-selected upload 2026-10-30/PAINTING2.png"
+        },
+        {
+          "src": "/artworks/regal/carnations-detail-1200.webp",
+          "srcSet": "/artworks/regal/carnations-detail-600.webp 600w, /artworks/regal/carnations-detail-1200.webp 1200w, /artworks/regal/carnations-detail-1800.webp 1800w",
+          "width": 1200,
+          "height": 1800,
+          "alt": "Close detail of carnations: raised paint contours and surface texture.",
+          "role": "detail",
+          "sourceFile": "VPA Website Update/The Regal Collection/Carnations (Close Up).jpg"
+        }
+      ],
+      "description": [
+        "Pink, green, ivory, and gold gather in flowing, sculpted forms. Curving ridges give the surface a floral rhythm, bringing softness and strength into the same composition.",
+        "For the artist, carnations symbolize deep affection and commitment. This painting is a reminder to find joy in one’s actions and encounters, and to recognize that love can also be found within oneself."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "sold",
+      "sourceUrl": "https://www.vudiphothisukart.com/carnations"
+    },
+    {
+      "id": "art_73b27f0e-875c-5aba-9873-f668ecf70303",
+      "slug": "navy",
+      "title": "Navy",
+      "image": {
+        "src": "/artworks/regal/navy-hero-approved-1200.webp",
+        "srcSet": "/artworks/regal/navy-hero-approved-600.webp 600w, /artworks/regal/navy-hero-approved-1200.webp 1200w, /artworks/regal/navy-hero-approved-1800.webp 1800w",
+        "width": 1200,
+        "height": 1800,
+        "alt": "Sweeping navy and teal ridges with gold and ivory highlights.",
+        "role": "artwork",
+        "sourceFile": "Artist-selected upload 2026-10-30/Navy.jpeg"
+      },
+      "images": [
+        {
+          "src": "/artworks/regal/navy-hero-approved-1200.webp",
+          "srcSet": "/artworks/regal/navy-hero-approved-600.webp 600w, /artworks/regal/navy-hero-approved-1200.webp 1200w, /artworks/regal/navy-hero-approved-1800.webp 1800w",
+          "width": 1200,
+          "height": 1800,
+          "alt": "Sweeping navy and teal ridges with gold and ivory highlights.",
+          "role": "artwork",
+          "sourceFile": "Artist-selected upload 2026-10-30/Navy.jpeg"
+        },
+        {
+          "src": "/artworks/regal/navy-detail-1200.webp",
+          "srcSet": "/artworks/regal/navy-detail-600.webp 600w, /artworks/regal/navy-detail-1200.webp 1200w, /artworks/regal/navy-detail-1800.webp 1800w",
+          "width": 1200,
+          "height": 1800,
+          "alt": "Close detail of navy: raised paint contours and surface texture.",
+          "role": "detail",
+          "sourceFile": "VPA Website Update/The Regal Collection/Navy (Close Up).jpg"
+        }
+      ],
+      "description": [
+        "Long ridges sweep through deep navy, teal, ivory, and gold. Their changing direction gives the surface a current of movement, with light catching the raised edges.",
+        "Navy is a tribute to the power of water: its capacity to sustain life and its potential to overwhelm. The work asks us to consider our relationship with something both essential and deserving of respect."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "sold",
+      "sourceUrl": "https://www.vudiphothisukart.com/navy"
+    },
+    {
+      "id": "art_a2303493-8cb3-584c-9f16-02c5a4a885ba",
+      "slug": "sahara",
+      "title": "Sahara",
+      "image": {
+        "src": "/artworks/regal/sahara-hero-approved-1200.webp",
+        "srcSet": "/artworks/regal/sahara-hero-approved-600.webp 600w, /artworks/regal/sahara-hero-approved-1200.webp 1200w, /artworks/regal/sahara-hero-approved-1800.webp 1800w",
+        "width": 1200,
+        "height": 1800,
+        "alt": "Diagonal gold, ivory, and dark blue marks across a textured canvas.",
+        "role": "artwork",
+        "sourceFile": "Artist-selected upload 2026-10-30/Sahara.jpeg"
+      },
+      "images": [
+        {
+          "src": "/artworks/regal/sahara-hero-approved-1200.webp",
+          "srcSet": "/artworks/regal/sahara-hero-approved-600.webp 600w, /artworks/regal/sahara-hero-approved-1200.webp 1200w, /artworks/regal/sahara-hero-approved-1800.webp 1800w",
+          "width": 1200,
+          "height": 1800,
+          "alt": "Diagonal gold, ivory, and dark blue marks across a textured canvas.",
+          "role": "artwork",
+          "sourceFile": "Artist-selected upload 2026-10-30/Sahara.jpeg"
+        },
+        {
+          "src": "/artworks/regal/sahara-detail-1200.webp",
+          "srcSet": "/artworks/regal/sahara-detail-600.webp 600w, /artworks/regal/sahara-detail-1200.webp 1200w, /artworks/regal/sahara-detail-1800.webp 1800w",
+          "width": 1200,
+          "height": 1800,
+          "alt": "Close detail of sahara: raised paint contours and surface texture.",
+          "role": "detail",
+          "sourceFile": "VPA Website Update/The Regal Collection/Sahara Close (Up).jpg"
+        }
+      ],
+      "description": [
+        "Gold and ivory move diagonally through dark passages, building a surface that feels layered and weathered. Small scattered marks interrupt the longer strokes.",
+        "Sahara draws on the artist’s fascination with the desert, its mysteries, and the traces of a world transformed. The painting holds a reminder that landscapes change, while their surfaces continue to carry stories."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/sahara"
+    },
+    {
+      "id": "art_04190788-1cbd-5804-b39e-1806de10ae85",
+      "slug": "verdant",
+      "title": "Verdant",
+      "image": {
+        "src": "/artworks/regal/verdant-hero-approved-1200.webp",
+        "srcSet": "/artworks/regal/verdant-hero-approved-600.webp 600w, /artworks/regal/verdant-hero-approved-1200.webp 1200w, /artworks/regal/verdant-hero-approved-1800.webp 1800w",
+        "width": 1200,
+        "height": 1800,
+        "alt": "Dense green and gold sculpted curls flowing across the surface.",
+        "role": "artwork",
+        "sourceFile": "Artist-selected upload 2026-10-30/Verdan.jpeg"
+      },
+      "images": [
+        {
+          "src": "/artworks/regal/verdant-hero-approved-1200.webp",
+          "srcSet": "/artworks/regal/verdant-hero-approved-600.webp 600w, /artworks/regal/verdant-hero-approved-1200.webp 1200w, /artworks/regal/verdant-hero-approved-1800.webp 1800w",
+          "width": 1200,
+          "height": 1800,
+          "alt": "Dense green and gold sculpted curls flowing across the surface.",
+          "role": "artwork",
+          "sourceFile": "Artist-selected upload 2026-10-30/Verdan.jpeg"
+        },
+        {
+          "src": "/artworks/regal/verdant-detail-1200.webp",
+          "srcSet": "/artworks/regal/verdant-detail-600.webp 600w, /artworks/regal/verdant-detail-1200.webp 1200w, /artworks/regal/verdant-detail-1800.webp 1800w",
+          "width": 1200,
+          "height": 1800,
+          "alt": "Close detail of verdant: raised paint contours and surface texture.",
+          "role": "detail",
+          "sourceFile": "VPA Website Update/The Regal Collection/Verdant (Close Up).jpg"
+        }
+      ],
+      "description": [
+        "Deep greens and metallic gold weave through an intricate field of sculpted curls. Raised contours catch the light like glimpses through a canopy.",
+        "Verdant returns to childhood summer evenings in the woods behind the artist’s home. A hidden fire pit beneath the trees became a place to imagine distant travel, as golden light filtered through the leaves."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/verdant"
+    },
+    {
+      "id": "art_71e7e08e-bf89-5c0b-8a25-bdf301d00ca4",
+      "slug": "ciaran",
+      "title": "Ciaran",
+      "image": {
+        "src": "/artworks/regal/ciaran-hero-approved-1200.webp",
+        "srcSet": "/artworks/regal/ciaran-hero-approved-600.webp 600w, /artworks/regal/ciaran-hero-approved-1200.webp 1200w, /artworks/regal/ciaran-hero-approved-1800.webp 1800w",
+        "width": 1200,
+        "height": 1800,
+        "alt": "Ornamental green, pink, ivory, and gold forms in sculpted relief.",
+        "role": "artwork",
+        "sourceFile": "Artist-selected upload 2026-10-30/Ciaran.jpeg"
+      },
+      "images": [
+        {
+          "src": "/artworks/regal/ciaran-hero-approved-1200.webp",
+          "srcSet": "/artworks/regal/ciaran-hero-approved-600.webp 600w, /artworks/regal/ciaran-hero-approved-1200.webp 1200w, /artworks/regal/ciaran-hero-approved-1800.webp 1800w",
+          "width": 1200,
+          "height": 1800,
+          "alt": "Ornamental green, pink, ivory, and gold forms in sculpted relief.",
+          "role": "artwork",
+          "sourceFile": "Artist-selected upload 2026-10-30/Ciaran.jpeg"
+        },
+        {
+          "src": "/artworks/regal/ciaran-detail-1200.webp",
+          "srcSet": "/artworks/regal/ciaran-detail-600.webp 600w, /artworks/regal/ciaran-detail-1200.webp 1200w, /artworks/regal/ciaran-detail-1800.webp 1800w",
+          "width": 1200,
+          "height": 1800,
+          "alt": "Close detail of ciaran: raised paint contours and surface texture.",
+          "role": "detail",
+          "sourceFile": "VPA Website Update/The Regal Collection/Ciaran (Close Up).jpg"
+        }
+      ],
+      "description": [
+        "Green, pink, ivory, and gold move through ornamental curves, their raised contours giving the painting a sense of layered movement.",
+        "Ciaran is an homage to honor, integrity, and leadership. For the artist, nobility is a quality within everyone: something revealed under pressure and recognized in the people we choose to follow."
+      ],
+      "dimensions": "24” X 36”",
+      "medium": "Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas.",
+      "availability": "unknown",
+      "sourceUrl": "https://www.vudiphothisukart.com/ciaran"
+    }
+  ]
+}

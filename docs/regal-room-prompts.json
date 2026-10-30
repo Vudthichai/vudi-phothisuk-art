@@ -1,0 +1,11 @@
+{
+  "method": "Generated empty rooms; authentic artwork photographs composited separately in RoomStudy.",
+  "common": "Photorealistic sophisticated furnished interior, landscape 3:2, straight-on camera perpendicular to back wall. EMPTY central hanging wall x41..59%,y13..55% for a separate original 24x36 inch portrait painting to be composited later. Do not generate paintings, frames, placeholders, wall art, text or watermark. Furniture console spans x27..73%, top y64%; keep all tabletop objects below y58% or outside x39..61%. Natural coherent soft daylight, no spotlights or harsh sun patches.",
+  "scenes": {
+    "carnations": "Warm contemporary sitting room: pale blush plaster wall, slim pale oak console, ivory curved chair partially visible lower left, dark green velvet cushion, small blush ceramic vase with a few flowers at far right of console, two books far left, olive tree far right. Daylight from left, neutral color balance. Subtle pink and deep green accents.",
+    "navy": "Refined contemporary study: pale cool gray wall, walnut console desk, dark navy reading chair lower right, bronze table lamp far left of console unlit, books and small stone bowl far right, tall plant far left. Daylight from left. Restrained deep blue, warm wood, brass accents.",
+    "sahara": "Warm architectural dining corner: light ivory cream plaster wall, travertine console, oak dining chair and edge of round table in lower left foreground, black ceramic vessel far right of console, small brass bowl far left, dry sculptural branches at far right edge. Diffuse daylight from right. Gold, ivory and charcoal accents, natural scale.",
+    "verdant": "Elegant garden sitting room: pale warm stone wall, dark oak console, moss green upholstered occasional chair lower left, antique bronze vase at console far right and small stack books far left, lush tall plant at far right. Diffuse daylight from left, warm gold accents and green linen, layered comfortable furnishings.",
+    "ciaran": "Refined welcoming entry: pale sage plaster wall, walnut console, small cream upholstered stool tucked under, burgundy ceramic bowl at far left console and small clear vase far right, tall leafy tree at far left, cream linen curtain at right edge. Soft neutral daylight from right. Restrained burgundy, sage, ivory and aged brass accents."
+  }
+}
