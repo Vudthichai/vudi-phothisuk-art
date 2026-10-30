@@ -26,3 +26,9 @@ desktop collection/detail visual review, and 390px collection layout review.
 
 ## Refined presentation
 The collection opens with an atmospheric crop of the authentic Navy detail photograph. Added cream mats and the five-work index have been removed. Each individual work now includes a separately labeled room study ahead of its smaller authentic texture detail. Five generated empty rooms are paired with original artwork photos through RoomStudy; artwork pixels are never generated. Complete generation prompts are recorded in regal-room-prompts.json. Scale remains illustrative.
+
+
+## Artist-selected hero photos — October 30, 2026
+Replaced the five hero references with the supplied PAINTING2.png, Navy.jpeg, Sahara.jpeg, Verdan.jpeg, and Ciaran.jpeg. The whole uploaded composition, orientation, and white border are retained; responsive WebP copies apply no color or exposure correction. The same approved image is used in each room. Earlier derivatives and original source records remain available.
+
+Five new empty rooms use abundant diffuse neutral daylight and brighter walls to match the supplied photographs. No extra shading or exposure filter is applied to these Regal artwork layers. Room backgrounds use versioned bright filenames; complete prompts are in regal-bright-room-prompts.json.
