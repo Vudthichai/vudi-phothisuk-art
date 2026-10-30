@@ -134,12 +134,12 @@ describe('The Oceans portfolio', () => {
     expect(placement.widthPercent / 88).toBeCloseTo(72 / 96);
     expect(placement.leftPercent + placement.widthPercent / 2).toBe(50);
   });
-  it('keeps Sunset Waves at 24 by 36 inches against its illustrative nine-foot sofa', () => {
+  it('keeps Sunset Waves at 24 by 36 inches above its illustrative console', () => {
     const artwork = findCollection('oceans')!.artworks.find(item => item.slug === 'sunset-waves')!;
     const placement = roomPlacement(artwork, roomDirections['sunset-waves'])!;
     expect(placement.widthInches).toBe(24);
-    expect(placement.widthPercent / 72).toBeCloseTo(24 / 108);
-    expect(placement.widthPercent).toBeCloseTo(24 / 108 * 72);
+    expect(placement.widthPercent / 67).toBeCloseTo(24 / 84);
+    expect(placement.widthPercent).toBeCloseTo(24 / 84 * 67);
   });
   it('shows not-found for a painting outside its collection', () => {
     openOceans('/collections/regal-collection/manta');
