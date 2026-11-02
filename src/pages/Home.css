@@ -22,9 +22,14 @@
 .forest-hero-image:not(.is-whole) img{object-position:50% 79%}.forest-introduction{display:block;width:94%;max-width:1800px;padding:8px 0 28px}.forest-introduction>.eyebrow{display:none}.forest-introduction>div{max-width:none}.forest-introduction h2{font-size:27px;margin:0 0 10px}.forest-introduction p:not(.eyebrow){max-width:none;margin-bottom:7px}.forest-introduction .forest-small{margin-top:8px}.home-regal-row{padding-bottom:45px}.forest-closing{border-top:1px solid #dbe1d7}
 @media(max-width:700px){.forest-hero-image:not(.is-whole) img{object-position:64% 80%}.forest-introduction{padding:8px 0 28px}.forest-introduction h2{font-size:25px}}
 .forest-hero-image:not(.is-whole) img{object-position:50% 86%}
-/* Brighten only the photographed canvas margin; the painted field stays untouched.
-   The translucent treatment retains the photographed canvas texture and signature. */
-.home-ocean-canvas{position:relative}.home-ocean-canvas::after{content:"";position:absolute;inset:0;background:rgba(255,255,255,.48);pointer-events:none;clip-path:polygon(0 0,100% 0,100% 100%,97% 100%,97% 96%,3% 96%,3% 100%,0 100%,0 0,2.5% 2.5%,2.5% 94%,97.5% 94%,97.5% 2.5%,2.5% 2.5%);clip-rule:evenodd}
+
+.home-ocean-canvas{position:relative}
 @media(max-width:700px){.forest-hero-image:not(.is-whole) img{object-position:64% 86%}}
-.home-ocean-feature img{max-height:none}.home-ocean-canvas::after{clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,2.5% 4%,97.5% 4%,97.5% 94%,2.5% 94%,2.5% 4%,0 0,92% 94%,99% 94%,99% 100%,92% 100%,92% 94%,0 0)}
-.home-ocean-canvas::after{background:rgba(255,255,255,.35);clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,2.5% 4%,97.5% 4%,97.5% 94%,2.5% 94%,2.5% 4%,0 0)}
+.home-ocean-feature img{max-height:none}
+
+
+/* The Oceans is the unmodified source image: no border masks or overlays. */
+.home-ocean-canvas::before,.home-ocean-canvas::after{content:none}
+.forest-hero-image:not(.is-whole) img{transform:none;object-position:50% 50%}
+/* Show the artist-supplied landscape detail in full, including its lower canvas edge. */
+.forest-hero-image:not(.is-whole){height:auto;max-height:none;aspect-ratio:3196/1798}.forest-hero-image:not(.is-whole) img{object-fit:contain;object-position:center}
