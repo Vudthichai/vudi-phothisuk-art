@@ -17,7 +17,7 @@ export function Home() {
   return <div className="forest-home">
     <PageMeta title="Home" description="Make some art today. Explore dimensional mixed-media paintings and the stories behind the work of Vudi Phothisuk."/>
     <section className="forest-opening" aria-labelledby="home-title">
-      <div className="forest-masthead"><p>Vudi Phothisuk Art</p><h1 id="home-title"><img className="forest-tagline" src="/brand/make-some-art-today.png" alt="Make some art today."/></h1><span>Paintings · Texture · Stories</span></div>
+      <div className="forest-masthead"><p>Vudi Phothisuk Art</p><h1 id="home-title">Make some art today.</h1><span>Paintings · Texture · Stories</span></div>
       <figure className="forest-feature">
         <div className={`forest-hero-image ${whole ? 'is-whole' : ''}`}><img src={whole ? "/artworks/forest/mother-nature-1800.webp" : "/artworks/forest/mother-nature-detail-sdr.png"} srcSet={whole ? "/artworks/forest/mother-nature-900.webp 900w, /artworks/forest/mother-nature-1800.webp 1800w, /artworks/forest/mother-nature-2800.webp 2800w" : undefined} sizes="94vw" width={whole ? 1865 : 3198} height={whole ? 2800 : 1799} alt={whole ? 'Mother Nature, complete painting: a forest goddess beside a winding river, with sculpted leaves and flowers.' : 'Detail of Mother Nature: sculpted pink and orange flowers, green leaves, and a pale waterfall.'} fetchPriority="high"/></div>
         <figcaption><span><em>Mother Nature</em><small>Forest & Flowers · {whole ? 'Complete painting' : 'Detail'}</small></span><button type="button" aria-pressed={whole} onClick={() => setWhole(!whole)}>{whole ? 'Return to the detail' : 'See the whole painting'}</button></figcaption>
