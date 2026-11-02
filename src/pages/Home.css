@@ -47,3 +47,9 @@ body:has(.forest-home) .footer-name{font-family:'Bodoni Moda',Didot,serif}
 .home-ocean-copy{display:flex;justify-content:space-between;align-items:baseline;gap:40px;max-width:none;margin:0;padding:22px 4% 40px}
 .home-ocean-description{max-width:620px;min-width:0}.home-ocean-copy>.text-link{flex-shrink:0}.home-ocean-description p{margin-bottom:0}
 @media(max-width:700px){.home-ocean-copy{display:block;padding:22px 4% 30px}.home-ocean-copy>.text-link{display:inline-block;margin-top:18px}}
+
+/* Shared gallery alignment and collection-heading scale. */
+.home-ocean-copy{padding-inline:0}
+.home-regal-row{width:94%;max-width:1800px}
+.home-ocean-copy h2,.home-regal-row .forest-section-heading h2{font-size:35px;line-height:1.2;letter-spacing:-1px}
+@media(max-width:700px){.home-ocean-copy{padding-inline:0}.home-ocean-copy h2,.home-regal-row .forest-section-heading h2{font-size:31px}}
