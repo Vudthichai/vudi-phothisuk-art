@@ -28,8 +28,8 @@ describe('portfolio foundation', () => {
     const menu = screen.getByRole('button', { name: /Menu/ });
     await user.click(menu);
     expect(menu.getAttribute('aria-expanded')).toBe('true');
-    await user.click(screen.getByRole('link', { name: /Explore Forest/ }));
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Forest & Flowers');
+    await user.click(screen.getByRole('link', { name: /The Regal Collection/ }));
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain('Regal');
     expect(menu.getAttribute('aria-expanded')).toBe('false');
     expect(document.activeElement?.id).toBe('main');
   });
@@ -150,5 +150,21 @@ describe('The Oceans portfolio', () => {
     expect(screen.getAllByRole('img')).toHaveLength(2);
     expect(container.querySelector('.artwork-primary')?.getAttribute('src')).toContain('artist-selection');
     expect(screen.queryByRole('region', { name: 'Details' })).toBeNull();
+  });
+});
+
+describe('homepage artwork encounter', () => {
+  it('opens on the selected detail and lets visitors inspect the complete painting', async () => {
+    const user = userEvent.setup();
+    render(<MemoryRouter><Home/></MemoryRouter>);
+    expect(screen.getByRole('heading', { level: 1, name: 'Make some art today.' })).toBeTruthy();
+    const control = screen.getByRole('button', { name: /See the whole painting/ });
+    expect(control.getAttribute('aria-pressed')).toBe('false');
+    await user.click(control);
+    expect(screen.getByAltText(/Mother Nature, complete painting/)).toBeTruthy();
+    expect(control.getAttribute('aria-pressed')).toBe('true');
+    await user.click(control);
+    expect(screen.getByAltText(/Detail of Mother Nature/)).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Talk with Vudi/ }).getAttribute('href')).toContain('mailto:');
   });
 });
