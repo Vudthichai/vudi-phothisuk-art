@@ -154,18 +154,17 @@ describe('The Oceans portfolio', () => {
 });
 
 describe('homepage artwork encounter', () => {
-  it('switches between real painting and detail photographs without losing the story or inquiry route', async () => {
+  it('opens on the selected detail and lets visitors inspect the complete painting', async () => {
     const user = userEvent.setup();
     render(<MemoryRouter><Home/></MemoryRouter>);
-    const painting = screen.getByRole('button', { name: 'The painting' });
-    const surface = screen.getByRole('button', { name: 'The surface' });
-    expect(painting.getAttribute('aria-pressed')).toBe('true');
-    await user.click(surface);
-    expect(surface.getAttribute('aria-pressed')).toBe('true');
-    expect(screen.getByAltText('Close detail of navy: raised paint contours and surface texture.').getAttribute('src')).toContain('navy-detail');
-    expect(screen.getByText('Navy · photographed surface detail')).toBeTruthy();
-    await user.click(painting);
-    expect(screen.getByAltText('Sweeping navy and teal ridges with gold and ivory highlights.').getAttribute('src')).toContain('navy-hero-approved');
-    expect(screen.getByRole('link', { name: 'Talk with Vudi' }).getAttribute('href')).toContain('mailto:');
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Make some art today.');
+    const control = screen.getByRole('button', { name: /See the whole painting/ });
+    expect(control.getAttribute('aria-pressed')).toBe('false');
+    await user.click(control);
+    expect(screen.getByAltText(/Mother Nature, complete painting/)).toBeTruthy();
+    expect(control.getAttribute('aria-pressed')).toBe('true');
+    await user.click(control);
+    expect(screen.getByAltText(/Detail of Mother Nature/)).toBeTruthy();
+    expect(screen.getByRole('link', { name: /Talk with Vudi/ }).getAttribute('href')).toContain('mailto:');
   });
 });
