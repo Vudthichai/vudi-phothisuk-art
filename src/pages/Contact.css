@@ -15,5 +15,5 @@ body:has(.contact-page) .brand,body:has(.contact-page) .footer-name,.contact-pag
 @media(max-width:700px){.contact-page{padding:36px 0 45px}.contact-layout{grid-template-columns:1fr;gap:40px}.contact-page h1{font-size:48px}.contact-intro{font-size:16px}.contact-topics{margin-top:28px}.contact-portrait{justify-self:start;max-width:420px}.contact-signoff{margin-top:24px}}
 .contact-room{position:relative;max-width:550px;isolation:isolate}
 .contact-room .contact-room-background{width:100%;height:auto;display:block}
-.contact-room-art{position:absolute;left:29%;top:18%;width:47%;aspect-ratio:3/4;overflow:hidden;box-shadow:2px 5px 9px #0003;background:#f6f5f0}
+.contact-room-art{position:absolute;left:38.5%;top:35%;width:28%;aspect-ratio:3/4;overflow:hidden;box-shadow:2px 5px 9px #0003;background:#f6f5f0}
 .contact-room .contact-room-art img{position:absolute;max-width:none;width:116.3%;height:117.4%;left:-8.1%;top:-12.9%;object-fit:fill;image-orientation:from-image}
