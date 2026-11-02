@@ -47,7 +47,7 @@ export function ContactPage() {
   return <section className="contact-page" aria-labelledby="contact-title">
     <PageMeta title="Commissions & Contact" description="Contact Vudi Phothisuk about an original painting, a commission, or the story behind the work."/>
     <div className="contact-hero">
-      <img className="contact-hero-image" src="/artist/mother-nature-contact-detail.jpg" width="4280" height="3057" alt="An angled close-up of Mother Nature, with sculpted orange flowers and green and gold leaves." fetchPriority="high"/>
+      <img className="contact-hero-image" src="/artist/mother-nature-contact-full.jpeg" alt="An angled close-up of Mother Nature, with sculpted orange flowers and green and gold leaves." fetchPriority="high"/>
       <div className="contact-copy"><p className="eyebrow">Commissions & Contact</p><h1 id="contact-title">Let’s talk art.</h1>
         <p className="contact-intro">Have a painting in mind, a question about the work, or an idea for something personal? I’d love to hear from you.</p>
         <a className="contact-email" href="mailto:vudiphothisukart@gmail.com">vudiphothisukart@gmail.com</a>
