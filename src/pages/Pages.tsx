@@ -56,7 +56,7 @@ export function ContactPage() {
         </div>
         <p className="contact-signoff">Vudi Phothisuk</p>
       </div>
-      <figure className="contact-portrait contact-room" aria-label="Room visualization featuring the supplied lily painting; illustrative scale."><img className="contact-room-background" src="/artist/contact-room-v1.png" width="1024" height="1536" alt="Sage plaster sitting room with walnut furniture and a rust velvet chair."/><div className="contact-room-art"><img src="/artist/lilies-source.jpeg" alt="Original textured painting with orange lilies, green leaves, and a sweeping orange curve, retaining its white canvas border."/></div><figcaption>Room visualization · illustrative scale</figcaption></figure>
+      <figure className="contact-portrait"><img src="/artist/lilies-source.jpeg" width="4284" height="5712" alt="Textured painting with orange lilies, green leaves, and a sweeping orange curve, photographed on an easel."/></figure>
     </div>
   </section>;
 }
