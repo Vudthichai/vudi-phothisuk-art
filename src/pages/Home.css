@@ -32,4 +32,4 @@
 .home-ocean-canvas::before,.home-ocean-canvas::after{content:none}
 .forest-hero-image:not(.is-whole) img{transform:none;object-position:50% 50%}
 /* Show the artist-supplied landscape detail in full, including its lower canvas edge. */
-.forest-hero-image:not(.is-whole){height:auto;max-height:none;aspect-ratio:3196/1798}.forest-hero-image:not(.is-whole) img{object-fit:contain;object-position:center}
+.forest-hero-image:not(.is-whole){height:auto;max-height:none;aspect-ratio:3198/1799}.forest-hero-image:not(.is-whole) img{object-fit:contain;object-position:center}
