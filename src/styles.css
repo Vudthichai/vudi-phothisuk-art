@@ -55,3 +55,6 @@
 
 /* Crop the complete room and photograph together, preserving their relative scale. */
 .room-scene-composition{position:relative;transform:scale(var(--room-view-scale,1));transform-origin:var(--room-view-origin,50% 50%)}
+
+.collections-menu{position:relative}.collections-trigger{font:inherit;color:inherit;background:none;border:0;padding:12px 0;cursor:pointer}.collections-trigger[aria-expanded=true]{box-shadow:inset 0 -1px currentColor}.collections-dropdown{position:absolute;z-index:20;top:100%;right:0;width:260px;display:grid;grid-template-rows:0fr;visibility:hidden;opacity:0;transform:translateY(-8px);background:#fff;box-shadow:0 12px 28px #12351d12;transition:grid-template-rows .25s ease,opacity .25s ease,transform .25s ease,visibility .25s}.collections-dropdown.expanded{grid-template-rows:1fr;visibility:visible;opacity:1;transform:translateY(0)}.collections-dropdown>div{overflow:hidden}.navigation .collections-dropdown a{display:block;padding:17px 22px}.collections-dropdown small{display:block;margin-top:5px;color:#617060;font-size:10px}.collections-trigger:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+@media(max-width:700px){.collections-dropdown{position:static;width:100%;box-shadow:none}.collections-trigger{width:100%;text-align:left}.navigation .collections-dropdown a{padding:13px 20px}}

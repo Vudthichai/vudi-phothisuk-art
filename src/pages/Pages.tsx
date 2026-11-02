@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import './Home.css';
 import './Contact.css';
+import './About.css';
 import { useEffect, useState } from 'react';
 import { collections, findCollection, informationPages } from '../data';
 import { Gallery, ArtworkViews } from '../components/Gallery';
@@ -10,7 +11,7 @@ export function PageMeta({ title, description }: { title: string; description: s
   useEffect(() => { document.title = `${title} | Vudi Phothisuk Art`; document.querySelector('meta[name="description"]')?.setAttribute('content', description); }, [title, description]);
   return null;
 }
-export function CollectionLinks() { return <div className="collection-list">{[...collections].sort((a,b) => Number(Boolean(b.artworks.length)) - Number(Boolean(a.artworks.length))).map(collection => <Link key={collection.slug} to={`/collections/${collection.slug}`}><h3>{collection.name}</h3><span className="collection-status">{collection.artworks.length ? `${collection.artworks.length} artworks` : collection.slug === 'forest-and-flowers' ? 'Photography in preparation' : 'In preparation'}</span><span aria-hidden="true">→</span></Link>)}</div>; }
+export function CollectionLinks() { return <div className="collection-list">{[...collections].sort((a,b) => Number(Boolean(b.artworks.length)) - Number(Boolean(a.artworks.length))).map(collection => <Link key={collection.slug} to={`/collections/${collection.slug}`}><h3>{collection.name}</h3><span className="collection-status">{collection.artworks.length ? `${collection.artworks.length} artworks` : collection.slug === 'forest-and-flowers' ? 'Coming soon' : 'In preparation'}</span><span aria-hidden="true">→</span></Link>)}</div>; }
 export function Home() {
   const ocean = findCollection('oceans')!.artworks.find(art => art.slug === 'the-oceans')!;
   const regalWorks = ['navy', 'carnations', 'sahara'].map(slug => findCollection('regal-collection')!.artworks.find(art => art.slug === slug)!);
@@ -31,7 +32,7 @@ export function Home() {
   </div>;
 }
 export function Collections() { return <section className="section page"><PageMeta title="Collections" description="Explore the collections of Vudi Phothisuk Art."/><p className="eyebrow">The portfolio</p><h1>Collections</h1><CollectionLinks/></section>; }
-export function CollectionPage() { const { slug = '' } = useParams(); const collection = findCollection(slug); if (!collection) return <NotFound/>; if (slug === 'regal-collection') return <><PageMeta title={collection.name} description={collection.summary}/><RegalCollection collection={collection}/></>; if (slug === 'oceans') return <><PageMeta title={collection.name} description={collection.summary}/><OceanCollection collection={collection}/></>; return <section className="section page"><PageMeta title={collection.name} description={`${collection.name} — a collection by Vudi Phothisuk. ${collection.summary}`}/><Link className="text-link" to="/collections">← All collections</Link><p className="eyebrow">{slug === 'forest-and-flowers' ? 'Photography in preparation' : 'Collection'}</p><h1>{collection.name}</h1><p className="page-intro">{collection.summary}</p><Gallery artworks={collection.artworks}/></section>; }
+export function CollectionPage() { const { slug = '' } = useParams(); const collection = findCollection(slug); if (!collection) return <NotFound/>; if (slug === 'regal-collection') return <><PageMeta title={collection.name} description={collection.summary}/><RegalCollection collection={collection}/></>; if (slug === 'oceans') return <><PageMeta title={collection.name} description={collection.summary}/><OceanCollection collection={collection}/></>; return <section className="section page"><PageMeta title={collection.name} description={`${collection.name} — a collection by Vudi Phothisuk. ${collection.summary}`}/><Link className="text-link" to="/collections">← All collections</Link><p className="eyebrow">{slug === 'forest-and-flowers' ? 'Coming soon' : 'Collection'}</p><h1>{collection.name}</h1><p className="page-intro">{collection.summary}</p><Gallery artworks={collection.artworks}/></section>; }
 export function ArtworkPage() {
   const { slug = '', artworkSlug = '' } = useParams();
   const collection = findCollection(slug);
@@ -62,5 +63,9 @@ export function ContactPage() {
     </div>
   </section>;
 }
-export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'contact') return <ContactPage/>; const content = informationPages[page]; return <section className="section page"><PageMeta title={content.title} description={content.description}/><p className="eyebrow">Vudi Phothisuk Art</p><h1>{content.title}</h1><p className="page-intro">{content.description}</p><p className="content-note">This section is being prepared for the new portfolio.</p><Link className="text-link" to="/collections">Explore the collections →</Link></section>; }
+export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'contact') return <ContactPage/>; if (page === 'about') return <AboutPage/>; const content = informationPages[page]; return <section className="section page"><PageMeta title={content.title} description={content.description}/><p className="eyebrow">Vudi Phothisuk Art</p><h1>{content.title}</h1><p className="page-intro">{content.description}</p><p className="content-note">This section is being prepared for the new portfolio.</p><Link className="text-link" to="/collections">Explore the collections →</Link></section>; }
 export function NotFound() { return <section className="section page"><PageMeta title="Page not found" description="This page could not be found in the Vudi Phothisuk Art portfolio."/><p className="eyebrow">404</p><h1>Page not found.</h1><Link className="button-link" to="/">Return home →</Link></section>; }
+
+function AboutPage() {
+  return <section className="about-page"><PageMeta title="About the Artist" description="Meet Vudi Phothisuk and discover the sculptural texture, layered color, and deliberate form behind his paintings."/><div className="about-copy"><p className="eyebrow">About the artist</p><h1>Life isn’t 2D.<br/>Why should your art be?</h1><p>To me, a painting is not simply something to view — it’s something to feel. It’s a conversation starter, a memory holder, a lived experience embedded in pigment and form.</p><p>My work blends sculptural texture, layered color, and deliberate form, brought to life through collections that act as immersive environments.</p><p>I chase presence over trends and look for purpose in the middle of utility and design.</p><p>I hope the pieces I make offer space to pause — to notice, to reflect, to feel something textured and real, even in a world that rarely allows for it.</p><p className="about-signoff">Vudi Phothisuk</p><Link className="text-link" to="/contact">Let’s talk art</Link></div><img src="/artist/vudi-about.jpg" alt="Vudi Phothisuk holding a textured turquoise shoreline painting" width="1161" height="2035"/></section>;
+}
