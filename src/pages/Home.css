@@ -32,4 +32,24 @@
 .home-ocean-canvas::before,.home-ocean-canvas::after{content:none}
 .forest-hero-image:not(.is-whole) img{transform:none;object-position:50% 50%}
 /* Show the artist-supplied landscape detail in full, including its lower canvas edge. */
-.forest-hero-image:not(.is-whole){height:auto;max-height:none;aspect-ratio:3196/1798}.forest-hero-image:not(.is-whole) img{object-fit:contain;object-position:center}
+.forest-hero-image:not(.is-whole){height:auto;max-height:none;aspect-ratio:3198/1799}.forest-hero-image:not(.is-whole) img{object-fit:contain;object-position:center}
+
+/* Live brand lettering stays sharp at every display scale. */
+@font-face{font-family:'Bodoni Moda';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/bodoni-moda-regular.ttf') format('truetype')}
+.forest-masthead h1{font-family:'Bodoni Moda',Didot,serif;font-weight:400;font-synthesis:none;font-optical-sizing:auto;font-size:clamp(32px,6vw,92px);line-height:1.2;letter-spacing:-.035em;width:100%;max-width:none;color:#12351d;text-wrap:balance}
+.home-ocean-copy{margin-left:auto;margin-right:0}
+@media(max-width:700px){.forest-masthead h1{font-size:clamp(30px,6.4vw,44px);letter-spacing:-.035em}.home-ocean-copy{margin-left:0;max-width:none}}
+
+/* One serif family for homepage display type; one sans-serif for reading and controls. */
+.forest-home h2,.forest-home h3,.forest-masthead>p,.forest-feature figcaption{font-family:'Bodoni Moda',Didot,serif;font-weight:400;font-optical-sizing:auto}
+.forest-home .text-link,.forest-feature button{font-family:Arial,Helvetica,sans-serif}
+body:has(.forest-home) .footer-name{font-family:'Bodoni Moda',Didot,serif}
+.home-ocean-copy{display:flex;justify-content:space-between;align-items:baseline;gap:40px;max-width:none;margin:0;padding:22px 4% 40px}
+.home-ocean-description{max-width:620px;min-width:0}.home-ocean-copy>.text-link{flex-shrink:0}.home-ocean-description p{margin-bottom:0}
+@media(max-width:700px){.home-ocean-copy{display:block;padding:22px 4% 30px}.home-ocean-copy>.text-link{display:inline-block;margin-top:18px}}
+
+/* Shared gallery alignment and collection-heading scale. */
+.home-ocean-copy{padding-inline:0}
+.home-regal-row{width:94%;max-width:1800px}
+.home-ocean-copy h2,.home-regal-row .forest-section-heading h2{font-size:35px;line-height:1.2;letter-spacing:-1px}
+@media(max-width:700px){.home-ocean-copy{padding-inline:0}.home-ocean-copy h2,.home-regal-row .forest-section-heading h2{font-size:31px}}
