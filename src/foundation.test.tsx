@@ -152,3 +152,20 @@ describe('The Oceans portfolio', () => {
     expect(screen.queryByRole('region', { name: 'Details' })).toBeNull();
   });
 });
+
+describe('homepage artwork encounter', () => {
+  it('switches between real painting and detail photographs without losing the story or inquiry route', async () => {
+    const user = userEvent.setup();
+    render(<MemoryRouter><Home/></MemoryRouter>);
+    const painting = screen.getByRole('button', { name: 'The painting' });
+    const surface = screen.getByRole('button', { name: 'The surface' });
+    expect(painting.getAttribute('aria-pressed')).toBe('true');
+    await user.click(surface);
+    expect(surface.getAttribute('aria-pressed')).toBe('true');
+    expect(screen.getByAltText('Close detail of navy: raised paint contours and surface texture.').getAttribute('src')).toContain('navy-detail');
+    expect(screen.getByText('Navy · photographed surface detail')).toBeTruthy();
+    await user.click(painting);
+    expect(screen.getByAltText('Sweeping navy and teal ridges with gold and ivory highlights.').getAttribute('src')).toContain('navy-hero-approved');
+    expect(screen.getByRole('link', { name: 'Talk with Vudi' }).getAttribute('href')).toContain('mailto:');
+  });
+});
