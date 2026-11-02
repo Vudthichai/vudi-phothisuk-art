@@ -21,3 +21,10 @@
 @media(max-width:700px){.forest-hero-image:not(.is-whole) img{object-position:64% 65%}.forest-introduction{grid-template-columns:1fr;gap:0;padding:28px 0 35px}.forest-introduction h2{font-size:28px}.home-ocean-feature img{max-height:none}.home-ocean-copy{padding:22px 4% 30px}.home-ocean-copy h2{font-size:34px}.home-regal-grid{grid-template-columns:1fr;gap:34px}.home-regal-row{padding:35px 0 45px}.home-regal-grid h3{font-size:27px}}
 .forest-hero-image:not(.is-whole) img{object-position:50% 79%}.forest-introduction{display:block;width:94%;max-width:1800px;padding:8px 0 28px}.forest-introduction>.eyebrow{display:none}.forest-introduction>div{max-width:none}.forest-introduction h2{font-size:27px;margin:0 0 10px}.forest-introduction p:not(.eyebrow){max-width:none;margin-bottom:7px}.forest-introduction .forest-small{margin-top:8px}.home-regal-row{padding-bottom:45px}.forest-closing{border-top:1px solid #dbe1d7}
 @media(max-width:700px){.forest-hero-image:not(.is-whole) img{object-position:64% 80%}.forest-introduction{padding:8px 0 28px}.forest-introduction h2{font-size:25px}}
+.forest-hero-image:not(.is-whole) img{object-position:50% 86%}
+/* Brighten only the photographed canvas margin; the painted field stays untouched.
+   The translucent treatment retains the photographed canvas texture and signature. */
+.home-ocean-canvas{position:relative}.home-ocean-canvas::after{content:"";position:absolute;inset:0;background:rgba(255,255,255,.48);pointer-events:none;clip-path:polygon(0 0,100% 0,100% 100%,97% 100%,97% 96%,3% 96%,3% 100%,0 100%,0 0,2.5% 2.5%,2.5% 94%,97.5% 94%,97.5% 2.5%,2.5% 2.5%);clip-rule:evenodd}
+@media(max-width:700px){.forest-hero-image:not(.is-whole) img{object-position:64% 86%}}
+.home-ocean-feature img{max-height:none}.home-ocean-canvas::after{clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,2.5% 4%,97.5% 4%,97.5% 94%,2.5% 94%,2.5% 4%,0 0,92% 94%,99% 94%,99% 100%,92% 100%,92% 94%,0 0)}
+.home-ocean-canvas::after{background:rgba(255,255,255,.35);clip-path:polygon(evenodd,0 0,100% 0,100% 100%,0 100%,0 0,2.5% 4%,97.5% 4%,97.5% 94%,2.5% 94%,2.5% 4%,0 0)}
