@@ -1,0 +1,1 @@
+Contact portrait: artist-supplied IMG_9780.jpeg (export EF3A2C94-5382-4DDD-A282-72447EF7417B). Entire supplied photograph retained. Orientation normalized, embedded profile converted to sRGB when present, single-frame lossless WebP copies at up to 600 and 1200 pixels wide. No exposure, retouching, or saturation edits. Original remains untouched.
