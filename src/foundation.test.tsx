@@ -157,7 +157,7 @@ describe('homepage artwork encounter', () => {
   it('opens on the selected detail and lets visitors inspect the complete painting', async () => {
     const user = userEvent.setup();
     render(<MemoryRouter><Home/></MemoryRouter>);
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Make some art today.');
+    expect(screen.getByRole('heading', { level: 1, name: 'Make some art today.' })).toBeTruthy();
     const control = screen.getByRole('button', { name: /See the whole painting/ });
     expect(control.getAttribute('aria-pressed')).toBe('false');
     await user.click(control);
