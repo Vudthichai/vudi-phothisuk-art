@@ -18,7 +18,7 @@ export type Artwork = {
 };
 export type Collection = { slug: string; name: string; summary: string; artworks: Artwork[] };
 export const collections: Collection[] = [
-  { slug: 'forest-and-flowers', name: 'Forest & Flowers', summary: 'The first collection being prepared for this new portfolio.', artworks: [] },
+  { slug: 'forest-and-flowers', name: 'Forest & Flowers', summary: 'A collection in development. Artwork photography is being prepared.', artworks: [] },
   { slug: 'oceans', name: 'The Oceans', summary: oceans.introduction, artworks: oceans.artworks },
   { slug: 'regal-collection', name: 'The Regal Collection', summary: regal.introduction, artworks: regal.artworks },
   { slug: 'canvas-collaborations', name: 'Canvas Collaborations', summary: 'Collection presentation in preparation.', artworks: [] },

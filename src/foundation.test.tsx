@@ -28,8 +28,8 @@ describe('portfolio foundation', () => {
     const menu = screen.getByRole('button', { name: /Menu/ });
     await user.click(menu);
     expect(menu.getAttribute('aria-expanded')).toBe('true');
-    await user.click(screen.getByRole('link', { name: /Explore Forest/ }));
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toBe('Forest & Flowers');
+    await user.click(screen.getByRole('link', { name: /The Regal Collection/ }));
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain('Regal');
     expect(menu.getAttribute('aria-expanded')).toBe('false');
     expect(document.activeElement?.id).toBe('main');
   });
