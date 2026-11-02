@@ -1,5 +1,6 @@
 import { Link, useParams } from 'react-router-dom';
 import './Home.css';
+import './Contact.css';
 import { useEffect, useState } from 'react';
 import { collections, findCollection, informationPages } from '../data';
 import { Gallery, ArtworkViews } from '../components/Gallery';
@@ -42,5 +43,24 @@ export function ArtworkPage() {
   const next = ordered[index + 1];
   return <section className={`section page artwork-page artwork-theme-${artwork.slug}`}><PageMeta title={artwork.title} description={artwork.description?.[0] ?? artwork.title}/><Link className="text-link" to={`/collections/${slug}`}>← {collection.name}</Link><div className="artwork-detail"><div><img className="artwork-primary" src={artwork.image.src} srcSet={artwork.image.srcSet} sizes="(max-width: 700px) 86vw, 50vw" alt={artwork.image.alt} width={artwork.image.width} height={artwork.image.height} fetchPriority="high" decoding="async"/></div><div className="artwork-story"><p className="eyebrow">{collection.name}</p><h1>{artwork.title}</h1>{artwork.description?.map(paragraph => <p key={paragraph}>{paragraph}</p>)}<dl className="artwork-facts">{artwork.dimensions && <><dt>Dimensions</dt><dd>{artwork.dimensions}</dd></>}{artwork.medium && <><dt>Medium</dt><dd>{artwork.medium}</dd></>}</dl>{artwork.availability === 'sold' ? <p className="artwork-status">Sold</p> : <a className="text-link" href={`mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent(`Artwork inquiry: ${artwork.title}`)}`}>Inquire about this artwork →</a>}</div></div><ArtworkViews artwork={artwork}/><nav className="artwork-pagination" aria-label="Artwork navigation"><div>{previous && <Link to={`/collections/${slug}/${previous.slug}`} rel="prev" aria-label={`Previous painting: ${previous.title}`}><span>← Previous painting</span><strong>{previous.title}</strong></Link>}</div><Link className="text-link" to={`/collections/${slug}`}>View the collection</Link><div>{next && <Link to={`/collections/${slug}/${next.slug}`} rel="next" aria-label={`Next painting: ${next.title}`}><span>Next painting →</span><strong>{next.title}</strong></Link>}</div></nav></section>;
 }
-export function InformationPage({ page }: { page: keyof typeof informationPages }) { const content = informationPages[page]; return <section className="section page"><PageMeta title={content.title} description={content.description}/><p className="eyebrow">Vudi Phothisuk Art</p><h1>{content.title}</h1><p className="page-intro">{content.description}</p><p className="content-note">This section is being prepared for the new portfolio.</p><Link className="text-link" to="/collections">Explore the collections →</Link></section>; }
+export function ContactPage() {
+  return <section className="contact-page" aria-labelledby="contact-title">
+    <PageMeta title="Commissions & Contact" description="Contact Vudi Phothisuk about an original painting, a commission, or the story behind the work."/>
+    <div className="contact-hero">
+      <img className="contact-hero-image" src="/artist/mother-nature-contact-full.jpeg" alt="An angled close-up of Mother Nature, with sculpted orange flowers and green and gold leaves." fetchPriority="high"/>
+      <div className="contact-copy"><p className="eyebrow">Commissions & Contact</p><h1 id="contact-title">Let’s talk art.</h1>
+        <p className="contact-intro">Have a painting in mind, a question about the work, or an idea for something personal? I’d love to hear from you.</p>
+        <a className="contact-email" href="mailto:vudiphothisukart@gmail.com">vudiphothisukart@gmail.com</a>
+      </div>
+    </div>
+    <div className="contact-details">
+      <div className="contact-topics">
+        <div><h2>A painting you love</h2><p>Include the painting’s title and anything you’d like to know about it.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Artwork%20inquiry">Ask about an artwork</a></div>
+        <div><h2>Something personal</h2><p>Tell me about your idea, the space, and any size or timing you have in mind. It’s fine if you’re still figuring it out.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Commission%20conversation">Start a commission conversation</a></div>
+      </div>
+      <p className="contact-signoff">Vudi Phothisuk</p>
+    </div>
+  </section>;
+}
+export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'contact') return <ContactPage/>; const content = informationPages[page]; return <section className="section page"><PageMeta title={content.title} description={content.description}/><p className="eyebrow">Vudi Phothisuk Art</p><h1>{content.title}</h1><p className="page-intro">{content.description}</p><p className="content-note">This section is being prepared for the new portfolio.</p><Link className="text-link" to="/collections">Explore the collections →</Link></section>; }
 export function NotFound() { return <section className="section page"><PageMeta title="Page not found" description="This page could not be found in the Vudi Phothisuk Art portfolio."/><p className="eyebrow">404</p><h1>Page not found.</h1><Link className="button-link" to="/">Return home →</Link></section>; }
