@@ -46,17 +46,19 @@ export function ArtworkPage() {
 export function ContactPage() {
   return <section className="contact-page" aria-labelledby="contact-title">
     <PageMeta title="Commissions & Contact" description="Contact Vudi Phothisuk about an original painting, a commission, or the story behind the work."/>
-    <div className="contact-layout">
+    <div className="contact-hero">
+      <img className="contact-hero-image" src="/artist/mother-nature-contact-detail.jpg" width="4280" height="3057" alt="An angled close-up of Mother Nature, with sculpted orange flowers and green and gold leaves." fetchPriority="high"/>
       <div className="contact-copy"><p className="eyebrow">Commissions & Contact</p><h1 id="contact-title">Let’s talk art.</h1>
         <p className="contact-intro">Have a painting in mind, a question about the work, or an idea for something personal? I’d love to hear from you.</p>
         <a className="contact-email" href="mailto:vudiphothisukart@gmail.com">vudiphothisukart@gmail.com</a>
-        <div className="contact-topics">
-          <div><h2>A painting you love</h2><p>Include the painting’s title and anything you’d like to know about it.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Artwork%20inquiry">Ask about an artwork</a></div>
-          <div><h2>Something personal</h2><p>Tell me about your idea, the space, and any size or timing you have in mind. It’s fine if you’re still figuring it out.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Commission%20conversation">Start a commission conversation</a></div>
-        </div>
-        <p className="contact-signoff">Vudi Phothisuk</p>
       </div>
-      <figure className="contact-portrait"><img src="/artist/lilies-source.jpeg" width="4284" height="5712" alt="Textured painting with orange lilies, green leaves, and a sweeping orange curve, photographed on an easel."/></figure>
+    </div>
+    <div className="contact-details">
+      <div className="contact-topics">
+        <div><h2>A painting you love</h2><p>Include the painting’s title and anything you’d like to know about it.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Artwork%20inquiry">Ask about an artwork</a></div>
+        <div><h2>Something personal</h2><p>Tell me about your idea, the space, and any size or timing you have in mind. It’s fine if you’re still figuring it out.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Commission%20conversation">Start a commission conversation</a></div>
+      </div>
+      <p className="contact-signoff">Vudi Phothisuk</p>
     </div>
   </section>;
 }
