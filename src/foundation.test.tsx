@@ -165,6 +165,17 @@ describe('homepage artwork encounter', () => {
     expect(control.getAttribute('aria-pressed')).toBe('true');
     await user.click(control);
     expect(screen.getByAltText(/Detail of Mother Nature/)).toBeTruthy();
+    const painting = screen.getByRole('button', { name: 'View Mother Nature, complete painting' });
+    painting.focus();
+    await user.keyboard('{Enter}');
+    expect(screen.getByAltText(/Mother Nature, complete painting/)).toBeTruthy();
+    await user.click(control);
+    await user.click(painting);
+    expect(screen.getByAltText(/Mother Nature, complete painting/)).toBeTruthy();
+    await user.click(control);
+    painting.focus();
+    await user.keyboard(' ');
+    expect(screen.getByAltText(/Mother Nature, complete painting/)).toBeTruthy();
     expect(screen.getByRole('link', { name: /Talk with Vudi/ }).getAttribute('href')).toContain('mailto:');
   });
 });
