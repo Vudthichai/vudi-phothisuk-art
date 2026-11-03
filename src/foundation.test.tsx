@@ -64,7 +64,8 @@ describe('The Oceans portfolio', () => {
     expect(screen.getByText(/Room study · illustrative scale/)).toBeTruthy();
     expect(screen.getByRole('region', { name: 'Golden Sand Beach, at home.' })).toBeTruthy();
     expect(screen.getAllByRole('img')).toHaveLength(2);
-    expect(screen.getByRole('link', { name: /Inquire about/ }).getAttribute('href')).toContain('Golden%20Sand%20Beach');
+    expect(screen.getByText('Sold')).toBeTruthy();
+    expect(screen.queryByRole('link', { name: /Inquire about/ })).toBeNull();
     expect(screen.queryByText('Available')).toBeNull();
     expect(screen.getAllByRole('img')[0].getAttribute('fetchpriority')).toBe('high');
   });

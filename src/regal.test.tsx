@@ -9,7 +9,7 @@ it('presents all five Regal works with working collection-scoped links', () => {
   render(<MemoryRouter initialEntries={['/collections/regal-collection']}><Routes><Route path="/collections/:slug" element={<CollectionPage/>}/></Routes></MemoryRouter>);
   expect(screen.getByRole('heading', {level:1}).textContent).toBe('The RegalCollection.');
   for (const art of findCollection('regal-collection')!.artworks) expect(screen.getByRole('link',{name:`View ${art.title}`}).getAttribute('href')).toBe(`/collections/regal-collection/${art.slug}`);
-  expect(screen.getAllByText('Sold')).toHaveLength(2);
+  expect(screen.getAllByText('Sold')).toHaveLength(3);
   expect(screen.queryByRole('navigation',{name:'Paintings in the Regal Collection'})).toBeNull();
 });
 it('opens every Regal detail without close-ups and with correct neighboring works', () => {
