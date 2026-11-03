@@ -61,3 +61,7 @@
 
 /* Keep mobile artwork navigation compact and in document flow below the work. */
 @media(max-width:700px){.artwork-pagination{position:static;gap:16px;margin-top:48px;padding-top:24px}.artwork-pagination>div{min-width:0}.artwork-pagination a{display:block;min-height:44px;padding-block:8px}.artwork-pagination span{font-size:11px;margin-bottom:6px}.artwork-pagination strong{font:400 16px/1.4 Arial,Helvetica,sans-serif;overflow-wrap:anywhere}}
+
+/* Shared closing line follows the existing brand typography. */
+.site-footer{align-items:flex-end;color:#28392f}.site-footer p{font-family:'Bodoni Moda',Didot,serif;font-size:18px;line-height:1.3;text-align:right;margin-left:auto}
+@media(max-width:700px){.site-footer{align-items:center}.site-footer p{margin-left:0;text-align:center}}

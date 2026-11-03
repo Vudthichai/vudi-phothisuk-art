@@ -6,13 +6,13 @@ export function ExhibitionsPage() {
     <header className="exhibition-heading">
       <p className="eyebrow">Exhibitions</p>
       <h1 id="exhibition-title">Forest &amp; Flowers</h1>
-      <p className="exhibition-lead">Sculptural texture, layered color,<br/>and changing light.</p>
+      <p className="exhibition-lead">I'm returning to Field Day, where I previously exhibited The Oceans Collection, to share a new chapter of my work: Forest &amp; Flowers.</p>
     </header>
     <div className="exhibition-body">
       <aside className="exhibition-details" aria-label="Exhibition details">
         <p className="eyebrow">At Field Day</p>
         <p><time dateTime="2026-12-05">December 5, 2026</time><br/><span>4:00–7:00 PM</span></p>
-        <p>Field Day<br/><span>Lawrenceville, Pittsburgh, PA</span></p>
+        <address>Field Day<br/><span>3706 Butler Street<br/>Lawrenceville, Pittsburgh, PA 15201</span></address>
       </aside>
       <div className="exhibition-synopsis">
         <h2>A closer look at the natural world.</h2>
