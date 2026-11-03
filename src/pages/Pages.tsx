@@ -1,10 +1,12 @@
+import { MotherNature } from '../components/MotherNature';
+import { RegalPreview } from '../components/RegalPreview';
 import { AvailableArt } from './AvailableArt';
 import { ExhibitionsPage } from './Exhibitions';
 import { Link, useParams } from 'react-router-dom';
 import './Home.css';
 import './Contact.css';
 import './About.css';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { collections, findCollection, informationPages } from '../data';
 import { Gallery, ArtworkViews } from '../components/Gallery';
 import { RegalCollection } from '../components/RegalCollection';
@@ -16,20 +18,15 @@ export function PageMeta({ title, description }: { title: string; description: s
 export function CollectionLinks() { return <div className="collection-list">{[...collections].sort((a,b) => Number(Boolean(b.artworks.length)) - Number(Boolean(a.artworks.length))).map(collection => <Link key={collection.slug} to={`/collections/${collection.slug}`}><h3>{collection.name}</h3><span className="collection-status">{collection.artworks.length ? `${collection.artworks.length} artworks` : collection.slug === 'forest-and-flowers' ? 'Coming soon' : 'In preparation'}</span><span aria-hidden="true">→</span></Link>)}</div>; }
 export function Home() {
   const ocean = findCollection('oceans')!.artworks.find(art => art.slug === 'the-oceans')!;
-  const regalWorks = ['navy', 'carnations', 'sahara'].map(slug => findCollection('regal-collection')!.artworks.find(art => art.slug === slug)!);
-  const [whole, setWhole] = useState(false);
   return <div className="forest-home">
     <PageMeta title="Home" description="Make some art today. Explore dimensional mixed-media paintings and the stories behind the work of Vudi Phothisuk."/>
     <section className="forest-opening" aria-labelledby="home-title">
       <div className="forest-masthead"><p>Vudi Phothisuk Art</p><h1 id="home-title">Make some art today.</h1><span>Paintings · Texture · Stories</span></div>
-      <figure className="forest-feature">
-        <button type="button" className={`forest-hero-image ${whole ? 'is-whole' : ''}`} aria-label="View Mother Nature, complete painting" aria-pressed={whole} onClick={() => setWhole(true)}><img src={whole ? "/artworks/forest/mother-nature-1800.webp" : "/artworks/forest/mother-nature-detail-sdr.png"} srcSet={whole ? "/artworks/forest/mother-nature-900.webp 900w, /artworks/forest/mother-nature-1800.webp 1800w, /artworks/forest/mother-nature-2800.webp 2800w" : undefined} sizes="94vw" width={whole ? 1865 : 3198} height={whole ? 2800 : 1799} alt={whole ? 'Mother Nature, complete painting: a forest goddess beside a winding river, with sculpted leaves and flowers.' : 'Detail of Mother Nature: sculpted pink and orange flowers, green leaves, and a pale waterfall.'} fetchPriority="high"/></button>
-        <figcaption><span><em>Mother Nature</em><small>Forest & Flowers · {whole ? 'Complete painting' : 'Detail'}</small></span><button type="button" aria-pressed={whole} onClick={() => setWhole(!whole)}>{whole ? 'Return to the detail' : 'See the whole painting'}</button></figcaption>
-      </figure>
+      <MotherNature/>
     </section>
     <section className="forest-introduction" aria-labelledby="forest-title"><p className="eyebrow">Forest & Flowers</p><div><h2 id="forest-title">A presence within the forest.</h2><p>A hidden goddess emerges from leaves, vines, and flowers. Beside her, a pale river winds between densely textured mountains.</p><p><em>Mother Nature</em> considers our dependence on the natural world—and the difference between appreciating nature and believing we control it.</p><p className="forest-small">A first look at Forest & Flowers. More paintings and new photography to come.</p></div></section>
     <section className="home-ocean-feature" id="home-paintings" aria-labelledby="home-ocean-title"><Link className="home-ocean-canvas" to="/collections/oceans" aria-label="Explore The Oceans"><img src={ocean.image.src} srcSet={ocean.image.srcSet} sizes="94vw" width={ocean.image.width} height={ocean.image.height} alt={ocean.image.alt} loading="lazy"/></Link><div className="home-ocean-copy"><div className="home-ocean-description"><h2 id="home-ocean-title">The Oceans</h2><p>Shorelines, breaking waves, and the movement of water, held in sculptural texture.</p></div><Link className="text-link" to="/collections/oceans">Explore the collection</Link></div></section>
-    <section className="home-regal-row" aria-labelledby="home-regal-title"><div className="forest-section-heading"><h2 id="home-regal-title">The Regal Collection</h2><Link className="text-link" to="/collections/regal-collection" aria-label="Explore The Regal Collection">Explore the collection</Link></div><div className="home-regal-grid">{regalWorks.map(art => <Link key={art.slug} to={`/collections/regal-collection/${art.slug}`}><img src={art.image.src} srcSet={art.image.srcSet} sizes="(max-width:700px) 88vw, 28vw" width={art.image.width} height={art.image.height} alt={art.image.alt} loading="lazy"/><h3>{art.title}</h3></Link>)}</div></section>
+    <RegalPreview/>
     <section className="forest-closing"><div><img className="forest-monogram" src="/brand/msat-floral.png" alt="Make some art today floral monogram" width="96" height="96" loading="lazy"/><p className="eyebrow">Behind the work</p><h2>Made with depth.<br/>And something to say.</h2><p>I’m Vudi Phothisuk. My paintings bring landscape, memory, and emotion into sculpted surfaces, layered color, and changing light.</p></div><div><p>Curious about a painting, or imagining something personal?</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Artwork%20%26%20commission%20conversation">Talk with Vudi</a></div></section>
   </div>;
 }

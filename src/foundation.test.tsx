@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it } from 'vitest';
-import { cleanup, render, screen, waitFor } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
@@ -159,7 +159,8 @@ describe('homepage artwork encounter', () => {
     const user = userEvent.setup();
     render(<MemoryRouter><Home/></MemoryRouter>);
     expect(screen.getByRole('heading', { level: 1, name: 'Make some art today.' })).toBeTruthy();
-    const control = screen.getByRole('button', { name: /See the whole painting/ });
+    fireEvent.load(document.querySelector('.mother-nature-full')!);
+    const control = screen.getByRole('button', { name: /View full painting/ });
     expect(control.getAttribute('aria-pressed')).toBe('false');
     await user.click(control);
     expect(screen.getByAltText(/Mother Nature, complete painting/)).toBeTruthy();
