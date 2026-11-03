@@ -3,6 +3,7 @@ import './Exhibitions.css';
 
 export function ExhibitionsPage() {
   return <section className="exhibitions-page" aria-labelledby="exhibition-title">
+    <div className="exhibition-copy">
     <header className="exhibition-heading">
       <p className="eyebrow">Exhibitions</p>
       <h1 id="exhibition-title">Forest &amp; Flowers</h1>
@@ -21,5 +22,10 @@ export function ExhibitionsPage() {
         <Link className="text-link" to="/collections/forest-and-flowers">Explore Forest &amp; Flowers</Link>
       </div>
     </div>
+    </div>
+    <figure className="exhibition-venue">
+      <img className="exhibition-venue-photo" src="/venues/field-day/exterior-960.webp" srcSet="/venues/field-day/exterior-640.webp 640w, /venues/field-day/exterior-960.webp 960w, /venues/field-day/exterior-1440.webp 1440w" sizes="(max-width: 800px) 86vw, (max-width: 1467px) 48vw, 704px" width="2365" height="1577" alt="Field Day’s brick exterior with two blue entrances and large industrial windows in Lawrenceville, Pittsburgh." fetchPriority="high" decoding="async"/>
+      <figcaption><span className="exhibition-venue-mark"><img src="/venues/field-day/logo.png" alt="Field Day" width="558" height="358"/></span></figcaption>
+    </figure>
   </section>;
 }
