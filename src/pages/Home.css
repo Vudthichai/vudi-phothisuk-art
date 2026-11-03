@@ -53,3 +53,6 @@ body:has(.forest-home) .footer-name{font-family:'Bodoni Moda',Didot,serif}
 .home-regal-row{width:94%;max-width:1800px}
 .home-ocean-copy h2,.home-regal-row .forest-section-heading h2{font-size:35px;line-height:1.2;letter-spacing:-1px}
 @media(max-width:700px){.home-ocean-copy{padding-inline:0}.home-ocean-copy h2,.home-regal-row .forest-section-heading h2{font-size:31px}}
+
+/* Use the existing image switch with native pointer and keyboard activation. */
+button.forest-hero-image{display:block;width:100%;border:0;padding:0;color:inherit;cursor:pointer}
