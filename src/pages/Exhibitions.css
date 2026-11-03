@@ -1,17 +1,20 @@
-.exhibitions-page{width:90%;max-width:1320px;margin:auto;padding:80px 0 110px;color:#28392f}
-.exhibition-heading{padding-bottom:65px;border-bottom:1px solid #d5d7cd}
-.exhibition-heading .eyebrow{margin-bottom:30px}
-.exhibition-heading h1{font-size:clamp(48px,7.5vw,104px);letter-spacing:-.045em;max-width:1000px;margin-bottom:28px}
-.exhibition-lead{font:400 clamp(20px,2.4vw,30px)/1.5 Georgia,'Times New Roman',serif;color:#596456;margin:0}
-.exhibition-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.65fr);gap:10%;padding-top:55px}
-.exhibition-details .eyebrow{margin-bottom:24px}
-.exhibition-details p:not(.eyebrow),.exhibition-details address{font:400 21px/1.6 Georgia,'Times New Roman',serif;margin-bottom:28px}
-.exhibition-details span{font:400 14px/1.8 Arial,Helvetica,sans-serif;color:#596456}
-.exhibition-synopsis{max-width:680px}
-.exhibition-synopsis h2{font-size:clamp(28px,3vw,38px);line-height:1.2;letter-spacing:-.025em;margin-bottom:26px}
-.exhibition-synopsis p{font-size:17px;line-height:1.9;color:#596456;margin-bottom:24px}
-.exhibition-synopsis .text-link{display:inline-block;min-height:44px;padding-block:12px;margin-top:5px}
-@media(max-width:700px){.exhibitions-page{width:86%;padding:45px 0 65px}.exhibition-heading{padding-bottom:35px}.exhibition-heading .eyebrow{margin-bottom:22px}.exhibition-heading h1{font-size:clamp(44px,12vw,64px);margin-bottom:22px}.exhibition-body{grid-template-columns:1fr;gap:28px;padding-top:30px}.exhibition-details{padding-bottom:4px;border-bottom:1px solid #d5d7cd}.exhibition-synopsis p{font-size:16px;line-height:1.85}}
-
+.exhibitions-page{width:90%;max-width:1320px;margin:auto;padding:72px 0 100px;color:#28392f;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:64px;align-items:start}
+.exhibition-copy{min-width:0}
 .exhibitions-page h1,.exhibitions-page h2{font-family:'Bodoni Moda',Didot,serif;font-weight:400;font-synthesis:none;font-optical-sizing:auto}
-.exhibition-lead{font:400 17px/1.85 Arial,Helvetica,sans-serif;max-width:720px}
+.exhibition-heading .eyebrow{margin-bottom:24px}
+.exhibition-heading h1{font-size:clamp(44px,4.5vw,66px);line-height:1.1;letter-spacing:-.04em;margin-bottom:28px}
+.exhibition-lead{font:400 16px/1.85 Arial,Helvetica,sans-serif;color:#596456;margin:0 0 30px}
+.exhibition-details{border-block:1px solid #d5d7cd;padding:25px 0 5px;margin-bottom:32px}
+.exhibition-details .eyebrow{margin-bottom:18px}
+.exhibition-details p:not(.eyebrow),.exhibition-details address{font:400 20px/1.6 Georgia,'Times New Roman',serif;margin-bottom:20px}
+.exhibition-details span{font:400 14px/1.8 Arial,Helvetica,sans-serif;color:#596456}
+.exhibition-synopsis h2{font-size:30px;line-height:1.2;letter-spacing:-.025em;margin-bottom:22px}
+.exhibition-synopsis p{font-size:16px;line-height:1.85;color:#596456;margin-bottom:22px}
+.exhibition-synopsis .text-link{display:inline-block;min-height:44px;padding-block:12px}
+.exhibition-venue{min-width:0;margin:0;padding-top:38px}
+.exhibition-venue-photo{display:block;width:100%;height:auto}
+.exhibition-venue figcaption{margin-top:24px}
+.exhibition-venue-mark{display:inline-block;padding:12px 20px;background:#000}
+.exhibition-venue-mark img{display:block;width:112px;height:auto}
+@media(max-width:1000px){.exhibitions-page{gap:36px}}
+@media(max-width:800px){.exhibitions-page{width:86%;padding:45px 0 65px;grid-template-columns:1fr;gap:32px}.exhibition-heading h1{font-size:clamp(44px,9vw,64px)}.exhibition-venue{padding-top:0}.exhibition-venue figcaption{margin-top:18px}}
