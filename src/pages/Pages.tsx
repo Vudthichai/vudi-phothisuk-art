@@ -1,3 +1,4 @@
+import { AvailableArt } from './AvailableArt';
 import { ExhibitionsPage } from './Exhibitions';
 import { Link, useParams } from 'react-router-dom';
 import './Home.css';
@@ -63,7 +64,7 @@ export function ContactPage() {
     </div>
   </section>;
 }
-export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'contact') return <ContactPage/>; if (page === 'about') return <AboutPage/>; if (page === 'exhibitions') return <><PageMeta title="Forest & Flowers — Exhibitions" description={informationPages.exhibitions.description}/><ExhibitionsPage/></>; const content = informationPages[page]; return <section className="section page"><PageMeta title={content.title} description={content.description}/><p className="eyebrow">Vudi Phothisuk Art</p><h1>{content.title}</h1><p className="page-intro">{content.description}</p><p className="content-note">This section is being prepared for the new portfolio.</p><Link className="text-link" to="/collections">Explore the collections →</Link></section>; }
+export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'available-art') return <><PageMeta title={informationPages[page].title} description={informationPages[page].description}/><AvailableArt/></>; if (page === 'contact') return <ContactPage/>; if (page === 'about') return <AboutPage/>; if (page === 'exhibitions') return <><PageMeta title="Forest & Flowers — Exhibitions" description={informationPages.exhibitions.description}/><ExhibitionsPage/></>; return <NotFound/>; }
 export function NotFound() { return <section className="section page"><PageMeta title="Page not found" description="This page could not be found in the Vudi Phothisuk Art portfolio."/><p className="eyebrow">404</p><h1>Page not found.</h1><Link className="button-link" to="/">Return home →</Link></section>; }
 
 function AboutPage() {
