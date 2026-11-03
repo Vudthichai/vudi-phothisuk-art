@@ -60,7 +60,6 @@ export function ContactPage() {
         <div><h2>A painting you love</h2><p>Include the painting’s title and anything you’d like to know about it.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Artwork%20inquiry">Ask about an artwork</a></div>
         <div><h2>Something personal</h2><p>Tell me about your idea, the space, and any size or timing you have in mind. It’s fine if you’re still figuring it out.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Commission%20conversation">Start a commission conversation</a></div>
       </div>
-      <p className="contact-signoff">Vudi Phothisuk</p>
     </div>
   </section>;
 }
