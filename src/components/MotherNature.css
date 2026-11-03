@@ -1,0 +1,13 @@
+/* The two original photographs differ in composition: crossfade rather than fake a continuous zoom. */
+.forest-feature .mother-nature-view{display:block;width:100%;padding:0;border:0;background:#fff;color:inherit;cursor:pointer;text-decoration:none;overflow:hidden}
+.mother-nature-stage{position:relative;display:block;height:min(52.875vw,1012.5px);transition:height .85s cubic-bezier(.2,.65,.3,1)}
+.mother-nature-stage>img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain;transition:opacity .8s ease,transform .85s cubic-bezier(.2,.65,.3,1)}
+.mother-nature-detail{opacity:1;transform:scale(1)}
+.mother-nature-full{opacity:0;transform:scale(1.04)}
+.is-whole .mother-nature-stage{height:clamp(550px,65vw,950px)}
+.is-whole .mother-nature-detail{opacity:0;transform:scale(.96)}
+.is-whole .mother-nature-full{opacity:1;transform:scale(1)}
+.mother-nature-stage .forest-drift-piece{animation-duration:.85s}
+@media(max-width:700px){.is-whole .mother-nature-stage{height:min(80svh,580px)}.mother-nature figcaption{flex-wrap:wrap}.mother-nature figcaption>button{min-height:44px}}
+@media(prefers-reduced-motion:reduce){.mother-nature-stage,.mother-nature-stage>img{transition:none;transform:none!important}}
+.forest-feature .mother-nature-view span{margin-left:0}
