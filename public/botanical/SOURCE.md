@@ -11,3 +11,7 @@ Three green leaves and two pink/apricot petals were generated together on a tran
 - petal-apricot.webp — 168 × 151, 5,990 bytes
 
 Total: 28,206 bytes. Each asset is reused for mobile menu openings on the homepage and Forest & Flowers page, and for Mother Nature transitions only. Assets have real alpha transparency; the original generated sheet is retained in the execution workspace.
+
+## Phase 1 library migration
+
+The active effects now resolve assets through `src/botanical/registry.ts`. Three of these generated cutouts were copied byte-for-byte into the new leaf/petal directories; these legacy originals remain unchanged for provenance. The expanded library and current inventory are documented in `src/assets/botanical/SOURCE.md`.

@@ -114,5 +114,5 @@ it('uses exactly three leaf and two petal cutouts with empty alt text in a hidde
   expect(layer.getAttribute('aria-hidden')).toBe('true');
   expect(layer.querySelectorAll('.forest-leaf')).toHaveLength(3);
   expect(layer.querySelectorAll('.forest-petal')).toHaveLength(2);
-  for(const image of layer.querySelectorAll('img')){expect(image.getAttribute('alt')).toBe('');expect(image.getAttribute('src')).toMatch(/^\/botanical\/.+\.webp$/);expect(image.getAttribute('draggable')).toBe('false');}
+  for(const image of layer.querySelectorAll('img')){expect(image.getAttribute('alt')).toBe('');expect(image.getAttribute('src')).toContain('/assets/botanical/');expect(image.getAttribute('draggable')).toBe('false');}
 });
