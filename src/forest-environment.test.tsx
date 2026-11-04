@@ -2,6 +2,8 @@
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { act, cleanup, render, waitFor } from '@testing-library/react';
 import { BarkReveal, ForestFoliage, VineGrowth } from './components/ForestEnvironment';
+import { PathVine } from './components/PathVine';
+import { MushroomStoryboard } from './dev/MushroomStoryboard';
 import { MushroomGrowth } from './components/MushroomGrowth';
 import type { BarkAsset, FoliagePiece, GrowthSequence, VineAsset } from './botanical/forest';
 const vine: VineAsset = { id: 'test-vine', image: '/vine.webp', width: 400, height: 400, path: 'M 5 95 C 60 80 10 20 90 5', revealWidth: 20 };
@@ -99,4 +101,35 @@ it('holds decode failures and does not fire cues or play broken assets', async (
   const { container } = render(<VineGrowth asset={vine} trigger="mount" onCue={cue}/>);
   await waitFor(() => expect(container.querySelector('[data-status="error"]')).not.toBeNull());
   expect(Element.prototype.animate).not.toHaveBeenCalled(); expect(cue).not.toHaveBeenCalled();
+});
+
+it('builds arbitrary vine paths with tangent-attached leaves and staggered growth', async () => {
+  Object.defineProperty(SVGElement.prototype, 'getTotalLength', { configurable: true, value: () => 100 });
+  Object.defineProperty(SVGElement.prototype, 'getPointAtLength', { configurable: true, value: (length: number) => ({ x: length, y: 100 - length }) });
+  const leaves = [{ id: 'a', image: '/leaf.webp', width: 100, height: 200, at: .21, size: 8, angle: -30 }, { id: 'b', image: '/leaf.webp', width: 100, height: 200, at: .57, size: 7, angle: 40 }];
+  const { container, rerender } = render(<PathVine path={vine.path} leaves={leaves} replayKey={1} duration={4}/>);
+  await waitFor(() => expect(container.querySelector('[data-status="playing"]')).not.toBeNull());
+  expect(container.querySelectorAll('[data-growing-stem]')).toHaveLength(2);
+  expect(container.querySelector('[data-vine-leaf]')?.parentElement?.getAttribute('transform')).toContain('translate(21 79)');
+  const calls = vi.mocked(Element.prototype.animate).mock.calls;
+  expect(calls[2][1]).toMatchObject({ delay: 816, duration: 600 });
+  expect(calls[3][1]).toMatchObject({ delay: 2176, duration: 600 });
+  const nextPath = 'M 10 90 C 5 5 50 5 90 10';
+  rerender(<PathVine path={nextPath} leaves={leaves} replayKey={1}/>);
+  await waitFor(() => expect(container.querySelector('[data-growing-stem]')?.getAttribute('d')).toBe(nextPath));
+  expect(cancel).toHaveBeenCalled();
+});
+it('plays rejected mushroom frames only in a dev storyboard, never approving a growth asset', async () => {
+  const { container } = render(<MushroomStoryboard replayKey={1} duration={6}/>);
+  await waitFor(() => expect(container.querySelector('[data-status="playing"]')).not.toBeNull());
+  expect(container.textContent).toContain('UNAPPROVED');
+  const [frames, options] = vi.mocked(Element.prototype.animate).mock.calls[0];
+  expect(frames).toHaveLength(16);
+  expect((frames as Keyframe[])[0]).toMatchObject({ transform: 'translate(-0%, -0%)', easing: 'steps(1, end)' });
+  expect((frames as Keyframe[])[15]).toMatchObject({ transform: 'translate(-75%, -75%)' });
+  expect(options).toMatchObject({ duration: 6000 });
+  expect(container.querySelector('.flower-bloom')).toBeNull();
+  act(() => { reduced = true; preferenceListeners.forEach(listener => listener()); });
+  expect(cancel).toHaveBeenCalled();
+  expect(container.querySelector('[data-status="reduced-motion"]')).not.toBeNull();
 });

@@ -10,9 +10,9 @@ animation timing is changed. The Phase 2 dev HTML pattern is extended with
 1. Run `npm run dev -- --host 127.0.0.1`.
 2. Open `http://127.0.0.1:5173/dev/forest.html` (also linked from the Phase 2 preview).
 3. Use the separate replay buttons and duration/scale controls. Foliage also uses
-   intensity. Mushroom replay is intentionally disabled: assets did not pass.
-4. Expand the rejected mushroom sheet to assess continuity/edges on two backgrounds.
-5. Enable OS/browser reduced motion: foliage is still, vine fully shown, bark
+   intensity. Mushroom storyboard replay is a diagnostic aid only: imagery still fails approval.
+4. Replay the visible rejected mushroom storyboard, then expand the full sheet to assess continuity/edges on two backgrounds. Its asset-blocked status never changes.
+5. Enable OS/browser reduced motion: foliage is still, vine fully shown, mushroom holds its final rejected state, bark
    removed to show the original artwork. There is no audio, autoplay or loop by
    default. Keyboard Enter/Space and touch activate standard native buttons.
 
@@ -27,7 +27,9 @@ it does not expose this review environment.
 - `GrowthSequence` reuses the Phase 2 `FlowerSequence` contract. `MushroomGrowth`
   delegates to `FlowerBloom` unchanged; its historical CSS names are internal.
   Approved continuous frames are the growth, never a scaled finished mushroom.
-  `needs-assets` scenes cannot play. The existing duration, scale, placement,
+  `needs-assets` scenes cannot play in the approved renderer. The separate dev-only
+  `MushroomStoryboard` cycles rejected contact-sheet cells with stepped transforms
+  for review; it neither passes these frames into that renderer nor approves them. The existing duration, scale, placement,
   trigger, replay and reduced-motion behavior therefore stays identical.
 - New layered scenes share `ForestControls` and `useForestMotion`. The hook handles
   image decode, manual/mount/one-shot-visible triggers, finite playback, replay,
@@ -39,9 +41,14 @@ it does not expose this review environment.
   nearby leaves progressively. Path/asset/origin are configuration, not component
   rewrites. Changing path direction changes the reveal origin. This is a mask
   prototype, not a photographed biological growth sequence or path-deformation rig.
+- `PathVine` adds a freely configurable normalized SVG path, shaded illustrated
+  stem and existing photographic `VineLeaf` cutouts. Leaf attachments follow the
+  curve tangent and appear only after the advancing tip reaches their nonuniform
+  positions. The meander/edge-wrap selector demonstrates reconfiguration without
+  warping a photograph. It shares the same lifecycle and static placement helper.
 - `ForestFoliage` takes cutouts and attachment origins. Small rotations have
   different amplitudes, keyframe times, durations and delays. A single irregular
-  breeze envelope returns to rest, with no synchronized repeating sine loop.
+  breeze envelope includes subtle Y-axis depth pivoting and returns to rest, with no synchronized repeating sine loop.
 - `BarkReveal` accepts texture plus registered tonal masks and an unchanged artwork
   `{src,width,height}`. Matching texture/mask cover mapping preserves the ridges;
   artwork uses `contain` inside its original aspect ratio. Bands clear from
@@ -65,9 +72,11 @@ only runs its rAF loop during an approved sequence.
 
 ## Quality and validation
 
-Mushroom is **blocked**, vine is an **experimental photographic path reveal**,
-foliage is a **restrained cutout motion prototype**, and bark is an **experimental
-ridge dissolve**. None is claimed as a finished immersive environment. Asset
+Mushroom is **asset-blocked with replayable unapproved storyboard inspection**;
+vine is an **experimental illustrated-stem/photographic-leaf growth prototype**
+(with the earlier photographic mask available for comparison); foliage is an
+**approved prototype for restrained cutout motion only**; bark remains an
+**experimental ridge dissolve**. None is claimed as a finished immersive environment. Asset
 provenance, bytes and missing imagery are in `../dev/forest/SOURCE.md`.
 
 Tests cover approval gating, Phase 2 reuse, unique/path-configurable masks, idle
@@ -88,3 +97,10 @@ and mobile memory/cadence. Then review vine edges and leaf development, branch
 attachments, and bark transitions on real Safari. Only after that select painting
 contexts, establish unobstructed safe zones, and request separate approval for
 public assignment. No painting mapping or Phase 4 feature is implemented here.
+
+
+The follow-up visual gallery adds no image bytes and keeps the same production
+bundle hashes. Every study now displays an explicit quality status. All four have
+visible scenes and replay, but mushroom replay is conspicuously watermarked as
+unapproved storyboard inspection, not a claim of believable growth. Reduced motion
+holds the final storyboard frame. No quality gate has been relaxed.
