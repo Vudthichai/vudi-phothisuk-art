@@ -1,0 +1,397 @@
+{
+  "title": "Forest & Flowers",
+  "introduction": [
+    "Forest & Flowers brings together dimensional mixed-media acrylic paintings shaped by sculpted organic plaster, layered color, and metallic highlights. Leaves, blossoms, bark, and flowing landscapes become ways of exploring discovery, love, remembrance, and our dependence on the natural world. Each painting carries its own story, from an unexpected encounter with beauty to a personal tribute or a call for conservation. Across the collection, shifting light reveals details within the textured surfaces, encouraging the close attention through which both nature and personal meaning become more visible."
+  ],
+  "artworks": [
+    {
+      "id": "mother-nature",
+      "slug": "mother-nature",
+      "title": "Mother Nature",
+      "dimensions": "24 × 36 in.",
+      "medium": "Mixed-media acrylic with organic plaster on canvas",
+      "description": [
+        "A hidden goddess emerges from the forest, her profile formed by the leaves, vines, and flowers that surround her. Beside her, a pale river winds between densely textured mountains, drawing the eye into the landscape. Sculpted foliage and metallic highlights reveal a presence that might initially go unnoticed.",
+        "Mother Nature considers the contradictions in our relationship with the natural world: we depend on its generosity, yet often mistake that dependence for ownership. She sustains us, inspires us, and reclaims what we leave behind. Her beauty rewards curiosity; her strength exists beyond our permission. The painting asks us to look more closely, and to recognize the difference between appreciating nature and believing we control it."
+      ],
+      "copyStatus": "artist-source",
+      "availability": "provisional",
+      "availabilityNote": "Availability to be confirmed",
+      "images": [
+        {
+          "id": "mother-nature",
+          "alt": "Mother Nature — temporary photograph, full composition",
+          "role": "full",
+          "variants": [
+            {
+              "key": "mother-nature-640",
+              "width": 640,
+              "height": 961,
+              "src": "/forest-preview/images/mother-nature-640.webp"
+            },
+            {
+              "key": "mother-nature-1200",
+              "width": 1200,
+              "height": 1802,
+              "src": "/forest-preview/images/mother-nature-1200.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "blooming-desire",
+      "slug": "blooming-desire",
+      "title": "Blooming Desire",
+      "dimensions": "24 × 36 in.",
+      "medium": "Mixed-media acrylic with organic plaster on canvas",
+      "description": [
+        "Blooming Desire explores the excitement of finding someone who makes the ordinary feel unfamiliar again, opening a world of experiences to discover together. Cream-colored sculpted flowers rise from intertwining currents of coral, red, and gold, while dark stems and leaves thread through the restless surface.",
+        "Each blossom has its own irregular shape, bringing the painting’s idea of imperfect connection into physical form. The swirling textures echo the exchange of thoughts, feelings, and possibilities that accompanies a new relationship. There is pleasure in the uncertainty of what might emerge, and in making the attempt together. At its heart is a desire to be understood and embraced as we are, with room for something shared to grow."
+      ],
+      "copyStatus": "artist-source",
+      "availability": "provisional",
+      "availabilityNote": "Availability to be confirmed",
+      "images": [
+        {
+          "id": "blooming-desire",
+          "alt": "Blooming Desire — temporary photograph, full composition",
+          "role": "full",
+          "variants": [
+            {
+              "key": "blooming-desire-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/blooming-desire-640.webp"
+            },
+            {
+              "key": "blooming-desire-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/blooming-desire-1200.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wild-tiger-lilies",
+      "slug": "wild-tiger-lilies",
+      "title": "Wild Tiger Lilies",
+      "dimensions": "24 × 36 in.",
+      "medium": "Mixed-media acrylic with organic plaster on canvas",
+      "description": [
+        "Bright orange tiger lilies punctuate a dense field of curling textures, their spotted petals unfolding among sculpted leaves. A sweeping gold-toned curve leads through greens, pinks, and shadowed passages, offering glimpses of flowers within the intricate surface.",
+        "Wild Tiger Lilies draws on the pleasure of discovering beauty beyond familiar paths and carefully tended gardens. Its blooms appear within the surrounding tangle, giving the composition the spontaneity of something encountered while wandering. Their vivid color catches our attention first; the quieter details hold it. The painting celebrates discoveries we could not have planned, and the curiosity that allows us to notice them."
+      ],
+      "copyStatus": "artist-source",
+      "availability": "provisional",
+      "availabilityNote": "Availability to be confirmed",
+      "images": [
+        {
+          "id": "wild-tiger-lilies",
+          "alt": "Wild Tiger Lilies — temporary photograph, full composition",
+          "role": "full",
+          "variants": [
+            {
+              "key": "wild-tiger-lilies-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/wild-tiger-lilies-640.webp"
+            },
+            {
+              "key": "wild-tiger-lilies-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/wild-tiger-lilies-1200.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gilded-bloom",
+      "slug": "gilded-bloom",
+      "title": "Gilded Bloom",
+      "dimensions": "24 × 36 in.",
+      "medium": "Mixed-media acrylic with organic plaster on canvas",
+      "description": [
+        "A partial bloom extends inward from the edge of the canvas, its golden and copper-toned petals set against layered washes of green, blush pink, and cream. Fine grooves mark the petals, while a rougher central surface creates a contrast in texture. Subtle blue and purple undertones beneath the warmer colors reveal themselves as the light and viewing angle change.",
+        "Developed through experimentation with color, layering, and organic form, Gilded Bloom gives curiosity a visible presence. Broad passages of paint leave room around the flower, allowing its contours and metallic nuances to emerge gradually. The composition rewards close attention to the small variations through which the painting took shape."
+      ],
+      "copyStatus": "artist-source",
+      "availability": "provisional",
+      "availabilityNote": "Availability to be confirmed",
+      "images": [
+        {
+          "id": "gilded-bloom",
+          "alt": "Gilded Bloom — temporary photograph, full composition",
+          "role": "full",
+          "variants": [
+            {
+              "key": "gilded-bloom-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/gilded-bloom-640.webp"
+            },
+            {
+              "key": "gilded-bloom-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/gilded-bloom-1200.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a-forest-forgotten",
+      "slug": "a-forest-forgotten",
+      "title": "A Forest Forgotten",
+      "dimensions": "24 × 36 in.",
+      "medium": "Mixed-media acrylic with organic plaster on canvas",
+      "description": [
+        "A towering tree trunk fills the center of A Forest Forgotten, its deeply worked surface rising beyond the canvas. Around it, sculpted leaves and pale flowers frame glimpses of green forest beneath a sky of pink, gold, and blue. The close viewpoint gives the tree a commanding presence while allowing the surrounding landscape to remain partly concealed.",
+        "Inspired by the conservation work of Paul Rosolie and Junglekeepers, the painting reflects on the beauty and vulnerability of rainforests, and on the distance between recognizing their value and acting to protect them. It brings that concern into a tangible encounter with bark, foliage, color, and scale.",
+        "10% of the sale price of this original artwork will be donated to Junglekeepers in support of its Amazon rainforest conservation efforts."
+      ],
+      "copyStatus": "artist-source",
+      "availability": "provisional",
+      "availabilityNote": "Availability to be confirmed",
+      "images": [
+        {
+          "id": "a-forest-forgotten",
+          "alt": "A Forest Forgotten — temporary photograph, full composition",
+          "role": "full",
+          "variants": [
+            {
+              "key": "a-forest-forgotten-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/a-forest-forgotten-640.webp"
+            },
+            {
+              "key": "a-forest-forgotten-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/a-forest-forgotten-1200.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "moss-and-mushrooms",
+      "slug": "moss-and-mushrooms",
+      "title": "Moss & Mushrooms",
+      "dimensions": "30 × 40 in.",
+      "medium": "Mixed-media acrylic with organic plaster on canvas",
+      "description": [
+        "Deep diagonal grooves carry the eye across the bark of an old forest tree. Earthy browns and fine golden highlights trace its ridges, interrupted by vivid patches of green moss. Clusters of sculpted mushrooms project from the surface, their rust-colored tops and pale edges creating small, distinct pauses within the sweeping grain.",
+        "From a distance, Moss & Mushrooms reads as an abstract arrangement of lines, color, and movement. Closer viewing reveals the individual forms inhabiting the bark. This shift in perspective is central to the painting: a surface easily passed by becomes a landscape of its own, full of detail and quiet life."
+      ],
+      "copyStatus": "artist-source",
+      "availability": "provisional",
+      "availabilityNote": "Availability to be confirmed",
+      "images": [
+        {
+          "id": "moss-and-mushrooms",
+          "alt": "Moss & Mushrooms — temporary photograph, full composition",
+          "role": "full",
+          "variants": [
+            {
+              "key": "moss-and-mushrooms-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/moss-and-mushrooms-640.webp"
+            },
+            {
+              "key": "moss-and-mushrooms-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/moss-and-mushrooms-1200.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ethereal-bloom",
+      "slug": "ethereal-bloom",
+      "title": "Ethereal Bloom",
+      "dimensions": "30 × 40 in.",
+      "medium": "Mixed-media acrylic with organic plaster on canvas",
+      "description": [
+        "Five sculpted flowers are spaced across a flowing field of pink, green, gold, and deep shadow. Their placement gives the eye points of rest within the elaborate surface, where curling marks gather, unfold, and turn into one another. Metallic highlights trace the raised textures, revealing different details as light moves across the painting.",
+        "Ethereal Bloom finds its balance in the relationship between these distinct blossoms and the movement surrounding them. Each flower holds its own place while contributing to the rhythm of the whole. The composition offers an expansive first impression, followed by a more intimate experience of small contours, layered color, and sculptural detail."
+      ],
+      "copyStatus": "artist-source",
+      "availability": "provisional",
+      "availabilityNote": "Availability to be confirmed",
+      "images": [
+        {
+          "id": "ethereal-bloom",
+          "alt": "Ethereal Bloom — temporary photograph, full composition",
+          "role": "full",
+          "variants": [
+            {
+              "key": "ethereal-bloom-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/ethereal-bloom-640.webp"
+            },
+            {
+              "key": "ethereal-bloom-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/ethereal-bloom-1200.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "tiger-lily",
+      "slug": "tiger-lily",
+      "title": "Tiger Lily",
+      "dimensions": "24 × 36 in.",
+      "medium": "Mixed-media acrylic with organic plaster on canvas",
+      "description": [
+        "Two orange tiger lilies rise from an intricate surface of evergreen tones, soft pink, and gold. Their spotted petals curl outward, giving the flowers a sculptural presence against the tightly worked background. A winding band of warm color sweeps between them, carrying the glow of sunset through the composition.",
+        "In Tiger Lily, broad movement and fine detail work together. The curve guides the eye across the canvas, while smaller patterns and scattered leaves offer reasons to pause. Bright blossoms stand against quieter greens and darker edges, creating a sense of warmth within the surrounding foliage. The painting brings the energy of flowering forms into a landscape shaped by texture and light."
+      ],
+      "copyStatus": "artist-source",
+      "availability": "not-for-sale",
+      "availabilityNote": "Not for Sale (personal gift)",
+      "images": [
+        {
+          "id": "tiger-lily",
+          "alt": "Tiger Lily — temporary photograph, full composition",
+          "role": "full",
+          "variants": [
+            {
+              "key": "tiger-lily-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/tiger-lily-640.webp"
+            },
+            {
+              "key": "tiger-lily-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/tiger-lily-1200.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "75-leaves",
+      "slug": "75-leaves",
+      "title": "75 Leaves",
+      "dimensions": "24 × 36 in.",
+      "medium": "Mixed-media acrylic with organic plaster on canvas",
+      "description": [
+        "75 Leaves pays tribute to WWII pilot Wallace N. “Wally” King. Each of its 75 sculpted leaves represents one of the 75 combat missions he flew. A blue-and-gold current, representing the Elbe River, winds through layered passages of green, pink, and metallic texture.",
+        "Among the foliage, a single golden-bronze leaf stands apart: a tribute to King’s life and a reminder that humanity and hope can endure amid war. The flowing composition brings these meanings into an organic landscape, holding courage and sacrifice alongside the beauty of life. Its details invite a slower reading, allowing the tribute to emerge through the individual leaves and the river moving among them."
+      ],
+      "copyStatus": "artist-source",
+      "availability": "not-for-sale",
+      "availabilityNote": "Not for Sale (dedicated tribute)",
+      "images": [
+        {
+          "id": "75-leaves",
+          "alt": "75 Leaves — temporary photograph, full composition",
+          "role": "full",
+          "variants": [
+            {
+              "key": "75-leaves-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/75-leaves-640.webp"
+            },
+            {
+              "key": "75-leaves-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/75-leaves-1200.webp"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dragon-lily",
+      "slug": "dragon-lily",
+      "title": "Dragon Lily",
+      "dimensions": null,
+      "medium": null,
+      "description": [
+        "Two sculpted pink lilies emerge from a richly textured field of turquoise, blue, violet, and gold. Their spotted petals curl outward, casting delicate shadows across the flowing surface. A sweeping golden ribbon winds between the blossoms, drawing the eye through layers of metallic color and intricate, wave-like patterns. Small green leaves punctuate the composition, bringing moments of stillness to its movement.",
+        "Dragon Lily explores the tension between strength and delicacy. Its blossoms appear both graceful and commanding, rising from an environment of restless color and sculptural movement. The winding gold passage connects the two flowers, suggesting an unseen current flowing between them. As light moves across the painting, its raised surfaces reveal shifting colors and shadows, inviting the viewer to discover new details with each encounter."
+      ],
+      "copyStatus": "provisional",
+      "availability": "provisional",
+      "availabilityNote": "Availability to be confirmed",
+      "images": [
+        {
+          "id": "dragon-lily-full",
+          "alt": "Dragon Lily — full composition",
+          "role": "full",
+          "variants": [
+            {
+              "key": "dragon-lily-full-640",
+              "width": 640,
+              "height": 480,
+              "src": "/forest-preview/images/dragon-lily-full-640.webp"
+            },
+            {
+              "key": "dragon-lily-full-1200",
+              "width": 1200,
+              "height": 900,
+              "src": "/forest-preview/images/dragon-lily-full-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "dragon-lily-angle",
+          "alt": "Dragon Lily — angled view showing dimensional depth",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "dragon-lily-angle-640",
+              "width": 640,
+              "height": 480,
+              "src": "/forest-preview/images/dragon-lily-angle-640.webp"
+            },
+            {
+              "key": "dragon-lily-angle-1200",
+              "width": 1200,
+              "height": 900,
+              "src": "/forest-preview/images/dragon-lily-angle-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "dragon-lily-detail",
+          "alt": "Dragon Lily — sculptural close-up",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "dragon-lily-detail-640",
+              "width": 640,
+              "height": 480,
+              "src": "/forest-preview/images/dragon-lily-detail-640.webp"
+            },
+            {
+              "key": "dragon-lily-detail-1200",
+              "width": 1200,
+              "height": 900,
+              "src": "/forest-preview/images/dragon-lily-detail-1200.webp"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

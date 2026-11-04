@@ -1,13 +1,16 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import type { ForestCollectionData, ForestImage, ForestArtwork } from './types';
 import { BotanicalFall } from '../components/BotanicalFall';
 import './PrivateForest.css';
-const api = '/.netlify/functions/forest-collection';
+const collectionUrl = '/forest-preview/collection.json';
+const sessionKey = 'vudi-forest-preview-unlocked';
+function remembered() { try { return sessionStorage.getItem(sessionKey) === 'yes'; } catch { return false; } }
+function remember(value: boolean) { try { if (value) sessionStorage.setItem(sessionKey, 'yes'); else sessionStorage.removeItem(sessionKey); } catch { /* Access still works in this view when storage is unavailable. */ } }
 const base = '/collections/forest-and-flowers';
 function Photograph({ image, eager = false }: { image: ForestImage; eager?: boolean }) {
   const main = image.variants[image.variants.length - 1];
-  return <img src={`${api}?image=${encodeURIComponent(main.key)}`} srcSet={image.variants.map(v => `${api}?image=${encodeURIComponent(v.key)} ${v.width}w`).join(', ')} sizes="(max-width:700px) 90vw, 50vw" width={main.width} height={main.height} alt={image.alt} loading={eager ? 'eager' : 'lazy'} decoding="async" />;
+  return <img src={main.src} srcSet={image.variants.map(v => `${v.src} ${v.width}w`).join(', ')} sizes="(max-width:700px) 90vw, 50vw" width={main.width} height={main.height} alt={image.alt} loading={eager ? 'eager' : 'lazy'} decoding="async" />;
 }
 function Inquiry({ artwork }: { artwork: ForestArtwork }) {
   return artwork.availability === 'not-for-sale' ? <p className="private-availability">{artwork.availabilityNote}</p> : <div><p className="private-availability">{artwork.availabilityNote}</p><a className="text-link" href={`mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent('Artwork inquiry — ' + artwork.title)}`}>Inquire for Pricing</a></div>;
@@ -21,6 +24,8 @@ export function PrivateForest() {
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
   const [sequence, setSequence] = useState(0);
+  const unlockRequest = useRef<AbortController | null>(null);
+  useEffect(() => () => unlockRequest.current?.abort(), []);
   useEffect(() => {
     const oldTitle = document.title;
     const description = document.querySelector('meta[name="description"]');
@@ -35,14 +40,15 @@ export function PrivateForest() {
     return () => { document.title = oldTitle; description?.setAttribute('content',oldDescription); if (!existing) robots.remove(); else if (oldRobots !== null && oldRobots !== undefined) robots.setAttribute('content',oldRobots); };
   }, []);
   useEffect(() => {
+    if (!remembered()) { setChecking(false); return; }
     const abort = new AbortController();
-    fetch(api, { credentials: 'same-origin', cache: 'no-store', signal: abort.signal }).then(async response => {
-      if (response.ok) setData(await response.json());
-      else if (response.status !== 401) setMessage((await response.json()).error);
-    }).catch(error => { if (error.name !== 'AbortError') setMessage('The private preview is temporarily unavailable.'); }).finally(() => { if (!abort.signal.aborted) setChecking(false); });
+    fetch(collectionUrl, { cache: 'no-store', signal: abort.signal }).then(async response => {
+      if (!response.ok) throw new Error();
+      setData(await response.json());
+    }).catch(error => { if (error.name !== 'AbortError') setMessage('The preview could not load. Please try again.'); }).finally(() => { if (!abort.signal.aborted) setChecking(false); });
     return () => abort.abort();
   }, []);
-  // Browser back/forward cache must revalidate the session before redisplaying content.
+  // Re-read this tab's visibility flag after browser back/forward restoration.
   useEffect(() => {
     const refresh = (event: PageTransitionEvent) => { if (event.persisted) window.location.reload(); };
     window.addEventListener('pageshow', refresh);
@@ -50,22 +56,22 @@ export function PrivateForest() {
   }, []);
   useEffect(() => { setSequence(0); }, [location.pathname]);
   async function unlock(event: FormEvent) {
-    event.preventDefault(); setBusy(true); setMessage('');
+    event.preventDefault(); setMessage('');
+    if (password !== 'Evergreen') { setPassword(''); setMessage('That password was not recognized. Please try again.'); return; }
+    setBusy(true);
+    unlockRequest.current?.abort();
+    const abort = new AbortController(); unlockRequest.current = abort;
     try {
-      const response = await fetch(api, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password }) });
-      const result = await response.json(); setPassword('');
-      if (response.ok) setData(result); else setMessage(result.error);
-    } catch { setMessage('The private preview is temporarily unavailable.'); }
-    finally { setBusy(false); }
-  }
-  async function lock() {
-    setBusy(true); setMessage('');
-    try {
-      const response = await fetch(api, { method: 'DELETE', credentials: 'same-origin' });
+      const response = await fetch(collectionUrl, { cache: 'no-store', signal: abort.signal });
       if (!response.ok) throw new Error();
-      setData(null); setSequence(0);
-    } catch { setData(null); setMessage('Content hidden. Session could not be cleared; close this browser session to finish locking.'); }
-    finally { setBusy(false); }
+      const result = await response.json();
+      if (!abort.signal.aborted) { remember(true); setData(result); setPassword(''); }
+    } catch { if (!abort.signal.aborted) setMessage('The preview could not load. Please try again.'); }
+    finally { if (!abort.signal.aborted) setBusy(false); }
+  }
+  function lock() {
+    unlockRequest.current?.abort();
+    remember(false); setData(null); setSequence(0); setPassword(''); setMessage('');
   }
   const artwork = data?.artworks.find(a => a.slug === artworkSlug);
   return <section className="private-forest section page">
