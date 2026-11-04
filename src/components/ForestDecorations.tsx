@@ -1,9 +1,16 @@
 import './ForestDecorations.css';
 
-/** Small illustrated accents; never part of the artwork or the accessibility tree. */
+const pieces = [
+  { file: 'leaf-serrated', className: 'forest-leaf leaf-0', width: 127, height: 168 },
+  { file: 'leaf-curled', className: 'forest-leaf leaf-1', width: 92, height: 168 },
+  { file: 'leaf-rounded', className: 'forest-leaf leaf-2', width: 168, height: 155 },
+  { file: 'petal-pink', className: 'forest-petal petal-0', width: 168, height: 133 },
+  { file: 'petal-apricot', className: 'forest-petal petal-1', width: 168, height: 151 },
+];
+
+/** Reusable generated cutouts; kept separate from the original artwork photographs. */
 export function ForestDecorations() {
   return <span className="forest-drift" aria-hidden="true">
-    {[0, 1, 2].map(index => <svg key={index} className={`forest-drift-piece forest-leaf leaf-${index}`} viewBox="0 0 32 48" focusable="false"><path d="M27 3C6 5-2 22 13 42 29 36 33 19 27 3Z"/><path className="leaf-vein" d="M13 42 26 6M20 24l-9-5m6 14 10-5"/></svg>)}
-    <svg className="forest-drift-piece forest-petal" viewBox="0 0 32 48" focusable="false"><path d="M16 43C-3 29-2 5 13 5c16-7 26 15 3 38Z"/></svg>
+    {pieces.map(piece => <span key={piece.file} className={`forest-drift-piece ${piece.className}`}><img src={`/botanical/${piece.file}.webp`} width={piece.width} height={piece.height} alt="" draggable={false} decoding="async"/></span>)}
   </span>;
 }

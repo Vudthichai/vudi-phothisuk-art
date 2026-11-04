@@ -7,7 +7,8 @@
 .is-whole .mother-nature-stage{height:clamp(550px,65vw,950px)}
 .is-whole .mother-nature-detail{opacity:0;transform:scale(.96)}
 .is-whole .mother-nature-full{opacity:1;transform:scale(1)}
-.mother-nature-stage .forest-drift-piece{animation-duration:.85s}
+.mother-nature-stage .forest-drift{--fall-distance:min(34vw,260px)}
+.is-whole .mother-nature-stage .forest-drift{--fall-distance:min(65svh,520px)}
 @media(max-width:700px){.is-whole .mother-nature-stage{height:min(80svh,580px)}.mother-nature figcaption{flex-wrap:wrap}.mother-nature figcaption>button{min-height:44px}}
 @media(prefers-reduced-motion:reduce){.mother-nature-stage,.mother-nature-stage>img{transition:none;transform:none!important}}
 .forest-feature .mother-nature-view span{margin-left:0}

@@ -1,9 +1,11 @@
-.forest-drift{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2}
-.forest-drift-piece{position:absolute;top:-35px;width:15px;height:24px;opacity:0;animation:forest-fall 1.25s ease-out both;--drift-x:20px;--turn:75deg}
-.forest-leaf{fill:#647e4c}.leaf-vein{fill:none;stroke:#edf0df;stroke-width:1;opacity:.7}
-.leaf-0{left:8%;--drift-x:24px;--turn:65deg}
-.leaf-1{left:84%;width:12px;animation-delay:.1s;animation-duration:1.4s;--drift-x:-25px;--turn:-80deg}
-.leaf-2{left:62%;width:10px;animation-delay:.06s;animation-duration:1.1s;--drift-x:18px;--turn:110deg}
-.forest-petal{left:35%;width:11px;fill:#bb8a77;animation-delay:.08s;animation-duration:1.3s;--drift-x:-18px;--turn:145deg}
-@keyframes forest-fall{0%{opacity:0;transform:translate(0,0) rotate(-15deg)}15%{opacity:.35}70%{opacity:.2}100%{opacity:0;transform:translate(var(--drift-x),180px) rotate(var(--turn))}}
-@media(prefers-reduced-motion:reduce){.forest-drift{display:none!important}.forest-drift-piece{animation:none}}
+.forest-drift{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;--fall-distance:clamp(280px,58svh,600px)}
+.forest-drift-piece{position:absolute;top:-65px;width:36px;opacity:0;pointer-events:none;--duration:3.3s;--delay:0s;--drift-x:100px;--turn:65deg;--sway:8px;animation:forest-fall var(--duration) linear var(--delay) both}
+.forest-drift-piece img{display:block;width:100%;height:auto;pointer-events:none;animation:forest-sway var(--duration) ease-in-out var(--delay) both}
+.leaf-0{left:10%}
+.leaf-1{left:74%;width:31px;--duration:3.9s;--delay:.1s;--drift-x:-110px;--turn:-70deg;--sway:-10px}
+.leaf-2{left:42%;width:43px;--duration:2.8s;--delay:.25s;--drift-x:65px;--turn:110deg}
+.petal-0{left:25%;width:32px;--duration:3.6s;--delay:.12s;--drift-x:-80px;--turn:145deg;--sway:-7px}
+.petal-1{left:88%;width:35px;--duration:3.1s;--delay:.2s;--drift-x:-120px;--turn:-100deg}
+@keyframes forest-fall{0%{opacity:0;transform:translate3d(0,0,0) rotate(-15deg)}12%{opacity:.7}65%{opacity:.6}100%{opacity:0;transform:translate3d(var(--drift-x),var(--fall-distance),0) rotate(var(--turn))}}
+@keyframes forest-sway{0%{transform:translateX(0) rotate(-8deg)}28%{transform:translateX(var(--sway)) rotate(7deg)}62%{transform:translateX(calc(var(--sway) * -1)) rotate(-5deg)}100%{transform:translateX(2px) rotate(4deg)}}
+@media(prefers-reduced-motion:reduce){.forest-drift{display:none!important}.forest-drift-piece,.forest-drift-piece img{animation:none!important}}
