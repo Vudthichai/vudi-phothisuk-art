@@ -1,0 +1,16 @@
+.forest-environment { position: relative; aspect-ratio: 1; width: 100%; overflow: hidden; pointer-events: none; contain: layout paint; }
+.forest-environment .forest-preload { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.forest-placement, .forest-vine svg { position: absolute; }
+.forest-vine svg { overflow: hidden; }
+.forest-vine[data-status="idle"] [data-vine-path], .forest-vine[data-status="loading"] [data-vine-path] { stroke-dashoffset: 100; }
+.forest-foliage-piece { position: absolute; }
+.forest-foliage-piece img { width: 100%; height: auto; display: block; }
+.forest-artwork { position: absolute; width: 100%; height: 100%; object-fit: contain; object-position: inherit; }
+.forest-bark-band { position: absolute; inset: 0; background-size: cover; background-position: center; mask-size: cover; mask-position: center; -webkit-mask-size: cover; -webkit-mask-position: center; }
+.forest-bark[data-status="reduced-motion"] .forest-bark-band, .forest-environment[data-status="error"] .forest-bark-band { display: none; }
+.forest-environment[data-status="error"] { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  .forest-bark-band { display: none; }
+  .forest-foliage-piece img { transform: none !important; }
+  .forest-vine [data-vine-path] { stroke-dashoffset: 0 !important; }
+}

@@ -1,0 +1,9 @@
+.forest-study { padding: 24px 0 32px; border-bottom: 1px solid #c8ccc2; }
+.forest-review-stage { max-width: 480px; background: #edece1; border: 1px solid #c8ccc2; }
+.forest-review-controls { display: flex; gap: 16px; flex-wrap: wrap; align-items: end; margin-top: 16px; }
+.forest-review-controls label { display: grid; gap: 8px; min-width: 120px; }
+.forest-review-controls input { width: 120px; accent-color: #253d32; }
+.forest-review-controls button { margin-top: 0; }
+.forest-review-status { font-size: .9rem; }
+summary { cursor: pointer; padding: 16px 0; }
+button:focus-visible, a:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px solid #253d32; outline-offset: 4px; }

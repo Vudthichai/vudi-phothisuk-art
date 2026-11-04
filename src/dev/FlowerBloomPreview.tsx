@@ -12,7 +12,7 @@ const whiteLily: FlowerSequence = {
 };
 function Preview() {
   const [replay, setReplay] = useState(0);
-  return <main><p>Private local development · Phase 2</p><h1>Living white flower</h1>
+  return <main><p>Private local development · Phase 2</p><h1>Living white flower</h1><p><a href="/dev/forest.html">Phase 3 forest environment review</a></p>
     <p role="status">Awaiting approved imagery. {whiteLily.status === 'needs-assets' && whiteLily.reason}</p>
     <div className="review-stage"><FlowerBloom asset={whiteLily} replayKey={replay} /><span>No approved bloom loaded</span></div>
     <button disabled={whiteLily.status !== 'approved'} onClick={() => setReplay(value => value + 1)}>Replay bloom</button>
