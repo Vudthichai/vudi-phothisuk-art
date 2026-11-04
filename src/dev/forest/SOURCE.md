@@ -7,7 +7,7 @@ are local review material only. No new illustration is presented as artist work.
 
 | File | Dimensions | Bytes | Quality/status |
 | --- | --- | ---: | --- |
-| mushroom-rejected.webp | 960px-wide contact sheet | 268,820 | Rejected: shifting moss/anchor, discontinuous cap and contaminated alpha. Never fed to player. |
+| mushroom-rejected.webp | 960px-wide contact sheet | 268,820 | Rejected: shifting moss/anchor, discontinuous cap and contaminated alpha. Only stepped diagnostic review; never approved for the growth player. |
 | vine-study.webp | 640 × 640 | 31,604 | Photographic path-reveal prototype; edges need cleanup, no new-leaf unfurling. |
 | bark-study.webp | 640 × 640 | 185,212 | Generated oak-inspired texture, experiment only. |
 | bark-ridges-0.png … -5.png | 384 × 384 each | 45,028 total | Registered complementary tonal masks, technically derived from the bark study. |
@@ -15,7 +15,7 @@ are local review material only. No new illustration is presented as artist work.
 WebP copies preserve original canvas proportions (ImageMagick resize, quality
 85 for mushroom/bark, 88 for vine). Source generator PNGs remain unchanged in
 `/workspace/generated_images` in the development workspace; they are not runtime
-assets. The mushroom sheet is displayed only as a labeled static rejection study.
+assets. The mushroom sheet is available as a labeled rejection contact sheet and stepped diagnostic playback. This does not change its rejected status.
 
 The bark masks partition a grayscale 384px copy of the original generated bark,
 softened by a 1.4px Gaussian before classifying ridges. For luminance `v`, band is
@@ -43,3 +43,11 @@ the artwork beneath is a separate, unchanged, proportion-preserving image.
   are a motion study, not a whole forest or branch simulation.
 - Bark: review tonal sequencing and edge detail on a real device. Luminance bands
   follow surface structure but are not a physical peeling or changing-light model.
+
+
+Visual-study follow-up: no new image assets or generation requests were needed.
+The available generation capability remains still imagery, not temporally controlled
+video or a biological rig; prior results still fail sequence approval. `PathVine`
+uses a shaded SVG stem with existing Phase 1 photographic cutouts. It is explicitly
+a mixed illustrated/photographic prototype, not a photographic vine sequence.
+The earlier photographic mask demo remains available for comparison.

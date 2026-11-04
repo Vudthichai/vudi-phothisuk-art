@@ -14,3 +14,11 @@
   .forest-foliage-piece img { transform: none !important; }
   .forest-vine [data-vine-path] { stroke-dashoffset: 0 !important; }
 }
+.forest-foliage-piece { perspective: 500px; }
+.forest-path-vine[data-status="loading"] [data-growing-stem] { stroke-dashoffset: 100; }
+.forest-path-vine[data-status="loading"] [data-vine-leaf] { opacity: 0; }
+.forest-path-vine [data-vine-leaf] { transform-box: fill-box; transform-origin: 50% 95%; }
+@media (prefers-reduced-motion: reduce) {
+  .forest-path-vine [data-growing-stem] { stroke-dashoffset: 0 !important; }
+  .forest-path-vine [data-vine-leaf] { opacity: 1 !important; transform: none !important; }
+}

@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import type { FlowerSequence } from './bloom';
 
 /** Same registered sequence contract as Phase 2; growth is in frames, never scaling. */
@@ -38,4 +39,17 @@ export type BarkAsset = {
   image: string;
   /** Tonal ridge bands derived from this exact image; darkest bands first. */
   ridgeMasks: readonly string[];
+};
+
+/** Static fit shared by all layered scenes; never used to fake growth. */
+export function forestPlacement(controls: ForestControls): CSSProperties {
+  const x = Math.max(0, Math.min(100, controls.placement?.x ?? 50));
+  const y = Math.max(0, Math.min(100, controls.placement?.y ?? 50));
+  const size = `${Math.max(.1, Math.min(1, controls.scale ?? 1)) * 100}%`;
+  return { width: size, height: size, left: `${x}%`, top: `${y}%`, transform: `translate(-${x}%, -${y}%)` };
+}
+export type VineLeaf = {
+  id: string; image: string; width: number; height: number;
+  /** Fraction along stem, deliberately nonuniform. */
+  at: number; size: number; angle: number;
 };
