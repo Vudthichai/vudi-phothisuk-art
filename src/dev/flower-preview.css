@@ -1,0 +1,12 @@
+:root { font-family: Georgia, serif; color: #253d32; background: #faf8ee; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 900px; margin: auto; padding: 32px 20px; }
+p { line-height: 1.65; }
+.review-stage { max-width: 400px; position: relative; border: 1px solid #c8ccc2; }
+.review-stage span { position: absolute; inset: 45% 12px auto; text-align: center; }
+button { font: inherit; padding: 12px 20px; margin-top: 16px; }
+.candidate { padding: 16px; margin: 24px 0; }
+.candidate img { width: 100%; height: auto; display: block; }
+.ivory { background: #faf8ee; }
+.dark { background: #15382c; }
