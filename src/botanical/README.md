@@ -132,3 +132,9 @@ the surrounding experience must supply any meaningful botanical description.
 
 Current limitations: no production-ready bloom, no real Safari/device review,
 and no measured frame-sequence bandwidth/memory until coherent assets exist.
+
+## Phase 3 — forest environments
+
+See [FOREST.md](./FOREST.md) for the mushroom asset gate, path-based vine study,
+finite foliage breeze, experimental ridge reveal, shared controls, asset-quality
+limitations and local-only preview. These do not change the Phase 1/2 consumers.
