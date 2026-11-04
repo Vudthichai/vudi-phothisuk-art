@@ -4,7 +4,7 @@ async function files(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
   return (await Promise.all(entries.map(entry => entry.isDirectory() ? files(join(dir, entry.name)) : join(dir, entry.name)))).flat();
 }
-const blocked = /forest-path-vine|mushroom-storyboard|data-growing-stem|forest-environment|useForestMotion|mushroom-rejected|vine-study|bark-study|bark-ridges|forest-review|flower-bloom|white-lily-rejected|Living forest environments/;
+const blocked = /artwork-experience|experience-stage|No replacement painting generated|forest-path-vine|mushroom-storyboard|data-growing-stem|forest-environment|useForestMotion|mushroom-rejected|vine-study|bark-study|bark-ridges|forest-review|flower-bloom|white-lily-rejected|Living forest environments/;
 const output = await files('dist');
 for (const path of output) {
   if (blocked.test(path) || path.startsWith('dist/dev/')) throw new Error(`Private asset emitted: ${path}`);

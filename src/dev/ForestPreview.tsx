@@ -26,7 +26,7 @@ function Study({ id, title, note, quality, replayLabel, blocked = false, hasInte
 }
 function Preview() {
   const [vinePath, setVinePath] = useState<keyof typeof vinePaths>('meander');
-  return <main><p>Local development only · Phase 3</p><h1>Living forest environments</h1>
+  return <main><p>Local development only · Phase 3</p><h1>Living forest environments</h1><p><a href="/dev/artwork-experiences.html">Phase 4 artwork experience gallery</a></p>
     <p>Asset and motion studies, not production-ready effects. Nothing here is assigned to a painting. <a href="/dev/flower-bloom.html">Phase 2 flower review</a></p>
     <nav aria-label="Prototype review"><a href="#mushroom">Mushroom</a> · <a href="#vine">Vine</a> · <a href="#foliage">Foliage</a> · <a href="#bark">Bark</a></nav>
     <Study id="mushroom" title="Mushroom growth study" quality="asset-blocked" replayLabel="Replay unapproved storyboard" note={`Visible diagnostic playback of sixteen rejected states, not a believable growth animation. ${mushroom.status === 'needs-assets' ? mushroom.reason : ''}`}>
