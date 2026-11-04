@@ -1,17 +1,20 @@
 .forest-drift{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;--fall-distance:clamp(280px,58svh,530px)}
-.forest-drift-piece{position:absolute;top:-65px;width:36px;opacity:0;pointer-events:none;--duration:3.25s;--delay:.05s;--drift-x:100px;--curve:24px;--travel:1;--turn:65deg;--sway:8px;--tilt:8deg;--fall-ease:linear;animation:forest-fall var(--duration) var(--fall-ease) var(--delay) both}
-.forest-drift-piece img{display:block;width:100%;height:auto;pointer-events:none;animation:forest-sway var(--duration) ease-in-out var(--delay) both;animation-direction:var(--sway-direction,normal)}
-.leaf-0{left:10%}
-.leaf-1{left:74%;width:31px;--duration:3.85s;--delay:.47s;--drift-x:-110px;--curve:-32px;--travel:1.16;--turn:-70deg;--sway:-10px;--tilt:11deg;--sway-direction:reverse;--fall-ease:cubic-bezier(.3,.06,.75,.95)}
-.leaf-2{left:42%;width:43px;--duration:3.4s;--delay:.94s;--drift-x:65px;--curve:18px;--travel:.92;--turn:90deg;--tilt:5deg}
-.petal-0{left:25%;width:32px;--duration:3.1s;--delay:.68s;--drift-x:-80px;--curve:-24px;--travel:.96;--turn:120deg;--sway:-7px;--sway-direction:reverse;--fall-ease:cubic-bezier(.24,.08,.7,.94)}
-.petal-1{left:88%;width:35px;--duration:4s;--delay:1.12s;--drift-x:-120px;--curve:35px;--travel:1.12;--turn:-65deg;--tilt:6deg}
+.forest-drift-piece{position:absolute;top:-65px;width:36px;opacity:0;pointer-events:none;--duration:3.25s;--delay:.05s;--drift-x:100px;--curve:24px;--travel:1;--turn:65deg;--sway:8px;--tilt:8deg;--fall-ease:linear;--scale:1;perspective:500px;animation:forest-fall var(--duration) var(--fall-ease) var(--delay) both}
+.forest-drift-piece img{display:block;width:100%;height:auto;pointer-events:none;animation:petal-flutter var(--duration) ease-in-out var(--delay) both;backface-visibility:visible;animation-direction:var(--sway-direction,normal)}
+.forest-leaf img{animation-name:leaf-flutter}
+.leaf-0{left:10%;--scale:1.02}
+.leaf-1{left:74%;--scale:.93;width:31px;--duration:3.85s;--delay:.47s;--drift-x:-110px;--curve:-32px;--travel:1.16;--turn:-70deg;--sway:-10px;--tilt:11deg;--sway-direction:reverse;--fall-ease:cubic-bezier(.3,.06,.75,.95)}
+.leaf-2{left:42%;--scale:1.08;width:43px;--duration:3.4s;--delay:.94s;--drift-x:65px;--curve:18px;--travel:.92;--turn:90deg;--tilt:5deg}
+.petal-0{left:25%;--scale:.94;width:32px;--duration:3.1s;--delay:.68s;--drift-x:-80px;--curve:-24px;--travel:.96;--turn:120deg;--sway:-7px;--sway-direction:reverse;--fall-ease:cubic-bezier(.24,.08,.7,.94)}
+.petal-1{left:88%;--scale:1.04;width:35px;--duration:4s;--delay:1.12s;--drift-x:-120px;--curve:35px;--travel:1.12;--turn:-65deg;--tilt:6deg}
 @keyframes forest-fall{
-  0%{opacity:0;transform:translate3d(0,0,0) rotate(-15deg)}
-  16%{opacity:.65;transform:translate3d(calc(var(--drift-x) * .12 + var(--curve)),calc(var(--fall-distance) * var(--travel) * .14),0) rotate(calc(var(--turn) * .08))}
-  44%{opacity:.7;transform:translate3d(calc(var(--drift-x) * .42 - var(--curve) * .6),calc(var(--fall-distance) * var(--travel) * .4),0) rotate(calc(var(--turn) * .36))}
-  72%{opacity:.45;transform:translate3d(calc(var(--drift-x) * .76 + var(--curve) * .35),calc(var(--fall-distance) * var(--travel) * .72),0) rotate(calc(var(--turn) * .68))}
-  100%{opacity:0;transform:translate3d(var(--drift-x),calc(var(--fall-distance) * var(--travel)),0) rotate(var(--turn))}
+  0%{opacity:0;transform:translate3d(0,0,0) rotate(-15deg) scale(var(--scale))}
+  16%{opacity:1;transform:translate3d(calc(var(--drift-x) * .12 + var(--curve)),calc(var(--fall-distance) * var(--travel) * .14),0) rotate(calc(var(--turn) * .08)) scale(var(--scale))}
+  44%{opacity:1;transform:translate3d(calc(var(--drift-x) * .42 - var(--curve) * .6),calc(var(--fall-distance) * var(--travel) * .4),0) rotate(calc(var(--turn) * .36)) scale(var(--scale))}
+  72%{opacity:1;transform:translate3d(calc(var(--drift-x) * .76 + var(--curve) * .35),calc(var(--fall-distance) * var(--travel) * .72),0) rotate(calc(var(--turn) * .68)) scale(var(--scale))}
+  100%{opacity:0;transform:translate3d(var(--drift-x),calc(var(--fall-distance) * var(--travel)),0) rotate(var(--turn)) scale(var(--scale))}
 }
-@keyframes forest-sway{0%{transform:translateX(0) rotate(calc(var(--tilt) * -1))}28%{transform:translateX(var(--sway)) rotate(var(--tilt))}62%{transform:translateX(calc(var(--sway) * -1)) rotate(calc(var(--tilt) * -.6))}100%{transform:translateX(2px) rotate(calc(var(--tilt) * .4))}}
+/* Narrow silhouettes come from real 3D turns, not a washed-out opacity trick. */
+@keyframes leaf-flutter{0%{transform:rotateX(8deg) rotateY(-18deg)}24%{transform:translateX(var(--sway)) rotateX(-12deg) rotateY(64deg) rotateZ(7deg)}52%{transform:translateX(calc(var(--sway) * -.7)) rotateX(15deg) rotateY(-36deg) rotateZ(-5deg)}76%{transform:translateX(var(--sway)) rotateX(-8deg) rotateY(48deg)}100%{transform:rotateX(4deg) rotateY(-12deg)}}
+@keyframes petal-flutter{0%{transform:rotateX(-8deg) rotateY(10deg)}30%{transform:translateX(var(--sway)) rotateX(16deg) rotateY(-24deg) rotateZ(5deg)}66%{transform:translateX(calc(var(--sway) * -.8)) rotateX(-12deg) rotateY(28deg) rotateZ(-4deg)}100%{transform:rotateX(6deg) rotateY(-8deg)}}
 @media(prefers-reduced-motion:reduce){.forest-drift{display:none!important}.forest-drift-piece,.forest-drift-piece img{animation:none!important}}
