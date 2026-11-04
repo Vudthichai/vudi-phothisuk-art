@@ -73,8 +73,10 @@
 @media(max-width:700px){.site-footer{display:flex;flex-direction:column;align-items:center;gap:12px}.site-footer p{text-align:center}.footer-navigation{justify-content:center;gap:0 20px}.back-to-top{align-self:center}}
 
 /* Light dropdown surfaces keep their own contrast over photographic headers. */
-.site-header .navigation .collections-dropdown a{color:#28392f;background:#fff;box-shadow:none}
+.site-header .navigation .collections-dropdown a{color:#28392f;background:#f7f5ef;box-shadow:none}
 .site-header .navigation .collections-dropdown a:hover,.site-header .navigation .collections-dropdown a:focus-visible,.site-header .navigation .collections-dropdown a.active{color:#12351d;background:#eef0e8;box-shadow:none}
 .site-header .navigation .collections-dropdown a:focus-visible{outline:2px solid #28392f;outline-offset:-3px}
 .collections-dropdown small{color:#596456}
 .artwork-status,.ocean-exhibit-meta>span,.regal-work-meta>span{text-transform:uppercase;letter-spacing:.07em;font-size:11px}
+
+.collections-dropdown{background:#f7f5ef}

@@ -1,11 +1,17 @@
-.forest-drift{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;--fall-distance:clamp(280px,58svh,600px)}
-.forest-drift-piece{position:absolute;top:-65px;width:36px;opacity:0;pointer-events:none;--duration:3.3s;--delay:0s;--drift-x:100px;--turn:65deg;--sway:8px;animation:forest-fall var(--duration) linear var(--delay) both}
-.forest-drift-piece img{display:block;width:100%;height:auto;pointer-events:none;animation:forest-sway var(--duration) ease-in-out var(--delay) both}
+.forest-drift{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;--fall-distance:clamp(280px,58svh,530px)}
+.forest-drift-piece{position:absolute;top:-65px;width:36px;opacity:0;pointer-events:none;--duration:3.25s;--delay:.05s;--drift-x:100px;--curve:24px;--travel:1;--turn:65deg;--sway:8px;--tilt:8deg;--fall-ease:linear;animation:forest-fall var(--duration) var(--fall-ease) var(--delay) both}
+.forest-drift-piece img{display:block;width:100%;height:auto;pointer-events:none;animation:forest-sway var(--duration) ease-in-out var(--delay) both;animation-direction:var(--sway-direction,normal)}
 .leaf-0{left:10%}
-.leaf-1{left:74%;width:31px;--duration:3.9s;--delay:.1s;--drift-x:-110px;--turn:-70deg;--sway:-10px}
-.leaf-2{left:42%;width:43px;--duration:2.8s;--delay:.25s;--drift-x:65px;--turn:110deg}
-.petal-0{left:25%;width:32px;--duration:3.6s;--delay:.12s;--drift-x:-80px;--turn:145deg;--sway:-7px}
-.petal-1{left:88%;width:35px;--duration:3.1s;--delay:.2s;--drift-x:-120px;--turn:-100deg}
-@keyframes forest-fall{0%{opacity:0;transform:translate3d(0,0,0) rotate(-15deg)}12%{opacity:.7}65%{opacity:.6}100%{opacity:0;transform:translate3d(var(--drift-x),var(--fall-distance),0) rotate(var(--turn))}}
-@keyframes forest-sway{0%{transform:translateX(0) rotate(-8deg)}28%{transform:translateX(var(--sway)) rotate(7deg)}62%{transform:translateX(calc(var(--sway) * -1)) rotate(-5deg)}100%{transform:translateX(2px) rotate(4deg)}}
+.leaf-1{left:74%;width:31px;--duration:3.85s;--delay:.47s;--drift-x:-110px;--curve:-32px;--travel:1.16;--turn:-70deg;--sway:-10px;--tilt:11deg;--sway-direction:reverse;--fall-ease:cubic-bezier(.3,.06,.75,.95)}
+.leaf-2{left:42%;width:43px;--duration:3.4s;--delay:.94s;--drift-x:65px;--curve:18px;--travel:.92;--turn:90deg;--tilt:5deg}
+.petal-0{left:25%;width:32px;--duration:3.1s;--delay:.68s;--drift-x:-80px;--curve:-24px;--travel:.96;--turn:120deg;--sway:-7px;--sway-direction:reverse;--fall-ease:cubic-bezier(.24,.08,.7,.94)}
+.petal-1{left:88%;width:35px;--duration:4s;--delay:1.12s;--drift-x:-120px;--curve:35px;--travel:1.12;--turn:-65deg;--tilt:6deg}
+@keyframes forest-fall{
+  0%{opacity:0;transform:translate3d(0,0,0) rotate(-15deg)}
+  16%{opacity:.65;transform:translate3d(calc(var(--drift-x) * .12 + var(--curve)),calc(var(--fall-distance) * var(--travel) * .14),0) rotate(calc(var(--turn) * .08))}
+  44%{opacity:.7;transform:translate3d(calc(var(--drift-x) * .42 - var(--curve) * .6),calc(var(--fall-distance) * var(--travel) * .4),0) rotate(calc(var(--turn) * .36))}
+  72%{opacity:.45;transform:translate3d(calc(var(--drift-x) * .76 + var(--curve) * .35),calc(var(--fall-distance) * var(--travel) * .72),0) rotate(calc(var(--turn) * .68))}
+  100%{opacity:0;transform:translate3d(var(--drift-x),calc(var(--fall-distance) * var(--travel)),0) rotate(var(--turn))}
+}
+@keyframes forest-sway{0%{transform:translateX(0) rotate(calc(var(--tilt) * -1))}28%{transform:translateX(var(--sway)) rotate(var(--tilt))}62%{transform:translateX(calc(var(--sway) * -1)) rotate(calc(var(--tilt) * -.6))}100%{transform:translateX(2px) rotate(calc(var(--tilt) * .4))}}
 @media(prefers-reduced-motion:reduce){.forest-drift{display:none!important}.forest-drift-piece,.forest-drift-piece img{animation:none!important}}

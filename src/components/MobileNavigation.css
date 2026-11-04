@@ -13,3 +13,16 @@
 }
 @media(prefers-reduced-motion:reduce){.nav-panel,.navigation-links>.collections-menu,.navigation-links>a{transition:none!important;transform:none!important}}
 @media(max-width:700px){.nav-panel .forest-drift-piece{--drift-x:-18px}.nav-panel .leaf-0{left:66%}.nav-panel .leaf-1{left:86%;--drift-x:-30px}.nav-panel .leaf-2{left:78%;--drift-x:16px}.nav-panel .petal-0{left:58%;--drift-x:24px}.nav-panel .petal-1{left:92%;--drift-x:-35px}}
+
+/* Serif rhythm and an inset reveal keep Collections within the same warm menu surface. */
+@media(max-width:700px){
+  .navigation-links{font-family:'Bodoni Moda',Didot,serif;font-size:22px;font-weight:400;line-height:1.25}
+  .navigation-links>a,.navigation-links>.collections-menu>.collections-trigger{min-height:48px;padding-block:12px}
+  .nav-panel .collections-dropdown{background:transparent;box-shadow:none;transform:none;transition:grid-template-rows .3s ease,opacity .25s ease,visibility .3s}
+  .nav-panel .collections-dropdown>div{min-height:0}
+  .site-header .nav-panel .navigation .collections-dropdown a{background:transparent;font-size:18px;line-height:1.4;padding:9px 0 9px 14px;min-height:44px}
+  .site-header .nav-panel .navigation .collections-dropdown a:hover,.site-header .nav-panel .navigation .collections-dropdown a:focus-visible,.site-header .nav-panel .navigation .collections-dropdown a.active{background:#eef0e8}
+  .nav-panel .collections-dropdown small{font-family:Arial,Helvetica,sans-serif;font-size:10px;line-height:1.5;margin-top:3px}
+  .nav-panel .leaf-0{left:72%;--curve:12px}.nav-panel .leaf-1{--curve:-9px}.nav-panel .leaf-2{--curve:15px}.nav-panel .petal-0{left:74%;--curve:-6px}.nav-panel .petal-1{--curve:8px}
+}
+@media(max-width:360px){.navigation-links{font-size:20px}.navigation-links>a,.navigation-links>.collections-menu>.collections-trigger{padding-block:10px}}

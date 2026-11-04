@@ -12,3 +12,7 @@
 @media(max-width:700px){.is-whole .mother-nature-stage{height:min(80svh,580px)}.mother-nature figcaption{flex-wrap:wrap}.mother-nature figcaption>button{min-height:44px}}
 @media(prefers-reduced-motion:reduce){.mother-nature-stage,.mother-nature-stage>img{transition:none;transform:none!important}}
 .forest-feature .mother-nature-view span{margin-left:0}
+/* The final petal enters after the photograph settles, along its quieter left side. */
+.mother-nature-stage .petal-1{left:18%;--delay:1.35s;--drift-x:clamp(42px,8vw,110px);--curve:16px;--turn:35deg;--sway:5px}
+.is-whole .mother-nature-stage .petal-1{left:calc(50% - clamp(550px,65vw,950px) * .24)}
+@media(max-width:700px){.is-whole .mother-nature-stage .petal-1{left:12%}}
