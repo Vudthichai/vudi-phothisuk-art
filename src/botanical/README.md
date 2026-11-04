@@ -138,3 +138,9 @@ and no measured frame-sequence bandwidth/memory until coherent assets exist.
 See [FOREST.md](./FOREST.md) for the mushroom asset gate, path-based vine study,
 finite foliage breeze, experimental ridge reveal, shared controls, asset-quality
 limitations and local-only preview. These do not change the Phase 1/2 consumers.
+
+## Phase 4 — private artwork directions
+
+The development-only [experience guide](../dev/experiences/README.md) audits
+readiness and documents five configuration-driven painting experiences, asset
+gates, local review and the boundary against public activation.
