@@ -1,0 +1,6 @@
+.flower-bloom { position: relative; width: 100%; overflow: hidden; pointer-events: none; }
+.flower-bloom img { position: absolute; inset: 0; width: var(--flower-size); height: var(--flower-size); margin: auto; object-fit: contain; object-position: var(--flower-placement); }
+/* One small settling breath; the frame sequence supplies the actual unfolding. */
+.flower-bloom__settled { animation: flower-settle 1.4s ease-out both; }
+@keyframes flower-settle { 0% { transform: translateY(0); } 45% { transform: translateY(-1px); } 100% { transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .flower-bloom img { animation: none; } }

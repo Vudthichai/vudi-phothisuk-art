@@ -73,3 +73,62 @@ Nature forward/reverse transitions. No global ambient effect was introduced.
 work, not implemented behavior claims. Extend `BotanicalBehavior` and add an
 appropriately scoped component only when an experience actually requires it.
 No physics engine or animation dependency is needed for Phase 1.
+
+## Phase 2 — living flowers (architecture; imagery blocked)
+
+`bloom.ts` defines a species-independent registered-frame contract. `FlowerBloom`
+uses that contract alongside the existing botanical library; falling effects and
+all their consumers remain untouched. Flower sequences have different requirements
+from single falling cutouts, so they do not enter the leaf/petal registry.
+
+No white-lily sequence is approved yet. The available still-image generator
+produced a sixteen-state sheet, but petal geometry shifts and alpha contamination
+make it unsuitable for continuous playback. No temporal video/rig tool was
+available. `src/dev/flowers/white-lily-rejected.webp` is an AI-generated **rejected
+review reference**, not botanical evidence or a finished animation. No external
+photographs or licensed third-party material were downloaded.
+
+### Local review
+
+Run `npm run dev -- --host 127.0.0.1`, then open
+`http://127.0.0.1:5173/dev/flower-bloom.html`. It shows the rejected study against
+ivory and dark green. Replay intentionally stays disabled until real sequence
+assets pass review. This HTML is not a production build entry, is not linked from
+the site, and neither the preview nor its imagery is imported by public pages.
+`npm run build` emits only the existing site. Do not configure a production build
+input for the preview. There is no production preview route.
+
+### Supply a credible sequence
+
+Obtain or generate an authorized continuous timelapse or rendered flower rig with
+a locked camera, consistent illumination, fixed stem anchor, six stable lily
+tepals, natural independent unfolding/overlap, and a gentle settling endpoint.
+Export densely sampled, registered transparent frames (start with 48–96 at
+320–480px, then judge cadence and mobile memory). Inspect edges on both review
+backgrounds; no halos, detached flecks or changing anatomy. Optimize alpha-WebP
+frames and measure bytes/decoded memory on mobile before approval. Sparse,
+unrelated generated states must not be crossfaded to disguise discontinuity.
+Per-petal timing/depth is authored in the imagery, not faked in CSS.
+
+Once reviewed, create a `FlowerSequence` with `status: 'approved'`, ordered frame
+URLs, final `poster`, natural width/height, species/id and default duration.
+Keep it in the dev-only dependency graph until public integration is separately
+requested. The same player accepts future species without duplicating logic:
+
+```tsx
+<FlowerBloom asset={approvedSequence} duration={4} scale={.85}
+  placement="center bottom" trigger="manual" replayKey={replayNumber}
+  gentleMotion />
+```
+
+Scale is a static fit fraction (0.1–1), not a bloom animation. Placement uses CSS
+object-position. Triggers are `manual`, `mount` or one-shot `visible`; change a
+positive `replayKey` to replay. All frames decode before playback; errors leave
+the fixed-ratio stage empty. A short rAF loop advances frames once then stops;
+unmount/replay cancels it. Optional settling is a single 1px breath, not a loop.
+Reduced motion uses the final poster and responds to preference changes live.
+The decorative stage is pointer-transparent and hidden from assistive technology;
+the surrounding experience must supply any meaningful botanical description.
+
+Current limitations: no production-ready bloom, no real Safari/device review,
+and no measured frame-sequence bandwidth/memory until coherent assets exist.
