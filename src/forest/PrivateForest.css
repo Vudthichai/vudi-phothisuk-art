@@ -4,27 +4,32 @@
 .forest-entrance form { display: grid; gap: 14px; max-width: 360px; margin: 30px 0; }
 .forest-entrance input { font: inherit; padding: 14px; width: 100%; border: 1px solid #899889; background: #fffef8; border-radius: 0; }
 .private-forest button { font: inherit; cursor: pointer; }
-.forest-private-toolbar { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin: 15px 0 60px; }
+.forest-private-toolbar { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin: 15px 0 45px; }
 .forest-private-toolbar button { background: transparent; color: inherit; border: 1px solid #899889; padding: 8px 16px; }
-.private-forest-intro { position: relative; max-width: 850px; margin: 0 auto 90px; overflow: hidden; }
-.private-forest-intro h1 { font-size: clamp(3rem, 8vw, 6rem); }
-.private-forest-intro > p:not(.eyebrow) { max-width: 720px; line-height: 1.9; }
-.private-forest-gallery { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 70px 7%; }
-.private-forest-gallery img { display: block; width: 100%; height: auto; aspect-ratio: 3/4; object-fit: contain; }
-.private-forest-gallery h2 { font-size: clamp(1.7rem, 3vw, 2.5rem); margin-top: 24px; }
+.private-forest-intro { position: relative; max-width: 1000px; margin: 0 auto 65px; overflow: hidden; }
+.private-forest-intro h1 { font-size: clamp(3rem, 7vw, 5.3rem); margin-bottom: 28px; }
+.private-forest-intro > p:not(.eyebrow) { max-width: 740px; line-height: 1.9; }
+.private-forest-gallery { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 60px 5%; }
+.private-forest-gallery article { min-width: 0; }
+.forest-overview-image { display: block; background: #f2f0e7; padding: 12px; }
+.forest-overview-image img { display: block; width: 100%; height: auto; aspect-ratio: 3/4; object-fit: contain; }
+.private-forest-gallery h2 { font-size: clamp(1.6rem, 2.5vw, 2.3rem); margin: 22px 0 12px; }
 .private-forest-gallery a { color: inherit; }
+.forest-artwork-link { display: inline-block; margin-top: 20px; }
+.forest-featured-work { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 7%; align-items: center; margin-bottom: 20px; }
+.forest-featured-work .forest-overview-image img { aspect-ratio: auto; max-height: 70vh; }
+.forest-featured-work h2 { font-size: clamp(2.3rem,4vw,3.8rem); }
+.forest-featured-excerpt { line-height: 1.9; max-width: 460px; }
 .private-availability, .private-copy-note { font-size: .9rem; line-height: 1.7; }
-.private-artwork > header { max-width: 800px; margin: 0 auto 45px; }
-.private-artwork h1 { font-size: clamp(2.8rem, 6vw, 5rem); }
-.private-artwork-photos { max-width: 1100px; margin: auto; display: grid; gap: 35px; }
-.private-artwork-photos figure { margin: 0; }
-.private-artwork-photos img { display: block; width: 100%; max-height: 85vh; height: auto; object-fit: contain; }
-.private-artwork-photos figcaption { text-align: center; font-size: .8rem; margin: 14px 0; }
-.private-artwork-story { max-width: 760px; margin: 60px auto; font-size: 1.1rem; line-height: 1.95; }
+.private-artwork-presentation { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(240px,.85fr); gap: 5%; align-items: center; }
+.private-artwork-presentation > header { min-width: 0; }
+.private-artwork h1 { font-size: clamp(2.5rem,4.3vw,4.5rem); margin: 20px 0 28px; }
+.private-artwork-presentation header > p { line-height: 1.7; }
+.private-artwork-story { max-width: 760px; margin: 55px auto; font-size: 1.1rem; line-height: 1.95; }
 .private-copy-note { font-style: italic; }
 .private-artwork-next { display: flex; gap: 18px 28px; flex-wrap: wrap; border-top: 1px solid #c5cdbf; padding-top: 30px; }
 .private-forest :focus-visible { outline: 2px solid #294337; outline-offset: 4px; }
-@media(max-width:700px) { .private-forest-gallery { grid-template-columns: 1fr; gap: 55px; } .forest-private-toolbar { margin-bottom: 35px; } .private-forest-intro { margin-bottom: 50px; } .forest-entrance { margin-top: 20px; } }
-
-.private-forest-gallery .forest-landscape { grid-column: 1 / -1; }
-.private-forest-gallery .forest-landscape img { aspect-ratio: auto; max-height: 80vh; }
+@media(max-width:1100px) { .private-forest-gallery { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width:800px) { .private-artwork-presentation { grid-template-columns: minmax(0,1fr); gap: 32px; } .forest-featured-work { grid-template-columns: minmax(0,1fr); gap: 20px; } .private-artwork h1 { margin-top: 12px; } }
+@media(max-width:700px) { .private-forest-gallery { grid-template-columns: minmax(0,1fr); gap: 50px; } .forest-private-toolbar { margin-bottom: 30px; } .private-forest-intro { margin-bottom: 40px; } .forest-entrance { margin-top: 20px; } }
+.private-forest-intro button.text-link { border: 0; padding: 0; background: transparent; color: inherit; text-decoration: underline; text-underline-offset: 5px; }
