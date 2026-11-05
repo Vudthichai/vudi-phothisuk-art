@@ -65,3 +65,76 @@ local relock, content failure, unavailable storage and the existing inventory.
 Existing Phase 2–4 experimental previews remain excluded from production. No changes
 to homepage, public Mother Nature interaction, Oceans, Regal, Available Art, shared
 navigation, footer or artwork descriptions.
+
+## Gallery refinement and final-photography conventions
+
+Each detail page now uses `ArtworkImageGallery`: a single fixed-stage photograph,
+thumbnail buttons, previous/next controls, touch swipe, arrow/Home/End navigation
+and an enlarged native dialog. Escape closes the dialog and returns focus to its
+trigger. The prior photograph stays visible until a requested variant decodes;
+a short opacity transition is disabled under reduced motion. No artwork pixels
+are transformed, stretched, cropped or animated. Optional captions override the
+role label. A pointer-transparent `overlay` slot is reserved for a future approved
+artwork layer; this phase supplies no overlay or new botanical experience.
+
+On desktop, the image precedes the metadata in the DOM and occupies the larger
+column, with title/dimensions/medium/inquiry beside it. Mobile stacks the image
+and controls, then the metadata/story. Mother Nature is featured in the collection
+overview, followed by a regular responsive portrait grid of the other nine works.
+All approved text, availability, donation language and inquiry behavior remain.
+Temporary-image notices are internal `temporary: true` metadata rather than a
+repeated visitor-facing label. Provisional artwork copy is still labeled honestly.
+
+### Dragon Lily orientation
+
+IMG_6921.jpg and IMG_6922.jpg had landscape pixel storage and no usable EXIF
+orientation. Auto-orient alone did nothing. The upright derivatives apply a 90°
+clockwise pixel rotation, placing the easel beneath the canvas, with no crop or
+color adjustment. New files are `dragon-lily-{full|angle}-upright-{640|1200}.webp`.
+Their dimensions are 640×853 and 1200×1600. EXIF/XMP are removed so an orientation
+flag cannot cause a second rotation. Original uploaded JPEGs and previous display
+files remain unchanged. The close-up and its original 640×480/1200×900 proportions
+are unchanged byte-for-byte. No CSS rotation is used.
+
+### Record and filename conventions
+
+- Artwork IDs/slugs remain stable (`mother-nature`, etc.); never derive them from
+  a changing photograph filename.
+- `galleryImageId` chooses the overview/main photograph explicitly. It must match
+  an image's stable `id`. Fallback order is first `full` image, then first image.
+- The `images` array defines thumbnail order: full composition, angled view, details,
+  textures, then room context. Keep at least one image for each artwork.
+- Roles are `full`, `angle`, `detail`, `texture`, `room`. Labels display as Full
+  composition, Angled view, Sculptural detail, Texture close-up and Room-scale view.
+  Never imply a room visualization has verified physical scale unless it does.
+- Each image has `id`, descriptive `alt`, `role`, optional `caption`, optional
+  internal `temporary`, and `variants`. Captions should add context, not repeat
+  dimensions/medium. Alt text should describe the specific view.
+- File pattern: `{artwork-slug}-{role}-{version}-{width}.webp`, for example
+  `artwork-slug-full-final-v1-1200.webp`. Keep source originals separately, immutable.
+  Use new versioned filenames to avoid stale cached orientation/content.
+- Variant `src` is root-relative; `width`/`height` must be the actual exported pixel
+  dimensions. Sort variants by increasing width. Their aspect ratio should match
+  for a single image. Current exports use 640/1200; larger final sizes may be added
+  when the original supports them. Width descriptors and view-specific `sizes`
+  select responsive sources; thumbnails use the smallest appropriate derivative.
+
+### Replacement steps
+
+1. Confirm the painting ID and intended upright orientation from the original.
+2. Create WebP derivatives without changing the artwork's color or proportions;
+   preserve the full canvas/white border. Normalize pixel orientation and remove
+   conflicting EXIF. Do not use CSS rotation or generate substitute artwork.
+3. Add files under `public/forest-preview/images/` with the naming convention above.
+4. Edit only that image's variants/alt/caption/temporary status in
+   `public/forest-preview/collection.json`. Keep its image ID, or update
+   `galleryImageId` if deliberately choosing a different primary photo. Reorder
+   `images` to change thumbnail order. No component changes are needed.
+5. Check overview, main image, thumbnail, swipe and enlarged view at mobile/desktop
+   widths. Run tests and build. Remove obsolete derivatives only deliberately;
+   never delete the artist's original source photography.
+
+Final professional photographs are still pending. The final painting's dimensions,
+medium and provisional copy, and eight availability records, still need artist
+confirmation. The client-side Evergreen gate/session flag and indexing restrictions
+are unchanged; the existing visibility-deterrent limitations above still apply.

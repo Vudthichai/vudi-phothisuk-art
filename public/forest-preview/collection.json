@@ -20,7 +20,7 @@
       "images": [
         {
           "id": "mother-nature",
-          "alt": "Mother Nature — temporary photograph, full composition",
+          "alt": "Mother Nature — full composition",
           "role": "full",
           "variants": [
             {
@@ -35,9 +35,11 @@
               "height": 1802,
               "src": "/forest-preview/images/mother-nature-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         }
-      ]
+      ],
+      "galleryImageId": "mother-nature"
     },
     {
       "id": "blooming-desire",
@@ -55,7 +57,7 @@
       "images": [
         {
           "id": "blooming-desire",
-          "alt": "Blooming Desire — temporary photograph, full composition",
+          "alt": "Blooming Desire — full composition",
           "role": "full",
           "variants": [
             {
@@ -70,9 +72,11 @@
               "height": 1600,
               "src": "/forest-preview/images/blooming-desire-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         }
-      ]
+      ],
+      "galleryImageId": "blooming-desire"
     },
     {
       "id": "wild-tiger-lilies",
@@ -90,7 +94,7 @@
       "images": [
         {
           "id": "wild-tiger-lilies",
-          "alt": "Wild Tiger Lilies — temporary photograph, full composition",
+          "alt": "Wild Tiger Lilies — full composition",
           "role": "full",
           "variants": [
             {
@@ -105,9 +109,11 @@
               "height": 1600,
               "src": "/forest-preview/images/wild-tiger-lilies-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         }
-      ]
+      ],
+      "galleryImageId": "wild-tiger-lilies"
     },
     {
       "id": "gilded-bloom",
@@ -125,7 +131,7 @@
       "images": [
         {
           "id": "gilded-bloom",
-          "alt": "Gilded Bloom — temporary photograph, full composition",
+          "alt": "Gilded Bloom — full composition",
           "role": "full",
           "variants": [
             {
@@ -140,9 +146,11 @@
               "height": 1600,
               "src": "/forest-preview/images/gilded-bloom-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         }
-      ]
+      ],
+      "galleryImageId": "gilded-bloom"
     },
     {
       "id": "a-forest-forgotten",
@@ -161,7 +169,7 @@
       "images": [
         {
           "id": "a-forest-forgotten",
-          "alt": "A Forest Forgotten — temporary photograph, full composition",
+          "alt": "A Forest Forgotten — full composition",
           "role": "full",
           "variants": [
             {
@@ -176,9 +184,11 @@
               "height": 1600,
               "src": "/forest-preview/images/a-forest-forgotten-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         }
-      ]
+      ],
+      "galleryImageId": "a-forest-forgotten"
     },
     {
       "id": "moss-and-mushrooms",
@@ -196,7 +206,7 @@
       "images": [
         {
           "id": "moss-and-mushrooms",
-          "alt": "Moss & Mushrooms — temporary photograph, full composition",
+          "alt": "Moss & Mushrooms — full composition",
           "role": "full",
           "variants": [
             {
@@ -211,9 +221,11 @@
               "height": 1600,
               "src": "/forest-preview/images/moss-and-mushrooms-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         }
-      ]
+      ],
+      "galleryImageId": "moss-and-mushrooms"
     },
     {
       "id": "ethereal-bloom",
@@ -231,7 +243,7 @@
       "images": [
         {
           "id": "ethereal-bloom",
-          "alt": "Ethereal Bloom — temporary photograph, full composition",
+          "alt": "Ethereal Bloom — full composition",
           "role": "full",
           "variants": [
             {
@@ -246,9 +258,11 @@
               "height": 1600,
               "src": "/forest-preview/images/ethereal-bloom-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         }
-      ]
+      ],
+      "galleryImageId": "ethereal-bloom"
     },
     {
       "id": "tiger-lily",
@@ -266,7 +280,7 @@
       "images": [
         {
           "id": "tiger-lily",
-          "alt": "Tiger Lily — temporary photograph, full composition",
+          "alt": "Tiger Lily — full composition",
           "role": "full",
           "variants": [
             {
@@ -281,9 +295,11 @@
               "height": 1600,
               "src": "/forest-preview/images/tiger-lily-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         }
-      ]
+      ],
+      "galleryImageId": "tiger-lily"
     },
     {
       "id": "75-leaves",
@@ -301,7 +317,7 @@
       "images": [
         {
           "id": "75-leaves",
-          "alt": "75 Leaves — temporary photograph, full composition",
+          "alt": "75 Leaves — full composition",
           "role": "full",
           "variants": [
             {
@@ -316,9 +332,11 @@
               "height": 1600,
               "src": "/forest-preview/images/75-leaves-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         }
-      ]
+      ],
+      "galleryImageId": "75-leaves"
     },
     {
       "id": "dragon-lily",
@@ -342,16 +360,17 @@
             {
               "key": "dragon-lily-full-640",
               "width": 640,
-              "height": 480,
-              "src": "/forest-preview/images/dragon-lily-full-640.webp"
+              "height": 853,
+              "src": "/forest-preview/images/dragon-lily-full-upright-640.webp"
             },
             {
               "key": "dragon-lily-full-1200",
               "width": 1200,
-              "height": 900,
-              "src": "/forest-preview/images/dragon-lily-full-1200.webp"
+              "height": 1600,
+              "src": "/forest-preview/images/dragon-lily-full-upright-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         },
         {
           "id": "dragon-lily-angle",
@@ -361,16 +380,17 @@
             {
               "key": "dragon-lily-angle-640",
               "width": 640,
-              "height": 480,
-              "src": "/forest-preview/images/dragon-lily-angle-640.webp"
+              "height": 853,
+              "src": "/forest-preview/images/dragon-lily-angle-upright-640.webp"
             },
             {
               "key": "dragon-lily-angle-1200",
               "width": 1200,
-              "height": 900,
-              "src": "/forest-preview/images/dragon-lily-angle-1200.webp"
+              "height": 1600,
+              "src": "/forest-preview/images/dragon-lily-angle-upright-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         },
         {
           "id": "dragon-lily-detail",
@@ -389,9 +409,11 @@
               "height": 900,
               "src": "/forest-preview/images/dragon-lily-detail-1200.webp"
             }
-          ]
+          ],
+          "temporary": true
         }
-      ]
+      ],
+      "galleryImageId": "dragon-lily-full"
     }
   ]
 }
