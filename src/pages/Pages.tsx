@@ -21,7 +21,7 @@ export function Home() {
   return <div className="forest-home">
     <PageMeta title="Home" description="Make some art today. Explore dimensional mixed-media paintings and the stories behind the work of Vudi Phothisuk."/>
     <section className="forest-opening" aria-labelledby="home-title">
-      <div className="forest-masthead"><p>Vudi Phothisuk Art</p><h1 id="home-title">Make some art today.</h1><span>Paintings · Texture · Stories</span></div>
+      <div className="forest-masthead"><p>Vudi Phothisuk Art</p><h1 id="home-title"><span className="home-title-reveal">Make some art today.</span></h1><span>Paintings · Texture · Stories</span></div>
       <MotherNature/>
     </section>
     <section className="forest-introduction" aria-labelledby="forest-title"><p className="eyebrow">Forest & Flowers</p><div><h2 id="forest-title">A presence within the forest.</h2><p>A hidden goddess emerges from leaves, vines, and flowers. Beside her, a pale river winds between densely textured mountains.</p><p><em>Mother Nature</em> considers our dependence on the natural world—and the difference between appreciating nature and believing we control it.</p><p className="forest-small">A first look at Forest & Flowers. More paintings and new photography to come.</p></div></section>
