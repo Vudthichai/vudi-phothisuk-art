@@ -1,0 +1,79 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/golden-sand-beach",
+  "path": "/golden-sand-beach",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Golden Sand Beach — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><strong>Golden Sand Beach:</strong> If you are patient enough to catch a golden hour along the coast, you'll notice that the sand has a shimmer unlike any other time of day. Light hitting the sands at just the right angle gives it this glistening effect that is uniquely different depending on what beach you are on. This work is a tribute to those special grains of sands making golden hour more special.</p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">For serious inquiries please email vudiphothisukart@gmail.com</span></p></div>",
+      "text": "Golden Sand Beach: If you are patient enough to catch a golden hour along the coast, you'll notice that the sand has a shimmer unlike any other time of day. Light hitting the sands at just the right angle gives it this glistening effect that is uniquely different depending on what beach you are on. This work is a tribute to those special grains of sands making golden hour more special.24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.For serious inquiries please email vudiphothisukart@gmail.com"
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/ecb3eb32-8cdc-4ec1-8cb2-c3c25791fb3c/IMG_7498.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/ecb3eb32-8cdc-4ec1-8cb2-c3c25791fb3c/IMG_7498.jpeg",
+        "data-image-dimensions": "2498x3762",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7498.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/d4bdbac5-ba08-4a23-8721-b993fdeb8252/IMG_7225.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/d4bdbac5-ba08-4a23-8721-b993fdeb8252/IMG_7225.jpg",
+        "data-image-dimensions": "1179x2038",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7225.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/c2a89677-fd8c-4984-8815-26a7ef4cb7b5/IMG_6757.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/c2a89677-fd8c-4984-8815-26a7ef4cb7b5/IMG_6757.jpg",
+        "data-image-dimensions": "2268x4032",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6757.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 3,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/3a8871cd-00bb-4fac-b954-90734134a289/Untitled+design.jpg.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/3a8871cd-00bb-4fac-b954-90734134a289/Untitled+design.jpg.jpg",
+        "data-image-dimensions": "1791x3188",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "Untitled design.jpg.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-oceans#golden-sand-beach",
+      "text": "\n    Back to The Oceans\n  "
+    },
+    {
+      "href": "/waters-edge",
+      "text": "\n    Previous\n  "
+    },
+    {
+      "href": "/sunset-waves",
+      "text": "\n    Next\n  "
+    }
+  ]
+}

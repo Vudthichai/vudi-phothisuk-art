@@ -1,0 +1,67 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/beach-day",
+  "path": "/beach-day",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Beach Day — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><strong>Beach Day </strong>From the hot summer heat and bustling boardwalks to cool ocean breezes and soft sands. If you were fortunate enough to spend summers at a beach, you know the euphoric feeling of seeing that endless ocean horizon growing into view as you drive up to the shoreline. Beach Day is for all the waves that took my breath away. Whether it was the East Coast or West Coast and Hawaiian Islands to Phi Phi Islands it's hard to pick a favorite beach as every place has its own feel. If I had to widdle it down to one wave my vote is towards the sands somewhere in Phuket.</p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">For serious inquiries please email vudiphothisukart@gmail.com</span></p></div>",
+      "text": "Beach Day From the hot summer heat and bustling boardwalks to cool ocean breezes and soft sands. If you were fortunate enough to spend summers at a beach, you know the euphoric feeling of seeing that endless ocean horizon growing into view as you drive up to the shoreline. Beach Day is for all the waves that took my breath away. Whether it was the East Coast or West Coast and Hawaiian Islands to Phi Phi Islands it's hard to pick a favorite beach as every place has its own feel. If I had to widdle it down to one wave my vote is towards the sands somewhere in Phuket.24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.For serious inquiries please email vudiphothisukart@gmail.com"
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/d274ff7b-ce6b-4c1a-9c41-3380c4af90a4/IMG_6664.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/d274ff7b-ce6b-4c1a-9c41-3380c4af90a4/IMG_6664.jpeg",
+        "data-image-dimensions": "1937x2920",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6664.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750219348870-QSRF243VA3DGFZYZWW8Y/IMG_5678.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750219348870-QSRF243VA3DGFZYZWW8Y/IMG_5678.jpg",
+        "data-image-dimensions": "2052x2735",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_5678.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750219301684-PP7RVIR0R6TX3CJGLXV0/IMG_7497.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750219301684-PP7RVIR0R6TX3CJGLXV0/IMG_7497.jpg",
+        "data-image-dimensions": "1635x2453",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7497.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-oceans#beach-day",
+      "text": "\n    Back to The Oceans\n  "
+    },
+    {
+      "href": "/mermaid-tail",
+      "text": "\n    Previous\n  "
+    },
+    {
+      "href": "/arctic-waves",
+      "text": "\n    Next\n  "
+    }
+  ]
+}

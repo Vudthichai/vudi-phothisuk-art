@@ -1,0 +1,53 @@
+{
+  "sitemapPageCount": 32,
+  "retrievedPaths": [
+    "/mermaid-tail",
+    "/waters-edge",
+    "/verdant",
+    "/arctic-waves",
+    "/sunset-waves",
+    "/summer-swells",
+    "/manta",
+    "/the-oceans-painting",
+    "/carnations",
+    "/the-oceans",
+    "/the-regal-collection",
+    "/collaborations",
+    "/navy",
+    "/golden-sand-beach",
+    "/dark-scales",
+    "/sahara",
+    "/beach-day",
+    "/home",
+    "/arctic-ocean"
+  ],
+  "failedRequests": [
+    {
+      "path": "/ciaran",
+      "httpStatus": 429
+    },
+    {
+      "path": "/collaborations",
+      "operation": "caption recapture",
+      "httpStatus": 429
+    }
+  ],
+  "notInspected": [
+    "https://www.vudiphothisukart.com/event-1",
+    "https://www.vudiphothisukart.com/event-1/ube-fest",
+    "https://www.vudiphothisukart.com/event-1/pop-up-baum-haus",
+    "https://www.vudiphothisukart.com/event-1/pier-pressure-ii",
+    "https://www.vudiphothisukart.com/event-1/event-one-zm7hk",
+    "https://www.vudiphothisukart.com/past-events-1",
+    "https://www.vudiphothisukart.com/past-events-1/blog-post-title-four-29ygs",
+    "https://www.vudiphothisukart.com/past-events-1/blog-post-title-three-zxb32",
+    "https://www.vudiphothisukart.com/past-events-1/blog-post-title-two-ml8k4",
+    "https://www.vudiphothisukart.com/past-events-1/blog-post-title-one-gn3bl",
+    "https://www.vudiphothisukart.com/about",
+    "https://www.vudiphothisukart.com/inquire",
+    "https://www.vudiphothisukart.com/ciaran"
+  ],
+  "forestAndFlowers": "Absent from inspected sitemap and collection navigation. Not proof that no unpublished or unlinked collection exists.",
+  "complete": false,
+  "stoppedOnRateLimit": true
+}

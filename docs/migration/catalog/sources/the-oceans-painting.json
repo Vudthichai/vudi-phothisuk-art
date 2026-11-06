@@ -1,0 +1,75 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/the-oceans-painting",
+  "path": "/the-oceans-painting",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "The Oceans — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>The Oceans:</strong> Our oceans act as the great protector of our world. Regulating global temperatures and scrubbing 25% of human made CO2 emissions. The liquid seascape is also home to Phytoplankton, tiny plant-like organisms in the ocean, producing at least 50% of the Earth's oxygen through photosynthesis. Standing in front of an endless horizon of water has always made me feel humbled. The amount of unknown mystery coupled with the daring stories of those who braved the currents for a better life has always inspired me. Our oceans aren’t just a body of armor but a signature of life. It’s our duty to respect our oceans and learn from it before it no longer cares to protect us.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">36” X 72” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">For serious inquiries please email vudiphothisukart@gmail.com</span></p></div>",
+      "text": "The Oceans: Our oceans act as the great protector of our world. Regulating global temperatures and scrubbing 25% of human made CO2 emissions. The liquid seascape is also home to Phytoplankton, tiny plant-like organisms in the ocean, producing at least 50% of the Earth's oxygen through photosynthesis. Standing in front of an endless horizon of water has always made me feel humbled. The amount of unknown mystery coupled with the daring stories of those who braved the currents for a better life has always inspired me. Our oceans aren’t just a body of armor but a signature of life. It’s our duty to respect our oceans and learn from it before it no longer cares to protect us.36” X 72” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.For serious inquiries please email vudiphothisukart@gmail.com"
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/d4509b5e-cb59-4248-93d4-af2fb2d2425b/The+Oceans.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/d4509b5e-cb59-4248-93d4-af2fb2d2425b/The+Oceans.jpg",
+        "data-image-dimensions": "2465x1224",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "The Oceans.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750261760139-W3HCAPI8N9CVFJHTSQLE/IMG_9590.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750261760139-W3HCAPI8N9CVFJHTSQLE/IMG_9590.jpg",
+        "data-image-dimensions": "2500x2997",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_9590.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750251300379-MT3O8974AZCWQMWADGWP/IMG_6778.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750251300379-MT3O8974AZCWQMWADGWP/IMG_6778.jpg",
+        "data-image-dimensions": "2193x2925",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6778.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 3,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750261718635-HC9KJY5LOC97OY8DWJ7K/Untitled%2Bdesign.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750261718635-HC9KJY5LOC97OY8DWJ7K/Untitled%2Bdesign.jpg",
+        "data-image-dimensions": "2500x3400",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "Untitled+design.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-oceans#theoceanspainting",
+      "text": "\n    Back to The Oceans\n  "
+    },
+    {
+      "href": "/arctic-ocean",
+      "text": "\n    Previous\n  "
+    }
+  ]
+}
