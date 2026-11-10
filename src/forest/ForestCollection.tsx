@@ -59,11 +59,42 @@ export function ForestCollection() {
 }
 
 
+const motherNatureChapters = [
+  {
+    imageId: 'mother-nature-angle-img-8275',
+    title: 'The Hidden Goddess',
+    description: 'The goddess is not immediately revealed. Her profile emerges from the surrounding foliage, inviting the viewer to look beyond the landscape and discover the presence hidden within it.',
+  },
+  {
+    imageId: 'mother-nature-angle-img-8272',
+    title: 'Sculpted by Nature',
+    description: 'Leaves, vines, and flowers extend beyond the painted surface, transforming the canvas into a dimensional landscape. Organic plaster and layered textures create an interplay between painting and sculpture.',
+  },
+  {
+    imageId: 'mother-nature-angle-img-8269',
+    title: 'Where Two Worlds Meet',
+    description: 'The painted river draws the eye into the distance while sculpted foliage emerges toward the viewer. Together, these contrasting depths blur the boundary between the landscape and the living presence within it.',
+  },
+];
+
 function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
   const hero = primaryForestImage(artwork);
   const position = data.artworks.indexOf(artwork) + 1;
   const next = data.artworks[position];
   const [openPhoto, setOpenPhoto] = useState<number | null>(null);
+
+  function renderPhoto(imageId: string, label: string, finale = false) {
+    const index = artwork.images.findIndex(image => image.id === imageId);
+    const image = artwork.images[index];
+    if (!image) return null;
+
+    return <figure className={finale ? 'forest-editorial-finale' : 'forest-editorial-chapter-photo'}>
+      <button type="button" className="forest-editorial-photo" aria-label={`Enlarge ${label}`} onClick={() => setOpenPhoto(index)}>
+        <Photograph image={image} sizes={finale ? '(max-width: 1500px) 86vw, 1290px' : '(max-width: 800px) 86vw, (max-width: 1500px) 46vw, 690px'}/>
+      </button>
+      {finale && <figcaption>{label}</figcaption>}
+    </figure>;
+  }
 
   return <article className="forest-editorial">
     <div className="forest-editorial-opening">
@@ -95,16 +126,16 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
         </svg>
         <h2 id="mother-nature-details">Closer look</h2>
       </header>
-      <div className="forest-editorial-grid">
-        {artwork.images.slice(1).map((image, index) => (
-          <figure key={image.id}>
-            <button type="button" className="forest-editorial-photo" aria-label={`Enlarge ${image.caption ?? image.alt}`} onClick={() => setOpenPhoto(index + 1)}>
-              <Photograph image={image} sizes="(max-width: 520px) 86vw, (max-width: 800px) 43vw, 50vw"/>
-            </button>
-            <figcaption>{image.caption}</figcaption>
-          </figure>
-        ))}
-      </div>
+      {motherNatureChapters.map(({ imageId, title, description }) => (
+        <section className="forest-editorial-chapter" key={imageId} aria-labelledby={`${imageId}-title`}>
+          <div className="forest-editorial-chapter-copy">
+            <h3 id={`${imageId}-title`}>{title}</h3>
+            <p>{description}</p>
+          </div>
+          {renderPhoto(imageId, title)}
+        </section>
+      ))}
+      {renderPhoto('mother-nature-angle-img-8264', 'Flowers in Relief', true)}
     </section>
     {openPhoto !== null && <FullscreenArtworkViewer images={artwork.images} initialIndex={openPhoto} onClose={() => setOpenPhoto(null)}/>}
     <nav className="private-artwork-next" aria-label="More paintings">

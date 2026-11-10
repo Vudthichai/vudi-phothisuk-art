@@ -72,7 +72,7 @@ export function FullscreenArtworkViewer({ images, initialIndex, onClose }: {
     onKeyDown={event => {
       revealControls();
       if (event.key === 'Tab') {
-        const controls = event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not(:disabled)');
+        const controls = [...event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')].filter(control => control.getClientRects().length);
         const first = controls[0], last = controls[controls.length - 1];
         if (event.shiftKey ? document.activeElement === first : document.activeElement === last) {
           event.preventDefault();
@@ -91,9 +91,16 @@ export function FullscreenArtworkViewer({ images, initialIndex, onClose }: {
     <ViewerControl icon="previous" label="Previous photograph" onClick={() => move(-1)} placement="forest-viewer-previous"/>
     <ViewerControl icon="next" label="Next photograph" onClick={() => move(1)} placement="forest-viewer-next"/>
     <p className="forest-viewer-caption" aria-live="polite">
-      <span>{image.caption ?? imageRoleLabel[image.role]}</span>
+      <span className="forest-viewer-photo-label">{image.caption ?? imageRoleLabel[image.role]}</span>
       <span className="forest-viewer-count">{index + 1} / {images.length}</span>
     </p>
+    <div className="forest-viewer-pagination" role="group" aria-label="Choose a photograph">
+      {images.map((photo, position) => (
+        <button type="button" key={photo.id}
+          aria-label={`Photograph ${position + 1}: ${photo.caption ?? imageRoleLabel[photo.role]}`}
+          aria-current={position === index ? 'true' : undefined} onClick={() => setIndex(position)}/>
+      ))}
+    </div>
   </dialog>;
 }
 
