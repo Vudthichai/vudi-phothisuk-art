@@ -122,52 +122,6 @@
               "src": "/forest-preview/images/mother-nature-angle-img-8264-v1-1200.webp"
             }
           ]
-        },
-        {
-          "id": "mother-nature-detail",
-          "alt": "Mother Nature — goddess profile formed by leaves and vines",
-          "role": "detail",
-          "variants": [
-            {
-              "key": "mother-nature-detail-final-v1-640",
-              "width": 640,
-              "height": 1138,
-              "src": "/forest-preview/images/mother-nature-detail-final-v1-640.webp"
-            },
-            {
-              "key": "mother-nature-detail-final-v1-1200",
-              "width": 1200,
-              "height": 2133,
-              "src": "/forest-preview/images/mother-nature-detail-final-v1-1200.webp"
-            }
-          ],
-          "caption": "Goddess profile"
-        },
-        {
-          "id": "mother-nature-detail-2",
-          "alt": "Mother Nature — raised flowers and foliage",
-          "role": "detail",
-          "variants": [
-            {
-              "key": "mother-nature-detail-2-final-v1-640",
-              "width": 640,
-              "height": 480,
-              "src": "/forest-preview/images/mother-nature-detail-2-final-v1-640.webp"
-            },
-            {
-              "key": "mother-nature-detail-2-final-v1-1200",
-              "width": 1200,
-              "height": 900,
-              "src": "/forest-preview/images/mother-nature-detail-2-final-v1-1200.webp"
-            }
-          ],
-          "caption": "Raised flowers",
-          "enlargement": {
-            "key": "mother-nature-detail-enlarge-v1-2400",
-            "src": "/forest-preview/images/mother-nature-detail-enlarge-v1-2400.webp",
-            "width": 2400,
-            "height": 1800
-          }
         }
       ],
       "galleryImageId": "mother-nature"
