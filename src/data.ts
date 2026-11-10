@@ -1,3 +1,4 @@
+import { forestCollection } from './forest/collection';
 import oceans from './oceans.json';
 import regal from './regal.json';
 export type ArtworkImage = {
@@ -16,9 +17,9 @@ export type Artwork = {
   availability?: string;
   sourceUrl?: string;
 };
-export type Collection = { slug: string; name: string; summary: string; artworks: Artwork[] };
+export type Collection = { slug: string; name: string; summary: string; artworks: Artwork[]; artworkCount?: number };
 export const collections: Collection[] = [
-  { slug: 'forest-and-flowers', name: 'Forest & Flowers', summary: 'Coming soon.', artworks: [] },
+  { slug: 'forest-and-flowers', name: 'Forest & Flowers', summary: forestCollection.introduction[0], artworks: [], artworkCount: forestCollection.artworks.length },
   { slug: 'oceans', name: 'The Oceans', summary: oceans.introduction, artworks: oceans.artworks },
   { slug: 'regal-collection', name: 'The Regal Collection', summary: regal.introduction, artworks: regal.artworks },
 ];

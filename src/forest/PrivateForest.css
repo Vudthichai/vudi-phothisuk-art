@@ -1,11 +1,6 @@
 .private-forest { color: #294337; background: #faf8ef; }
-.forest-entrance { max-width: 580px; margin: 8vh auto; padding: 40px 0; }
-.forest-entrance h1 { font-size: clamp(2.6rem, 7vw, 5rem); }
-.forest-entrance form { display: grid; gap: 14px; max-width: 360px; margin: 30px 0; }
-.forest-entrance input { font: inherit; padding: 14px; width: 100%; border: 1px solid #899889; background: #fffef8; border-radius: 0; }
 .private-forest button { font: inherit; cursor: pointer; }
 .forest-private-toolbar { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin: 15px 0 45px; }
-.forest-private-toolbar button { background: transparent; color: inherit; border: 1px solid #899889; padding: 8px 16px; }
 .private-forest-intro { position: relative; max-width: 1000px; margin: 0 auto 65px; overflow: hidden; }
 .private-forest-intro h1 { font-size: clamp(3rem, 7vw, 5.3rem); margin-bottom: 28px; }
 .private-forest-intro > p:not(.eyebrow) { max-width: 740px; line-height: 1.9; }
@@ -32,5 +27,5 @@
 .private-artwork-next { display: flex; gap: 18px 28px; flex-wrap: wrap; border-top: 1px solid #c5cdbf; padding-top: 30px; }
 .private-forest :focus-visible { outline: 2px solid #294337; outline-offset: 4px; }
 @media(max-width:800px) { .private-artwork-presentation { grid-template-columns: minmax(0,1fr); gap: 32px; } .forest-exhibit { grid-template-columns: minmax(0,1fr); gap: 24px; padding-bottom: 56px; } .forest-exhibit + .forest-exhibit { padding-top: 56px; } .private-artwork h1 { margin-top: 12px; } }
-@media(max-width:700px) { .forest-private-toolbar { margin-bottom: 30px; } .private-forest-intro { margin-bottom: 40px; } .forest-entrance { margin-top: 20px; } }
+@media(max-width:700px) { .forest-private-toolbar { margin-bottom: 30px; } .private-forest-intro { margin-bottom: 40px; } }
 .private-forest-intro button.text-link { border: 0; padding: 0; background: transparent; color: inherit; text-decoration: underline; text-underline-offset: 5px; }
