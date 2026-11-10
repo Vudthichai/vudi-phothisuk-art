@@ -24,19 +24,75 @@
           "role": "full",
           "variants": [
             {
-              "key": "mother-nature-640",
+              "key": "mother-nature-full-final-v1-640",
               "width": 640,
-              "height": 961,
-              "src": "/forest-preview/images/mother-nature-640.webp"
+              "height": 964,
+              "src": "/forest-preview/images/mother-nature-full-final-v1-640.webp"
             },
             {
-              "key": "mother-nature-1200",
+              "key": "mother-nature-full-final-v1-1200",
               "width": 1200,
-              "height": 1802,
-              "src": "/forest-preview/images/mother-nature-1200.webp"
+              "height": 1807,
+              "src": "/forest-preview/images/mother-nature-full-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
+        },
+        {
+          "id": "mother-nature-angle",
+          "alt": "Mother Nature — angled view showing the raised surface",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "mother-nature-angle-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/mother-nature-angle-final-v1-640.webp"
+            },
+            {
+              "key": "mother-nature-angle-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/mother-nature-angle-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "mother-nature-detail",
+          "alt": "Mother Nature — goddess profile formed by leaves and vines",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "mother-nature-detail-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/mother-nature-detail-final-v1-640.webp"
+            },
+            {
+              "key": "mother-nature-detail-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/mother-nature-detail-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "mother-nature-detail-2",
+          "alt": "Mother Nature — raised flowers and foliage",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "mother-nature-detail-2-final-v1-640",
+              "width": 640,
+              "height": 480,
+              "src": "/forest-preview/images/mother-nature-detail-2-final-v1-640.webp"
+            },
+            {
+              "key": "mother-nature-detail-2-final-v1-1200",
+              "width": 1200,
+              "height": 900,
+              "src": "/forest-preview/images/mother-nature-detail-2-final-v1-1200.webp"
+            }
+          ]
         }
       ],
       "galleryImageId": "mother-nature"
@@ -61,19 +117,75 @@
           "role": "full",
           "variants": [
             {
-              "key": "blooming-desire-640",
+              "key": "blooming-desire-full-final-v1-640",
               "width": 640,
               "height": 853,
-              "src": "/forest-preview/images/blooming-desire-640.webp"
+              "src": "/forest-preview/images/blooming-desire-full-final-v1-640.webp"
             },
             {
-              "key": "blooming-desire-1200",
+              "key": "blooming-desire-full-final-v1-1200",
               "width": 1200,
               "height": 1600,
-              "src": "/forest-preview/images/blooming-desire-1200.webp"
+              "src": "/forest-preview/images/blooming-desire-full-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
+        },
+        {
+          "id": "blooming-desire-angle",
+          "alt": "Blooming Desire — angled view showing the raised surface",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "blooming-desire-angle-final-v1-640",
+              "width": 640,
+              "height": 854,
+              "src": "/forest-preview/images/blooming-desire-angle-final-v1-640.webp"
+            },
+            {
+              "key": "blooming-desire-angle-final-v1-1200",
+              "width": 1200,
+              "height": 1602,
+              "src": "/forest-preview/images/blooming-desire-angle-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "blooming-desire-detail",
+          "alt": "Blooming Desire — raised cream blossoms and curling textures",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "blooming-desire-detail-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/blooming-desire-detail-final-v1-640.webp"
+            },
+            {
+              "key": "blooming-desire-detail-final-v1-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/blooming-desire-detail-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "blooming-desire-detail-2",
+          "alt": "Blooming Desire — cream flowers against coral and gold swirls",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "blooming-desire-detail-2-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/blooming-desire-detail-2-final-v1-640.webp"
+            },
+            {
+              "key": "blooming-desire-detail-2-final-v1-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/blooming-desire-detail-2-final-v1-1200.webp"
+            }
+          ]
         }
       ],
       "galleryImageId": "blooming-desire"
@@ -98,19 +210,94 @@
           "role": "full",
           "variants": [
             {
-              "key": "wild-tiger-lilies-640",
+              "key": "wild-tiger-lilies-full-final-v1-640",
               "width": 640,
-              "height": 853,
-              "src": "/forest-preview/images/wild-tiger-lilies-640.webp"
+              "height": 973,
+              "src": "/forest-preview/images/wild-tiger-lilies-full-final-v1-640.webp"
             },
             {
-              "key": "wild-tiger-lilies-1200",
+              "key": "wild-tiger-lilies-full-final-v1-1200",
               "width": 1200,
-              "height": 1600,
-              "src": "/forest-preview/images/wild-tiger-lilies-1200.webp"
+              "height": 1824,
+              "src": "/forest-preview/images/wild-tiger-lilies-full-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
+        },
+        {
+          "id": "wild-tiger-lilies-angle",
+          "alt": "Wild Tiger Lilies — angled view showing the raised surface",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "wild-tiger-lilies-angle-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/wild-tiger-lilies-angle-final-v1-640.webp"
+            },
+            {
+              "key": "wild-tiger-lilies-angle-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/wild-tiger-lilies-angle-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "wild-tiger-lilies-angle-2",
+          "alt": "Wild Tiger Lilies — alternate angled view of the canvas and its edge",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "wild-tiger-lilies-angle-2-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/wild-tiger-lilies-angle-2-final-v1-640.webp"
+            },
+            {
+              "key": "wild-tiger-lilies-angle-2-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/wild-tiger-lilies-angle-2-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "wild-tiger-lilies-detail",
+          "alt": "Wild Tiger Lilies — sculpted orange flower and curled leaves",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "wild-tiger-lilies-detail-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/wild-tiger-lilies-detail-final-v1-640.webp"
+            },
+            {
+              "key": "wild-tiger-lilies-detail-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/wild-tiger-lilies-detail-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "wild-tiger-lilies-detail-2",
+          "alt": "Wild Tiger Lilies — spotted petals and raised green foliage",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "wild-tiger-lilies-detail-2-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/wild-tiger-lilies-detail-2-final-v1-640.webp"
+            },
+            {
+              "key": "wild-tiger-lilies-detail-2-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/wild-tiger-lilies-detail-2-final-v1-1200.webp"
+            }
+          ]
         }
       ],
       "galleryImageId": "wild-tiger-lilies"
@@ -135,19 +322,75 @@
           "role": "full",
           "variants": [
             {
-              "key": "gilded-bloom-640",
+              "key": "gilded-bloom-full-final-v1-640",
               "width": 640,
-              "height": 853,
-              "src": "/forest-preview/images/gilded-bloom-640.webp"
+              "height": 975,
+              "src": "/forest-preview/images/gilded-bloom-full-final-v1-640.webp"
             },
             {
-              "key": "gilded-bloom-1200",
+              "key": "gilded-bloom-full-final-v1-1200",
+              "width": 1200,
+              "height": 1828,
+              "src": "/forest-preview/images/gilded-bloom-full-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "gilded-bloom-angle",
+          "alt": "Gilded Bloom — angled view showing the raised surface",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "gilded-bloom-angle-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/gilded-bloom-angle-final-v1-640.webp"
+            },
+            {
+              "key": "gilded-bloom-angle-final-v1-1200",
               "width": 1200,
               "height": 1600,
-              "src": "/forest-preview/images/gilded-bloom-1200.webp"
+              "src": "/forest-preview/images/gilded-bloom-angle-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
+        },
+        {
+          "id": "gilded-bloom-detail",
+          "alt": "Gilded Bloom — metallic petals and layered surface",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "gilded-bloom-detail-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/gilded-bloom-detail-final-v1-640.webp"
+            },
+            {
+              "key": "gilded-bloom-detail-final-v1-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/gilded-bloom-detail-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "gilded-bloom-detail-2",
+          "alt": "Gilded Bloom — grooved petals at the edge of the canvas",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "gilded-bloom-detail-2-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/gilded-bloom-detail-2-final-v1-640.webp"
+            },
+            {
+              "key": "gilded-bloom-detail-2-final-v1-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/gilded-bloom-detail-2-final-v1-1200.webp"
+            }
+          ]
         }
       ],
       "galleryImageId": "gilded-bloom"
@@ -173,19 +416,75 @@
           "role": "full",
           "variants": [
             {
-              "key": "a-forest-forgotten-640",
+              "key": "a-forest-forgotten-full-final-v1-640",
               "width": 640,
-              "height": 853,
-              "src": "/forest-preview/images/a-forest-forgotten-640.webp"
+              "height": 971,
+              "src": "/forest-preview/images/a-forest-forgotten-full-final-v1-640.webp"
             },
             {
-              "key": "a-forest-forgotten-1200",
+              "key": "a-forest-forgotten-full-final-v1-1200",
               "width": 1200,
-              "height": 1600,
-              "src": "/forest-preview/images/a-forest-forgotten-1200.webp"
+              "height": 1820,
+              "src": "/forest-preview/images/a-forest-forgotten-full-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
+        },
+        {
+          "id": "a-forest-forgotten-angle",
+          "alt": "A Forest Forgotten — angled view showing the raised surface",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "a-forest-forgotten-angle-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/a-forest-forgotten-angle-final-v1-640.webp"
+            },
+            {
+              "key": "a-forest-forgotten-angle-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/a-forest-forgotten-angle-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "a-forest-forgotten-detail",
+          "alt": "A Forest Forgotten — deep grooves in the tree bark",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "a-forest-forgotten-detail-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/a-forest-forgotten-detail-final-v1-640.webp"
+            },
+            {
+              "key": "a-forest-forgotten-detail-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/a-forest-forgotten-detail-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "a-forest-forgotten-detail-2",
+          "alt": "A Forest Forgotten — raised leaves beside the trunk",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "a-forest-forgotten-detail-2-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/a-forest-forgotten-detail-2-final-v1-640.webp"
+            },
+            {
+              "key": "a-forest-forgotten-detail-2-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/a-forest-forgotten-detail-2-final-v1-1200.webp"
+            }
+          ]
         }
       ],
       "galleryImageId": "a-forest-forgotten"
@@ -210,19 +509,75 @@
           "role": "full",
           "variants": [
             {
-              "key": "moss-and-mushrooms-640",
+              "key": "moss-and-mushrooms-full-final-v1-640",
               "width": 640,
-              "height": 853,
-              "src": "/forest-preview/images/moss-and-mushrooms-640.webp"
+              "height": 857,
+              "src": "/forest-preview/images/moss-and-mushrooms-full-final-v1-640.webp"
             },
             {
-              "key": "moss-and-mushrooms-1200",
+              "key": "moss-and-mushrooms-full-final-v1-1200",
+              "width": 1200,
+              "height": 1607,
+              "src": "/forest-preview/images/moss-and-mushrooms-full-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "moss-and-mushrooms-angle",
+          "alt": "Moss & Mushrooms — angled view showing the raised surface",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "moss-and-mushrooms-angle-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/moss-and-mushrooms-angle-final-v1-640.webp"
+            },
+            {
+              "key": "moss-and-mushrooms-angle-final-v1-1200",
               "width": 1200,
               "height": 1600,
-              "src": "/forest-preview/images/moss-and-mushrooms-1200.webp"
+              "src": "/forest-preview/images/moss-and-mushrooms-angle-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
+        },
+        {
+          "id": "moss-and-mushrooms-detail",
+          "alt": "Moss & Mushrooms — rust-colored mushrooms rising from the bark",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "moss-and-mushrooms-detail-final-v1-640",
+              "width": 640,
+              "height": 480,
+              "src": "/forest-preview/images/moss-and-mushrooms-detail-final-v1-640.webp"
+            },
+            {
+              "key": "moss-and-mushrooms-detail-final-v1-1200",
+              "width": 1200,
+              "height": 900,
+              "src": "/forest-preview/images/moss-and-mushrooms-detail-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "moss-and-mushrooms-detail-2",
+          "alt": "Moss & Mushrooms — layered mushroom caps and green moss",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "moss-and-mushrooms-detail-2-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/moss-and-mushrooms-detail-2-final-v1-640.webp"
+            },
+            {
+              "key": "moss-and-mushrooms-detail-2-final-v1-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/moss-and-mushrooms-detail-2-final-v1-1200.webp"
+            }
+          ]
         }
       ],
       "galleryImageId": "moss-and-mushrooms"
@@ -247,19 +602,75 @@
           "role": "full",
           "variants": [
             {
-              "key": "ethereal-bloom-640",
+              "key": "ethereal-bloom-full-final-v1-640",
               "width": 640,
-              "height": 853,
-              "src": "/forest-preview/images/ethereal-bloom-640.webp"
+              "height": 857,
+              "src": "/forest-preview/images/ethereal-bloom-full-final-v1-640.webp"
             },
             {
-              "key": "ethereal-bloom-1200",
+              "key": "ethereal-bloom-full-final-v1-1200",
+              "width": 1200,
+              "height": 1607,
+              "src": "/forest-preview/images/ethereal-bloom-full-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "ethereal-bloom-angle",
+          "alt": "Ethereal Bloom — angled view showing the raised surface",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "ethereal-bloom-angle-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/ethereal-bloom-angle-final-v1-640.webp"
+            },
+            {
+              "key": "ethereal-bloom-angle-final-v1-1200",
               "width": 1200,
               "height": 1600,
-              "src": "/forest-preview/images/ethereal-bloom-1200.webp"
+              "src": "/forest-preview/images/ethereal-bloom-angle-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
+        },
+        {
+          "id": "ethereal-bloom-detail",
+          "alt": "Ethereal Bloom — sculpted blossom in close-up",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "ethereal-bloom-detail-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/ethereal-bloom-detail-final-v1-640.webp"
+            },
+            {
+              "key": "ethereal-bloom-detail-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/ethereal-bloom-detail-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "ethereal-bloom-detail-2",
+          "alt": "Ethereal Bloom — raised flowers and curling surface ridges",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "ethereal-bloom-detail-2-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/ethereal-bloom-detail-2-final-v1-640.webp"
+            },
+            {
+              "key": "ethereal-bloom-detail-2-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/ethereal-bloom-detail-2-final-v1-1200.webp"
+            }
+          ]
         }
       ],
       "galleryImageId": "ethereal-bloom"
@@ -297,6 +708,63 @@
             }
           ],
           "temporary": true
+        },
+        {
+          "id": "tiger-lily-angle",
+          "alt": "Tiger Lily — angled view showing the raised surface",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "tiger-lily-angle-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/tiger-lily-angle-final-v1-640.webp"
+            },
+            {
+              "key": "tiger-lily-angle-final-v1-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/tiger-lily-angle-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "tiger-lily-detail",
+          "alt": "Tiger Lily — raised orange tiger lily and spotted petals",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "tiger-lily-detail-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/tiger-lily-detail-final-v1-640.webp"
+            },
+            {
+              "key": "tiger-lily-detail-final-v1-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/tiger-lily-detail-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "tiger-lily-detail-2",
+          "alt": "Tiger Lily — orange blossom beside the warm winding band",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "tiger-lily-detail-2-final-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/tiger-lily-detail-2-final-v1-640.webp"
+            },
+            {
+              "key": "tiger-lily-detail-2-final-v1-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/tiger-lily-detail-2-final-v1-1200.webp"
+            }
+          ]
         }
       ],
       "galleryImageId": "tiger-lily"
@@ -321,19 +789,75 @@
           "role": "full",
           "variants": [
             {
-              "key": "75-leaves-640",
+              "key": "75-leaves-full-final-v1-640",
               "width": 640,
               "height": 853,
-              "src": "/forest-preview/images/75-leaves-640.webp"
+              "src": "/forest-preview/images/75-leaves-full-final-v1-640.webp"
             },
             {
-              "key": "75-leaves-1200",
+              "key": "75-leaves-full-final-v1-1200",
               "width": 1200,
-              "height": 1600,
-              "src": "/forest-preview/images/75-leaves-1200.webp"
+              "height": 1599,
+              "src": "/forest-preview/images/75-leaves-full-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
+        },
+        {
+          "id": "75-leaves-angle",
+          "alt": "75 Leaves — angled view showing the raised surface",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "75-leaves-angle-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/75-leaves-angle-final-v1-640.webp"
+            },
+            {
+              "key": "75-leaves-angle-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/75-leaves-angle-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "75-leaves-detail",
+          "alt": "75 Leaves — raised leaves along the blue-and-gold river",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "75-leaves-detail-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/75-leaves-detail-final-v1-640.webp"
+            },
+            {
+              "key": "75-leaves-detail-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/75-leaves-detail-final-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "75-leaves-detail-2",
+          "alt": "75 Leaves — raised foliage and pink texture",
+          "role": "detail",
+          "variants": [
+            {
+              "key": "75-leaves-detail-2-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/75-leaves-detail-2-final-v1-640.webp"
+            },
+            {
+              "key": "75-leaves-detail-2-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/75-leaves-detail-2-final-v1-1200.webp"
+            }
+          ]
         }
       ],
       "galleryImageId": "75-leaves"
@@ -358,59 +882,75 @@
           "role": "full",
           "variants": [
             {
-              "key": "dragon-lily-full-640",
+              "key": "dragon-lily-full-final-v1-640",
               "width": 640,
-              "height": 853,
-              "src": "/forest-preview/images/dragon-lily-full-upright-640.webp"
+              "height": 852,
+              "src": "/forest-preview/images/dragon-lily-full-final-v1-640.webp"
             },
             {
-              "key": "dragon-lily-full-1200",
+              "key": "dragon-lily-full-final-v1-1200",
               "width": 1200,
-              "height": 1600,
-              "src": "/forest-preview/images/dragon-lily-full-upright-1200.webp"
+              "height": 1597,
+              "src": "/forest-preview/images/dragon-lily-full-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
         },
         {
           "id": "dragon-lily-angle",
-          "alt": "Dragon Lily — angled view showing dimensional depth",
+          "alt": "Dragon Lily — angled view showing the raised surface",
           "role": "angle",
           "variants": [
             {
-              "key": "dragon-lily-angle-640",
+              "key": "dragon-lily-angle-final-v1-640",
               "width": 640,
-              "height": 853,
-              "src": "/forest-preview/images/dragon-lily-angle-upright-640.webp"
+              "height": 1138,
+              "src": "/forest-preview/images/dragon-lily-angle-final-v1-640.webp"
             },
             {
-              "key": "dragon-lily-angle-1200",
+              "key": "dragon-lily-angle-final-v1-1200",
               "width": 1200,
-              "height": 1600,
-              "src": "/forest-preview/images/dragon-lily-angle-upright-1200.webp"
+              "height": 2133,
+              "src": "/forest-preview/images/dragon-lily-angle-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
+        },
+        {
+          "id": "dragon-lily-angle-2",
+          "alt": "Dragon Lily — alternate angled view of the canvas and its edge",
+          "role": "angle",
+          "variants": [
+            {
+              "key": "dragon-lily-angle-2-final-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/dragon-lily-angle-2-final-v1-640.webp"
+            },
+            {
+              "key": "dragon-lily-angle-2-final-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/dragon-lily-angle-2-final-v1-1200.webp"
+            }
+          ]
         },
         {
           "id": "dragon-lily-detail",
-          "alt": "Dragon Lily — sculptural close-up",
+          "alt": "Dragon Lily — raised pink flower against blue and purple textures",
           "role": "detail",
           "variants": [
             {
-              "key": "dragon-lily-detail-640",
+              "key": "dragon-lily-detail-final-v1-640",
               "width": 640,
-              "height": 480,
-              "src": "/forest-preview/images/dragon-lily-detail-640.webp"
+              "height": 1138,
+              "src": "/forest-preview/images/dragon-lily-detail-final-v1-640.webp"
             },
             {
-              "key": "dragon-lily-detail-1200",
+              "key": "dragon-lily-detail-final-v1-1200",
               "width": 1200,
-              "height": 900,
-              "src": "/forest-preview/images/dragon-lily-detail-1200.webp"
+              "height": 2133,
+              "src": "/forest-preview/images/dragon-lily-detail-final-v1-1200.webp"
             }
-          ],
-          "temporary": true
+          ]
         }
       ],
       "galleryImageId": "dragon-lily-full"

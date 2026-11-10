@@ -47,8 +47,10 @@ it('still opens when browser storage is unavailable',async()=>{
 it('removes noindex metadata when leaving the preview component',async()=>{
  const {unmount}=page();await screen.findByLabelText('Password');unmount();await waitFor(()=>expect(document.querySelector('meta[name="robots"]')).toBeNull());
 });
-it('preserves ten originals, two not-for-sale exceptions and twelve existing photographs',()=>{
- expect(collection.artworks).toHaveLength(10);expect(collection.artworks.reduce((n,a)=>n+a.images.length,0)).toBe(12);
+it('preserves ten originals, two not-for-sale exceptions and the approved photography selection',()=>{
+ expect(collection.artworks).toHaveLength(10);expect(collection.artworks.reduce((n,a)=>n+a.images.length,0)).toBe(41);
+ const temporary = collection.artworks.flatMap(art => art.images.filter(image => 'temporary' in image && image.temporary));
+ expect(temporary.map(image => image.id)).toEqual(['tiger-lily']);
  expect(collection.artworks.filter(a=>a.availability==='not-for-sale').map(a=>a.title)).toEqual(['Tiger Lily','75 Leaves']);
  expect(collection.artworks.filter(a=>a.availability==='provisional')).toHaveLength(8);
  expect(collection.artworks.find(a=>a.slug==='dragon-lily')?.dimensions).toBeNull();
