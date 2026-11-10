@@ -32,7 +32,9 @@
 
 .forest-editorial-opening { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-areas: "hero title" "hero facts"; grid-template-rows: auto 1fr; column-gap: 6%; }
 .forest-editorial-title { grid-area: title; }
-.forest-editorial-title .eyebrow { margin-bottom: 16px; }
+.forest-editorial-title h1, .forest-editorial-story h2, .forest-editorial-detail-heading h2, .forest-editorial-grid figcaption { font-family: "Bodoni Moda", Didot, Georgia, serif; }
+
+.forest-editorial-number { margin-bottom: 16px; color: #536658; font-variant-numeric: tabular-nums; }
 .forest-editorial-title h1 { font-size: clamp(2.75rem, 5vw, 5rem); margin-bottom: 20px; }
 .forest-editorial-hero { grid-area: hero; margin: 0; }
 .forest-editorial-photo { display: block; width: 100%; border: 0; padding: 0; background: transparent; cursor: zoom-in !important; }
@@ -44,9 +46,13 @@
 .forest-editorial-facts .private-availability { margin: 22px 0 6px; }
 .forest-editorial-story { margin-top: clamp(2rem, 4vw, 3.5rem); line-height: 1.8; }
 .forest-editorial-story h2 { font-size: clamp(1.55rem, 2.5vw, 2.2rem); }
-.forest-editorial-details { margin: clamp(3rem, 8vw, 7rem) 0; }
+.forest-editorial-details { max-width: 68rem; margin: clamp(3rem, 8vw, 7rem) auto; }
+.forest-editorial-detail-heading { margin-bottom: clamp(20px, 3vw, 38px); }
+.forest-editorial-detail-heading h2 { font-size: clamp(1.65rem, 3vw, 2.4rem); margin: 0; }
+.forest-editorial-sprig { display: block; color: #526a57; opacity: .55; width: 54px; height: auto; margin-bottom: 8px; }
 .forest-editorial-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.22fr); gap: clamp(24px, 4vw, 58px); align-items: start; }
 .forest-editorial-grid figure { margin: 0; }
+.forest-editorial-grid figcaption { font-size: 1rem; color: #425749; }
 .forest-editorial-grid figure:nth-child(even) { align-self: end; }
 @media (max-width: 800px) {
   .forest-editorial-opening { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "hero" "facts"; grid-template-rows: auto; }

@@ -61,13 +61,14 @@ export function ForestCollection() {
 
 function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
   const hero = primaryForestImage(artwork);
-  const next = data.artworks[data.artworks.indexOf(artwork) + 1];
+  const position = data.artworks.indexOf(artwork) + 1;
+  const next = data.artworks[position];
   const [openPhoto, setOpenPhoto] = useState<number | null>(null);
 
   return <article className="forest-editorial">
     <div className="forest-editorial-opening">
       <header className="forest-editorial-title">
-        <p className="eyebrow">Forest &amp; Flowers</p>
+        <p className="eyebrow forest-editorial-number">{String(position).padStart(2, '0')} / {data.artworks.length} — Forest &amp; Flowers</p>
         <h1>{artwork.title}</h1>
         <p>{artwork.dimensions}</p>
       </header>
@@ -87,7 +88,13 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
       </div>
     </div>
     <section className="forest-editorial-details" aria-labelledby="mother-nature-details">
-      <h2 id="mother-nature-details">Closer look</h2>
+      <header className="forest-editorial-detail-heading">
+        <svg className="forest-editorial-sprig" width="64" height="32" viewBox="0 0 64 32" fill="none"
+          stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M4 28C19 24 30 12 58 5M19 22C12 21 9 16 8 10c8 1 12 5 13 11m7-5C24 11 24 6 26 2c6 4 8 7 7 11m3-2c3 4 9 6 17 2-5-3-10-4-15-3m10-3c3-5 8-6 13-5-3 4-7 6-12 5"/>
+        </svg>
+        <h2 id="mother-nature-details">Closer look</h2>
+      </header>
       <div className="forest-editorial-grid">
         {artwork.images.slice(1).map((image, index) => (
           <figure key={image.id}>
