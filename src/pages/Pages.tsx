@@ -15,7 +15,17 @@ export function PageMeta({ title, description }: { title: string; description: s
   useEffect(() => { document.title = `${title} | Vudi Phothisuk Art`; document.querySelector('meta[name="description"]')?.setAttribute('content', description); }, [title, description]);
   return null;
 }
-export function CollectionLinks() { return <div className="collection-list">{[...collections].sort((a,b) => Number(Boolean(b.artworks.length)) - Number(Boolean(a.artworks.length))).map(collection => <Link key={collection.slug} to={`/collections/${collection.slug}`}><h3>{collection.name}</h3><span className="collection-status">{collection.artworks.length ? `${collection.artworks.length} artworks` : collection.slug === 'forest-and-flowers' ? 'Coming soon' : 'In preparation'}</span><span aria-hidden="true">→</span></Link>)}</div>; }
+export function CollectionLinks() {
+  const entries = collections.map(collection => ({
+    collection,
+    count: collection.artworkCount ?? collection.artworks.length,
+  })).sort((a, b) => Number(Boolean(b.count)) - Number(Boolean(a.count)));
+  return <div className="collection-list">{entries.map(({ collection, count }) => (
+    <Link key={collection.slug} to={`/collections/${collection.slug}`}>
+      <h3>{collection.name}</h3><span className="collection-status">{count ? `${count} artworks` : 'In preparation'}</span><span aria-hidden="true">→</span>
+    </Link>
+  ))}</div>;
+}
 export function Home() {
   const ocean = findCollection('oceans')!.artworks.find(art => art.slug === 'the-oceans')!;
   return <div className="forest-home">

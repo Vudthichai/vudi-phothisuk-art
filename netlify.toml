@@ -7,21 +7,3 @@
   from = "/*"
   to = "/index.html"
   status = 200
-
-[[headers]]
-  for = "/collections/forest-and-flowers"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow, noarchive"
-    Cache-Control = "private, no-store"
-
-[[headers]]
-  for = "/collections/forest-and-flowers/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow, noarchive"
-    Cache-Control = "private, no-store"
-
-[[headers]]
-  for = "/forest-preview/*"
-  [headers.values]
-    X-Robots-Tag = "noindex, nofollow, noarchive"
-    Cache-Control = "no-store"
