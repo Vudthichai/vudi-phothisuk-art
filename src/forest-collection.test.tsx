@@ -38,7 +38,7 @@ it('offers a return link when the artwork slug is unknown', () => {
 });
 
 it('preserves ten originals, two not-for-sale exceptions and the approved photography selection',()=>{
- expect(collection.artworks).toHaveLength(10);expect(collection.artworks.reduce((n,a)=>n+a.images.length,0)).toBe(41);
+ expect(collection.artworks).toHaveLength(10);expect(collection.artworks.reduce((n,a)=>n+a.images.length,0)).toBe(42);
  const temporary = collection.artworks.flatMap(art => art.images.filter(image => 'temporary' in image && image.temporary));
  expect(temporary.map(image => image.id)).toEqual(['tiger-lily']);
  expect(collection.artworks.filter(a=>a.availability==='not-for-sale').map(a=>a.title)).toEqual(['Tiger Lily','75 Leaves']);

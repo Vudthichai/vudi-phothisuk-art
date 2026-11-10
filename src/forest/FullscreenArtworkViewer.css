@@ -1,0 +1,122 @@
+.forest-fullscreen[open] {
+  --viewer-top: max(10px, env(safe-area-inset-top));
+  --viewer-bottom: max(10px, env(safe-area-inset-bottom));
+  --viewer-left: max(12px, env(safe-area-inset-left));
+  --viewer-right: max(12px, env(safe-area-inset-right));
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  border: 0;
+  padding: calc(var(--viewer-top) + 46px) var(--viewer-right) calc(var(--viewer-bottom) + 38px) var(--viewer-left);
+  background: #151515;
+  color: #f4f2ef;
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  overflow: hidden;
+}
+.forest-fullscreen::backdrop { background: #151515; }
+.forest-viewer-control {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: inherit;
+  background: rgb(21 21 21 / .82);
+  border: 0;
+  border-radius: 50%;
+  transition: opacity .25s ease, background-color .2s ease;
+}
+.forest-viewer-control:disabled { opacity: .44; cursor: default; }
+.forest-viewer-control:hover:not(:disabled) { background: #383838; }
+.private-forest .forest-viewer-control:focus-visible { outline: 2px solid white; outline-offset: 2px; opacity: 1; }
+.forest-viewer-close, .forest-viewer-previous, .forest-viewer-next, .forest-fullscreen-zoom, .forest-viewer-caption { position: absolute; }
+.forest-viewer-close { top: var(--viewer-top); right: var(--viewer-right); }
+.forest-viewer-previous, .forest-viewer-next { top: 50%; transform: translateY(-50%); }
+.forest-viewer-previous { left: var(--viewer-left); }
+.forest-viewer-next { right: var(--viewer-right); }
+.forest-fullscreen-zoom { top: var(--viewer-top); left: var(--viewer-left); display: flex; gap: 2px; }
+.forest-viewer-caption {
+  bottom: var(--viewer-bottom);
+  left: var(--viewer-left);
+  right: var(--viewer-right);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0;
+  min-height: 28px;
+  font-size: .8125rem;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.forest-viewer-count { white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (hover: hover) and (pointer: fine) {
+  .forest-fullscreen[data-idle="true"] .forest-viewer-control:not(:hover):not(:focus-visible) { opacity: .58; }
+  .forest-fullscreen[data-idle="true"] .forest-viewer-caption { opacity: .66; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .forest-fullscreen .forest-viewer-control, .forest-viewer-caption { transition: none; }
+}
+.forest-fullscreen-stage { display: grid; place-items: center; min-width: 0; min-height: 0; overflow: hidden; container-type: size; touch-action: none; user-select: none; cursor: zoom-in; }
+.forest-fullscreen-stage[data-zoomed="true"] { cursor: grab; }
+.forest-fullscreen-stage[data-zoomed="true"]:active { cursor: grabbing; }
+.forest-fullscreen-photo { position: relative; max-width: 100%; max-height: 100%; pointer-events: none; }
+.forest-fullscreen-photo img { display: block; width: auto; height: auto; max-width: 100cqw; max-height: 100cqh; object-fit: contain; }
+.forest-fullscreen-photo .forest-fullscreen-hires { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; }
+.forest-fullscreen-hires[data-ready="true"] { opacity: 1; }
+.forest-viewer-pagination { display: none; }
+
+@media (max-width: 600px) {
+  .forest-fullscreen[open] { padding-bottom: calc(var(--viewer-bottom) + 54px); }
+  .forest-viewer-previous, .forest-viewer-next { display: none; }
+  .forest-viewer-caption {
+    left: auto;
+    min-height: 44px;
+    justify-content: end;
+    font-size: .75rem;
+  }
+  .forest-viewer-photo-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .forest-viewer-pagination {
+    position: absolute;
+    inset: auto 0 var(--viewer-bottom);
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .forest-viewer-pagination button {
+    width: 44px;
+    height: 44px;
+    display: grid;
+    place-items: center;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    pointer-events: auto;
+  }
+  .forest-viewer-pagination button::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #a19d97;
+  }
+  .forest-viewer-pagination button[aria-current="true"]::before {
+    width: 9px;
+    height: 9px;
+    background: #f4f2ef;
+  }
+  .private-forest .forest-viewer-pagination button:focus-visible { outline: 2px solid white; outline-offset: -5px; }
+}

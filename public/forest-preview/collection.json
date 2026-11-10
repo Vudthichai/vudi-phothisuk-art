@@ -1,7 +1,7 @@
 {
   "title": "Forest & Flowers",
   "introduction": [
-    "Forest & Flowers brings together dimensional mixed-media acrylic paintings shaped by sculpted organic plaster, layered color, and metallic highlights. Leaves, blossoms, bark, and flowing landscapes become ways of exploring discovery, love, remembrance, and our dependence on the natural world. Each painting carries its own story, from an unexpected encounter with beauty to a personal tribute or a call for conservation. Across the collection, shifting light reveals details within the textured surfaces, encouraging the close attention through which both nature and personal meaning become more visible."
+    "In Forest & Flowers, sculpted leaves, blossoms, and bark rise from layers of acrylic and organic plaster. As the light shifts, rivers, hidden figures, and metallic traces come into view. These paintings explore love, remembrance, and our dependence on the natural world."
   ],
   "artworks": [
     {
@@ -35,64 +35,117 @@
               "height": 1807,
               "src": "/forest-preview/images/mother-nature-full-final-v1-1200.webp"
             }
-          ]
+          ],
+          "enlargement": {
+            "key": "mother-nature-full-enlarge-v1-2400",
+            "src": "/forest-preview/images/mother-nature-full-enlarge-v1-2400.webp",
+            "width": 2400,
+            "height": 3614
+          }
         },
         {
-          "id": "mother-nature-angle",
-          "alt": "Mother Nature — angled view showing the raised surface",
+          "id": "mother-nature-angle-img-8275",
+          "alt": "Mother Nature — goddess profile at an angle",
           "role": "angle",
+          "caption": "The Hidden Goddess",
           "variants": [
             {
-              "key": "mother-nature-angle-final-v1-640",
+              "key": "mother-nature-angle-img-8275-v1-640",
               "width": 640,
               "height": 1138,
-              "src": "/forest-preview/images/mother-nature-angle-final-v1-640.webp"
+              "src": "/forest-preview/images/mother-nature-angle-img-8275-v1-640.webp"
             },
             {
-              "key": "mother-nature-angle-final-v1-1200",
+              "key": "mother-nature-angle-img-8275-v1-1200",
               "width": 1200,
               "height": 2133,
-              "src": "/forest-preview/images/mother-nature-angle-final-v1-1200.webp"
+              "src": "/forest-preview/images/mother-nature-angle-img-8275-v1-1200.webp"
             }
-          ]
+          ],
+          "enlargement": {
+            "key": "mother-nature-angle-img-8275-enlarge-v1-2268",
+            "src": "/forest-preview/images/mother-nature-angle-img-8275-enlarge-v1-2268.webp",
+            "width": 2268,
+            "height": 4032
+          }
         },
         {
-          "id": "mother-nature-detail",
-          "alt": "Mother Nature — goddess profile formed by leaves and vines",
-          "role": "detail",
+          "id": "mother-nature-angle-img-8272",
+          "alt": "Mother Nature — raised foliage along the canvas edge",
+          "role": "angle",
+          "caption": "Sculpted Foliage",
           "variants": [
             {
-              "key": "mother-nature-detail-final-v1-640",
+              "key": "mother-nature-angle-img-8272-v1-640",
               "width": 640,
               "height": 1138,
-              "src": "/forest-preview/images/mother-nature-detail-final-v1-640.webp"
+              "src": "/forest-preview/images/mother-nature-angle-img-8272-v1-640.webp"
             },
             {
-              "key": "mother-nature-detail-final-v1-1200",
+              "key": "mother-nature-angle-img-8272-v1-1200",
               "width": 1200,
               "height": 2133,
-              "src": "/forest-preview/images/mother-nature-detail-final-v1-1200.webp"
+              "src": "/forest-preview/images/mother-nature-angle-img-8272-v1-1200.webp"
             }
-          ]
+          ],
+          "enlargement": {
+            "key": "mother-nature-angle-img-8272-enlarge-v1-2268",
+            "src": "/forest-preview/images/mother-nature-angle-img-8272-enlarge-v1-2268.webp",
+            "width": 2268,
+            "height": 4032
+          }
         },
         {
-          "id": "mother-nature-detail-2",
-          "alt": "Mother Nature — raised flowers and foliage",
-          "role": "detail",
+          "id": "mother-nature-angle-img-8269",
+          "alt": "Mother Nature — goddess and river from an angle",
+          "role": "angle",
+          "caption": "Light Across the Surface",
           "variants": [
             {
-              "key": "mother-nature-detail-2-final-v1-640",
+              "key": "mother-nature-angle-img-8269-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/mother-nature-angle-img-8269-v1-640.webp"
+            },
+            {
+              "key": "mother-nature-angle-img-8269-v1-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/mother-nature-angle-img-8269-v1-1200.webp"
+            }
+          ],
+          "enlargement": {
+            "key": "mother-nature-angle-img-8269-enlarge-v1-2400",
+            "src": "/forest-preview/images/mother-nature-angle-img-8269-enlarge-v1-2400.webp",
+            "width": 2400,
+            "height": 3200
+          }
+        },
+        {
+          "id": "mother-nature-angle-img-8264",
+          "alt": "Mother Nature — raised flowers at a low angle",
+          "role": "angle",
+          "caption": "Flowers in Relief",
+          "variants": [
+            {
+              "key": "mother-nature-angle-img-8264-v1-640",
               "width": 640,
               "height": 480,
-              "src": "/forest-preview/images/mother-nature-detail-2-final-v1-640.webp"
+              "src": "/forest-preview/images/mother-nature-angle-img-8264-v1-640.webp"
             },
             {
-              "key": "mother-nature-detail-2-final-v1-1200",
+              "key": "mother-nature-angle-img-8264-v1-1200",
               "width": 1200,
               "height": 900,
-              "src": "/forest-preview/images/mother-nature-detail-2-final-v1-1200.webp"
+              "src": "/forest-preview/images/mother-nature-angle-img-8264-v1-1200.webp"
             }
-          ]
+          ],
+          "enlargement": {
+            "key": "mother-nature-angle-img-8264-enlarge-v1-2400",
+            "src": "/forest-preview/images/mother-nature-angle-img-8264-enlarge-v1-2400.webp",
+            "width": 2400,
+            "height": 1800
+          }
         }
       ],
       "galleryImageId": "mother-nature"
