@@ -57,7 +57,7 @@
 .forest-editorial-chapter-photo, .forest-editorial-finale { margin-inline: 0; margin-bottom: 0; }
 .forest-editorial-chapter-photo { margin-top: 0; }
 .forest-editorial-finale figcaption { font-size: 1rem; color: #425749; }
-.forest-editorial-mobile-hint, .forest-editorial-mobile-interpretation { display: none; }
+.forest-editorial-mobile-hint, .forest-editorial-mobile-medium, .forest-editorial-mobile-inquiry { display: none; }
 @media (min-width: 801px) {
   .forest-editorial-chapter:nth-of-type(even) { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); }
   .forest-editorial-chapter:nth-of-type(even) .forest-editorial-chapter-photo { grid-column: 1; grid-row: 1; }
@@ -75,10 +75,13 @@
   .private-forest:has(.forest-editorial) .forest-private-toolbar { margin: 0 0 20px; }
   .forest-editorial-number { margin-bottom: 8px; }
   .forest-editorial-title h1 { font-size: clamp(2.5rem, 10vw, 3rem); margin-bottom: 6px; }
-  .forest-editorial-title > p:last-child { margin-bottom: 14px; }
+  .forest-editorial-title > p { margin-bottom: 6px; }
+  .forest-editorial-title > .forest-editorial-mobile-medium { display: block; font-size: .875rem; line-height: 1.5; margin-bottom: 16px; max-width: 34ch; }
+  .forest-editorial-mobile-inquiry { display: block; padding-top: 20px; border-top: 1px solid #c5cdbf; margin-bottom: 26px; }
+  .forest-editorial-mobile-inquiry .private-availability { margin: 0 0 6px; }
   .forest-editorial-hero, .forest-editorial-finale { margin-inline: -7vw; }
   .forest-editorial-hero .forest-editorial-hero-caption { display: block; }
-  .forest-editorial-hero-caption > :not(.forest-editorial-mobile-hint), .forest-editorial-desktop-interpretation { display: none; }
+  .forest-editorial-hero-caption > :not(.forest-editorial-mobile-hint), .forest-editorial-desktop-facts { display: none; }
   .forest-editorial-mobile-hint {
     display: block;
     color: #536658;
@@ -92,7 +95,7 @@
   .forest-editorial-facts .private-availability { margin-top: 10px; }
   .forest-editorial-story { margin-top: 26px; }
   .forest-editorial-story h2 { margin-bottom: 12px; }
-  .forest-editorial-story p, .forest-editorial-chapter-copy p, .forest-editorial-mobile-interpretation p { font-size: 1rem; line-height: 1.68; }
+  .forest-editorial-story p, .forest-editorial-chapter-copy p { font-size: 1rem; line-height: 1.68; }
   .forest-editorial-story p:last-child { margin-bottom: 0; }
   .forest-editorial-details { margin: 32px 0; padding-top: 20px; }
   .forest-editorial-detail-heading { margin-bottom: 20px; }
@@ -101,14 +104,6 @@
   .forest-editorial-chapter:first-of-type .forest-editorial-chapter-photo { margin-inline-start: 8%; }
   .forest-editorial-chapter:nth-of-type(2) .forest-editorial-chapter-photo { margin-inline-start: -7vw; }
   .forest-editorial-chapter:nth-of-type(3) .forest-editorial-chapter-photo { margin-inline-end: 8%; }
-  .forest-editorial-mobile-interpretation {
-    display: block;
-    margin: 10px 0 0;
-    padding-top: 18px;
-    border-top: 1px solid #c5cdbf;
-    max-width: 42ch;
-  }
-  .forest-editorial-mobile-interpretation p { margin-bottom: 0; }
   .forest-editorial-finale figcaption { margin-inline: 7vw; }
   .forest-editorial-chapter + .forest-editorial-chapter, .forest-editorial-finale { margin-top: 30px; }
 }

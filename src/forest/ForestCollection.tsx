@@ -102,6 +102,7 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
         <p className="eyebrow forest-editorial-number">{String(position).padStart(2, '0')} / {data.artworks.length} — Forest &amp; Flowers</p>
         <h1>{artwork.title}</h1>
         <p>{artwork.dimensions}</p>
+        <p className="forest-editorial-mobile-medium">{artwork.medium}</p>
       </header>
       <figure className="forest-editorial-hero">
         <button type="button" className="forest-editorial-photo" aria-label="Enlarge Mother Nature" onClick={() => setOpenPhoto(0)}>
@@ -114,14 +115,13 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
         </figcaption>
       </figure>
       <div className="forest-editorial-facts">
-        <p>{artwork.medium}</p>
-        <Inquiry artwork={artwork}/>
+        <div className="forest-editorial-desktop-facts">
+          <p>{artwork.medium}</p>
+          <Inquiry artwork={artwork}/>
+        </div>
         <section className="forest-editorial-story" aria-labelledby="mother-nature-story">
           <h2 id="mother-nature-story">About the painting</h2>
-          <p>{artwork.description[0]}</p>
-          <div className="forest-editorial-desktop-interpretation">
-            {artwork.description.slice(1).map(paragraph => <p key={paragraph}>{paragraph}</p>)}
-          </div>
+          {artwork.description.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
         </section>
       </div>
     </div>
@@ -136,15 +136,11 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
             <p>{description}</p>
           </div>
           {renderPhoto(imageId, title)}
-          {imageId === 'mother-nature-angle-img-8272' && (
-            <div className="forest-editorial-mobile-interpretation">
-              {artwork.description.slice(1).map(paragraph => <p key={paragraph}>{paragraph}</p>)}
-            </div>
-          )}
         </section>
       ))}
       {renderPhoto('mother-nature-angle-img-8264', 'Flowers in Relief', true)}
     </section>
+    <div className="forest-editorial-mobile-inquiry"><Inquiry artwork={artwork}/></div>
     {openPhoto !== null && <FullscreenArtworkViewer images={artwork.images} initialIndex={openPhoto} onClose={() => setOpenPhoto(null)}/>}
     <nav className="private-artwork-next" aria-label="More paintings">
       <Link className="text-link" to={base}>All Forest &amp; Flowers paintings</Link>
