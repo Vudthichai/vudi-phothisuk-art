@@ -11,7 +11,7 @@
 .private-forest-intro > p:not(.eyebrow) { max-width: 740px; line-height: 1.9; }
 .private-forest-gallery { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 60px 5%; }
 .private-forest-gallery article { min-width: 0; }
-.forest-overview-image { display: block; background: #f2f0e7; padding: 12px; }
+.forest-overview-image { display: block; }
 .forest-overview-image img { display: block; width: 100%; height: auto; aspect-ratio: 3/4; object-fit: contain; }
 .private-forest-gallery h2 { font-size: clamp(1.6rem, 2.5vw, 2.3rem); margin: 22px 0 12px; }
 .private-forest-gallery a { color: inherit; }
