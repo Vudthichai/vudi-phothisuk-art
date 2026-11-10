@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState, type PointerEvent } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent } from 'react';
 import { ForestPhotograph, imageRoleLabel } from './ForestPhotograph';
 import type { ForestImage } from './types';
 import './FullscreenArtworkViewer.css';
@@ -8,12 +8,49 @@ type View = Point & { scale: number };
 const fitted: View = { x: 0, y: 0, scale: 1 };
 const distance = (a: Point, b: Point) => Math.hypot(b.x - a.x, b.y - a.y);
 
+const icons = {
+  close: 'M6 6l12 12M18 6L6 18',
+  previous: 'M15 5l-7 7 7 7',
+  next: 'M9 5l7 7-7 7',
+  minus: 'M5 12h14',
+  plus: 'M5 12h14M12 5v14',
+  fit: 'M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5',
+};
+
+function ViewerControl({ icon, label, onClick, disabled, autoFocus, placement }: {
+  icon: keyof typeof icons;
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+  autoFocus?: boolean;
+  placement?: string;
+}) {
+  return <button type="button" className={`forest-viewer-control ${placement ?? ''}`}
+    aria-label={label} title={label} onClick={onClick} disabled={disabled} autoFocus={autoFocus}>
+    <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <path d={icons[icon]}/>
+    </svg>
+  </button>;
+}
+
 export function FullscreenArtworkViewer({ images, initialIndex, onClose }: {
   images: ForestImage[];
   initialIndex: number;
   onClose: () => void;
 }) {
   const [index, setIndex] = useState(initialIndex);
+  const [idle, setIdle] = useState(false);
+  const idleTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  function revealControls() {
+    clearTimeout(idleTimer.current);
+    setIdle(false);
+    idleTimer.current = setTimeout(() => setIdle(true), 2400);
+  }
+  useEffect(() => {
+    revealControls();
+    return () => clearTimeout(idleTimer.current);
+  }, []);
   const dialog = useRef<HTMLDialogElement>(null);
   useLayoutEffect(() => {
     const element = dialog.current;
@@ -30,23 +67,33 @@ export function FullscreenArtworkViewer({ images, initialIndex, onClose }: {
   }
 
   const image = images[index];
-  return <dialog className="forest-fullscreen" ref={dialog} aria-label="Mother Nature photograph viewer"
+  return <dialog className="forest-fullscreen" ref={dialog} data-idle={idle} onPointerMove={revealControls} onPointerDown={revealControls} aria-label="Mother Nature photograph viewer"
     onCancel={event => { event.preventDefault(); onClose(); }}
     onKeyDown={event => {
-      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      revealControls();
+      if (event.key === 'Tab') {
+        const controls = event.currentTarget.querySelectorAll<HTMLButtonElement>('button:not(:disabled)');
+        const first = controls[0], last = controls[controls.length - 1];
+        if (event.shiftKey ? document.activeElement === first : document.activeElement === last) {
+          event.preventDefault();
+          (event.shiftKey ? last : first)?.focus();
+        }
+      } else if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
         event.preventDefault();
+        if (document.activeElement?.closest('.forest-fullscreen-zoom')) {
+          event.currentTarget.querySelector<HTMLButtonElement>('.forest-viewer-close')?.focus();
+        }
         move(event.key === 'ArrowLeft' ? -1 : 1);
       }
     }}>
-    <div className="forest-fullscreen-bar">
-      <p aria-live="polite">{image.caption ?? imageRoleLabel[image.role]} · {index + 1} / {images.length}</p>
-      <button type="button" autoFocus onClick={onClose}>Close</button>
-    </div>
+    <ViewerControl icon="close" label="Close viewer" autoFocus onClick={onClose} placement="forest-viewer-close"/>
     <ZoomablePhotograph key={image.id} image={image} move={move}/>
-    <div className="forest-fullscreen-navigation">
-      <button type="button" onClick={() => move(-1)}>Previous photograph</button>
-      <button type="button" onClick={() => move(1)}>Next photograph</button>
-    </div>
+    <ViewerControl icon="previous" label="Previous photograph" onClick={() => move(-1)} placement="forest-viewer-previous"/>
+    <ViewerControl icon="next" label="Next photograph" onClick={() => move(1)} placement="forest-viewer-next"/>
+    <p className="forest-viewer-caption" aria-live="polite">
+      <span>{image.caption ?? imageRoleLabel[image.role]}</span>
+      <span className="forest-viewer-count">{index + 1} / {images.length}</span>
+    </p>
   </dialog>;
 }
 
@@ -141,8 +188,6 @@ function ZoomablePhotograph({ image, move }: { image: ForestImage; move: (by: nu
         const dx = point.x - origin.x;
         if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(point.y - origin.y) * 1.5) move(dx < 0 ? 1 : -1);
       }
-    } else if (event.pointerType === 'mouse') {
-      zoom(old.scale > 1 ? 1 : 2, point);
     } else {
       const time = Date.now();
       const previous = lastTap.current;
@@ -165,10 +210,10 @@ function ZoomablePhotograph({ image, move }: { image: ForestImage; move: (by: nu
           alt="" aria-hidden="true" data-ready={loaded} decoding="async" onLoad={() => setLoaded(true)}/>}
       </div>
     </div>
-    <div className="forest-fullscreen-zoom" aria-label="Zoom controls">
-      <button type="button" onClick={() => zoom(view.scale / 1.5)} disabled={view.scale <= 1}>Zoom out</button>
-      <button type="button" onClick={() => zoom(view.scale * 1.5)} disabled={view.scale >= 4}>Zoom in</button>
-      <button type="button" onClick={() => zoom(1)} disabled={view.scale === 1}>Fit</button>
+    <div className="forest-fullscreen-zoom" role="group" aria-label="Zoom controls">
+      <ViewerControl icon="minus" label="Zoom out" onClick={() => zoom(view.scale / 1.5)} disabled={view.scale <= 1}/>
+      <ViewerControl icon="plus" label="Zoom in" onClick={() => zoom(view.scale * 1.5)} disabled={view.scale >= 4}/>
+      <ViewerControl icon="fit" label="Fit photograph" onClick={() => zoom(1)} disabled={view.scale === 1}/>
     </div>
   </>;
 }
