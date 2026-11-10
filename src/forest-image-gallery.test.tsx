@@ -47,10 +47,13 @@ it('opens and closes an enlarged view and omits unnecessary controls for one pho
  expect(screen.getByRole('dialog').hasAttribute('open')).toBe(true);
  fireEvent.click(screen.getByRole('button',{name:'Close enlarged view'}));expect(screen.queryByRole('dialog')).toBeNull();
 });
-it('records portrait full/angled views and leaves the close-up landscape',()=>{
+it('records upright Dragon Lily photographs in gallery order',()=>{
  const art=collection.artworks.find(a=>a.slug==='dragon-lily')!;
- for(const photo of art.images.slice(0,2))for(const variant of photo.variants){expect(variant.width).toBeLessThan(variant.height);expect(variant.src).toContain('upright');}
- expect(art.images[2].variants[1]).toMatchObject({width:1200,height:900,src:'/forest-preview/images/dragon-lily-detail-1200.webp'});
+ expect(art.images.map(photo=>photo.role)).toEqual(['full','angle','angle','detail']);
+ for(const photo of art.images)for(const variant of photo.variants){
+   expect(variant.width).toBeLessThan(variant.height);
+ }
+ expect(art.images[0].id).toBe(art.galleryImageId);
  expect(primaryForestImage({...art,availability:'provisional',images:images,galleryImageId:images[1].id}).id).toBe(images[1].id);
 });
 it('supports texture and room roles without changing the gallery interface',()=>{

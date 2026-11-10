@@ -1,7 +1,7 @@
 .forest-image-gallery { min-width: 0; }
 .forest-selected-photo { margin: 0; }
-.forest-photo-stage { position: relative; height: clamp(340px,70vh,820px); background: #f2f0e7; touch-action: pan-y; overflow: hidden; }
-.forest-enlarge { display: block; border: 0; padding: 14px; width: 100%; height: 100%; background: transparent; cursor: zoom-in !important; }
+.forest-photo-stage { position: relative; height: clamp(340px,70vh,820px); touch-action: pan-y; overflow: hidden; }
+.forest-enlarge { display: block; border: 0; padding: 0; width: 100%; height: 100%; background: transparent; cursor: zoom-in !important; }
 .forest-photo-swap { display: block; width: 100%; height: 100%; animation: forest-photo-enter .22s ease-out both; }
 .forest-photo-swap img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .forest-selected-photo figcaption { display: flex; justify-content: space-between; gap: 16px; margin-top: 14px; font-size: .85rem; }

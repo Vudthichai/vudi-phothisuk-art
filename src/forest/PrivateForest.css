@@ -9,16 +9,18 @@
 .private-forest-intro { position: relative; max-width: 1000px; margin: 0 auto 65px; overflow: hidden; }
 .private-forest-intro h1 { font-size: clamp(3rem, 7vw, 5.3rem); margin-bottom: 28px; }
 .private-forest-intro > p:not(.eyebrow) { max-width: 740px; line-height: 1.9; }
-.private-forest-gallery { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 60px 5%; }
-.private-forest-gallery article { min-width: 0; }
-.forest-overview-image { display: block; background: #f2f0e7; padding: 12px; }
-.forest-overview-image img { display: block; width: 100%; height: auto; aspect-ratio: 3/4; object-fit: contain; }
-.private-forest-gallery h2 { font-size: clamp(1.6rem, 2.5vw, 2.3rem); margin: 22px 0 12px; }
+.forest-exhibit { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,.75fr); align-items: center; gap: 9%; padding: 0 0 110px; border-bottom: 1px solid #dcded6; }
+.forest-exhibit + .forest-exhibit { padding-top: 110px; }
+.forest-overview-image { display: block; }
+.forest-overview-image img { display: block; width: 100%; height: auto; object-fit: contain; }
+.forest-overview-copy h2 { font-size: clamp(2.3rem,4vw,3.8rem); margin: 0 0 12px; }
 .private-forest-gallery a { color: inherit; }
 .forest-artwork-link { display: inline-block; margin-top: 20px; }
-.forest-featured-work { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1fr); gap: 7%; align-items: center; margin-bottom: 20px; }
-.forest-featured-work .forest-overview-image img { aspect-ratio: auto; max-height: 70vh; }
-.forest-featured-work h2 { font-size: clamp(2.3rem,4vw,3.8rem); }
+@media (min-width: 801px) {
+  .forest-exhibit:nth-child(even) { grid-template-columns: minmax(0,.75fr) minmax(0,1.25fr); }
+  .forest-exhibit:nth-child(even) .forest-overview-image { grid-column: 2; grid-row: 1; }
+  .forest-exhibit:nth-child(even) .forest-overview-copy { grid-column: 1; grid-row: 1; }
+}
 .forest-featured-excerpt { line-height: 1.9; max-width: 460px; }
 .private-availability, .private-copy-note { font-size: .9rem; line-height: 1.7; }
 .private-artwork-presentation { display: grid; grid-template-columns: minmax(0,1.6fr) minmax(240px,.85fr); gap: 5%; align-items: center; }
@@ -29,7 +31,6 @@
 .private-copy-note { font-style: italic; }
 .private-artwork-next { display: flex; gap: 18px 28px; flex-wrap: wrap; border-top: 1px solid #c5cdbf; padding-top: 30px; }
 .private-forest :focus-visible { outline: 2px solid #294337; outline-offset: 4px; }
-@media(max-width:1100px) { .private-forest-gallery { grid-template-columns: repeat(2,minmax(0,1fr)); } }
-@media(max-width:800px) { .private-artwork-presentation { grid-template-columns: minmax(0,1fr); gap: 32px; } .forest-featured-work { grid-template-columns: minmax(0,1fr); gap: 20px; } .private-artwork h1 { margin-top: 12px; } }
-@media(max-width:700px) { .private-forest-gallery { grid-template-columns: minmax(0,1fr); gap: 50px; } .forest-private-toolbar { margin-bottom: 30px; } .private-forest-intro { margin-bottom: 40px; } .forest-entrance { margin-top: 20px; } }
+@media(max-width:800px) { .private-artwork-presentation { grid-template-columns: minmax(0,1fr); gap: 32px; } .forest-exhibit { grid-template-columns: minmax(0,1fr); gap: 24px; padding-bottom: 56px; } .forest-exhibit + .forest-exhibit { padding-top: 56px; } .private-artwork h1 { margin-top: 12px; } }
+@media(max-width:700px) { .forest-private-toolbar { margin-bottom: 30px; } .private-forest-intro { margin-bottom: 40px; } .forest-entrance { margin-top: 20px; } }
 .private-forest-intro button.text-link { border: 0; padding: 0; background: transparent; color: inherit; text-decoration: underline; text-underline-offset: 5px; }
