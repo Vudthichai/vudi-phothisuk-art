@@ -29,3 +29,23 @@
 @media(max-width:800px) { .private-artwork-presentation { grid-template-columns: minmax(0,1fr); gap: 32px; } .forest-exhibit { grid-template-columns: minmax(0,1fr); gap: 24px; padding-bottom: 56px; } .forest-exhibit + .forest-exhibit { padding-top: 56px; } .private-artwork h1 { margin-top: 12px; } }
 @media(max-width:700px) { .forest-private-toolbar { margin-bottom: 30px; } .private-forest-intro { margin-bottom: 40px; } }
 .private-forest-intro button.text-link { border: 0; padding: 0; background: transparent; color: inherit; text-decoration: underline; text-underline-offset: 5px; }
+
+.forest-editorial-opening { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); grid-template-areas: "hero title" "hero facts"; grid-template-rows: 1fr 1fr; column-gap: 6%; }
+.forest-editorial-title { grid-area: title; align-self: end; }
+.forest-editorial-title .eyebrow { margin-bottom: 16px; }
+.forest-editorial-title h1 { font-size: clamp(2.75rem, 5vw, 5rem); margin-bottom: 20px; }
+.forest-editorial-hero { grid-area: hero; }
+.forest-editorial-hero .forest-photo-stage { height: auto; }
+.forest-editorial-hero .forest-photo-swap img { height: auto; }
+.forest-editorial-hero figcaption { flex-wrap: wrap; align-items: center; }
+.private-forest .forest-enlarge-link { background: transparent; border: 0; padding: 10px 0; min-height: 44px; color: inherit; }
+.forest-editorial-facts { grid-area: facts; max-width: 26rem; }
+.forest-editorial-facts .private-availability { margin: 26px 0 8px; }
+.forest-editorial-story { max-width: 64ch; margin: clamp(3rem, 8vw, 7rem) auto; font-size: 1.1rem; line-height: 1.9; }
+.forest-editorial-details { max-width: 56rem; margin: 0 auto clamp(3rem, 8vw, 7rem); }
+.forest-editorial-details .forest-photo-thumbnails button { flex-basis: 86px; }
+@media (max-width: 800px) {
+  .forest-editorial-opening { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "hero" "facts"; grid-template-rows: auto; }
+  .forest-editorial-title h1 { margin-bottom: 10px; }
+  .forest-editorial-facts { margin-top: 16px; }
+}

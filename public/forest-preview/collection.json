@@ -1,7 +1,7 @@
 {
   "title": "Forest & Flowers",
   "introduction": [
-    "Forest & Flowers brings together dimensional mixed-media acrylic paintings shaped by sculpted organic plaster, layered color, and metallic highlights. Leaves, blossoms, bark, and flowing landscapes become ways of exploring discovery, love, remembrance, and our dependence on the natural world. Each painting carries its own story, from an unexpected encounter with beauty to a personal tribute or a call for conservation. Across the collection, shifting light reveals details within the textured surfaces, encouraging the close attention through which both nature and personal meaning become more visible."
+    "In Forest & Flowers, sculpted leaves, blossoms, and bark rise from layers of acrylic and organic plaster. As the light shifts, rivers, hidden figures, and metallic traces come into view. These paintings explore love, remembrance, and our dependence on the natural world."
   ],
   "artworks": [
     {
@@ -35,7 +35,13 @@
               "height": 1807,
               "src": "/forest-preview/images/mother-nature-full-final-v1-1200.webp"
             }
-          ]
+          ],
+          "enlargement": {
+            "key": "mother-nature-full-enlarge-v1-2400",
+            "src": "/forest-preview/images/mother-nature-full-enlarge-v1-2400.webp",
+            "width": 2400,
+            "height": 3614
+          }
         },
         {
           "id": "mother-nature-angle",
@@ -54,7 +60,8 @@
               "height": 2133,
               "src": "/forest-preview/images/mother-nature-angle-final-v1-1200.webp"
             }
-          ]
+          ],
+          "caption": "Relief from the side"
         },
         {
           "id": "mother-nature-detail",
@@ -73,7 +80,8 @@
               "height": 2133,
               "src": "/forest-preview/images/mother-nature-detail-final-v1-1200.webp"
             }
-          ]
+          ],
+          "caption": "Goddess profile"
         },
         {
           "id": "mother-nature-detail-2",
@@ -92,7 +100,14 @@
               "height": 900,
               "src": "/forest-preview/images/mother-nature-detail-2-final-v1-1200.webp"
             }
-          ]
+          ],
+          "caption": "Raised flowers",
+          "enlargement": {
+            "key": "mother-nature-detail-enlarge-v1-2400",
+            "src": "/forest-preview/images/mother-nature-detail-enlarge-v1-2400.webp",
+            "width": 2400,
+            "height": 1800
+          }
         }
       ],
       "galleryImageId": "mother-nature"

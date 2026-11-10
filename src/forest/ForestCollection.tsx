@@ -35,7 +35,7 @@ export function ForestCollection() {
 
   return <section className="private-forest section page">
       <div className="forest-private-toolbar"><Link className="text-link" to={artworkSlug ? base : '/collections'}>{artworkSlug ? 'Back to collection' : 'All collections'}</Link></div>
-      {artworkSlug ? artwork ? <article className="private-artwork"><div className="private-artwork-presentation"><ArtworkImageGallery title={artwork.title} images={artwork.images} initialImageId={primaryForestImage(artwork).id}/><header><p className="eyebrow">Forest &amp; Flowers</p><h1>{artwork.title}</h1><p>{artwork.dimensions ?? 'Dimensions to be confirmed'}</p><p>{artwork.medium ?? 'Medium to be confirmed'}</p><Inquiry artwork={artwork}/></header></div><div className="private-artwork-story">{artwork.copyStatus === 'provisional' && <p className="private-copy-note">Provisional description — pending artist approval.</p>}{artwork.description.map((paragraph,index) => <p key={index}>{paragraph}</p>)}</div><nav className="private-artwork-next" aria-label="Other paintings">{data.artworks.filter(a => a.id !== artwork.id).map(a => <Link key={a.id} to={`${base}/${a.slug}`}>{a.title}</Link>)}</nav></article> : <div><h1>Painting not found</h1><Link to={base}>View the collection</Link></div> : <>
+      {artworkSlug ? artwork?.slug === 'mother-nature' ? <MotherNatureEditorial artwork={artwork}/> : artwork ? <article className="private-artwork"><div className="private-artwork-presentation"><ArtworkImageGallery title={artwork.title} images={artwork.images} initialImageId={primaryForestImage(artwork).id}/><header><p className="eyebrow">Forest &amp; Flowers</p><h1>{artwork.title}</h1><p>{artwork.dimensions ?? 'Dimensions to be confirmed'}</p><p>{artwork.medium ?? 'Medium to be confirmed'}</p><Inquiry artwork={artwork}/></header></div><div className="private-artwork-story">{artwork.copyStatus === 'provisional' && <p className="private-copy-note">Provisional description — pending artist approval.</p>}{artwork.description.map((paragraph,index) => <p key={index}>{paragraph}</p>)}</div><nav className="private-artwork-next" aria-label="Other paintings">{data.artworks.filter(a => a.id !== artwork.id).map(a => <Link key={a.id} to={`${base}/${a.slug}`}>{a.title}</Link>)}</nav></article> : <div><h1>Painting not found</h1><Link to={base}>View the collection</Link></div> : <>
         <header className="private-forest-intro"><p className="eyebrow">Collection</p><h1>{data.title}</h1>{data.introduction.map((p,index) => <p key={index}>{p}</p>)}<button className="text-link" onClick={() => setSequence(n => n + 1)}>A moment in the forest</button>{sequence > 0 && <BotanicalFall key={sequence} particles={[{ assetId:'leaf-green', left:'6%', duration:3.2, delay:0, displayWidth:25 },{ assetId:'petal-tiger-lily', left:'92%', drift:-30, duration:3.4, delay:.4, displayWidth:26 }]} distance="280px"/>}</header>
         <div className="private-forest-gallery">
           {data.artworks.map(art => (
@@ -55,4 +55,39 @@ export function ForestCollection() {
         </div>
       </>}
   </section>;
+}
+
+
+function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
+  const hero = primaryForestImage(artwork);
+  const next = data.artworks[data.artworks.indexOf(artwork) + 1];
+
+  return <article className="forest-editorial">
+    <div className="forest-editorial-opening">
+      <header className="forest-editorial-title">
+        <p className="eyebrow">Forest &amp; Flowers</p>
+        <h1>{artwork.title}</h1>
+        <p>{artwork.dimensions}</p>
+      </header>
+      <div className="forest-editorial-hero">
+        <ArtworkImageGallery title={artwork.title} images={[hero]} editorialHero/>
+      </div>
+      <div className="forest-editorial-facts">
+        <p>{artwork.medium}</p>
+        <Inquiry artwork={artwork}/>
+      </div>
+    </div>
+    <section className="forest-editorial-story" aria-labelledby="mother-nature-story">
+      <h2 id="mother-nature-story">About the painting</h2>
+      {artwork.description.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+    </section>
+    <section className="forest-editorial-details" aria-labelledby="mother-nature-details">
+      <h2 id="mother-nature-details">Closer look</h2>
+      <ArtworkImageGallery title={artwork.title} images={artwork.images.filter(image => image.id !== hero.id)}/>
+    </section>
+    <nav className="private-artwork-next" aria-label="More paintings">
+      <Link className="text-link" to={base}>All Forest &amp; Flowers paintings</Link>
+      {next && <Link className="text-link" to={`${base}/${next.slug}`}>Next painting · {next.title}</Link>}
+    </nav>
+  </article>;
 }
