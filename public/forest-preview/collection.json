@@ -44,24 +44,84 @@
           }
         },
         {
-          "id": "mother-nature-angle",
-          "alt": "Mother Nature — angled view showing the raised surface",
+          "id": "mother-nature-angle-img-8275",
+          "alt": "Mother Nature — goddess profile at an angle",
           "role": "angle",
+          "caption": "Goddess profile at an angle",
           "variants": [
             {
-              "key": "mother-nature-angle-final-v1-640",
+              "key": "mother-nature-angle-img-8275-v1-640",
               "width": 640,
               "height": 1138,
-              "src": "/forest-preview/images/mother-nature-angle-final-v1-640.webp"
+              "src": "/forest-preview/images/mother-nature-angle-img-8275-v1-640.webp"
             },
             {
-              "key": "mother-nature-angle-final-v1-1200",
+              "key": "mother-nature-angle-img-8275-v1-1200",
               "width": 1200,
               "height": 2133,
-              "src": "/forest-preview/images/mother-nature-angle-final-v1-1200.webp"
+              "src": "/forest-preview/images/mother-nature-angle-img-8275-v1-1200.webp"
             }
-          ],
-          "caption": "Relief from the side"
+          ]
+        },
+        {
+          "id": "mother-nature-angle-img-8272",
+          "alt": "Mother Nature — raised foliage along the canvas edge",
+          "role": "angle",
+          "caption": "Raised foliage along the canvas edge",
+          "variants": [
+            {
+              "key": "mother-nature-angle-img-8272-v1-640",
+              "width": 640,
+              "height": 1138,
+              "src": "/forest-preview/images/mother-nature-angle-img-8272-v1-640.webp"
+            },
+            {
+              "key": "mother-nature-angle-img-8272-v1-1200",
+              "width": 1200,
+              "height": 2133,
+              "src": "/forest-preview/images/mother-nature-angle-img-8272-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "mother-nature-angle-img-8269",
+          "alt": "Mother Nature — goddess and river from an angle",
+          "role": "angle",
+          "caption": "Goddess and river from an angle",
+          "variants": [
+            {
+              "key": "mother-nature-angle-img-8269-v1-640",
+              "width": 640,
+              "height": 853,
+              "src": "/forest-preview/images/mother-nature-angle-img-8269-v1-640.webp"
+            },
+            {
+              "key": "mother-nature-angle-img-8269-v1-1200",
+              "width": 1200,
+              "height": 1600,
+              "src": "/forest-preview/images/mother-nature-angle-img-8269-v1-1200.webp"
+            }
+          ]
+        },
+        {
+          "id": "mother-nature-angle-img-8264",
+          "alt": "Mother Nature — raised flowers at a low angle",
+          "role": "angle",
+          "caption": "Raised flowers at a low angle",
+          "variants": [
+            {
+              "key": "mother-nature-angle-img-8264-v1-640",
+              "width": 640,
+              "height": 480,
+              "src": "/forest-preview/images/mother-nature-angle-img-8264-v1-640.webp"
+            },
+            {
+              "key": "mother-nature-angle-img-8264-v1-1200",
+              "width": 1200,
+              "height": 900,
+              "src": "/forest-preview/images/mother-nature-angle-img-8264-v1-1200.webp"
+            }
+          ]
         },
         {
           "id": "mother-nature-detail",
