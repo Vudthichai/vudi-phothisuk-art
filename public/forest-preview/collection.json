@@ -210,16 +210,16 @@
           "role": "full",
           "variants": [
             {
-              "key": "wild-tiger-lilies-full-final-v1-640",
+              "key": "wild-tiger-lilies-full-final-v2-640",
               "width": 640,
-              "height": 973,
-              "src": "/forest-preview/images/wild-tiger-lilies-full-final-v1-640.webp"
+              "height": 961,
+              "src": "/forest-preview/images/wild-tiger-lilies-full-final-v2-640.webp"
             },
             {
-              "key": "wild-tiger-lilies-full-final-v1-1200",
+              "key": "wild-tiger-lilies-full-final-v2-1200",
               "width": 1200,
-              "height": 1824,
-              "src": "/forest-preview/images/wild-tiger-lilies-full-final-v1-1200.webp"
+              "height": 1802,
+              "src": "/forest-preview/images/wild-tiger-lilies-full-final-v2-1200.webp"
             }
           ]
         },
@@ -789,16 +789,16 @@
           "role": "full",
           "variants": [
             {
-              "key": "75-leaves-full-final-v1-640",
+              "key": "75-leaves-full-final-v2-640",
               "width": 640,
-              "height": 853,
-              "src": "/forest-preview/images/75-leaves-full-final-v1-640.webp"
+              "height": 856,
+              "src": "/forest-preview/images/75-leaves-full-final-v2-640.webp"
             },
             {
-              "key": "75-leaves-full-final-v1-1200",
+              "key": "75-leaves-full-final-v2-1200",
               "width": 1200,
-              "height": 1599,
-              "src": "/forest-preview/images/75-leaves-full-final-v1-1200.webp"
+              "height": 1604,
+              "src": "/forest-preview/images/75-leaves-full-final-v2-1200.webp"
             }
           ]
         },
