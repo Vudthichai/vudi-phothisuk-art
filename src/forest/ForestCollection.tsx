@@ -90,7 +90,7 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
 
     return <figure className={finale ? 'forest-editorial-finale' : 'forest-editorial-chapter-photo'}>
       <button type="button" className="forest-editorial-photo" aria-label={`Enlarge ${label}`} onClick={() => setOpenPhoto(index)}>
-        <Photograph image={image} sizes={finale ? '(max-width: 1500px) 86vw, 1290px' : '(max-width: 800px) 86vw, (max-width: 1500px) 46vw, 690px'}/>
+        <Photograph image={image} sizes={finale ? '(max-width: 600px) 100vw, (max-width: 1500px) 86vw, 1290px' : '(max-width: 600px) 94vw, (max-width: 800px) 86vw, (max-width: 1500px) 46vw, 690px'}/>
       </button>
       {finale && <figcaption>{label}</figcaption>}
     </figure>;
@@ -105,25 +105,28 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
       </header>
       <figure className="forest-editorial-hero">
         <button type="button" className="forest-editorial-photo" aria-label="Enlarge Mother Nature" onClick={() => setOpenPhoto(0)}>
-          <Photograph image={hero} eager sizes="(max-width: 800px) 86vw, 56vw"/>
+          <Photograph image={hero} eager sizes="(max-width: 600px) 100vw, (max-width: 800px) 86vw, 56vw"/>
         </button>
-        <figcaption><span>Full composition</span><button className="text-link forest-enlarge-link" type="button" onClick={() => setOpenPhoto(0)}>Enlarge artwork</button></figcaption>
+        <figcaption className="forest-editorial-hero-caption">
+          <span>Full composition</span>
+          <button className="text-link forest-enlarge-link" type="button" onClick={() => setOpenPhoto(0)}>Enlarge artwork</button>
+          <span className="forest-editorial-mobile-hint" aria-hidden="true">Tap the photograph to enlarge</span>
+        </figcaption>
       </figure>
       <div className="forest-editorial-facts">
         <p>{artwork.medium}</p>
         <Inquiry artwork={artwork}/>
         <section className="forest-editorial-story" aria-labelledby="mother-nature-story">
           <h2 id="mother-nature-story">About the painting</h2>
-          {artwork.description.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+          <p>{artwork.description[0]}</p>
+          <div className="forest-editorial-desktop-interpretation">
+            {artwork.description.slice(1).map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+          </div>
         </section>
       </div>
     </div>
     <section className="forest-editorial-details" aria-labelledby="mother-nature-details">
       <header className="forest-editorial-detail-heading">
-        <svg className="forest-editorial-sprig" width="64" height="32" viewBox="0 0 64 32" fill="none"
-          stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M4 28C19 24 30 12 58 5M19 22C12 21 9 16 8 10c8 1 12 5 13 11m7-5C24 11 24 6 26 2c6 4 8 7 7 11m3-2c3 4 9 6 17 2-5-3-10-4-15-3m10-3c3-5 8-6 13-5-3 4-7 6-12 5"/>
-        </svg>
         <h2 id="mother-nature-details">Closer look</h2>
       </header>
       {motherNatureChapters.map(({ imageId, title, description }) => (
@@ -133,6 +136,11 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
             <p>{description}</p>
           </div>
           {renderPhoto(imageId, title)}
+          {imageId === 'mother-nature-angle-img-8272' && (
+            <div className="forest-editorial-mobile-interpretation">
+              {artwork.description.slice(1).map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+            </div>
+          )}
         </section>
       ))}
       {renderPhoto('mother-nature-angle-img-8264', 'Flowers in Relief', true)}
