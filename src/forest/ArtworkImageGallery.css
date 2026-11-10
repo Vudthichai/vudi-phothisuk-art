@@ -17,10 +17,7 @@
 .forest-photo-dialog { color: #294337; background: #faf8ef; border: none; padding: 24px; max-width: 95vw; max-height: 94vh; }
 .forest-photo-dialog::backdrop { background: rgb(20 32 25 / .8); }
 .forest-dialog-content { max-width: 1300px; }
-.forest-dialog-photo { position: relative; margin-top: 18px; }
-.forest-dialog-photo img { display: block; width: 100%; height: 70vh; object-fit: contain; }
-.forest-dialog-photo .forest-hires { position: absolute; inset: 0; opacity: 0; }
-.forest-dialog-photo .forest-hires.is-ready { opacity: 1; }
+.forest-dialog-content > img { display: block; width: 100%; height: 70vh; object-fit: contain; margin-top: 18px; }
 .forest-dialog-content > p { font-size: .85rem; }
 @keyframes forest-photo-enter { from { opacity: .6; } to { opacity: 1; } }
 @media(max-width:800px) { .forest-photo-stage { height: clamp(320px,64svh,620px); } .forest-photo-dialog { padding: 16px; } .forest-photo-thumbnails { gap: 8px; } }

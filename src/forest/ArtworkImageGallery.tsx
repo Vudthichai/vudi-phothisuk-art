@@ -3,15 +3,14 @@ import type { ForestImage } from './types';
 import { ForestPhotograph, imageRoleLabel } from './ForestPhotograph';
 import './ArtworkImageGallery.css';
 
-type Props = { title: string; images: readonly ForestImage[]; initialImageId?: string; editorialHero?: boolean; /** Reserved for a future approved, pointer-transparent overlay. No effect is activated. */ overlay?: ReactNode };
-export function ArtworkImageGallery({ title, images, initialImageId, editorialHero, overlay }: Props) {
-  return <Gallery key={`${title}:${initialImageId}:${images.map(image => image.id).join('|')}`} title={title} images={images} initialImageId={initialImageId} editorialHero={editorialHero} overlay={overlay}/>;
+type Props = { title: string; images: readonly ForestImage[]; initialImageId?: string; /** Reserved for a future approved, pointer-transparent overlay. No effect is activated. */ overlay?: ReactNode };
+export function ArtworkImageGallery({ title, images, initialImageId, overlay }: Props) {
+  return <Gallery key={`${title}:${initialImageId}:${images.map(image => image.id).join('|')}`} title={title} images={images} initialImageId={initialImageId} overlay={overlay}/>;
 }
-function Gallery({ title, images, initialImageId, editorialHero, overlay }: Props) {
+function Gallery({ title, images, initialImageId, overlay }: Props) {
   const [selected, setSelected] = useState(() => Math.max(0, images.findIndex(image => image.id === initialImageId)));
   const [displayed, setDisplayed] = useState(selected);
   const [loading, setLoading] = useState(false);
-  const [enlarged, setEnlarged] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const thumbnails = useRef<HTMLDivElement>(null);
@@ -34,10 +33,6 @@ function Gallery({ title, images, initialImageId, editorialHero, overlay }: Prop
   const image = images[displayed];
   if (!image) return <p>Artwork photography is being prepared.</p>;
   const label = image.caption ?? imageRoleLabel[image.role];
-  function enlarge() {
-    dialog.current?.showModal();
-    setEnlarged(true);
-  }
   function choose(index: number, focus = false) {
     const next = (index + images.length) % images.length;
     setSelected(next); setLoadError(false);
@@ -61,36 +56,22 @@ function Gallery({ title, images, initialImageId, editorialHero, overlay }: Prop
   return <div className="forest-image-gallery">
     <figure className="forest-selected-photo">
       <div className="forest-photo-stage" id={stageId} aria-busy={loading} onPointerDown={event => { if (event.pointerType === 'touch') pointer.current = {x:event.clientX,y:event.clientY}; }} onPointerUp={swipeEnd} onPointerCancel={() => { pointer.current = null; }}>
-        <button type="button" className="forest-enlarge" aria-label={`Enlarge ${title}: ${label}`} onKeyDown={event => keyboard(event)} onClick={() => { if (Date.now() - swipeTime.current > 350) enlarge(); }}>
+        <button type="button" className="forest-enlarge" aria-label={`Enlarge ${title}: ${label}`} onKeyDown={event => keyboard(event)} onClick={() => { if (Date.now() - swipeTime.current > 350) dialog.current?.showModal(); }}>
           <span key={image.id} className="forest-photo-swap" onError={() => setLoadError(true)}><ForestPhotograph image={image} eager sizes="(max-width:800px) 90vw, 62vw"/></span>
         </button>
         {overlay && <div className="forest-photo-overlay" aria-hidden="true">{overlay}</div>}
       </div>
-      <figcaption>{label}{editorialHero ? <button className="text-link forest-enlarge-link" type="button" onClick={enlarge}>Enlarge artwork</button> : <span>{displayed + 1} / {images.length}</span>}</figcaption>
+      <figcaption>{label}<span>{displayed + 1} / {images.length}</span></figcaption>
     </figure>
     {loadError && <p role="alert">This photograph could not load. Please select another view.</p>}
     {images.length > 1 && <>
       <div className="forest-photo-controls"><button type="button" onClick={() => choose(selected - 1)} aria-label="Previous photograph">Previous</button><p aria-live="polite">{loading ? `Loading ${imageRoleLabel[images[selected].role]}…` : `${label}, ${displayed + 1} of ${images.length}`}</p><button type="button" onClick={() => choose(selected + 1)} aria-label="Next photograph">Next</button></div>
       <div ref={thumbnails} className="forest-photo-thumbnails" role="group" aria-label={`${title} photograph views`} onKeyDown={event => keyboard(event,true)}>
-        {images.map((photo,index) => <button type="button" key={photo.id} aria-label={`View ${photo.caption ?? imageRoleLabel[photo.role]}`} aria-pressed={index === selected} aria-controls={stageId} onClick={() => choose(index)}><ForestPhotograph image={{...photo,alt:''}} sizes="76px"/><span>{photo.caption ?? imageRoleLabel[photo.role]}</span></button>)}
+        {images.map((photo,index) => <button type="button" key={photo.id} aria-label={`View ${photo.caption ?? imageRoleLabel[photo.role]}`} aria-pressed={index === selected} aria-controls={stageId} onClick={() => choose(index)}><ForestPhotograph image={{...photo,alt:''}} sizes="76px"/><span>{imageRoleLabel[photo.role]}</span></button>)}
       </div>
     </>}
-    <dialog ref={dialog} className="forest-photo-dialog" aria-label={`${title} enlarged photograph`} onClose={() => setEnlarged(false)} onKeyDown={event => keyboard(event)} onClick={event => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
-      <div className="forest-dialog-content"><button type="button" className="forest-dialog-close" autoFocus onClick={() => dialog.current?.close()}>Close enlarged view</button><EnlargedPhotograph key={`${image.id}:${enlarged}`} image={image} active={enlarged}/><p>{label}</p>{images.length > 1 && <div className="forest-photo-controls"><button type="button" onClick={() => choose(selected-1)}>Previous photograph</button><button type="button" onClick={() => choose(selected+1)}>Next photograph</button></div>}</div>
+    <dialog ref={dialog} className="forest-photo-dialog" aria-label={`${title} enlarged photograph`} onKeyDown={event => keyboard(event)} onClick={event => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
+      <div className="forest-dialog-content"><button type="button" className="forest-dialog-close" autoFocus onClick={() => dialog.current?.close()}>Close enlarged view</button><ForestPhotograph image={image} eager sizes="90vw"/><p>{label}</p>{images.length > 1 && <div className="forest-photo-controls"><button type="button" onClick={() => choose(selected-1)}>Previous photograph</button><button type="button" onClick={() => choose(selected+1)}>Next photograph</button></div>}</div>
     </dialog>
-  </div>;
-}
-
-
-function EnlargedPhotograph({ image, active }: { image: ForestImage; active: boolean }) {
-  const [ready, setReady] = useState(false);
-  const large = image.enlargement;
-  return <div className="forest-dialog-photo">
-    <ForestPhotograph image={image} eager sizes="90vw"/>
-    {active && large && <img
-      className={ready ? 'forest-hires is-ready' : 'forest-hires'}
-      src={large.src} width={large.width} height={large.height} alt=""
-      aria-hidden="true" decoding="async" onLoad={() => setReady(true)}
-    />}
   </div>;
 }

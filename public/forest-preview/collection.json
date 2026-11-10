@@ -61,7 +61,13 @@
               "height": 2133,
               "src": "/forest-preview/images/mother-nature-angle-img-8275-v1-1200.webp"
             }
-          ]
+          ],
+          "enlargement": {
+            "key": "mother-nature-angle-img-8275-enlarge-v1-2268",
+            "src": "/forest-preview/images/mother-nature-angle-img-8275-enlarge-v1-2268.webp",
+            "width": 2268,
+            "height": 4032
+          }
         },
         {
           "id": "mother-nature-angle-img-8272",
@@ -81,7 +87,13 @@
               "height": 2133,
               "src": "/forest-preview/images/mother-nature-angle-img-8272-v1-1200.webp"
             }
-          ]
+          ],
+          "enlargement": {
+            "key": "mother-nature-angle-img-8272-enlarge-v1-2268",
+            "src": "/forest-preview/images/mother-nature-angle-img-8272-enlarge-v1-2268.webp",
+            "width": 2268,
+            "height": 4032
+          }
         },
         {
           "id": "mother-nature-angle-img-8269",
@@ -101,7 +113,13 @@
               "height": 1600,
               "src": "/forest-preview/images/mother-nature-angle-img-8269-v1-1200.webp"
             }
-          ]
+          ],
+          "enlargement": {
+            "key": "mother-nature-angle-img-8269-enlarge-v1-2400",
+            "src": "/forest-preview/images/mother-nature-angle-img-8269-enlarge-v1-2400.webp",
+            "width": 2400,
+            "height": 3200
+          }
         },
         {
           "id": "mother-nature-angle-img-8264",
@@ -121,7 +139,13 @@
               "height": 900,
               "src": "/forest-preview/images/mother-nature-angle-img-8264-v1-1200.webp"
             }
-          ]
+          ],
+          "enlargement": {
+            "key": "mother-nature-angle-img-8264-enlarge-v1-2400",
+            "src": "/forest-preview/images/mother-nature-angle-img-8264-enlarge-v1-2400.webp",
+            "width": 2400,
+            "height": 1800
+          }
         }
       ],
       "galleryImageId": "mother-nature"

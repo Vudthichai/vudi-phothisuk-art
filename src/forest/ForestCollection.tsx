@@ -5,6 +5,7 @@ import { forestCollection as data } from './collection';
 import { BotanicalFall } from '../components/BotanicalFall';
 import './PrivateForest.css';
 import { ArtworkImageGallery } from './ArtworkImageGallery';
+import { FullscreenArtworkViewer } from './FullscreenArtworkViewer';
 import { ForestPhotograph as Photograph } from './ForestPhotograph';
 import { primaryForestImage } from './types';
 const base = '/collections/forest-and-flowers';
@@ -61,6 +62,7 @@ export function ForestCollection() {
 function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
   const hero = primaryForestImage(artwork);
   const next = data.artworks[data.artworks.indexOf(artwork) + 1];
+  const [openPhoto, setOpenPhoto] = useState<number | null>(null);
 
   return <article className="forest-editorial">
     <div className="forest-editorial-opening">
@@ -69,22 +71,35 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
         <h1>{artwork.title}</h1>
         <p>{artwork.dimensions}</p>
       </header>
-      <div className="forest-editorial-hero">
-        <ArtworkImageGallery title={artwork.title} images={[hero]} editorialHero/>
-      </div>
+      <figure className="forest-editorial-hero">
+        <button type="button" className="forest-editorial-photo" aria-label="Enlarge Mother Nature" onClick={() => setOpenPhoto(0)}>
+          <Photograph image={hero} eager sizes="(max-width: 800px) 86vw, 56vw"/>
+        </button>
+        <figcaption><span>Full composition</span><button className="text-link forest-enlarge-link" type="button" onClick={() => setOpenPhoto(0)}>Enlarge artwork</button></figcaption>
+      </figure>
       <div className="forest-editorial-facts">
         <p>{artwork.medium}</p>
         <Inquiry artwork={artwork}/>
+        <section className="forest-editorial-story" aria-labelledby="mother-nature-story">
+          <h2 id="mother-nature-story">About the painting</h2>
+          {artwork.description.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+        </section>
       </div>
     </div>
-    <section className="forest-editorial-story" aria-labelledby="mother-nature-story">
-      <h2 id="mother-nature-story">About the painting</h2>
-      {artwork.description.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
-    </section>
     <section className="forest-editorial-details" aria-labelledby="mother-nature-details">
       <h2 id="mother-nature-details">Closer look</h2>
-      <ArtworkImageGallery title={artwork.title} images={artwork.images.filter(image => image.id !== hero.id)}/>
+      <div className="forest-editorial-grid">
+        {artwork.images.slice(1).map((image, index) => (
+          <figure key={image.id}>
+            <button type="button" className="forest-editorial-photo" aria-label={`Enlarge ${image.caption ?? image.alt}`} onClick={() => setOpenPhoto(index + 1)}>
+              <Photograph image={image} sizes="(max-width: 520px) 86vw, (max-width: 800px) 43vw, 50vw"/>
+            </button>
+            <figcaption>{image.caption}</figcaption>
+          </figure>
+        ))}
+      </div>
     </section>
+    {openPhoto !== null && <FullscreenArtworkViewer images={artwork.images} initialIndex={openPhoto} onClose={() => setOpenPhoto(null)}/>}
     <nav className="private-artwork-next" aria-label="More paintings">
       <Link className="text-link" to={base}>All Forest &amp; Flowers paintings</Link>
       {next && <Link className="text-link" to={`${base}/${next.slug}`}>Next painting · {next.title}</Link>}
