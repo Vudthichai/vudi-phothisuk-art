@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import type { ForestArtwork } from './types';
 import { forestCollection as data } from './collection';
+import { closerLook } from './closerLook';
 import { BotanicalFall } from '../components/BotanicalFall';
 import './PrivateForest.css';
 import { FullscreenArtworkViewer } from './FullscreenArtworkViewer';
@@ -84,7 +85,9 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
   const isMotherNature = artwork.id === 'mother-nature';
   const details = artwork.images.filter(image => image.role === 'detail');
   const position = data.artworks.indexOf(artwork) + 1;
+  const previous = data.artworks[position - 2];
   const next = data.artworks[position];
+  const chapters = closerLook[artwork.id] ?? [];
   const [openPhoto, setOpenPhoto] = useState<number | null>(null);
 
   function renderPhoto(imageId: string, label: string, finale = false, caption?: string) {
@@ -147,9 +150,20 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
         </section>
       ))}
       {renderPhoto('mother-nature-angle-img-8264', 'Flowers in Relief', true)}
-      </> : <div className="forest-editorial-targets">
-        {details.map(image => renderPhoto(image.id, `${artwork.title}: ${image.caption ?? 'detail'}`, false, image.caption))}
-      </div>}
+      </> : <>
+        {details.slice(0, chapters.length).map((image, index) => (
+          <section className="forest-editorial-chapter" key={image.id} aria-labelledby={`${image.id}-title`}>
+            <div className="forest-editorial-chapter-copy">
+              <h3 id={`${image.id}-title`}>{chapters[index].title}</h3>
+              <p>{chapters[index].description}</p>
+            </div>
+            {renderPhoto(image.id, `${artwork.title}: ${image.caption ?? 'detail'}`, false, image.caption)}
+          </section>
+        ))}
+        {details.length > chapters.length && <div className="forest-editorial-targets forest-editorial-continuation">
+          {details.slice(chapters.length).map(image => renderPhoto(image.id, `${artwork.title}: ${image.caption ?? 'detail'}`, false, image.caption))}
+        </div>}
+      </>}
     </section>}
     {openPhoto !== null && <FullscreenArtworkViewer title={artwork.title} images={artwork.images} initialIndex={openPhoto} onClose={() => setOpenPhoto(null)}/>}
     <footer className="forest-acquisition">
@@ -165,22 +179,33 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
           </a>
         </>}
       </section>
-      <nav className="forest-acquisition-navigation" aria-label="More paintings">
+      <nav className={`forest-acquisition-navigation${previous && next ? ' has-both-neighbors' : ''}`} aria-label="More paintings">
+        {previous && <ArtworkNeighbor artwork={previous} direction="previous"/>}
         <div className="forest-acquisition-collection">
           <p className="eyebrow">Explore the collection</p>
           <Link to={base}>View the Full Collection</Link>
         </div>
-        {next && <div className="forest-acquisition-next">
-          <p className="eyebrow">Up next</p>
-          <Link className="forest-acquisition-next-link" to={`${base}/${next.slug}`}>
-            <Photograph image={{ ...primaryForestImage(next), alt: '' }} sizes="72px"/>
-            <span>
-              <span className="forest-acquisition-next-title">{next.title} <span className="forest-acquisition-arrow" aria-hidden="true"/></span>
-              <span className="forest-acquisition-next-description">View the next artwork</span>
-            </span>
-          </Link>
-        </div>}
+        {next && <ArtworkNeighbor artwork={next} direction="next"/>}
       </nav>
     </footer>
   </article>;
+}
+
+
+function ArtworkNeighbor({ artwork, direction }: { artwork: ForestArtwork; direction: 'previous' | 'next' }) {
+  const label = direction === 'previous' ? 'Previous artwork' : 'Next artwork';
+  return <div className={`forest-acquisition-${direction}`}>
+    <p className="eyebrow">{label}</p>
+    <Link className="forest-acquisition-next-link" to={`${base}/${artwork.slug}`} aria-label={`${label}: ${artwork.title}`}>
+      <Photograph image={{ ...primaryForestImage(artwork), alt: '' }} sizes="72px"/>
+      <span>
+        <span className="forest-acquisition-next-title">
+          {direction === 'previous' && <span className="forest-acquisition-arrow forest-acquisition-arrow-back" aria-hidden="true"/>}
+          {artwork.title}
+          {direction === 'next' && <> <span className="forest-acquisition-arrow" aria-hidden="true"/></>}
+        </span>
+        <span className="forest-acquisition-next-description">View the {direction} artwork</span>
+      </span>
+    </Link>
+  </div>;
 }

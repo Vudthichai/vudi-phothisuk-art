@@ -387,32 +387,6 @@
           }
         },
         {
-          "id": "wild-tiger-lilies-img-8239",
-          "alt": "Wild Tiger Lilies — curling green surface",
-          "role": "detail",
-          "caption": "Curling Green Surface",
-          "variants": [
-            {
-              "key": "wild-tiger-lilies-img-8239-rollout-640",
-              "src": "/forest-preview/images/wild-tiger-lilies-img-8239-rollout-640.webp",
-              "width": 640,
-              "height": 1138
-            },
-            {
-              "key": "wild-tiger-lilies-img-8239-rollout-1200",
-              "src": "/forest-preview/images/wild-tiger-lilies-img-8239-rollout-1200.webp",
-              "width": 1200,
-              "height": 2133
-            }
-          ],
-          "enlargement": {
-            "key": "wild-tiger-lilies-img-8239-rollout-enlarge-2268",
-            "src": "/forest-preview/images/wild-tiger-lilies-img-8239-rollout-enlarge-2268.webp",
-            "width": 2268,
-            "height": 4032
-          }
-        },
-        {
           "id": "wild-tiger-lilies-img-6851",
           "alt": "Wild Tiger Lilies — lilies along the gold curve",
           "role": "detail",
