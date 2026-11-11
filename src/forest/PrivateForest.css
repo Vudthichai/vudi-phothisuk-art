@@ -32,7 +32,7 @@
 
 .forest-editorial-opening { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-areas: "hero title" "hero facts"; grid-template-rows: auto 1fr; column-gap: 6%; }
 .forest-editorial-title { grid-area: title; }
-.forest-editorial-title h1, .forest-editorial-story h2, .forest-editorial-detail-heading h2, .forest-editorial-chapter h3, .forest-editorial-finale figcaption { font-family: "Bodoni Moda", Didot, Georgia, serif; }
+.forest-editorial-title h1, .forest-editorial-story h2, .forest-editorial-detail-heading h2, .forest-editorial-chapter h3, .forest-editorial-finale figcaption, .forest-editorial-targets figcaption { font-family: "Bodoni Moda", Didot, Georgia, serif; }
 
 .forest-editorial-number { margin-bottom: 16px; color: #536658; font-variant-numeric: tabular-nums; }
 .forest-editorial-title h1 { font-size: clamp(2.75rem, 5vw, 5rem); margin-bottom: 20px; }
@@ -55,7 +55,7 @@
 .forest-editorial-chapter-copy p { line-height: 1.8; margin: 0; }
 .forest-editorial-chapter-photo, .forest-editorial-finale { margin-inline: 0; margin-bottom: 0; }
 .forest-editorial-chapter-photo { margin-top: 0; }
-.forest-editorial-finale figcaption { font-size: 1rem; color: #425749; }
+.forest-editorial-finale figcaption, .forest-editorial-targets figcaption { font-size: 1rem; color: #425749; }
 .forest-editorial-mobile-hint, .forest-editorial-mobile-medium { display: none; }
 @media (min-width: 801px) {
   .forest-editorial-chapter:nth-of-type(even) { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); }
@@ -152,4 +152,11 @@
   .forest-editorial-targets { grid-template-columns: minmax(0, 1fr); }
   .forest-editorial-targets > figure:nth-child(odd) { margin-inline-start: 8%; }
   .forest-editorial-targets > figure:nth-child(even) { margin-inline-end: 5%; }
+}
+@media (min-width: 801px) {
+  .forest-editorial-targets > figure:last-child:nth-child(odd):not(:only-child) {
+    grid-column: 1 / -1;
+    width: min(100%, 38rem);
+    justify-self: center;
+  }
 }

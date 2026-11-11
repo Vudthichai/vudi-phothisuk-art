@@ -191,9 +191,9 @@
         },
         {
           "id": "blooming-desire-img-6676",
-          "alt": "Blooming Desire — artist-selected detail 1",
+          "alt": "Blooming Desire — cream blossoms in relief",
           "role": "detail",
-          "caption": "Detail 1",
+          "caption": "Cream Blossoms in Relief",
           "variants": [
             {
               "key": "blooming-desire-img-6676-rollout-640",
@@ -217,9 +217,9 @@
         },
         {
           "id": "blooming-desire-img-6677",
-          "alt": "Blooming Desire — artist-selected detail 2",
+          "alt": "Blooming Desire — dark stems through coral",
           "role": "detail",
-          "caption": "Detail 2",
+          "caption": "Dark Stems Through Coral",
           "variants": [
             {
               "key": "blooming-desire-img-6677-rollout-640",
@@ -243,9 +243,9 @@
         },
         {
           "id": "blooming-desire-img-6678",
-          "alt": "Blooming Desire — artist-selected detail 3",
+          "alt": "Blooming Desire — petals among red currents",
           "role": "detail",
-          "caption": "Detail 3",
+          "caption": "Petals Among Red Currents",
           "variants": [
             {
               "key": "blooming-desire-img-6678-rollout-640",
@@ -315,56 +315,30 @@
           "role": "full",
           "variants": [
             {
-              "key": "wild-tiger-lilies-full-final-v2-640",
+              "key": "wild-tiger-lilies-full-final-v3-640",
+              "src": "/forest-preview/images/wild-tiger-lilies-full-final-v3-640.webp",
               "width": 640,
-              "height": 961,
-              "src": "/forest-preview/images/wild-tiger-lilies-full-final-v2-640.webp"
+              "height": 961
             },
             {
-              "key": "wild-tiger-lilies-full-final-v2-1200",
+              "key": "wild-tiger-lilies-full-final-v3-1200",
+              "src": "/forest-preview/images/wild-tiger-lilies-full-final-v3-1200.webp",
               "width": 1200,
-              "height": 1802,
-              "src": "/forest-preview/images/wild-tiger-lilies-full-final-v2-1200.webp"
+              "height": 1802
             }
           ],
           "enlargement": {
-            "key": "wild-tiger-lilies-rollout-enlarge-2400",
-            "src": "/forest-preview/images/wild-tiger-lilies-rollout-enlarge-2400.webp",
+            "key": "wild-tiger-lilies-full-final-v3-2400",
+            "src": "/forest-preview/images/wild-tiger-lilies-full-final-v3-2400.webp",
             "width": 2400,
             "height": 3604
           }
         },
         {
-          "id": "wild-tiger-lilies-img-6851",
-          "alt": "Wild Tiger Lilies — artist-selected detail 1",
-          "role": "detail",
-          "caption": "Detail 1",
-          "variants": [
-            {
-              "key": "wild-tiger-lilies-img-6851-rollout-640",
-              "src": "/forest-preview/images/wild-tiger-lilies-img-6851-rollout-640.webp",
-              "width": 640,
-              "height": 1138
-            },
-            {
-              "key": "wild-tiger-lilies-img-6851-rollout-1200",
-              "src": "/forest-preview/images/wild-tiger-lilies-img-6851-rollout-1200.webp",
-              "width": 1200,
-              "height": 2133
-            }
-          ],
-          "enlargement": {
-            "key": "wild-tiger-lilies-img-6851-rollout-enlarge-2400",
-            "src": "/forest-preview/images/wild-tiger-lilies-img-6851-rollout-enlarge-2400.webp",
-            "width": 2400,
-            "height": 4267
-          }
-        },
-        {
           "id": "wild-tiger-lilies-img-7964",
-          "alt": "Wild Tiger Lilies — artist-selected detail 2",
+          "alt": "Wild Tiger Lilies — orange petals in relief",
           "role": "detail",
-          "caption": "Detail 2",
+          "caption": "Orange Petals in Relief",
           "variants": [
             {
               "key": "wild-tiger-lilies-img-7964-rollout-640",
@@ -387,36 +361,10 @@
           }
         },
         {
-          "id": "wild-tiger-lilies-img-7965",
-          "alt": "Wild Tiger Lilies — artist-selected detail 3",
-          "role": "detail",
-          "caption": "Detail 3",
-          "variants": [
-            {
-              "key": "wild-tiger-lilies-img-7965-rollout-640",
-              "src": "/forest-preview/images/wild-tiger-lilies-img-7965-rollout-640.webp",
-              "width": 640,
-              "height": 853
-            },
-            {
-              "key": "wild-tiger-lilies-img-7965-rollout-1200",
-              "src": "/forest-preview/images/wild-tiger-lilies-img-7965-rollout-1200.webp",
-              "width": 1200,
-              "height": 1600
-            }
-          ],
-          "enlargement": {
-            "key": "wild-tiger-lilies-img-7965-rollout-enlarge-2400",
-            "src": "/forest-preview/images/wild-tiger-lilies-img-7965-rollout-enlarge-2400.webp",
-            "width": 2400,
-            "height": 3200
-          }
-        },
-        {
           "id": "wild-tiger-lilies-img-7982",
-          "alt": "Wild Tiger Lilies — artist-selected detail 4",
+          "alt": "Wild Tiger Lilies — the composition at an angle",
           "role": "detail",
-          "caption": "Detail 4",
+          "caption": "The Composition at an Angle",
           "variants": [
             {
               "key": "wild-tiger-lilies-img-7982-rollout-640",
@@ -440,9 +388,9 @@
         },
         {
           "id": "wild-tiger-lilies-img-8239",
-          "alt": "Wild Tiger Lilies — artist-selected detail 5",
+          "alt": "Wild Tiger Lilies — curling green surface",
           "role": "detail",
-          "caption": "Detail 5",
+          "caption": "Curling Green Surface",
           "variants": [
             {
               "key": "wild-tiger-lilies-img-8239-rollout-640",
@@ -465,10 +413,36 @@
           }
         },
         {
-          "id": "wild-tiger-lilies-img-8240",
-          "alt": "Wild Tiger Lilies — artist-selected detail 6",
+          "id": "wild-tiger-lilies-img-6851",
+          "alt": "Wild Tiger Lilies — lilies along the gold curve",
           "role": "detail",
-          "caption": "Detail 6",
+          "caption": "Lilies Along the Gold Curve",
+          "variants": [
+            {
+              "key": "wild-tiger-lilies-img-6851-rollout-640",
+              "src": "/forest-preview/images/wild-tiger-lilies-img-6851-rollout-640.webp",
+              "width": 640,
+              "height": 1138
+            },
+            {
+              "key": "wild-tiger-lilies-img-6851-rollout-1200",
+              "src": "/forest-preview/images/wild-tiger-lilies-img-6851-rollout-1200.webp",
+              "width": 1200,
+              "height": 2133
+            }
+          ],
+          "enlargement": {
+            "key": "wild-tiger-lilies-img-6851-rollout-enlarge-2400",
+            "src": "/forest-preview/images/wild-tiger-lilies-img-6851-rollout-enlarge-2400.webp",
+            "width": 2400,
+            "height": 4267
+          }
+        },
+        {
+          "id": "wild-tiger-lilies-img-8240",
+          "alt": "Wild Tiger Lilies — a bloom against pink",
+          "role": "detail",
+          "caption": "A Bloom Against Pink",
           "variants": [
             {
               "key": "wild-tiger-lilies-img-8240-rollout-640",
@@ -492,9 +466,9 @@
         },
         {
           "id": "wild-tiger-lilies-img-8241",
-          "alt": "Wild Tiger Lilies — artist-selected detail 7",
+          "alt": "Wild Tiger Lilies — three blooms along the curve",
           "role": "detail",
-          "caption": "Detail 7",
+          "caption": "Three Blooms Along the Curve",
           "variants": [
             {
               "key": "wild-tiger-lilies-img-8241-rollout-640",
@@ -514,6 +488,32 @@
             "src": "/forest-preview/images/wild-tiger-lilies-img-8241-rollout-enlarge-2400.webp",
             "width": 2400,
             "height": 4267
+          }
+        },
+        {
+          "id": "wild-tiger-lilies-img-7965",
+          "alt": "Wild Tiger Lilies — spotted petals and gold",
+          "role": "detail",
+          "caption": "Spotted Petals and Gold",
+          "variants": [
+            {
+              "key": "wild-tiger-lilies-img-7965-rollout-640",
+              "src": "/forest-preview/images/wild-tiger-lilies-img-7965-rollout-640.webp",
+              "width": 640,
+              "height": 853
+            },
+            {
+              "key": "wild-tiger-lilies-img-7965-rollout-1200",
+              "src": "/forest-preview/images/wild-tiger-lilies-img-7965-rollout-1200.webp",
+              "width": 1200,
+              "height": 1600
+            }
+          ],
+          "enlargement": {
+            "key": "wild-tiger-lilies-img-7965-rollout-enlarge-2400",
+            "src": "/forest-preview/images/wild-tiger-lilies-img-7965-rollout-enlarge-2400.webp",
+            "width": 2400,
+            "height": 3200
           }
         },
         {
@@ -585,9 +585,9 @@
         },
         {
           "id": "gilded-bloom-img-6684",
-          "alt": "Gilded Bloom — artist-selected detail 1",
+          "alt": "Gilded Bloom — grooved copper petals",
           "role": "detail",
-          "caption": "Detail 1",
+          "caption": "Grooved Copper Petals",
           "variants": [
             {
               "key": "gilded-bloom-img-6684-rollout-640",
@@ -611,9 +611,9 @@
         },
         {
           "id": "gilded-bloom-img-6685",
-          "alt": "Gilded Bloom — artist-selected detail 2",
+          "alt": "Gilded Bloom — metallic petals against green",
           "role": "detail",
-          "caption": "Detail 2",
+          "caption": "Metallic Petals Against Green",
           "variants": [
             {
               "key": "gilded-bloom-img-6685-rollout-640",
@@ -705,9 +705,9 @@
         },
         {
           "id": "a-forest-forgotten-img-7993",
-          "alt": "A Forest Forgotten — artist-selected detail 1",
+          "alt": "A Forest Forgotten — undergrowth at the trunk",
           "role": "detail",
-          "caption": "Detail 1",
+          "caption": "Undergrowth at the Trunk",
           "variants": [
             {
               "key": "a-forest-forgotten-img-7993-rollout-640",
@@ -731,9 +731,9 @@
         },
         {
           "id": "a-forest-forgotten-img-7994",
-          "alt": "A Forest Forgotten — artist-selected detail 2",
+          "alt": "A Forest Forgotten — the trunk in perspective",
           "role": "detail",
-          "caption": "Detail 2",
+          "caption": "The Trunk in Perspective",
           "variants": [
             {
               "key": "a-forest-forgotten-img-7994-rollout-640",
@@ -757,9 +757,9 @@
         },
         {
           "id": "a-forest-forgotten-img-7995",
-          "alt": "A Forest Forgotten — artist-selected detail 3",
+          "alt": "A Forest Forgotten — bark beside the canvas edge",
           "role": "detail",
-          "caption": "Detail 3",
+          "caption": "Bark Beside the Canvas Edge",
           "variants": [
             {
               "key": "a-forest-forgotten-img-7995-rollout-640",
@@ -783,9 +783,9 @@
         },
         {
           "id": "a-forest-forgotten-img-8231",
-          "alt": "A Forest Forgotten — artist-selected detail 4",
+          "alt": "A Forest Forgotten — vertical ridges and leaves",
           "role": "detail",
-          "caption": "Detail 4",
+          "caption": "Vertical Ridges and Leaves",
           "variants": [
             {
               "key": "a-forest-forgotten-img-8231-rollout-640",
@@ -870,9 +870,9 @@
         },
         {
           "id": "moss-and-mushrooms-img-8077",
-          "alt": "Moss & Mushrooms — artist-selected detail 1",
+          "alt": "Moss & Mushrooms — moss across diagonal bark",
           "role": "detail",
-          "caption": "Detail 1",
+          "caption": "Moss Across Diagonal Bark",
           "variants": [
             {
               "key": "moss-and-mushrooms-img-8077-rollout-640",
@@ -896,9 +896,9 @@
         },
         {
           "id": "moss-and-mushrooms-img-8078",
-          "alt": "Moss & Mushrooms — artist-selected detail 2",
+          "alt": "Moss & Mushrooms — pale edges of the caps",
           "role": "detail",
-          "caption": "Detail 2",
+          "caption": "Pale Edges of the Caps",
           "variants": [
             {
               "key": "moss-and-mushrooms-img-8078-rollout-640",
@@ -922,9 +922,9 @@
         },
         {
           "id": "moss-and-mushrooms-img-8079",
-          "alt": "Moss & Mushrooms — artist-selected detail 3",
+          "alt": "Moss & Mushrooms — rust-colored mushroom caps",
           "role": "detail",
-          "caption": "Detail 3",
+          "caption": "Rust-Colored Mushroom Caps",
           "variants": [
             {
               "key": "moss-and-mushrooms-img-8079-rollout-640",
@@ -948,9 +948,9 @@
         },
         {
           "id": "moss-and-mushrooms-img-8081",
-          "alt": "Moss & Mushrooms — artist-selected detail 4",
+          "alt": "Moss & Mushrooms — bark ridges at the edge",
           "role": "detail",
-          "caption": "Detail 4",
+          "caption": "Bark Ridges at the Edge",
           "variants": [
             {
               "key": "moss-and-mushrooms-img-8081-rollout-640",
@@ -974,9 +974,9 @@
         },
         {
           "id": "moss-and-mushrooms-img-8082",
-          "alt": "Moss & Mushrooms — artist-selected detail 5",
+          "alt": "Moss & Mushrooms — moss between gold ridges",
           "role": "detail",
-          "caption": "Detail 5",
+          "caption": "Moss Between Gold Ridges",
           "variants": [
             {
               "key": "moss-and-mushrooms-img-8082-rollout-640",
@@ -1067,9 +1067,9 @@
         },
         {
           "id": "ethereal-bloom-img-6694",
-          "alt": "Ethereal Bloom — artist-selected detail 1",
+          "alt": "Ethereal Bloom — flowers over pink ridges",
           "role": "detail",
-          "caption": "Detail 1",
+          "caption": "Flowers Over Pink Ridges",
           "variants": [
             {
               "key": "ethereal-bloom-img-6694-rollout-640",
@@ -1093,9 +1093,9 @@
         },
         {
           "id": "ethereal-bloom-img-7911",
-          "alt": "Ethereal Bloom — artist-selected detail 2",
+          "alt": "Ethereal Bloom — blooms across the surface",
           "role": "detail",
-          "caption": "Detail 2",
+          "caption": "Blooms Across the Surface",
           "variants": [
             {
               "key": "ethereal-bloom-img-7911-rollout-640",
@@ -1119,9 +1119,9 @@
         },
         {
           "id": "ethereal-bloom-img-7942",
-          "alt": "Ethereal Bloom — artist-selected detail 3",
+          "alt": "Ethereal Bloom — shadow along the canvas edge",
           "role": "detail",
-          "caption": "Detail 3",
+          "caption": "Shadow Along the Canvas Edge",
           "variants": [
             {
               "key": "ethereal-bloom-img-7942-rollout-640",
@@ -1145,9 +1145,9 @@
         },
         {
           "id": "ethereal-bloom-img-8260",
-          "alt": "Ethereal Bloom — artist-selected detail 4",
+          "alt": "Ethereal Bloom — metallic light on ridges",
           "role": "detail",
-          "caption": "Detail 4",
+          "caption": "Metallic Light on Ridges",
           "variants": [
             {
               "key": "ethereal-bloom-img-8260-rollout-640",
@@ -1238,9 +1238,9 @@
         },
         {
           "id": "tiger-lily-img-6671",
-          "alt": "Tiger Lily — artist-selected detail 1",
+          "alt": "Tiger Lily — a lily in relief",
           "role": "detail",
-          "caption": "Detail 1",
+          "caption": "A Lily in Relief",
           "variants": [
             {
               "key": "tiger-lily-img-6671-rollout-640",
@@ -1264,9 +1264,9 @@
         },
         {
           "id": "tiger-lily-img-6674",
-          "alt": "Tiger Lily — artist-selected detail 2",
+          "alt": "Tiger Lily — spotted petals along the curve",
           "role": "detail",
-          "caption": "Detail 2",
+          "caption": "Spotted Petals Along the Curve",
           "variants": [
             {
               "key": "tiger-lily-img-6674-rollout-640",
@@ -1290,9 +1290,9 @@
         },
         {
           "id": "tiger-lily-img-8308",
-          "alt": "Tiger Lily — artist-selected detail 3",
+          "alt": "Tiger Lily — orange bloom beside gold",
           "role": "detail",
-          "caption": "Detail 3",
+          "caption": "Orange Bloom Beside Gold",
           "variants": [
             {
               "key": "tiger-lily-img-8308-rollout-640",
@@ -1316,9 +1316,9 @@
         },
         {
           "id": "tiger-lily-img-8309",
-          "alt": "Tiger Lily — artist-selected detail 4",
+          "alt": "Tiger Lily — the curl of a petal",
           "role": "detail",
-          "caption": "Detail 4",
+          "caption": "The Curl of a Petal",
           "variants": [
             {
               "key": "tiger-lily-img-8309-rollout-640",
@@ -1342,9 +1342,9 @@
         },
         {
           "id": "tiger-lily-img-8310",
-          "alt": "Tiger Lily — artist-selected detail 5",
+          "alt": "Tiger Lily — two blooms in the current",
           "role": "detail",
-          "caption": "Detail 5",
+          "caption": "Two Blooms in the Current",
           "variants": [
             {
               "key": "tiger-lily-img-8310-rollout-640",
@@ -1368,9 +1368,9 @@
         },
         {
           "id": "tiger-lily-img-8311",
-          "alt": "Tiger Lily — artist-selected detail 6",
+          "alt": "Tiger Lily — raised petals and leaves",
           "role": "detail",
-          "caption": "Detail 6",
+          "caption": "Raised Petals and Leaves",
           "variants": [
             {
               "key": "tiger-lily-img-8311-rollout-640",
@@ -1394,9 +1394,9 @@
         },
         {
           "id": "tiger-lily-img-8312",
-          "alt": "Tiger Lily — artist-selected detail 7",
+          "alt": "Tiger Lily — gold at the canvas edge",
           "role": "detail",
-          "caption": "Detail 7",
+          "caption": "Gold at the Canvas Edge",
           "variants": [
             {
               "key": "tiger-lily-img-8312-rollout-640",
@@ -1420,9 +1420,9 @@
         },
         {
           "id": "tiger-lily-img-8313",
-          "alt": "Tiger Lily — artist-selected detail 8",
+          "alt": "Tiger Lily — the lilies in perspective",
           "role": "detail",
-          "caption": "Detail 8",
+          "caption": "The Lilies in Perspective",
           "variants": [
             {
               "key": "tiger-lily-img-8313-rollout-640",
@@ -1539,36 +1539,10 @@
           }
         },
         {
-          "id": "75-leaves-img-8201",
-          "alt": "75 Leaves — artist-selected detail 1",
-          "role": "detail",
-          "caption": "Detail 1",
-          "variants": [
-            {
-              "key": "75-leaves-img-8201-rollout-640",
-              "src": "/forest-preview/images/75-leaves-img-8201-rollout-640.webp",
-              "width": 640,
-              "height": 1138
-            },
-            {
-              "key": "75-leaves-img-8201-rollout-1200",
-              "src": "/forest-preview/images/75-leaves-img-8201-rollout-1200.webp",
-              "width": 1200,
-              "height": 2133
-            }
-          ],
-          "enlargement": {
-            "key": "75-leaves-img-8201-rollout-enlarge-2400",
-            "src": "/forest-preview/images/75-leaves-img-8201-rollout-enlarge-2400.webp",
-            "width": 2400,
-            "height": 4267
-          }
-        },
-        {
           "id": "75-leaves-img-8202",
-          "alt": "75 Leaves — artist-selected detail 2",
+          "alt": "75 Leaves — sculpted leaves along the elbe",
           "role": "detail",
-          "caption": "Detail 2",
+          "caption": "Sculpted Leaves Along the Elbe",
           "variants": [
             {
               "key": "75-leaves-img-8202-rollout-640",
@@ -1592,9 +1566,9 @@
         },
         {
           "id": "75-leaves-img-8212",
-          "alt": "75 Leaves — artist-selected detail 3",
+          "alt": "75 Leaves — blue current at the edge",
           "role": "detail",
-          "caption": "Detail 3",
+          "caption": "Blue Current at the Edge",
           "variants": [
             {
               "key": "75-leaves-img-8212-rollout-640",
@@ -1618,9 +1592,9 @@
         },
         {
           "id": "75-leaves-img-8214",
-          "alt": "75 Leaves — artist-selected detail 4",
+          "alt": "75 Leaves — leaves across pink and gold",
           "role": "detail",
-          "caption": "Detail 4",
+          "caption": "Leaves Across Pink and Gold",
           "variants": [
             {
               "key": "75-leaves-img-8214-rollout-640",
@@ -1644,9 +1618,9 @@
         },
         {
           "id": "75-leaves-img-8215",
-          "alt": "75 Leaves — artist-selected detail 5",
+          "alt": "75 Leaves — the elbe in perspective",
           "role": "detail",
-          "caption": "Detail 5",
+          "caption": "The Elbe in Perspective",
           "variants": [
             {
               "key": "75-leaves-img-8215-rollout-640",
@@ -1670,9 +1644,9 @@
         },
         {
           "id": "75-leaves-img-8219",
-          "alt": "75 Leaves — artist-selected detail 6",
+          "alt": "75 Leaves — raised leaves along the edge",
           "role": "detail",
-          "caption": "Detail 6",
+          "caption": "Raised Leaves Along the Edge",
           "variants": [
             {
               "key": "75-leaves-img-8219-rollout-640",
@@ -1762,36 +1736,10 @@
           }
         },
         {
-          "id": "dragon-lily-img-8222",
-          "alt": "Dragon Lily — artist-selected detail 1",
-          "role": "detail",
-          "caption": "Detail 1",
-          "variants": [
-            {
-              "key": "dragon-lily-img-8222-rollout-640",
-              "src": "/forest-preview/images/dragon-lily-img-8222-rollout-640.webp",
-              "width": 640,
-              "height": 1138
-            },
-            {
-              "key": "dragon-lily-img-8222-rollout-1200",
-              "src": "/forest-preview/images/dragon-lily-img-8222-rollout-1200.webp",
-              "width": 1200,
-              "height": 2133
-            }
-          ],
-          "enlargement": {
-            "key": "dragon-lily-img-8222-rollout-enlarge-2400",
-            "src": "/forest-preview/images/dragon-lily-img-8222-rollout-enlarge-2400.webp",
-            "width": 2400,
-            "height": 4267
-          }
-        },
-        {
           "id": "dragon-lily-img-8223",
-          "alt": "Dragon Lily — artist-selected detail 2",
+          "alt": "Dragon Lily — lilies along the gold ribbon",
           "role": "detail",
-          "caption": "Detail 2",
+          "caption": "Lilies Along the Gold Ribbon",
           "variants": [
             {
               "key": "dragon-lily-img-8223-rollout-640",
@@ -1815,9 +1763,9 @@
         },
         {
           "id": "dragon-lily-img-8225",
-          "alt": "Dragon Lily — artist-selected detail 3",
+          "alt": "Dragon Lily — violet ridges at the edge",
           "role": "detail",
-          "caption": "Detail 3",
+          "caption": "Violet Ridges at the Edge",
           "variants": [
             {
               "key": "dragon-lily-img-8225-rollout-640",
@@ -1841,9 +1789,9 @@
         },
         {
           "id": "dragon-lily-img-8227",
-          "alt": "Dragon Lily — artist-selected detail 4",
+          "alt": "Dragon Lily — pink blooms against blue",
           "role": "detail",
-          "caption": "Detail 4",
+          "caption": "Pink Blooms Against Blue",
           "variants": [
             {
               "key": "dragon-lily-img-8227-rollout-640",
