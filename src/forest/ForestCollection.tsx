@@ -149,20 +149,20 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
         <h2 id="mother-nature-inquiry">Interested in {artwork.title}?</h2>
         <p>For availability, pricing, and acquisition inquiries.</p>
         <a className="forest-acquisition-action" href={artworkInquiryUrl(artwork)}>
-          Inquire about this artwork <span aria-hidden="true">↗</span>
+          Inquire About This Artwork
         </a>
       </section>
       <nav className="forest-acquisition-navigation" aria-label="More paintings">
         <div className="forest-acquisition-collection">
           <p className="eyebrow">Explore the collection</p>
-          <Link to={base}>All Forest &amp; Flowers paintings <span aria-hidden="true">↗</span></Link>
+          <Link to={base}>View the Full Collection</Link>
         </div>
         {next && <div className="forest-acquisition-next">
           <p className="eyebrow">Up next</p>
           <Link className="forest-acquisition-next-link" to={`${base}/${next.slug}`}>
             <Photograph image={{ ...primaryForestImage(next), alt: '' }} sizes="72px"/>
             <span>
-              <span className="forest-acquisition-next-title">{next.title} <span aria-hidden="true">→</span></span>
+              <span className="forest-acquisition-next-title">{next.title} <span className="forest-acquisition-arrow" aria-hidden="true"/></span>
               <span className="forest-acquisition-next-description">View the next artwork</span>
             </span>
           </Link>

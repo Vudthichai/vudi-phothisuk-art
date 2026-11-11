@@ -130,6 +130,9 @@
 .forest-acquisition-next-link { display: inline-flex; align-items: center; gap: 16px; }
 .forest-acquisition-next-link img { width: 58px; height: auto; flex: none; }
 .forest-acquisition-next-title { display: block; font-size: clamp(1.45rem, 2.5vw, 2.15rem); line-height: 1.15; }
+.forest-acquisition-arrow { display: inline-block; position: relative; width: .7em; height: .4em; margin-left: .15em; vertical-align: .14em; }
+.forest-acquisition-arrow::before { content: ''; position: absolute; inset: 50% 0 auto; border-top: 1px solid currentColor; }
+.forest-acquisition-arrow::after { content: ''; position: absolute; right: 0; top: 50%; width: .28em; height: .28em; border-top: 1px solid currentColor; border-right: 1px solid currentColor; transform: translateY(-50%) rotate(45deg); }
 .forest-acquisition-next-description { display: block; margin-top: 5px; font-size: .8125rem; }
 .forest-acquisition-next-link:hover .forest-acquisition-next-title { text-decoration: underline; text-underline-offset: 4px; }
 @media (max-width: 600px) {
