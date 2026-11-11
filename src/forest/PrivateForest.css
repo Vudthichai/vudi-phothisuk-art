@@ -32,7 +32,7 @@
 
 .forest-editorial-opening { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); grid-template-areas: "hero title" "hero facts"; grid-template-rows: auto 1fr; column-gap: 6%; }
 .forest-editorial-title { grid-area: title; }
-.forest-editorial-title h1, .forest-editorial-story h2, .forest-editorial-detail-heading h2, .forest-editorial-chapter h3, .forest-editorial-finale figcaption, .forest-editorial-targets figcaption { font-family: "Bodoni Moda", Didot, Georgia, serif; }
+.forest-editorial-title h1, .forest-editorial-story h2, .forest-editorial-detail-heading h2, .forest-editorial-chapter h3, .forest-editorial-finale figcaption, .forest-editorial-targets figcaption, .forest-editorial-chapter-photo figcaption { font-family: "Bodoni Moda", Didot, Georgia, serif; }
 
 .forest-editorial-number { margin-bottom: 16px; color: #536658; font-variant-numeric: tabular-nums; }
 .forest-editorial-title h1 { font-size: clamp(2.75rem, 5vw, 5rem); margin-bottom: 20px; }
@@ -55,7 +55,7 @@
 .forest-editorial-chapter-copy p { line-height: 1.8; margin: 0; }
 .forest-editorial-chapter-photo, .forest-editorial-finale { margin-inline: 0; margin-bottom: 0; }
 .forest-editorial-chapter-photo { margin-top: 0; }
-.forest-editorial-finale figcaption, .forest-editorial-targets figcaption { font-size: 1rem; color: #425749; }
+.forest-editorial-finale figcaption, .forest-editorial-targets figcaption, .forest-editorial-chapter-photo figcaption { font-size: 1rem; color: #425749; }
 .forest-editorial-mobile-hint, .forest-editorial-mobile-medium { display: none; }
 @media (min-width: 801px) {
   .forest-editorial-chapter:nth-of-type(even) { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); }
@@ -159,4 +159,22 @@
     width: min(100%, 38rem);
     justify-self: center;
   }
+}
+
+
+.forest-editorial-continuation { margin-top: clamp(40px, 7vw, 96px); }
+.forest-acquisition-arrow-back { transform: rotate(180deg); margin: 0 .3em 0 0; }
+@media (min-width: 901px) {
+  .forest-acquisition-navigation.has-both-neighbors {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+}
+@media (max-width: 900px) {
+  .forest-acquisition-navigation.has-both-neighbors { grid-template-columns: minmax(0, 1fr); }
+  .forest-acquisition-navigation.has-both-neighbors > div + div { border-top: 1px solid #c5cdbf; }
+}
+@media (max-width: 600px) {
+  .forest-editorial-continuation { margin-top: 30px; }
+  .forest-acquisition-previous + .forest-acquisition-collection { border-top: 1px solid #c5cdbf; }
 }
