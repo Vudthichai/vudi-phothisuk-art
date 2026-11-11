@@ -87,7 +87,7 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
   const next = data.artworks[position];
   const [openPhoto, setOpenPhoto] = useState<number | null>(null);
 
-  function renderPhoto(imageId: string, label: string, finale = false) {
+  function renderPhoto(imageId: string, label: string, finale = false, caption?: string) {
     const index = artwork.images.findIndex(image => image.id === imageId);
     const image = artwork.images[index];
     if (!image) return null;
@@ -96,7 +96,7 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
       <button type="button" className="forest-editorial-photo" aria-label={`Enlarge ${label}`} onClick={() => setOpenPhoto(index)}>
         <Photograph image={image} sizes={finale ? '(max-width: 600px) 100vw, (max-width: 1500px) 86vw, 1290px' : '(max-width: 600px) 94vw, (max-width: 800px) 86vw, (max-width: 1500px) 46vw, 690px'}/>
       </button>
-      {finale && <figcaption>{label}</figcaption>}
+      {(caption ?? (finale ? label : undefined)) && <figcaption>{caption ?? label}</figcaption>}
     </figure>;
   }
 
@@ -148,7 +148,7 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
       ))}
       {renderPhoto('mother-nature-angle-img-8264', 'Flowers in Relief', true)}
       </> : <div className="forest-editorial-targets">
-        {details.map(image => renderPhoto(image.id, `${artwork.title}: ${image.caption ?? 'detail'}`))}
+        {details.map(image => renderPhoto(image.id, `${artwork.title}: ${image.caption ?? 'detail'}`, false, image.caption))}
       </div>}
     </section>}
     {openPhoto !== null && <FullscreenArtworkViewer title={artwork.title} images={artwork.images} initialIndex={openPhoto} onClose={() => setOpenPhoto(null)}/>}
@@ -156,7 +156,7 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
       <section className="forest-acquisition-inquiry" aria-labelledby="forest-artwork-inquiry">
         <p className="eyebrow">Original artwork</p>
         {artwork.availability === 'not-for-sale' ? (
-          <h2 id="forest-artwork-inquiry">{artwork.availabilityNote}</h2>
+          <p className="private-availability" id="forest-artwork-inquiry">Not for Sale</p>
         ) : <>
           <h2 id="forest-artwork-inquiry">Interested in {artwork.title}?</h2>
           <p>For availability, pricing, and acquisition inquiries.</p>
