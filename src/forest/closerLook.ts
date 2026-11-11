@@ -17,7 +17,7 @@ export const closerLook: Record<string, readonly { title: string; description: s
   ],
   'moss-and-mushrooms': [
     { title: 'Light on the Mushroom Caps', description: 'Pale edges catch the light where the sculpted caps project from the bark. Against rust-colored tops and dark grain, the layered forms make a surface that first reads as abstract feel inhabited.' },
-    { title: 'Moss Along the Grain', description: 'The bark’s diagonal ridges form long tracks across the painting. Bright green moss follows some grooves and interrupts others, bringing small changes of pace to the larger sweep of the surface.' },
+    { title: 'Moss Along the Grain', description: 'The forest reveals itself in layers. Deep grooves travel through the bark, interrupted by patches of vivid moss and traces of gold that catch the light. Along the lower edge, the artist\'s signature rests beneath the textured surface, a quiet finishing detail to a composition shaped by the irregular beauty of nature.' },
   ],
   'ethereal-bloom': [
     { title: 'Blossoms Over Pink Ridges', description: 'Raised blossoms gather against curling pink ridges. Metallic highlights shift along those ridges as the viewing angle changes, letting the eye follow the surface from the petals into the surrounding field.' },
@@ -26,6 +26,7 @@ export const closerLook: Record<string, readonly { title: string; description: s
   'tiger-lily': [
     { title: 'The Turn of the Lily', description: 'The orange petals turn away from the canvas and cast small shadows into the surrounding relief. Their spotted surfaces stay distinct against the tightly worked greens, even where the background is dense with detail.' },
     { title: 'Along the Warm Current', description: 'The winding band of gold and pink runs beside the sculpted flower. Its continuous movement sets off the separate shapes of the petals, and the quieter greens around it give the warm colors room to spread.' },
+    { title: 'The Bloom Within the Current', description: 'A single tiger lily emerges from the surrounding movement, its orange petals curling outward against layers of green, pink, and gold. The sculpted flower rises above the textured surface, revealing the contrast between the delicate form of the bloom and the restless patterns beneath it. Seen this closely, the painting becomes as much about dimension and touch as it is about color.' },
   ],
   '75-leaves': [
     { title: 'Leaves Along the Elbe', description: 'The blue-and-gold current winds through raised leaves. From close by, individual contours emerge from the overlapping forms, giving the viewer a way to pause over the leaves that mark Wallace N. “Wally” King’s missions.' },
