@@ -79,3 +79,20 @@ button.forest-hero-image{display:block;width:100%;border:0;padding:0;color:inher
 }
 
 .home-ocean-transition{margin:0 0 14px;color:#536658}
+
+
+.home-ocean-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, .75fr);
+  column-gap: clamp(24px, 5vw, 80px);
+  align-items: center;
+  max-width: 1240px;
+}
+.home-ocean-feature .home-ocean-transition { grid-column: 1 / -1; }
+.home-ocean-feature .home-ocean-copy { display: block; padding: 0; }
+.home-ocean-feature .home-ocean-copy > .text-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 10px; }
+.home-ocean-feature .home-ocean-copy h2 { font-family: "Bodoni Moda", Didot, Georgia, serif; }
+@media (max-width: 700px) {
+  .home-ocean-feature { grid-template-columns: minmax(0, 1fr); }
+  .home-ocean-feature .home-ocean-copy { padding-top: 18px; }
+}
