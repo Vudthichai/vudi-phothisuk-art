@@ -153,3 +153,10 @@
   .forest-editorial-targets > figure:nth-child(odd) { margin-inline-start: 8%; }
   .forest-editorial-targets > figure:nth-child(even) { margin-inline-end: 5%; }
 }
+@media (min-width: 801px) {
+  .forest-editorial-targets > figure:last-child:nth-child(odd):not(:only-child) {
+    grid-column: 1 / -1;
+    width: min(100%, 38rem);
+    justify-self: center;
+  }
+}
