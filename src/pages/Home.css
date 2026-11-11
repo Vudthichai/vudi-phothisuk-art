@@ -78,17 +78,14 @@ button.forest-hero-image{display:block;width:100%;border:0;padding:0;color:inher
   .forest-masthead .home-title-reveal { animation: none; clip-path: none; }
 }
 
-.home-ocean-transition{margin:0 0 14px;color:#536658}
-
-
 .home-ocean-feature {
   display: grid;
   grid-template-columns: minmax(0, 1.55fr) minmax(0, .75fr);
   column-gap: clamp(24px, 5vw, 80px);
   align-items: center;
-  max-width: 1240px;
+  padding-top: clamp(8px, 1.3vw, 20px);
 }
-.home-ocean-feature .home-ocean-transition { grid-column: 1 / -1; }
+.home-ocean-feature .home-ocean-eyebrow { font-size: 10px; line-height: 1.5; margin: 0 0 10px; }
 .home-ocean-feature .home-ocean-copy { display: block; padding: 0; }
 .home-ocean-feature .home-ocean-copy > .text-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 10px; }
 .home-ocean-feature .home-ocean-copy h2 { font-family: "Bodoni Moda", Didot, Georgia, serif; }

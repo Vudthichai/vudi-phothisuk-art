@@ -37,14 +37,14 @@ export function Home() {
     </section>
     <section className="forest-introduction" aria-labelledby="forest-title"><p className="eyebrow">Forest & Flowers</p><div><h2 id="forest-title">A presence within the forest.</h2><p>A hidden goddess emerges from leaves, vines, and flowers. Beside her, a pale river winds between densely textured mountains.</p><p><em>Mother Nature</em> considers our dependence on the natural world—and the difference between appreciating nature and believing we control it.</p><p className="forest-small">The complete Forest &amp; Flowers collection brings that attention to the natural world into ten paintings. <Link className="text-link" to="/collections/forest-and-flowers">Explore Forest &amp; Flowers</Link></p></div></section>
     <section className="home-ocean-feature" id="home-paintings" aria-labelledby="home-ocean-title">
-      <p className="eyebrow home-ocean-transition">From forest to shore</p>
       <RoomStudy artwork={ocean} sceneOnly/>
       <div className="home-ocean-copy">
         <div className="home-ocean-description">
+          <p className="eyebrow home-ocean-eyebrow">Selected Collection</p>
           <h2 id="home-ocean-title">The Oceans</h2>
-          <p>Shorelines, breaking waves, and the movement of water, held in sculptural texture.</p>
+          <p>Shorelines, breaking waves, and the movement of water, expressed through sculptural texture.</p>
         </div>
-        <Link className="text-link" to="/collections/oceans" aria-label="Explore The Oceans">Explore the collection</Link>
+        <Link className="text-link" to="/collections/oceans" aria-label="Explore The Oceans">Explore the Collection</Link>
       </div>
     </section>
     <RegalPreview/>
