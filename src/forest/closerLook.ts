@@ -16,8 +16,8 @@ export const closerLook: Record<string, readonly { title: string; description: s
     { title: 'The Forest Behind the Bark', description: 'From the side, the trunk’s raised surface stands forward while fragments of pale sky and green forest remain visible around it. The view holds both the tree and its surroundings in sight, an intimate perspective on the rainforest at the center of the work.' },
   ],
   'moss-and-mushrooms': [
-    { title: 'Moss Along the Grain', description: 'The bark’s diagonal ridges form long tracks across the painting. Bright green moss follows some grooves and interrupts others, bringing small changes of pace to the larger sweep of the surface.' },
     { title: 'Light on the Mushroom Caps', description: 'Pale edges catch the light where the sculpted caps project from the bark. Against rust-colored tops and dark grain, the layered forms make a surface that first reads as abstract feel inhabited.' },
+    { title: 'Moss Along the Grain', description: 'The bark’s diagonal ridges form long tracks across the painting. Bright green moss follows some grooves and interrupts others, bringing small changes of pace to the larger sweep of the surface.' },
   ],
   'ethereal-bloom': [
     { title: 'Blossoms Over Pink Ridges', description: 'Raised blossoms gather against curling pink ridges. Metallic highlights shift along those ridges as the viewing angle changes, letting the eye follow the surface from the petals into the surrounding field.' },
