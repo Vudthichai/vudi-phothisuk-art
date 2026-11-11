@@ -34,7 +34,8 @@ function ViewerControl({ icon, label, onClick, disabled, autoFocus, placement }:
   </button>;
 }
 
-export function FullscreenArtworkViewer({ images, initialIndex, onClose }: {
+export function FullscreenArtworkViewer({ title, images, initialIndex, onClose }: {
+  title: string;
   images: ForestImage[];
   initialIndex: number;
   onClose: () => void;
@@ -67,7 +68,7 @@ export function FullscreenArtworkViewer({ images, initialIndex, onClose }: {
   }
 
   const image = images[index];
-  return <dialog className="forest-fullscreen" ref={dialog} data-idle={idle} onPointerMove={revealControls} onPointerDown={revealControls} aria-label="Mother Nature photograph viewer"
+  return <dialog className="forest-fullscreen" ref={dialog} data-idle={idle} onPointerMove={revealControls} onPointerDown={revealControls} aria-label={`${title} photograph viewer`}
     onCancel={event => { event.preventDefault(); onClose(); }}
     onKeyDown={event => {
       revealControls();

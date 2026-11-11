@@ -140,3 +140,16 @@
   .forest-acquisition-navigation > div { padding: 18px 0; }
   .forest-acquisition-next { border-top: 1px solid #c5cdbf; }
 }
+
+.forest-editorial-targets {
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(30px, 6vw, 86px);
+}
+.forest-editorial-targets > figure:only-child { grid-column: 1 / -1; max-width: 56rem; margin-inline: auto; }
+@media (max-width: 800px) {
+  .forest-editorial-targets { grid-template-columns: minmax(0, 1fr); }
+  .forest-editorial-targets > figure:nth-child(odd) { margin-inline-start: 8%; }
+  .forest-editorial-targets > figure:nth-child(even) { margin-inline-end: 5%; }
+}
