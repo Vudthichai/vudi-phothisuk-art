@@ -106,3 +106,18 @@ button.forest-hero-image{display:block;width:100%;border:0;padding:0;color:inher
   .home-ocean-feature[data-reveal="shown"] > .home-ocean-copy { transition-delay: 90ms; }
   .home-ocean-feature[data-reveal="shown"]:focus-within > :is(.curated-room-scene, .home-ocean-copy) { transition: none; }
 }
+
+
+.home-regal-row { margin-top: 58px; padding-top: 54px; }
+.home-regal-row .forest-section-heading { align-items: end; }
+.home-regal-intro .eyebrow { margin: 0 0 10px; }
+.home-regal-intro h2 { margin-bottom: 10px; }
+.home-regal-intro > p:last-child { margin: 0; }
+.home-regal-row .forest-section-heading > .text-link { display: inline-flex; min-height: 44px; align-items: center; }
+.home-regal-dimensions { margin: 4px 0 0; font-size: .8125rem; }
+@media (min-width: 701px) {
+  .home-regal-grid { gap: 7%; }
+}
+@media (max-width: 700px) {
+  .home-regal-row { margin-top: 46px; padding-top: 36px; }
+}
