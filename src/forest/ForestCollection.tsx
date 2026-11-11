@@ -9,8 +9,11 @@ import { FullscreenArtworkViewer } from './FullscreenArtworkViewer';
 import { ForestPhotograph as Photograph } from './ForestPhotograph';
 import { primaryForestImage } from './types';
 const base = '/collections/forest-and-flowers';
+function artworkInquiryUrl(artwork: ForestArtwork) {
+  return `mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent('Artwork inquiry — ' + artwork.title)}`;
+}
 function Inquiry({ artwork }: { artwork: ForestArtwork }) {
-  return artwork.availability === 'not-for-sale' ? <p className="private-availability">{artwork.availabilityNote}</p> : <div><p className="private-availability">{artwork.availabilityNote}</p><a className="text-link" href={`mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent('Artwork inquiry — ' + artwork.title)}`}>Inquire for Pricing</a></div>;
+  return artwork.availability === 'not-for-sale' ? <p className="private-availability">{artwork.availabilityNote}</p> : <div><p className="private-availability">{artwork.availabilityNote}</p><a className="text-link" href={artworkInquiryUrl(artwork)}>Inquire for Pricing</a></div>;
 }
 export function ForestCollection() {
   const { artworkSlug } = useParams();
@@ -117,7 +120,6 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
       <div className="forest-editorial-facts">
         <div className="forest-editorial-desktop-facts">
           <p>{artwork.medium}</p>
-          <Inquiry artwork={artwork}/>
         </div>
         <section className="forest-editorial-story" aria-labelledby="mother-nature-story">
           <h2 id="mother-nature-story">About the painting</h2>
@@ -140,11 +142,32 @@ function MotherNatureEditorial({ artwork }: { artwork: ForestArtwork }) {
       ))}
       {renderPhoto('mother-nature-angle-img-8264', 'Flowers in Relief', true)}
     </section>
-    <div className="forest-editorial-mobile-inquiry"><Inquiry artwork={artwork}/></div>
     {openPhoto !== null && <FullscreenArtworkViewer images={artwork.images} initialIndex={openPhoto} onClose={() => setOpenPhoto(null)}/>}
-    <nav className="private-artwork-next" aria-label="More paintings">
-      <Link className="text-link" to={base}>All Forest &amp; Flowers paintings</Link>
-      {next && <Link className="text-link" to={`${base}/${next.slug}`}>Next painting · {next.title}</Link>}
-    </nav>
+    <footer className="forest-acquisition">
+      <section className="forest-acquisition-inquiry" aria-labelledby="mother-nature-inquiry">
+        <p className="eyebrow">Original artwork</p>
+        <h2 id="mother-nature-inquiry">Interested in {artwork.title}?</h2>
+        <p>For availability, pricing, and acquisition inquiries.</p>
+        <a className="forest-acquisition-action" href={artworkInquiryUrl(artwork)}>
+          Inquire about this artwork <span aria-hidden="true">↗</span>
+        </a>
+      </section>
+      <nav className="forest-acquisition-navigation" aria-label="More paintings">
+        <div className="forest-acquisition-collection">
+          <p className="eyebrow">Explore the collection</p>
+          <Link to={base}>All Forest &amp; Flowers paintings <span aria-hidden="true">↗</span></Link>
+        </div>
+        {next && <div className="forest-acquisition-next">
+          <p className="eyebrow">Up next</p>
+          <Link className="forest-acquisition-next-link" to={`${base}/${next.slug}`}>
+            <Photograph image={{ ...primaryForestImage(next), alt: '' }} sizes="72px"/>
+            <span>
+              <span className="forest-acquisition-next-title">{next.title} <span aria-hidden="true">→</span></span>
+              <span className="forest-acquisition-next-description">View the next artwork</span>
+            </span>
+          </Link>
+        </div>}
+      </nav>
+    </footer>
   </article>;
 }
