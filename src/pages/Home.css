@@ -121,3 +121,6 @@ button.forest-hero-image{display:block;width:100%;border:0;padding:0;color:inher
 @media (max-width: 700px) {
   .home-regal-row { margin-top: 46px; padding-top: 36px; }
 }
+
+.forest-feature.mother-nature figcaption { margin-top: 20px; }
+.forest-introduction p:not(.eyebrow):has(> em) { max-width: 900px; }
