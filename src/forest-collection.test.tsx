@@ -27,7 +27,7 @@ it('opens an artwork directly without a stored session', () => {
   sessionStorage.clear();
   page(`${base}/dragon-lily`);
   expect(screen.getByRole('heading', { level: 1, name: 'Dragon Lily' })).toBeDefined();
-  expect(screen.getByRole('link', { name: 'Inquire for Pricing' }).getAttribute('href')).toContain('Dragon%20Lily');
+  expect(screen.getByRole('link', { name: 'Inquire About This Artwork' }).getAttribute('href')).toContain('Dragon%20Lily');
   expect(screen.getByText(/Provisional description/)).toBeDefined();
 });
 
@@ -38,9 +38,10 @@ it('offers a return link when the artwork slug is unknown', () => {
 });
 
 it('preserves ten originals, two not-for-sale exceptions and the approved photography selection',()=>{
- expect(collection.artworks).toHaveLength(10);expect(collection.artworks.reduce((n,a)=>n+a.images.length,0)).toBe(42);
+ expect(collection.artworks).toHaveLength(10);
  const temporary = collection.artworks.flatMap(art => art.images.filter(image => 'temporary' in image && image.temporary));
- expect(temporary.map(image => image.id)).toEqual(['tiger-lily']);
+ expect(temporary).toHaveLength(0);
+ expect(collection.artworks.slice(1).map(art => art.images.filter(image => image.role === 'detail').length)).toEqual([3, 7, 2, 4, 5, 4, 8, 6, 4]);
  expect(collection.artworks.filter(a=>a.availability==='not-for-sale').map(a=>a.title)).toEqual(['Tiger Lily','75 Leaves']);
  expect(collection.artworks.filter(a=>a.availability==='provisional')).toHaveLength(8);
  expect(collection.artworks.find(a=>a.slug==='dragon-lily')?.dimensions).toBeNull();
