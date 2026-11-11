@@ -1,7 +1,7 @@
 .private-forest { color: #294337; background: #faf8ef; }
 .private-forest button { font: inherit; cursor: pointer; }
 .forest-private-toolbar { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin: 15px 0 45px; }
-.private-forest-intro { position: relative; max-width: 1000px; margin: 0 auto 65px; overflow: hidden; }
+.private-forest-intro { position: relative; max-width: 1000px; margin: 0 0 65px; overflow: hidden; }
 .private-forest-intro h1 { font-size: clamp(3rem, 7vw, 5.3rem); margin-bottom: 28px; }
 .private-forest-intro > p:not(.eyebrow) { max-width: 740px; line-height: 1.9; }
 .forest-exhibit { display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,.75fr); align-items: center; gap: 9%; padding: 0 0 110px; border-bottom: 1px solid #dcded6; }
@@ -43,7 +43,6 @@
 .forest-editorial-hero figcaption { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .private-forest .forest-enlarge-link { background: transparent; border: 0; padding: 8px 0; min-height: 44px; color: inherit; }
 .forest-editorial-facts { grid-area: facts; max-width: 58ch; }
-.forest-editorial-facts .private-availability { margin: 22px 0 6px; }
 .forest-editorial-story { margin-top: clamp(2rem, 4vw, 3.5rem); line-height: 1.8; }
 .forest-editorial-story h2 { font-size: clamp(1.55rem, 2.5vw, 2.2rem); }
 .forest-editorial-details { margin: clamp(3rem, 7vw, 6rem) 0; padding-top: clamp(28px, 4vw, 52px); border-top: 1px solid #c5cdbf; }
@@ -57,7 +56,7 @@
 .forest-editorial-chapter-photo, .forest-editorial-finale { margin-inline: 0; margin-bottom: 0; }
 .forest-editorial-chapter-photo { margin-top: 0; }
 .forest-editorial-finale figcaption { font-size: 1rem; color: #425749; }
-.forest-editorial-mobile-hint, .forest-editorial-mobile-medium, .forest-editorial-mobile-inquiry { display: none; }
+.forest-editorial-mobile-hint, .forest-editorial-mobile-medium { display: none; }
 @media (min-width: 801px) {
   .forest-editorial-chapter:nth-of-type(even) { grid-template-columns: minmax(0, 1fr) minmax(0, .8fr); }
   .forest-editorial-chapter:nth-of-type(even) .forest-editorial-chapter-photo { grid-column: 1; grid-row: 1; }
@@ -77,8 +76,6 @@
   .forest-editorial-title h1 { font-size: clamp(2.5rem, 10vw, 3rem); margin-bottom: 6px; }
   .forest-editorial-title > p { margin-bottom: 6px; }
   .forest-editorial-title > .forest-editorial-mobile-medium { display: block; font-size: .875rem; line-height: 1.5; margin-bottom: 16px; max-width: 34ch; }
-  .forest-editorial-mobile-inquiry { display: block; padding-top: 20px; border-top: 1px solid #c5cdbf; margin-bottom: 26px; }
-  .forest-editorial-mobile-inquiry .private-availability { margin: 0 0 6px; }
   .forest-editorial-hero, .forest-editorial-finale { margin-inline: -7vw; }
   .forest-editorial-hero .forest-editorial-hero-caption { display: block; }
   .forest-editorial-hero-caption > :not(.forest-editorial-mobile-hint), .forest-editorial-desktop-facts { display: none; }
@@ -92,7 +89,6 @@
   .private-forest .forest-editorial-photo:focus-visible { outline-offset: -3px; }
   .forest-editorial-facts { margin-top: 8px; }
   .forest-editorial-facts > p { margin-bottom: 10px; }
-  .forest-editorial-facts .private-availability { margin-top: 10px; }
   .forest-editorial-story { margin-top: 26px; }
   .forest-editorial-story h2 { margin-bottom: 12px; }
   .forest-editorial-story p, .forest-editorial-chapter-copy p { font-size: 1rem; line-height: 1.68; }
@@ -106,4 +102,38 @@
   .forest-editorial-chapter:nth-of-type(3) .forest-editorial-chapter-photo { margin-inline-end: 8%; }
   .forest-editorial-finale figcaption { margin-inline: 7vw; }
   .forest-editorial-chapter + .forest-editorial-chapter, .forest-editorial-finale { margin-top: 30px; }
+}
+
+
+.forest-acquisition { border-top: 1px solid #c5cdbf; }
+.forest-acquisition .eyebrow { margin-bottom: 12px; }
+.forest-acquisition-inquiry { padding: clamp(28px, 4.5vw, 60px) 0; }
+.forest-acquisition-inquiry h2, .forest-acquisition-next-title {
+  font-family: "Bodoni Moda", Didot, Georgia, serif;
+}
+.forest-acquisition-inquiry h2 { font-size: clamp(2rem, 4vw, 3.6rem); margin-bottom: 12px; }
+.forest-acquisition-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 48px;
+  padding: 10px 18px;
+  color: #fff;
+  background: #294337;
+  font-size: .875rem;
+}
+.forest-acquisition-action:hover { background: #395949; }
+.forest-acquisition-navigation { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid #c5cdbf; }
+.forest-acquisition-navigation > div { padding: 24px 0; }
+.forest-acquisition-navigation a { min-height: 44px; }
+.forest-acquisition-collection a { display: inline-flex; align-items: center; gap: 8px; text-decoration: underline; text-underline-offset: 4px; }
+.forest-acquisition-next-link { display: inline-flex; align-items: center; gap: 16px; }
+.forest-acquisition-next-link img { width: 58px; height: auto; flex: none; }
+.forest-acquisition-next-title { display: block; font-size: clamp(1.45rem, 2.5vw, 2.15rem); line-height: 1.15; }
+.forest-acquisition-next-description { display: block; margin-top: 5px; font-size: .8125rem; }
+.forest-acquisition-next-link:hover .forest-acquisition-next-title { text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 600px) {
+  .forest-acquisition-navigation { grid-template-columns: minmax(0, 1fr); }
+  .forest-acquisition-navigation > div { padding: 18px 0; }
+  .forest-acquisition-next { border-top: 1px solid #c5cdbf; }
 }
