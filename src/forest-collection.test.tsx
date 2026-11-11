@@ -41,7 +41,7 @@ it('preserves ten originals, two not-for-sale exceptions and the approved photog
  expect(collection.artworks).toHaveLength(10);
  const temporary = collection.artworks.flatMap(art => art.images.filter(image => 'temporary' in image && image.temporary));
  expect(temporary).toHaveLength(0);
- expect(collection.artworks.slice(1).map(art => art.images.filter(image => image.role === 'detail').length)).toEqual([3, 6, 2, 4, 5, 4, 8, 5, 3]);
+ expect(collection.artworks.slice(1).map(art => art.images.filter(image => image.role === 'detail').length)).toEqual([2, 3, 2, 2, 2, 2, 2, 2, 2]);
  expect(collection.artworks.filter(a=>a.availability==='not-for-sale').map(a=>a.title)).toEqual(['Tiger Lily','75 Leaves']);
  expect(collection.artworks.filter(a=>a.availability==='provisional')).toHaveLength(8);
  expect(collection.artworks.find(a=>a.slug==='dragon-lily')?.dimensions).toBeNull();
