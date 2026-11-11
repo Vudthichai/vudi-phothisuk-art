@@ -39,7 +39,7 @@ export function roomPlacement(artwork: Artwork, room: Pick<RoomDirection, 'wallW
   return { widthInches, widthPercent, leftPercent: (room.centerX ?? 50) - widthPercent / 2, topPercent: (room.centerY ?? 34) - imageHeightPercent / 2 };
 }
 
-export function RoomStudy({ artwork }: { artwork: Artwork }) {
+export function RoomStudy({ artwork, sceneOnly = false }: { artwork: Artwork; sceneOnly?: boolean }) {
   const [sceneFailed, setSceneFailed] = useState(false);
   const [sceneAttempt, setSceneAttempt] = useState(0);
   function retryImage(event: SyntheticEvent<HTMLImageElement>) {
@@ -69,15 +69,17 @@ export function RoomStudy({ artwork }: { artwork: Artwork }) {
     '--room-light-angle': `${direction.lightAngle ?? (fromRight ? 250 : 110)}deg`,
     '--room-shadow-x': fromRight ? '-.22cqw' : '.22cqw',
   } as CSSProperties;
-  return <section className="curated-room-study" aria-label={`${artwork.title}, at home.`}>
-    <div className="room-study-copy"><p className="eyebrow">A different perspective</p><h2 id={`room-title-${artwork.id}`}>{artwork.title},<br/>at home.</h2><p>{direction.copy}</p><p className="room-study-note">{artwork.dimensions}</p><p className="room-study-note">Room study · illustrative scale</p></div>
-    <div className="curated-room-scene room-lighting-integrated" style={placement} role={sceneFailed ? undefined : "img"} aria-label={`Illustrative room study showing ${artwork.title} in ${direction.setting}; painting dimensions ${artwork.dimensions}.`}>
+  const scene = <div className="curated-room-scene room-lighting-integrated" style={placement} role={sceneFailed ? undefined : "img"} aria-label={`Illustrative room study showing ${artwork.title} in ${direction.setting}; painting dimensions ${artwork.dimensions}.`}>
       {sceneFailed ? <div className="room-study-unavailable"><p role="status">The room image couldn’t load.</p><button type="button" onClick={() => { setSceneFailed(false); setSceneAttempt(value => value + 1); }}>Reload room image</button></div> : <div key={sceneAttempt} className="room-scene-composition">
       <img onError={retryImage} onLoad={showImage} className="curated-room-background" src={`/atmosphere/rooms/${background}-1440.webp`} width="1440" height="960" alt="" loading="lazy" decoding="async"/>
       <div className="room-canvas">
         <img onError={retryImage} onLoad={showImage} className="curated-room-art" src={artwork.image.src} srcSet={artwork.image.srcSet} sizes={measured.widthPercent >= 40 ? '(max-width: 700px) 55vw, 40vw' : '(max-width: 700px) 15vw, 10vw'} width={artwork.image.width} height={artwork.image.height} alt="" loading="lazy" decoding="async"/>
       </div>
       </div>}
-    </div>
+    </div>;
+  if (sceneOnly) return scene;
+  return <section className="curated-room-study" aria-label={`${artwork.title}, at home.`}>
+    <div className="room-study-copy"><p className="eyebrow">A different perspective</p><h2 id={`room-title-${artwork.id}`}>{artwork.title},<br/>at home.</h2><p>{direction.copy}</p><p className="room-study-note">{artwork.dimensions}</p><p className="room-study-note">Room study · illustrative scale</p></div>
+    {scene}
   </section>;
 }

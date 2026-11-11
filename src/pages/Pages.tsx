@@ -1,3 +1,4 @@
+import { RoomStudy } from '../components/RoomStudy';
 import { MotherNature } from '../components/MotherNature';
 import { RegalPreview } from '../components/RegalPreview';
 import { AvailableArt } from './AvailableArt';
@@ -35,7 +36,17 @@ export function Home() {
       <MotherNature/>
     </section>
     <section className="forest-introduction" aria-labelledby="forest-title"><p className="eyebrow">Forest & Flowers</p><div><h2 id="forest-title">A presence within the forest.</h2><p>A hidden goddess emerges from leaves, vines, and flowers. Beside her, a pale river winds between densely textured mountains.</p><p><em>Mother Nature</em> considers our dependence on the natural world—and the difference between appreciating nature and believing we control it.</p><p className="forest-small">The complete Forest &amp; Flowers collection brings that attention to the natural world into ten paintings. <Link className="text-link" to="/collections/forest-and-flowers">Explore Forest &amp; Flowers</Link></p></div></section>
-    <section className="home-ocean-feature" id="home-paintings" aria-labelledby="home-ocean-title"><p className="eyebrow home-ocean-transition">From forest to shore</p><Link className="home-ocean-canvas" to="/collections/oceans" aria-label="Explore The Oceans"><img src={ocean.image.src} srcSet={ocean.image.srcSet} sizes="94vw" width={ocean.image.width} height={ocean.image.height} alt={ocean.image.alt} loading="lazy"/></Link><div className="home-ocean-copy"><div className="home-ocean-description"><h2 id="home-ocean-title">The Oceans</h2><p>Shorelines, breaking waves, and the movement of water, held in sculptural texture.</p></div><Link className="text-link" to="/collections/oceans">Explore the collection</Link></div></section>
+    <section className="home-ocean-feature" id="home-paintings" aria-labelledby="home-ocean-title">
+      <p className="eyebrow home-ocean-transition">From forest to shore</p>
+      <RoomStudy artwork={ocean} sceneOnly/>
+      <div className="home-ocean-copy">
+        <div className="home-ocean-description">
+          <h2 id="home-ocean-title">The Oceans</h2>
+          <p>Shorelines, breaking waves, and the movement of water, held in sculptural texture.</p>
+        </div>
+        <Link className="text-link" to="/collections/oceans" aria-label="Explore The Oceans">Explore the collection</Link>
+      </div>
+    </section>
     <RegalPreview/>
     <section className="forest-closing"><div><img className="forest-monogram" src="/brand/msat-floral.png" alt="Make some art today floral monogram" width="96" height="96" loading="lazy"/><p className="eyebrow">Behind the work</p><h2>Made with depth.<br/>And something to say.</h2><p>I’m Vudi Phothisuk. My paintings bring landscape, memory, and emotion into sculpted surfaces, layered color, and changing light.</p></div><div><p>Curious about a painting, or imagining something personal?</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Artwork%20%26%20commission%20conversation">Talk with Vudi</a></div></section>
   </div>;
