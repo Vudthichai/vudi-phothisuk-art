@@ -7,7 +7,7 @@ import { Link, useParams } from 'react-router-dom';
 import './Home.css';
 import './Contact.css';
 import './About.css';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { collections, findCollection, informationPages } from '../data';
 import { Gallery, ArtworkViews } from '../components/Gallery';
 import { RegalCollection } from '../components/RegalCollection';
@@ -29,6 +29,27 @@ export function CollectionLinks() {
 }
 export function Home() {
   const ocean = findCollection('oceans')!.artworks.find(art => art.slug === 'the-oceans')!;
+  const oceansFeature = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const section = oceansFeature.current;
+    if (!section || typeof IntersectionObserver === 'undefined' ||
+      window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ||
+      section.getBoundingClientRect().top < window.innerHeight) return;
+
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      section.dataset.reveal = 'shown';
+      observer.disconnect();
+    }, { rootMargin: '0px 0px -8% 0px' });
+    section.dataset.reveal = 'pending';
+    observer.observe(section);
+    return () => {
+      observer.disconnect();
+      delete section.dataset.reveal;
+    };
+  }, []);
+
   return <div className="forest-home">
     <PageMeta title="Home" description="Make some art today. Explore dimensional mixed-media paintings and the stories behind the work of Vudi Phothisuk."/>
     <section className="forest-opening" aria-labelledby="home-title">
@@ -36,7 +57,7 @@ export function Home() {
       <MotherNature/>
     </section>
     <section className="forest-introduction" aria-labelledby="forest-title"><p className="eyebrow">Forest & Flowers</p><div><h2 id="forest-title">A presence within the forest.</h2><p>A hidden goddess emerges from leaves, vines, and flowers. Beside her, a pale river winds between densely textured mountains.</p><p><em>Mother Nature</em> considers our dependence on the natural world—and the difference between appreciating nature and believing we control it.</p><p className="forest-small">The complete Forest &amp; Flowers collection brings that attention to the natural world into ten paintings. <Link className="text-link" to="/collections/forest-and-flowers">Explore Forest &amp; Flowers</Link></p></div></section>
-    <section className="home-ocean-feature" id="home-paintings" aria-labelledby="home-ocean-title">
+    <section ref={oceansFeature} className="home-ocean-feature" id="home-paintings" aria-labelledby="home-ocean-title">
       <RoomStudy artwork={ocean} sceneOnly/>
       <div className="home-ocean-copy">
         <div className="home-ocean-description">
