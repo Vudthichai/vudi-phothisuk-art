@@ -77,3 +77,5 @@ button.forest-hero-image{display:block;width:100%;border:0;padding:0;color:inher
 @media (prefers-reduced-motion: reduce) {
   .forest-masthead .home-title-reveal { animation: none; clip-path: none; }
 }
+
+.home-ocean-transition{margin:0 0 14px;color:#536658}
