@@ -64,7 +64,7 @@ it.each([false,true])('keeps all three Regal links and supports keyboard scrolli
   expect(scroll).toHaveBeenLastCalledWith({left:258,behavior:reduced?'auto':'smooth'});
   await user.keyboard('{ArrowLeft}');
   expect(scroll).toHaveBeenLastCalledWith({left:-258,behavior:reduced?'auto':'smooth'});
-  within(gallery).getByRole('link', {name:/ Navy$/}).focus(); await user.keyboard('{ArrowRight}');
+  within(gallery).getByRole('link', {name:/ Navy 24” X 36”$/}).focus(); await user.keyboard('{ArrowRight}');
   expect(scroll).toHaveBeenCalledTimes(2);
 });
 
