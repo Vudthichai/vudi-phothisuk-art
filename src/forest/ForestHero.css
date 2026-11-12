@@ -1,0 +1,55 @@
+.forest-collection-hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: end;
+  min-height: max(560px, calc(100svh - 115px));
+  overflow: hidden;
+  color: #f7f5ef;
+  background: #16271c;
+}
+.forest-collection-hero > img,
+.forest-collection-hero::after {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.forest-collection-hero > img {
+  object-fit: cover;
+  object-position: 53% center;
+}
+.forest-collection-hero::after {
+  content: '';
+  background: linear-gradient(90deg, #07150c78, #07150c24 51%, transparent 77%);
+}
+.forest-collection-hero-copy {
+  width: 100%;
+  padding: 0 7% clamp(70px, 12svh, 145px);
+  --ocean-cream: #f7f5ef;
+}
+.forest-collection-hero-copy h1 {
+  margin: 0 0 22px;
+  color: inherit;
+  font: 400 clamp(64px, 9.1vw, 150px)/.96 'Bodoni Moda', Georgia, serif;
+  letter-spacing: -.045em;
+}
+@media (max-width: 700px) {
+  .forest-collection-hero {
+    min-height: max(510px, calc(100svh - 110px));
+  }
+  .forest-collection-hero > img {
+    object-position: 77% center;
+  }
+  .forest-collection-hero::after {
+    background: linear-gradient(0deg, #07150cb8, #07150c50 44%, transparent 72%);
+  }
+  .forest-collection-hero-copy {
+    padding-bottom: clamp(38px, 7svh, 68px);
+  }
+  .forest-collection-hero-copy h1 {
+    max-width: 9ch;
+    font-size: clamp(49px, 15vw, 94px);
+  }
+}

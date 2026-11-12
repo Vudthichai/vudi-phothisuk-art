@@ -5,6 +5,7 @@ import { forestCollection as data } from './collection';
 import { closerLook } from './closerLook';
 import { BotanicalFall } from '../components/BotanicalFall';
 import './PrivateForest.css';
+import { ForestHero } from './ForestHero';
 import { FullscreenArtworkViewer } from './FullscreenArtworkViewer';
 import { ForestPhotograph as Photograph } from './ForestPhotograph';
 import { primaryForestImage } from './types';
@@ -37,10 +38,12 @@ export function ForestCollection() {
   }, [title, summary]);
   useEffect(() => { setSequence(0); }, [location.pathname]);
 
-  return <section className="private-forest section page">
+  return <>
+    {!artworkSlug && <ForestHero/>}
+    <section className="private-forest section page">
       <div className="forest-private-toolbar"><Link className="text-link" to={artworkSlug ? base : '/collections'}>{artworkSlug ? 'Back to collection' : 'All collections'}</Link></div>
       {artworkSlug ? artwork ? <ForestArtworkEditorial key={artwork.id} artwork={artwork}/> : <div><h1>Painting not found</h1><Link to={base}>View the collection</Link></div> : <>
-        <header className="private-forest-intro"><p className="eyebrow">Collection</p><h1>{data.title}</h1>{data.introduction.map((p,index) => <p key={index}>{p}</p>)}<button className="text-link" onClick={() => setSequence(n => n + 1)}>A moment in the forest</button>{sequence > 0 && <BotanicalFall key={sequence} particles={[{ assetId:'leaf-green', left:'6%', duration:3.2, delay:0, displayWidth:25 },{ assetId:'petal-tiger-lily', left:'92%', drift:-30, duration:3.4, delay:.4, displayWidth:26 }]} distance="280px"/>}</header>
+        <header id="forest-collection-intro" className="private-forest-intro"><p className="eyebrow">Collection</p><h2>{data.title}</h2>{data.introduction.map((p,index) => <p key={index}>{p}</p>)}<button className="text-link" onClick={() => setSequence(n => n + 1)}>A moment in the forest</button>{sequence > 0 && <BotanicalFall key={sequence} particles={[{ assetId:'leaf-green', left:'6%', duration:3.2, delay:0, displayWidth:25 },{ assetId:'petal-tiger-lily', left:'92%', drift:-30, duration:3.4, delay:.4, displayWidth:26 }]} distance="280px"/>}</header>
         <div className="private-forest-gallery">
           {data.artworks.map(art => (
             <article key={art.id} className="forest-exhibit" aria-labelledby={`forest-exhibit-${art.id}`}>
@@ -58,7 +61,7 @@ export function ForestCollection() {
           ))}
         </div>
       </>}
-  </section>;
+  </section></>;
 }
 
 

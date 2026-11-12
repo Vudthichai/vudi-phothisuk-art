@@ -17,7 +17,7 @@ afterEach(cleanup);
 
 it('shows all ten public artwork links without a preview entrance', () => {
   page();
-  expect(screen.getByRole('heading', { level: 1, name: 'Forest & Flowers' })).toBeDefined();
+  expect(screen.getByRole('heading', { level: 1, name: 'Forest & Flowers.' })).toBeDefined();
   expect(screen.getAllByRole('article')).toHaveLength(10);
   expect(screen.queryByLabelText('Password')).toBeNull();
   expect(document.querySelector('meta[name="robots"]')).toBeNull();
