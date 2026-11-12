@@ -7,11 +7,11 @@ import { collections, findCollection } from './data';
 import { InformationPage, ArtworkPage } from './pages/Pages';
 import { Layout } from './components/Layout';
 afterEach(cleanup);
-const expected = ['The Oceans', 'Mermaid Tail', 'Beach Day', 'Arctic Waves', 'Water’s Edge', 'Arctic Ocean', 'Sahara'];
-it('lists exactly the seven confirmed available paintings with dimensions, detail paths and inquiry subjects', () => {
+const expected = ['The Oceans', 'Mermaid Tail', 'Arctic Waves', 'Water’s Edge', 'Arctic Ocean', 'Sahara'];
+it('lists exactly the six confirmed available paintings with dimensions, detail paths and inquiry subjects', () => {
   render(<MemoryRouter><InformationPage page="available-art"/></MemoryRouter>);
   const cards = screen.getAllByRole('article');
-  expect(cards).toHaveLength(7);
+  expect(cards).toHaveLength(6);
   expect(cards.map(card => within(card).getByRole('heading').textContent).sort()).toEqual([...expected].sort());
   for (const collection of collections) for (const artwork of collection.artworks) {
     if (artwork.availability !== 'available') {
@@ -35,7 +35,7 @@ it('uses live availability data and preserves newly sold artwork detail pages wi
     expect(screen.queryByRole('link', {name: 'View Sahara'})).toBeNull();
     view.unmount();
   } finally { sahara.availability = previous; }
-  for (const [collection, slug] of [['oceans', 'golden-sand-beach'], ['regal-collection', 'verdant'], ['regal-collection', 'ciaran'], ['regal-collection', 'navy']]) {
+  for (const [collection, slug] of [['oceans', 'beach-day'], ['oceans', 'golden-sand-beach'], ['regal-collection', 'verdant'], ['regal-collection', 'ciaran'], ['regal-collection', 'navy']]) {
     expect(findCollection(collection)!.artworks.find(a => a.slug === slug)!.availability).toBe('sold');
     const view = render(<MemoryRouter initialEntries={[`/collections/${collection}/${slug}`]}><Routes><Route path="/collections/:slug/:artworkSlug" element={<ArtworkPage/>}/></Routes></MemoryRouter>);
     expect(screen.getByText('Sold')).toBeTruthy();
@@ -60,11 +60,11 @@ it('opens Collections by keyboard, marks the selected collection and restores fo
   expect(document.activeElement).toBe(trigger);
 });
 
-it('places the five Oceans portraits before the horizontal feature and Sahara in the Regal section', () => {
+it('places the four Oceans portraits before the horizontal feature and Sahara in the Regal section', () => {
   const { container } = render(<MemoryRouter><InformationPage page="available-art"/></MemoryRouter>);
   const sections = container.querySelectorAll('.available-collection');
   expect(sections).toHaveLength(2);
-  expect([...sections[0].querySelectorAll('h3')].map(h => h.textContent)).toEqual(['Mermaid Tail', 'Beach Day', 'Arctic Waves', 'Water’s Edge', 'Arctic Ocean', 'The Oceans']);
+  expect([...sections[0].querySelectorAll('h3')].map(h => h.textContent)).toEqual(['Mermaid Tail', 'Arctic Waves', 'Water’s Edge', 'Arctic Ocean', 'The Oceans']);
   expect(sections[0].querySelector('.available-grid .available-featured')).toBeNull();
   expect(sections[0].querySelector('.available-featured h3')?.textContent).toBe('The Oceans');
   expect([...sections[1].querySelectorAll('h3')].map(h => h.textContent)).toEqual(['Sahara']);
