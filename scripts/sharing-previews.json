@@ -2,8 +2,8 @@
   "/": {
     "title": "Vudi Phothisuk Art",
     "description": "Explore dimensional mixed-media paintings and the stories behind the work of Vudi Phothisuk.",
-    "alt": "Detail of Mother Nature: sculpted pink and orange flowers, green leaves, and a pale waterfall.",
-    "image": "home.jpg"
+    "alt": "Make some art today above a detail of Mother Nature with sculpted foliage and flowers.",
+    "image": "home-v2.jpg"
   },
   "/collections": {
     "title": "Collections",
@@ -32,14 +32,14 @@
   "/contact": {
     "title": "Commissions & Contact",
     "description": "Contact Vudi Phothisuk about an original painting, a commission, or the story behind the work.",
-    "alt": "Let’s talk art beside a sculpted orange flower and foliage from Mother Nature.",
-    "image": "contact.jpg"
+    "alt": "Let’s talk art over a softly faded Mother Nature detail with an orange flower on the right.",
+    "image": "contact-v2.jpg"
   },
   "/collections/forest-and-flowers": {
     "title": "Forest & Flowers",
     "description": "In Forest & Flowers, sculpted leaves, blossoms, and bark rise from layers of acrylic and organic plaster. As the light shifts, rivers, hidden figures, and metallic traces come into view. These paintings explore love, remembrance, and our dependence on the natural world.",
-    "alt": "Forest & Flowers in ivory beside a detail of Mother Nature.",
-    "image": "collections--forest-and-flowers.jpg"
+    "alt": "Forest & Flowers in ivory over a close-up of Mother Nature.",
+    "image": "collections--forest-and-flowers-v2.jpg"
   },
   "/collections/forest-and-flowers/mother-nature": {
     "title": "Mother Nature | Forest & Flowers",
@@ -104,8 +104,8 @@
   "/collections/oceans": {
     "title": "The Oceans",
     "description": "The Oceans explores the sea through sculptural texture, shifting color, and personal memory. Shorelines, rolling waves, and imagined scales connect the pleasure of a beach day with curiosity about life beneath the surface. Across the collection, familiar coastal experiences open into questions of endurance, adventure, and responsibility. Each painting approaches the water differently, preserving both the intimacy of an individual encounter and the sense of a world extending beyond what we can see.",
-    "alt": "Dark ocean waves behind the ivory title The Oceans.",
-    "image": "collections--oceans.jpg"
+    "alt": "The Oceans in ivory over dark waves beneath a dramatic sky.",
+    "image": "collections--oceans-v2.jpg"
   },
   "/collections/oceans/summer-swells": {
     "title": "Summer Swells | The Oceans",
@@ -176,8 +176,8 @@
   "/collections/regal-collection": {
     "title": "The Regal Collection",
     "description": "A journey through memory and emotion, expressed in sculptural texture, shifting color, and metallic light.",
-    "alt": "The Regal Collection in ivory beside a detail of Navy.",
-    "image": "collections--regal-collection.jpg"
+    "alt": "The Regal Collection and A world within the surface over a textured detail of Navy.",
+    "image": "collections--regal-collection-v2.jpg"
   },
   "/collections/regal-collection/carnations": {
     "title": "Carnations | The Regal Collection",
