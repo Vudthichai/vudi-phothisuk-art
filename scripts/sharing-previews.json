@@ -1,0 +1,212 @@
+{
+  "/": {
+    "title": "Vudi Phothisuk Art",
+    "description": "Explore dimensional mixed-media paintings and the stories behind the work of Vudi Phothisuk.",
+    "alt": "Detail of Mother Nature: sculpted pink and orange flowers, green leaves, and a pale waterfall.",
+    "image": "home.jpg"
+  },
+  "/collections": {
+    "title": "Collections",
+    "description": "Explore Forest & Flowers, The Oceans, and The Regal Collection by Vudi Phothisuk.",
+    "alt": "Vudi Phothisuk’s signature above the title Collections.",
+    "image": "collections.jpg"
+  },
+  "/available-art": {
+    "title": "Available Art",
+    "description": "Explore available original paintings from The Oceans and The Regal Collection. Contact Vudi for pricing and inquiries.",
+    "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents.",
+    "image": "available-art.jpg"
+  },
+  "/about": {
+    "title": "About the Artist",
+    "description": "Meet Vudi Phothisuk and discover the sculptural texture, layered color, and deliberate form behind his paintings.",
+    "alt": "Vudi Phothisuk holding a textured turquoise shoreline painting",
+    "image": "about.jpg"
+  },
+  "/exhibitions": {
+    "title": "Exhibitions — Forest & Flowers",
+    "description": "Forest & Flowers exhibition at Field Day in Lawrenceville, Pittsburgh, on December 5, 2026.",
+    "alt": "Field Day’s brick exterior with two blue entrances and large industrial windows in Lawrenceville, Pittsburgh.",
+    "image": "exhibitions.jpg"
+  },
+  "/contact": {
+    "title": "Commissions & Contact",
+    "description": "Contact Vudi Phothisuk about an original painting, a commission, or the story behind the work.",
+    "alt": "Let’s talk art beside a sculpted orange flower and foliage from Mother Nature.",
+    "image": "contact.jpg"
+  },
+  "/collections/forest-and-flowers": {
+    "title": "Forest & Flowers",
+    "description": "In Forest & Flowers, sculpted leaves, blossoms, and bark rise from layers of acrylic and organic plaster. As the light shifts, rivers, hidden figures, and metallic traces come into view. These paintings explore love, remembrance, and our dependence on the natural world.",
+    "alt": "Forest & Flowers in ivory beside a detail of Mother Nature.",
+    "image": "collections--forest-and-flowers.jpg"
+  },
+  "/collections/forest-and-flowers/mother-nature": {
+    "title": "Mother Nature | Forest & Flowers",
+    "description": "A hidden goddess emerges from the forest, her profile formed by the leaves, vines, and flowers that surround her. Beside her, a pale river winds between densely textured mountains, drawing the eye into the landscape. Sculpted foliage and metallic highlights reveal a presence that might initially go unnoticed.",
+    "alt": "Mother Nature — full composition",
+    "image": "collections--forest-and-flowers--mother-nature.jpg"
+  },
+  "/collections/forest-and-flowers/blooming-desire": {
+    "title": "Blooming Desire | Forest & Flowers",
+    "description": "Cream-colored sculpted flowers rise from intertwining currents of coral, red, and gold, while dark stems and leaves thread through the restless surface.",
+    "alt": "Blooming Desire — full composition",
+    "image": "collections--forest-and-flowers--blooming-desire.jpg"
+  },
+  "/collections/forest-and-flowers/wild-tiger-lilies": {
+    "title": "Wild Tiger Lilies | Forest & Flowers",
+    "description": "Bright orange tiger lilies punctuate a dense field of curling textures, their spotted petals unfolding among sculpted leaves. A sweeping gold-toned curve leads through greens, pinks, and shadowed passages, offering glimpses of flowers within the intricate surface.",
+    "alt": "Wild Tiger Lilies — full composition",
+    "image": "collections--forest-and-flowers--wild-tiger-lilies.jpg"
+  },
+  "/collections/forest-and-flowers/gilded-bloom": {
+    "title": "Gilded Bloom | Forest & Flowers",
+    "description": "A partial bloom extends inward from the edge of the canvas, its golden and copper-toned petals set against layered washes of green, blush pink, and cream. Fine grooves mark the petals, while a rougher central surface creates a contrast in texture. Subtle blue and purple undertones beneath the warmer colors reveal themselves as the light and viewing angle change.",
+    "alt": "Gilded Bloom — full composition",
+    "image": "collections--forest-and-flowers--gilded-bloom.jpg"
+  },
+  "/collections/forest-and-flowers/a-forest-forgotten": {
+    "title": "A Forest Forgotten | Forest & Flowers",
+    "description": "A towering tree trunk fills the center of A Forest Forgotten, its deeply worked surface rising beyond the canvas. Around it, sculpted leaves and pale flowers frame glimpses of green forest beneath a sky of pink, gold, and blue. The close viewpoint gives the tree a commanding presence while allowing the surrounding landscape to remain partly concealed.",
+    "alt": "A Forest Forgotten — full composition",
+    "image": "collections--forest-and-flowers--a-forest-forgotten.jpg"
+  },
+  "/collections/forest-and-flowers/moss-and-mushrooms": {
+    "title": "Moss & Mushrooms | Forest & Flowers",
+    "description": "Deep diagonal grooves carry the eye across the bark of an old forest tree. Earthy browns and fine golden highlights trace its ridges, interrupted by vivid patches of green moss. Clusters of sculpted mushrooms project from the surface, their rust-colored tops and pale edges creating small, distinct pauses within the sweeping grain.",
+    "alt": "Moss & Mushrooms — full composition",
+    "image": "collections--forest-and-flowers--moss-and-mushrooms.jpg"
+  },
+  "/collections/forest-and-flowers/ethereal-bloom": {
+    "title": "Ethereal Bloom | Forest & Flowers",
+    "description": "Five sculpted flowers are spaced across a flowing field of pink, green, gold, and deep shadow. Their placement gives the eye points of rest within the elaborate surface, where curling marks gather, unfold, and turn into one another. Metallic highlights trace the raised textures, revealing different details as light moves across the painting.",
+    "alt": "Ethereal Bloom — full composition",
+    "image": "collections--forest-and-flowers--ethereal-bloom.jpg"
+  },
+  "/collections/forest-and-flowers/tiger-lily": {
+    "title": "Tiger Lily | Forest & Flowers",
+    "description": "Two orange tiger lilies rise from an intricate surface of evergreen tones, soft pink, and gold. Their spotted petals curl outward, giving the flowers a sculptural presence against the tightly worked background. A winding band of warm color sweeps between them, carrying the glow of sunset through the composition.",
+    "alt": "Tiger Lily — full composition",
+    "image": "collections--forest-and-flowers--tiger-lily.jpg"
+  },
+  "/collections/forest-and-flowers/75-leaves": {
+    "title": "75 Leaves | Forest & Flowers",
+    "description": "A blue-and-gold current, representing the Elbe River, winds through layered passages of green, pink, and metallic texture.",
+    "alt": "75 Leaves — full composition",
+    "image": "collections--forest-and-flowers--75-leaves.jpg"
+  },
+  "/collections/forest-and-flowers/dragon-lily": {
+    "title": "Dragon Lily | Forest & Flowers",
+    "description": "Two sculpted pink lilies emerge from a richly textured field of turquoise, blue, violet, and gold. Their spotted petals curl outward, casting delicate shadows across the flowing surface. A sweeping golden ribbon winds between the blossoms, drawing the eye through layers of metallic color and intricate, wave-like patterns. Small green leaves punctuate the composition, bringing moments of stillness to its movement.",
+    "alt": "Dragon Lily — full composition",
+    "image": "collections--forest-and-flowers--dragon-lily.jpg"
+  },
+  "/collections/oceans": {
+    "title": "The Oceans",
+    "description": "The Oceans explores the sea through sculptural texture, shifting color, and personal memory. Shorelines, rolling waves, and imagined scales connect the pleasure of a beach day with curiosity about life beneath the surface. Across the collection, familiar coastal experiences open into questions of endurance, adventure, and responsibility. Each painting approaches the water differently, preserving both the intimacy of an individual encounter and the sense of a world extending beyond what we can see.",
+    "alt": "Dark ocean waves behind the ivory title The Oceans.",
+    "image": "collections--oceans.jpg"
+  },
+  "/collections/oceans/summer-swells": {
+    "title": "Summer Swells | The Oceans",
+    "description": "Summer Swells gathers the pleasures of a beach day into bands of turquoise, white surf, and warm sand. Raised edges give the waves a physical presence, while passages of green and blue suggest water shifting as it approaches the shore. The composition holds the movement of the sea within a clear, open arrangement of color.",
+    "alt": "Turquoise and blue water with raised white surf beside bands of terracotta and pale sand.",
+    "image": "collections--oceans--summer-swells.jpg"
+  },
+  "/collections/oceans/manta": {
+    "title": "Manta | The Oceans",
+    "description": "A spotted ray glides through layered blues, beneath a network of pale lines that recalls light moving across water. The surface shifts from deeper tones to luminous aqua, while sculptural texture gives the surrounding water a sense of depth and motion. Against this active field, the ray appears poised and unhurried.",
+    "alt": "A spotted ray in layered blue and aqua water crossed by pale lines of reflected light.",
+    "image": "collections--oceans--manta.jpg"
+  },
+  "/collections/oceans/dark-scales": {
+    "title": "Dark Scales | The Oceans",
+    "description": "Rows of raised scales cover the canvas, catching silver, green, blue, and gold within a darkened surface. Repeated forms create a flowing rhythm, but small variations in their contours and color prevent the pattern from becoming uniform. Light reveals individual marks before drawing them back into the whole.",
+    "alt": "Raised scales with dark outlines and silver, green, blue, and gold highlights.",
+    "image": "collections--oceans--dark-scales.jpg"
+  },
+  "/collections/oceans/mermaid-tail": {
+    "title": "Mermaid Tail | The Oceans",
+    "description": "Pale, iridescent scales extend across Mermaid Tail, their sculpted contours gathering soft greens, blues, pinks, and metallic light. The repeated pattern changes subtly across the surface, creating a shimmer that depends as much on texture as on color. From one passage to another, the painting moves between delicacy and a more tangible, almost armored presence.",
+    "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents.",
+    "image": "collections--oceans--mermaid-tail.jpg"
+  },
+  "/collections/oceans/beach-day": {
+    "title": "Beach Day | The Oceans",
+    "description": "Broad diagonal waves cross a bright blue sea, their raised white edges breaking toward a warm stretch of sand. Fine marks scatter through the water, while the sculpted surf gives the composition a strong, rolling rhythm. Beach Day brings the anticipation of reaching the coast into a close view of the shoreline itself.",
+    "alt": "Diagonal bands of raised white surf breaking across blue water toward warm sand.",
+    "image": "collections--oceans--beach-day.jpg"
+  },
+  "/collections/oceans/arctic-waves": {
+    "title": "Arctic Waves | The Oceans",
+    "description": "A narrow line of white surf separates dark, textured water from a bronze-toned shore. Blue gathers along the breaking edge, where small raised marks catch the light and interrupt the darker field. Arctic Waves balances a strong division of color with the restless detail of its surface.",
+    "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore.",
+    "image": "collections--oceans--arctic-waves.jpg"
+  },
+  "/collections/oceans/water-s-edge": {
+    "title": "Water’s Edge | The Oceans",
+    "description": "Blue water meets a warm shoreline along a raised white edge, where the surf seems to gather before spreading over the sand. Fine streaks and metallic accents animate the sea, while the simpler bands of the beach give the composition a quieter counterpoint. The meeting of these surfaces becomes the painting’s central event.",
+    "alt": "Blue water meeting a warm sandy shoreline along a sculpted white wave.",
+    "image": "collections--oceans--water-s-edge.jpg"
+  },
+  "/collections/oceans/golden-sand-beach": {
+    "title": "Golden Sand Beach | The Oceans",
+    "description": "Turquoise waves move diagonally toward a broad field of gold, their sculpted white edges catching light above the textured sand. Metallic passages run through the shoreline, bringing the beach’s surface into focus alongside the movement of the water.",
+    "alt": "Diagonal turquoise waves with raised white edges beside metallic golden sand.",
+    "image": "collections--oceans--golden-sand-beach.jpg"
+  },
+  "/collections/oceans/sunset-waves": {
+    "title": "Sunset Waves | The Oceans",
+    "description": "An orange sky fades through pink and violet into deep blue above a mass of sculpted waves. Closely drawn ridges curl and overlap across the lower canvas, catching pale and metallic highlights. The smooth transition of the sky contrasts with the dense movement of the water below.",
+    "alt": "Sculpted blue waves beneath a smooth orange, pink, and violet sunset sky.",
+    "image": "collections--oceans--sunset-waves.jpg"
+  },
+  "/collections/oceans/arctic-ocean": {
+    "title": "Arctic Ocean | The Oceans",
+    "description": "White waves sweep diagonally through green water toward a dark, deeply textured shore. The strong contrasts give Arctic Ocean an immediate graphic presence, while finer marks within the surf suggest the irregular movement of breaking water. Raised ridges bring light into the composition’s darkest passages.",
+    "alt": "Diagonal white surf and green water meeting a deeply textured dark shore.",
+    "image": "collections--oceans--arctic-ocean.jpg"
+  },
+  "/collections/oceans/the-oceans": {
+    "title": "The Oceans | The Oceans",
+    "description": "A wide shoreline unfolds across The Oceans, with pale aqua water, layered white surf, and bands of warm sand. Its horizontal format allows the eye to travel along the coast, following small variations in the breaking waves. Sculptural texture gives substance to a scene associated with continuous change.",
+    "alt": "A panoramic shoreline of pale aqua water, white breaking surf, and layered warm sand.",
+    "image": "collections--oceans--the-oceans.jpg"
+  },
+  "/collections/regal-collection": {
+    "title": "The Regal Collection",
+    "description": "A journey through memory and emotion, expressed in sculptural texture, shifting color, and metallic light.",
+    "alt": "The Regal Collection in ivory beside a detail of Navy.",
+    "image": "collections--regal-collection.jpg"
+  },
+  "/collections/regal-collection/carnations": {
+    "title": "Carnations | The Regal Collection",
+    "description": "Pink, green, ivory, and gold gather in flowing, sculpted forms. Curving ridges give the surface a floral rhythm, bringing softness and strength into the same composition.",
+    "alt": "Pink, ivory, green, and gold curls carved into a richly textured surface.",
+    "image": "collections--regal-collection--carnations.jpg"
+  },
+  "/collections/regal-collection/navy": {
+    "title": "Navy | The Regal Collection",
+    "description": "Long ridges sweep through deep navy, teal, ivory, and gold. Their changing direction gives the surface a current of movement, with light catching the raised edges.",
+    "alt": "Sweeping navy and teal ridges with gold and ivory highlights.",
+    "image": "collections--regal-collection--navy.jpg"
+  },
+  "/collections/regal-collection/sahara": {
+    "title": "Sahara | The Regal Collection",
+    "description": "Gold and ivory move diagonally through dark passages, building a surface that feels layered and weathered. Small scattered marks interrupt the longer strokes.",
+    "alt": "Diagonal gold, ivory, and dark blue marks across a textured canvas.",
+    "image": "collections--regal-collection--sahara.jpg"
+  },
+  "/collections/regal-collection/verdant": {
+    "title": "Verdant | The Regal Collection",
+    "description": "Deep greens and metallic gold weave through an intricate field of sculpted curls. Raised contours catch the light like glimpses through a canopy.",
+    "alt": "Dense green and gold sculpted curls flowing across the surface.",
+    "image": "collections--regal-collection--verdant.jpg"
+  },
+  "/collections/regal-collection/ciaran": {
+    "title": "Ciaran | The Regal Collection",
+    "description": "Green, pink, ivory, and gold move through ornamental curves, their raised contours giving the painting a sense of layered movement.",
+    "alt": "Ornamental green, pink, ivory, and gold forms in sculpted relief.",
+    "image": "collections--regal-collection--ciaran.jpg"
+  }
+}
