@@ -80,3 +80,13 @@ test('exhibition dates/venue are accurate and incomplete catalog fields are omit
   assert(!('artMedium' in dragon)); assert(!('size' in dragon)); assert(!('description' in dragon));
   assert(incompleteArtwork.some(w => w.includes('Dragon Lily')));
 });
+
+test('public build identity contains only safe release facts and matches compiled eligibility', async () => {
+  const { buildInfo } = await import('../.prerender/entry-server.js');
+  const info = JSON.parse(await readFile('dist/build-info.json', 'utf8'));
+  assert.deepEqual(info, buildInfo);
+  assert.deepEqual(Object.keys(info).sort(), ['analytics_build_enabled', 'branch', 'commit', 'context']);
+  assert(info.commit === null || /^[a-f0-9]{40}$/.test(info.commit));
+  if (info.analytics_build_enabled) { assert.equal(info.context, 'production'); assert.equal(info.branch, 'main'); }
+  if (info.context === 'deploy-preview' || info.branch !== 'main') assert.equal(info.analytics_build_enabled, false);
+});

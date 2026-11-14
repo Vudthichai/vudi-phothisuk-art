@@ -5,3 +5,5 @@ export { pages, metadata, incompleteArtwork } from './seo/catalog';
 export function render(path: string) {
   return renderToString(<StaticRouter location={path}><App/></StaticRouter>);
 }
+
+export const buildInfo = __VPA_BUILD_INFO__;

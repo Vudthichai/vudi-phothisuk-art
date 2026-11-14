@@ -1,5 +1,5 @@
 import { mkdir, readFile, writeFile, access } from 'node:fs/promises';
-import { render, pages, metadata, incompleteArtwork } from '../.prerender/entry-server.js';
+import { render, pages, metadata, incompleteArtwork, buildInfo } from '../.prerender/entry-server.js';
 
 const site = 'https://vudiphothisukart.com';
 const template = await readFile('dist/index.html', 'utf8');
@@ -53,6 +53,7 @@ for (const page of pages) {
 }
 redirects.push('/* /404.html 404');
 await writeFile('dist/_redirects', redirects.join('\n') + '\n');
-await writeFile('dist/_headers', '/404.html\n  X-Robots-Tag: noindex\n');
+await writeFile('dist/_headers', '/404.html\n  X-Robots-Tag: noindex\n/build-info.json\n  X-Robots-Tag: noindex\n  Cache-Control: no-cache\n');
+await writeFile('dist/build-info.json', JSON.stringify(buildInfo, null, 2) + '\n');
 console.log(`Generated ${pages.length} public HTML pages, image sitemap, robots.txt, redirects and 404.html.`);
 for (const warning of incompleteArtwork) console.warn(`Catalog review required: ${warning}`);

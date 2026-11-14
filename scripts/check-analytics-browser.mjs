@@ -72,6 +72,31 @@ if (production) {
   console.log('Nonproduction build stays off even when served at the production origin.');
 }
 await ctx.close();
+if (production) {
+  const campaignContext = await context(); const campaignPage = await campaignContext.newPage(); const beforeCampaign = tagRequests;
+  await campaignPage.goto('https://vudiphothisukart.com/collections/oceans/mermaid-tail/?utm_source=gallery-outreach&utm_medium=email&utm_campaign=forest-flowers-2026&utm_content=gallery-001&email=private@example.com&gclid=secret', { waitUntil: 'networkidle' });
+  assert.equal(tagRequests, beforeCampaign);
+  await campaignPage.getByRole('link', { name: /The Oceans/, exact: false }).filter({ hasText: '←' }).click();
+  assert.equal(await campaignPage.evaluate(() => typeof window.dataLayer), 'undefined');
+  assert.equal(await campaignPage.evaluate(() => location.search), '');
+  await campaignPage.getByRole('button', { name: 'Accept analytics' }).click();
+  await campaignPage.waitForFunction(() => window.__gaCommands?.some(c => c[0] === 'event'));
+  let recorded = await campaignPage.evaluate(() => window.__gaCommands);
+  const config = recorded.find(c => c[0] === 'config')[2];
+  assert.equal(config.campaign_source, 'gallery-outreach'); assert.equal(config.campaign_medium, 'email');
+  assert.equal(config.campaign_name, 'forest-flowers-2026'); assert.equal(config.campaign_content, 'gallery-001');
+  assert.equal(config.campaign_term, ''); assert.equal(config.campaign_id, '');
+  assert(!JSON.stringify(recorded).match(/private@example|secret|gclid|\?utm_/));
+  assert.equal(recorded.filter(c => c[0] === 'event' && c[1] === 'page_view').length, 1);
+  await campaignPage.goBack();
+  await campaignPage.waitForFunction(() => window.__gaCommands.filter(c => c[0] === 'event' && c[1] === 'page_view').length === 2);
+  recorded = await campaignPage.evaluate(() => window.__gaCommands);
+  assert.equal(recorded.filter(c => c[0] === 'config').length, 1);
+  assert.equal(tagRequests, beforeCampaign + 1);
+  await campaignContext.close();
+  console.log('Approved GA4 campaign config survives browsing before acceptance and SPA returns, without pre-consent events, raw URL values or duplicate views.');
+}
+
 for (const origin of ['http://localhost', 'https://deploy-preview-60--vpa.netlify.app']) {
   const off = await context(true); const p = await off.newPage(); const before = tagRequests;
   await p.goto(origin + '/', { waitUntil: 'networkidle' });

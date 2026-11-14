@@ -20,6 +20,7 @@ const commands = () => (window.dataLayer ?? []).map(args => Array.from(args));
 const events = (name: string) => commands().filter(args => args[0] === 'event' && args[1] === name);
 beforeEach(() => {
   vi.resetModules(); policy.eligible = true; policy.signal = false;
+  window.history.replaceState({}, '', '/');
   localStorage.clear(); document.head.innerHTML = ''; window.dataLayer = undefined; window.gtag = undefined;
   window.addEventListener('click', preventNavigation);
 });
@@ -95,4 +96,27 @@ it('keeps a session choice when consent storage is unavailable', async () => {
   fireEvent.click(screen.getByRole('button', { name: 'Analytics preferences' }));
   fireEvent.click(screen.getByRole('button', { name: 'Decline analytics' }));
   expect(window['ga-disable-G-0S3J4CK8RP']).toBe(true);
+});
+it('attributes an approved gallery landing after consent, preserves it through SPA navigation, and deduplicates views', async () => {
+  const search = '?utm_source=gallery-outreach&utm_medium=email&utm_campaign=forest-flowers-2026&utm_content=gallery-001&email=private@example.com&gclid=secret';
+  window.history.replaceState({}, '', '/' + search);
+  await setup();
+  expect(window.dataLayer).toBeUndefined(); expect(document.getElementById('vpa-google-tag')).toBeNull();
+  fireEvent.click(screen.getByText('Collection')); // browse before consent: no event queue
+  expect(window.dataLayer).toBeUndefined();
+  fireEvent.click(screen.getByRole('button', { name: 'Accept analytics' }));
+  await waitFor(() => expect(events('page_view')).toHaveLength(1));
+  const config = commands().find(c => c[0] === 'config')!;
+  expect(config[2]).toMatchObject({ campaign_source: 'gallery-outreach', campaign_medium: 'email', campaign_name: 'forest-flowers-2026', campaign_content: 'gallery-001', send_page_view: false });
+  fireEvent.click(screen.getByText('Artwork')); fireEvent.click(screen.getByText('Collection'));
+  expect(events('page_view')).toHaveLength(3);
+  expect(commands().filter(c => c[0] === 'config')).toHaveLength(1);
+  expect(JSON.stringify(commands())).not.toMatch(/private@example|secret|gclid|\?utm_/);
+});
+it('does not configure attribution for personal or unapproved UTM values', async () => {
+  window.history.replaceState({}, '', '/?utm_source=jane-smith&utm_medium=email&utm_campaign=forest-flowers-2026');
+  await setup(); fireEvent.click(screen.getByRole('button', { name: 'Accept analytics' }));
+  await waitFor(() => expect(events('page_view')).toHaveLength(1));
+  expect(JSON.stringify(commands())).not.toMatch(/jane-smith/);
+  expect(commands().find(c => c[0] === 'config')![2]).toMatchObject({ campaign_source: '', campaign_medium: '', campaign_name: '', campaign_content: '', campaign_id: '', campaign_term: '' });
 });

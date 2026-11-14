@@ -1,3 +1,4 @@
+import { landingCampaign } from './campaign';
 import { metadata, findPage } from '../seo/catalog';
 import { collections } from '../data';
 import { forestCollection } from '../forest/collection';
@@ -42,9 +43,15 @@ function initialize(path: string) {
   command('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
   command('set', 'ads_data_redaction', true);
   command('set', 'url_passthrough', false);
+  // Explicitly override every campaign field, including unsupported term/id,
+  // so invalid or omitted values cannot fall back to raw URL parameters.
+  const campaign = { campaign_source: '', campaign_medium: '', campaign_name: '', campaign_content: '', campaign_id: '', campaign_term: '', ...landingCampaign() };
+  command('set', { ...campaign, page_location: data.indexable ? data.url : 'https://vudiphothisukart.com/404/' });
   command('js', new Date());
   command('consent', 'update', { analytics_storage: 'granted' });
+  // GA4's recognized campaign configuration overrides UTMs without sending a raw URL.
   command('config', measurementId, {
+    ...campaign,
     send_page_view: false, allow_google_signals: false, allow_ad_personalization_signals: false,
     page_location: data.indexable ? data.url : 'https://vudiphothisukart.com/',
     page_referrer: safeExternalReferrer(), page_title: data.indexable ? data.title : 'Page not found',

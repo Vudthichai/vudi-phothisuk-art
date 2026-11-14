@@ -8,7 +8,7 @@ Last verified: **2026-11-14**. Read this file and `AGENTS.md` before changing th
 - This SEO/GEO phase starts from verified `origin/main` **9b209df1716e694985a31305b76c9053bb720c59** (2026-11-12, Beach Day marked sold).
 - The starting cloud `work` checkout was clean at `0110e0c`, seven commits behind. It was preserved; `feature/seo-geo-foundation` was created directly from fetched `origin/main`.
 - Technical implementation and a draft PR are authorized. **Merging, deployment, domain/DNS/forwarding, production settings and commerce changes are not authorized.** No deployment accompanies this phase.
-- Recent commits use `[skip netlify]`. Keep this marker on this phase's commits to suppress automatic Netlify builds. A merge/release must be separately approved; never infer the deployed SHA from Git history alone.
+- Recent commits use `[skip netlify]`. Retain this marker on preparation commits, but do not treat it as a publication lock: GitHub records a successful preview build for `552efd4` despite the marker. A merge/release must be separately approved; never infer the deployed SHA from Git history alone.
 
 ## Architecture and sources of truth
 
@@ -30,6 +30,8 @@ Preserve artwork titles, symbolism, descriptions, pricing, dimensions, availabil
 
 ## Build, deployment and SEO
 
+Release gates and exact production steps: [release checklist](docs/release-checklist.md).
+
 See [architecture and deployment](docs/architecture-deployment.md), [SEO/GEO decisions](docs/seo-geo.md), and [validation evidence](docs/seo-validation.md).
 
 - Node 24; `npm ci`; `npm test`; `npm run build`; `npm run test:seo` after the build.
@@ -39,7 +41,7 @@ See [architecture and deployment](docs/architecture-deployment.md), [SEO/GEO dec
 - `src/seo/catalog.ts` derives route metadata, structured data, image sitemap entries and verified legacy aliases from existing catalog data.
 - `scripts/sharing-previews.json` holds curated sharing image/alt choices only. Descriptions and artwork facts are not duplicated there.
 - GA4 direct tag implementation added to PR #60 with owner-confirmed ID `G-0S3J4CK8RP` (stream: Vudi Phothisuk Art — Website). Owner confirmed Enhanced measurement OFF and approved the consent notice on 2026-11-14. No GTM or verification tokens. Not deployed; live collection remains unverified.
-- Analytics requires Netlify production/main build, exact HTTPS apex origin, and visitor consent; local/preview builds are disabled. Keep Enhanced measurement OFF: page views are manual and deduplicated. No ad consent, URL query/hash values, mailto contents, custom PII or sale/lead claims. See `docs/analytics-growth.md` for events, disclosure, withdrawal and verification.
+- Analytics requires Netlify production/main build, exact HTTPS apex origin, and visitor consent; local/preview builds are disabled. Keep Enhanced measurement OFF: page views are manual and deduplicated. No ad consent, raw URL queries/fragments, click IDs, mailto contents, custom PII or sale/lead claims. Owner-approved UTMs map to recognized GA campaign fields only after consent; see the strict conventions in analytics documentation. See `docs/analytics-growth.md` for events, disclosure, withdrawal and verification.
 
 ## Completed in this phase
 
@@ -47,10 +49,10 @@ Static initial HTML for all public routes; unique standard/social metadata; cano
 
 ## Remaining work / unresolved facts
 
-- Verify Netlify site ID, deployed SHA, release method, domain aliases, deploy context restrictions, and real edge routing when a preview/release is approved. Do not alter production settings.
+- Netlify API and byte comparisons verified preview deploy `6af8ad9bcc486fa438994562` serves `552efd4`. Site ID `b29576b1-1206-4298-8484-335bebbbc72c`; API confirms published production deploy `6af5e552f0faa7ee815b22f3` at `9b209df`, main/production. Owner confirms automatic publishing enabled and GitHub repo/production branch main. New PR-head hosted checks must match `/build-info.json` and current GitHub status; see release checklist/PR #60. Do not alter production settings.
 - Dragon Lily: dimensions and medium missing; copy provisional. Eight Forest availability records remain unconfirmed. Build reports these; no guessed facts or offers are emitted.
 - Open historical draft PRs at inspection: #2 source inventory, #19 contact photo edge treatment. They have not been merged or assumed approved.
-- Verify Google Search Console and Bing Webmaster Tools ownership; submit sitemap only after approved release; inspect indexing and Google-selected canonicals. Public search checks are not proof of index status.
+- Owner confirms Search Console ownership verified, live homepage test passed and indexing requested; GA4 created and Enhanced measurement disabled. Account reports were not independently inspected. An indexing request is not evidence that every page is indexed. After release, submit/verify the new sitemap and inspect page canonicals/indexing. Bing ownership remains unverified.
 - GA4 account/property/stream and Enhanced measurement OFF are owner-confirmed. Review remaining account-side privacy/retention/tag settings and verify real delivery only after approved release. Local tests intercept Google traffic; no live hits were generated. See [measurement and remaining work](docs/analytics-growth.md).
 - Actual search/AI inclusion, field Core Web Vitals, physical mobile testing and hosted rich-result testing remain external validation tasks.
 
