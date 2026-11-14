@@ -1,0 +1,91 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/dark-scales",
+  "path": "/dark-scales",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Dark Scales — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Dark Scales</strong>: The ocean is full of mysterious creatures. There are millions of undiscovered species under the surface. Strange, beautiful yet mysterious fish, each with their own story. Scales and scars timestamp their journey through life. Having over half an eon to their belt maybe we can learn the wisdom of what it takes to swim through life and continue to what unfolds tomorrow.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">For serious inquiries please email vudiphothisukart@gmail.com</span></p></div>",
+      "text": "Dark Scales: The ocean is full of mysterious creatures. There are millions of undiscovered species under the surface. Strange, beautiful yet mysterious fish, each with their own story. Scales and scars timestamp their journey through life. Having over half an eon to their belt maybe we can learn the wisdom of what it takes to swim through life and continue to what unfolds tomorrow.24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.For serious inquiries please email vudiphothisukart@gmail.com"
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2986baa6-cd82-43f5-a9b9-e5ac4dfefde3/IMG_7494.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2986baa6-cd82-43f5-a9b9-e5ac4dfefde3/IMG_7494.jpeg",
+        "data-image-dimensions": "2510x3782",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7494.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/baf1c4f0-33c0-4f9d-84ad-5515a73715f3/IMG_6861.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/baf1c4f0-33c0-4f9d-84ad-5515a73715f3/IMG_6861.jpeg",
+        "data-image-dimensions": "3024x4032",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6861.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718219826882-69B6EX23O2Z7LMMBJ38S/IMG_6851.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718219826882-69B6EX23O2Z7LMMBJ38S/IMG_6851.jpg",
+        "data-image-dimensions": "2268x3402",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6851.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 3,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750218005474-4QTOAHAQEUCBIEPQPRRD/IMG_6640.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750218005474-4QTOAHAQEUCBIEPQPRRD/IMG_6640.jpg",
+        "data-image-dimensions": "1356x1808",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6640.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 4,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/4383a627-f305-4356-ad4e-c68c79dccbe0/IMG_7576.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/4383a627-f305-4356-ad4e-c68c79dccbe0/IMG_7576.jpeg",
+        "data-image-dimensions": "1792x2688",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7576.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-oceans#dark-scales",
+      "text": "\n    Back to The Oceans\n  "
+    },
+    {
+      "href": "/manta",
+      "text": "\n    Previous\n  "
+    },
+    {
+      "href": "/mermaid-tail",
+      "text": "\n    Next\n  "
+    }
+  ]
+}

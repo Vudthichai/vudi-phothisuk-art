@@ -1,0 +1,79 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/arctic-waves",
+  "path": "/arctic-waves",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Arctic Waves — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Arctic Waves:</strong> Arctic waves are like the essence of life's journey, embodying the unseen currents that shape our existence. Their ceaseless rise and fall capture the ebb and flow of our experiences, where each crest symbolizes fleeting moments of triumph, and each trough reflects the quiet depths of introspection and challenge. The delicate dance of light and shadow upon the waves mirrors the ever-shifting landscape of our emotions and thoughts, revealing the hidden beauty in both chaos and calm. In their rhythmic passage, Arctic waves remind us of the intricate, interconnected patterns that define our lives, urging us to find harmony in the perpetual motion of being.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">For serious inquiries please email vudiphothisukart@gmail.com</span></p></div>",
+      "text": "Arctic Waves: Arctic waves are like the essence of life's journey, embodying the unseen currents that shape our existence. Their ceaseless rise and fall capture the ebb and flow of our experiences, where each crest symbolizes fleeting moments of triumph, and each trough reflects the quiet depths of introspection and challenge. The delicate dance of light and shadow upon the waves mirrors the ever-shifting landscape of our emotions and thoughts, revealing the hidden beauty in both chaos and calm. In their rhythmic passage, Arctic waves remind us of the intricate, interconnected patterns that define our lives, urging us to find harmony in the perpetual motion of being.24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.For serious inquiries please email vudiphothisukart@gmail.com"
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/76107722-8a07-497b-ac67-c1c48048d3a1/IMG_8685.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/76107722-8a07-497b-ac67-c1c48048d3a1/IMG_8685.jpg",
+        "data-image-dimensions": "1781x2702",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_8685.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/e7c686e8-779f-4bd6-a1ce-dcb9f1655985/IMG_7223.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/e7c686e8-779f-4bd6-a1ce-dcb9f1655985/IMG_7223.jpeg",
+        "data-image-dimensions": "1169x1467",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7223.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750220731337-B8V8088CRSK8A2TNGT6D/IMG_8685.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750220731337-B8V8088CRSK8A2TNGT6D/IMG_8685.jpg",
+        "data-image-dimensions": "1725x2300",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_8685.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 3,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/cc2c6534-e30b-4dc9-ad80-2f6453ad1c07/Untitled+design.png.png",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/cc2c6534-e30b-4dc9-ad80-2f6453ad1c07/Untitled+design.png.png",
+        "data-image-dimensions": "2048x3072",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "Untitled design.png.png"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-oceans#arctic-waves",
+      "text": "\n    Back to The Oceans\n  "
+    },
+    {
+      "href": "/beach-day",
+      "text": "\n    Previous\n  "
+    },
+    {
+      "href": "/waters-edge",
+      "text": "\n    Next\n  "
+    }
+  ]
+}

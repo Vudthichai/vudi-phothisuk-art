@@ -1,0 +1,13 @@
+# Missing information and uncertainties
+
+- **Forest & Flowers:** no page in the inspected public sitemap/navigation. Need an authoritative artwork list and approved exhibition descriptions. Absence from discovery does not establish absence from the artist's work.
+- **Ciaran:** identified on The Regal Collection with a public `/ciaran` link, but the detail request returned HTTP 429. No description, size, medium, sales or standalone photo data inferred.
+- **Canvas Collaborations:** seven named projects from preceding public inspection; current snapshots only preserve collection introduction. Exact caption paragraphs and embedded video/image metadata need recapture after throttling clears. A project can contain multiple physical canvases (notably the previously observed PIER PRESSURE triple-canvas reference), so the catalog's 23 records are not a physical painting count.
+- **Prices:** none displayed in the 15 captured artwork-page text blocks. Null does not mean free, unavailable, or no price exists elsewhere. No currency inferred.
+- **Availability:** five captured pages explicitly display sold wording (Summer Swells, Manta, Sunset Waves, Carnations, Navy). Other pages give inquiry instructions, not confirmed availability. Reconfirm all sales data with the owner before publishing.
+- **Dimensions:** preserve the published two-number strings. Inch-like typography is visible; measurement order, framed/unframed extent and depth are not confirmed. Do not silently interpret as width × height.
+- **Media:** medium wording is captured verbatim for 15 works; do not substitute a generic medium for uncaptured works. “Ready to hand” needs owner clarification.
+- **Photographs:** 56 page-associated references captured; binary quality, crop, visual match, duplicates, primary/detail roles, original source and new-page placements unverified. Collection/home images remain additional unassigned references in source snapshots. No ZIP inspected this phase; unmatched uploaded-image count is unknown.
+- **Coverage:** event/history pages and general information pages are excluded from Phase 1 inspection and may contain additional works. The sitemap and captured collection navigation delimit discovery, not a complete artist oeuvre. No full-site completion claim.
+- **Approved descriptions:** none supplied. Preserve old source wording and add separately approved versions later. Revised copy must not overwrite this historical inventory.
+- **Redirect targets:** old paths are preserved, but new paths and redirect approval remain pending. Seven collaboration projects share a single old page; do not fabricate old individual URLs.

@@ -1,0 +1,67 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/verdant",
+  "path": "/verdant",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Verdant — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Verdant</strong>: How does one feel when walking into a lush garden? One filled with opulent shades of green, trees that shoot branches into the heavens, only to have a canopy of emerald green filtering a golden hour evening with ethereal rays of sunlight. I spent many days in my backyard woods pondering about world travel as a kid. I would rush to the hidden fire pit I made under such a canopy when the sun was setting just right. This work is a representation of those childhood summer memories.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Please email me at vudiphothisukart@gmail.com for serious inquiries.</strong></span></p></div>",
+      "text": "Verdant: How does one feel when walking into a lush garden? One filled with opulent shades of green, trees that shoot branches into the heavens, only to have a canopy of emerald green filtering a golden hour evening with ethereal rays of sunlight. I spent many days in my backyard woods pondering about world travel as a kid. I would rush to the hidden fire pit I made under such a canopy when the sun was setting just right. This work is a representation of those childhood summer memories.24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.Please email me at vudiphothisukart@gmail.com for serious inquiries."
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg",
+        "data-image-dimensions": "4160x6240",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "Verdan.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/d0e97ffe-2dba-4ca0-a68d-80575cb2a98f/IMG_6762.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/d0e97ffe-2dba-4ca0-a68d-80575cb2a98f/IMG_6762.jpeg",
+        "data-image-dimensions": "4536x8064",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6762.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/ee5f3ad9-33bc-4734-852f-8b73d7223b69/Verdant+%28Close+Up%29.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/ee5f3ad9-33bc-4734-852f-8b73d7223b69/Verdant+%28Close+Up%29.jpg",
+        "data-image-dimensions": "2208x1472",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "Verdant (Close Up).jpg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-regal-collection#verdant",
+      "text": "\n    Back to The Regal Collection\n  "
+    },
+    {
+      "href": "/sahara",
+      "text": "\n    Previous\n  "
+    },
+    {
+      "href": "/ciaran",
+      "text": "\n    Next\n  "
+    }
+  ]
+}

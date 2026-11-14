@@ -1,0 +1,79 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/sunset-waves",
+  "path": "/sunset-waves",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Sunset Waves — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><strong>Sunset Waves:</strong> Sunsets and rolling ocean waves are a combination older than man himself. Our waters have seen the evolution of species, the growth of mankind and the fall of civilizations one sunset at a time. But for every sunset that dips below the aqua horizon lies a sunrise reaching for a new day somewhere else in the world. It's a reminder that something that's given away is taken from somewhere else. </p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">Sold</span></p></div>",
+      "text": "Sunset Waves: Sunsets and rolling ocean waves are a combination older than man himself. Our waters have seen the evolution of species, the growth of mankind and the fall of civilizations one sunset at a time. But for every sunset that dips below the aqua horizon lies a sunrise reaching for a new day somewhere else in the world. It's a reminder that something that's given away is taken from somewhere else. 24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.Sold"
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1fd1f695-3e0d-451a-845c-9fa81ecaddc6/IMG_9573.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1fd1f695-3e0d-451a-845c-9fa81ecaddc6/IMG_9573.jpg",
+        "data-image-dimensions": "2465x3705",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_9573.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750264236096-EKQ0LR8SH8WKRCPPJY3U/IMG_8752.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750264236096-EKQ0LR8SH8WKRCPPJY3U/IMG_8752.jpg",
+        "data-image-dimensions": "2500x3333",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_8752.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750249642027-4ECRGGW4O1AHQSQTNBJP/IMG_7180.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750249642027-4ECRGGW4O1AHQSQTNBJP/IMG_7180.jpg",
+        "data-image-dimensions": "1464x1952",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7180.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 3,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750249863084-VHQZG0BQ3CJSSOVU9Y7N/IMG_7180.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750249863084-VHQZG0BQ3CJSSOVU9Y7N/IMG_7180.jpg",
+        "data-image-dimensions": "1026x1369",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7180.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-oceans#sunset-waves",
+      "text": "\n    Back to The Oceans\n  "
+    },
+    {
+      "href": "/golden-sand-beach",
+      "text": "\n    Previous\n  "
+    },
+    {
+      "href": "/arctic-ocean",
+      "text": "\n    Next\n  "
+    }
+  ]
+}
