@@ -38,11 +38,12 @@ See [architecture and deployment](docs/architecture-deployment.md), [SEO/GEO dec
 - Canonical host: `https://vudiphothisukart.com`; trailing slash for HTML pages.
 - `src/seo/catalog.ts` derives route metadata, structured data, image sitemap entries and verified legacy aliases from existing catalog data.
 - `scripts/sharing-previews.json` holds curated sharing image/alt choices only. Descriptions and artwork facts are not duplicated there.
-- No GA4, GTM, verification tokens, or invented tracking IDs have been added.
+- GA4 direct tag implementation added to PR #60 with owner-confirmed ID `G-0S3J4CK8RP` (stream: Vudi Phothisuk Art — Website). Owner confirmed Enhanced measurement OFF and approved the consent notice on 2026-11-14. No GTM or verification tokens. Not deployed; live collection remains unverified.
+- Analytics requires Netlify production/main build, exact HTTPS apex origin, and visitor consent; local/preview builds are disabled. Keep Enhanced measurement OFF: page views are manual and deduplicated. No ad consent, URL query/hash values, mailto contents, custom PII or sale/lead claims. See `docs/analytics-growth.md` for events, disclosure, withdrawal and verification.
 
 ## Completed in this phase
 
-Static initial HTML for all public routes; unique standard/social metadata; canonical consistency on direct loads and client navigation; image sitemap; explicit search/training crawler separation; source-backed legacy redirects; HTTP 404 configuration; artist/artwork/collection/breadcrumb/exhibition schema; catalog warnings; recovery documentation and validation checks.
+Static initial HTML for all public routes; unique standard/social metadata; canonical consistency on direct loads and client navigation; image sitemap; explicit search/training crawler separation; source-backed legacy redirects; HTTP 404 configuration; artist/artwork/collection/breadcrumb/exhibition schema; catalog warnings; recovery documentation and validation checks. Follow-up on the same PR adds consent-gated production-only GA4, safe catalog events, analytics tests and account verification guidance.
 
 ## Remaining work / unresolved facts
 
@@ -50,7 +51,7 @@ Static initial HTML for all public routes; unique standard/social metadata; cano
 - Dragon Lily: dimensions and medium missing; copy provisional. Eight Forest availability records remain unconfirmed. Build reports these; no guessed facts or offers are emitted.
 - Open historical draft PRs at inspection: #2 source inventory, #19 contact photo edge treatment. They have not been merged or assumed approved.
 - Verify Google Search Console and Bing Webmaster Tools ownership; submit sitemap only after approved release; inspect indexing and Google-selected canonicals. Public search checks are not proof of index status.
-- Configure GA4 only with a verified property/measurement ID and agreed measurement/privacy approach. See [measurement and remaining work](docs/analytics-growth.md).
+- GA4 account/property/stream and Enhanced measurement OFF are owner-confirmed. Review remaining account-side privacy/retention/tag settings and verify real delivery only after approved release. Local tests intercept Google traffic; no live hits were generated. See [measurement and remaining work](docs/analytics-growth.md).
 - Actual search/AI inclusion, field Core Web Vitals, physical mobile testing and hosted rich-result testing remain external validation tasks.
 
 ## Historical documentation

@@ -41,3 +41,7 @@ Do not add a second SPA fallback in the Netlify UI. Unknown client-side navigati
 Production HTTPS and apex/www convergence were verified read-only during audit. Netlify headers are present. The exact production site ID, deployed SHA and release method are not yet independently verified through the hosting account. Current source commits contain `[skip netlify]`; observed live metadata/sold status do not establish a particular automatic deployment process.
 
 This branch must not merge or deploy without approval. Its commits retain `[skip netlify]`; do not remove that marker to obtain a preview. After separate preview authorization, verify all route/status rules with the real Netlify edge and test social crawlers. Domain/DNS, Squarespace and commerce settings remain outside scope.
+
+## GA4 follow-up (owner-authorized, 2026-11-14)
+
+The same draft PR now includes direct `gtag.js` analytics (`G-0S3J4CK8RP`) with an approved optional consent notice. The build/origin gate, safe payloads, event contract, owner-confirmed Enhanced measurement OFF, privacy review and live verification instructions are recorded in [analytics-growth.md](analytics-growth.md). No account/hosting settings were changed by this implementation. A generic local build intentionally cannot collect production data. Netlify `CONTEXT=production` and `BRANCH=main` must be present in the approved release build; see [Netlify environment documentation](https://docs.netlify.com/build/configure-builds/environment-variables/).

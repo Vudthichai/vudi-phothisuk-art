@@ -12,7 +12,7 @@ npm run build
 npm run test:seo
 ```
 
-The build generates static HTML for the existing public React routes, standard/social metadata, JSON-LD, an image sitemap, robots policy and Netlify redirects/404 handling. It uses the existing artwork catalogs and curated sharing images; no backend or tracking IDs are required.
+The build generates static HTML for the existing public React routes, standard/social metadata, JSON-LD, an image sitemap, robots policy and Netlify redirects/404 handling. It uses the existing artwork catalogs and curated sharing images; no backend is required. The confirmed GA4 ID is configured in code; analytics activates only on production/main builds at the live apex origin after visitor consent. See the analytics documentation before release.
 
 See [architecture/deployment](docs/architecture-deployment.md), [SEO/GEO](docs/seo-geo.md), [validation](docs/seo-validation.md) and [remaining account-dependent work](docs/analytics-growth.md).
 
