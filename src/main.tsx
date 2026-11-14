@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Layout } from './components/Layout';
-import { Home, Collections, CollectionPage, ArtworkPage, InformationPage, NotFound } from './pages/Pages';
-import { informationPages } from './data';
-import './styles.css';
-import { ForestCollection } from './forest/ForestCollection';
-ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><BrowserRouter><Routes><Route element={<Layout/>}><Route index element={<Home/>}/><Route path="collections" element={<Collections/>}/><Route path="collections/forest-and-flowers" element={<ForestCollection/>}/><Route path="collections/forest-and-flowers/:artworkSlug" element={<ForestCollection/>}/><Route path="collections/:slug" element={<CollectionPage/>}/><Route path="collections/:slug/:artworkSlug" element={<ArtworkPage/>}/>{(Object.keys(informationPages) as (keyof typeof informationPages)[]).map(page => <Route key={page} path={page} element={<InformationPage page={page}/>}/>)}<Route path="*" element={<NotFound/>}/></Route></Routes></BrowserRouter></React.StrictMode>);
+import { createRoot, hydrateRoot } from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+import { App } from './App';
+const root = document.getElementById('root')!;
+const app = <React.StrictMode><BrowserRouter><App/></BrowserRouter></React.StrictMode>;
+if (root.hasChildNodes()) hydrateRoot(root, app);
+else createRoot(root).render(app);

@@ -14,7 +14,7 @@ function artworkInquiryUrl(artwork: ForestArtwork) {
   return `mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent('Artwork inquiry — ' + artwork.title)}`;
 }
 function Inquiry({ artwork }: { artwork: ForestArtwork }) {
-  return artwork.availability === 'not-for-sale' ? <p className="private-availability">{artwork.availabilityNote}</p> : <div><p className="private-availability">{artwork.availabilityNote}</p><a className="text-link" href={artworkInquiryUrl(artwork)}>Inquire for Pricing</a></div>;
+  return artwork.availability === 'not-for-sale' ? <p className="private-availability">{artwork.availabilityNote}</p> : <div><p className="private-availability">{artwork.availabilityNote}</p><a className="text-link" data-analytics-artwork={`${base}/${artwork.slug}`} href={artworkInquiryUrl(artwork)}>Inquire for Pricing</a></div>;
 }
 export function ForestCollection() {
   const { artworkSlug } = useParams();
@@ -177,7 +177,7 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
         ) : <>
           <h2 id="forest-artwork-inquiry">Interested in {artwork.title}?</h2>
           <p>For availability, pricing, and acquisition inquiries.</p>
-          <a className="forest-acquisition-action" href={artworkInquiryUrl(artwork)}>
+          <a className="forest-acquisition-action" data-analytics-artwork={`${base}/${artwork.slug}`} href={artworkInquiryUrl(artwork)}>
             Inquire About This Artwork
           </a>
         </>}

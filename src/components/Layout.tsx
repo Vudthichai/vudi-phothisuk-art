@@ -7,11 +7,12 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 export function Layout() {
   const [open, setOpen] = useState(false);
-  const [compact, setCompact] = useState(() => window.matchMedia?.('(max-width:700px)').matches ?? false);
+  const [compact, setCompact] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const navPanel = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const query = window.matchMedia?.('(max-width:700px)');
+    setCompact(query?.matches ?? false);
     const update = () => { if (query?.matches && document.getElementById('primary-nav')?.contains(document.activeElement)) menuButton.current?.focus(); setCompact(query?.matches ?? false); setOpen(false); setCollectionsOpen(false); };
     query?.addEventListener?.('change', update);
     return () => query?.removeEventListener?.('change', update);
