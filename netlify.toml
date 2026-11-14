@@ -3,7 +3,6 @@
   publish = "dist"
 [build.environment]
   NODE_VERSION = "24"
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+
+# Routing is generated into dist/_redirects from the public route catalog.
+# No SPA catch-all: unknown URLs must return HTTP 404.
