@@ -13,13 +13,14 @@ function prefersStill() {
 export function OceanCollection({ collection }: { collection: Collection }) {
   const scene = useRef<HTMLDivElement>(null);
   const gallery = useRef<HTMLElement>(null);
-  const [stillPreferred, setStillPreferred] = useState(prefersStill);
+  const [stillPreferred, setStillPreferred] = useState(false);
   const moving = !stillPreferred;
 
   useEffect(() => {
     const preference = window.matchMedia?.(reducedQuery);
     const connection = (navigator as Navigator & { connection?: Connection }).connection;
     const update = () => setStillPreferred(prefersStill());
+    update();
     preference?.addEventListener('change', update);
     connection?.addEventListener?.('change', update);
     return () => { preference?.removeEventListener('change', update); connection?.removeEventListener?.('change', update); };

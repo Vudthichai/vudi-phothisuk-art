@@ -11,7 +11,7 @@ function AvailablePainting({ artwork, collection, featured = false }: { artwork:
       <h3 id={`available-${artwork.id}`}><Link to={path}>{artwork.title}</Link></h3>
       {artwork.dimensions && <p className="available-dimensions">{artwork.dimensions}</p>}
       {artwork.description?.[0] && <p className="available-description">{artwork.description[0]}</p>}
-      <a className="text-link" aria-label={`Inquire about ${artwork.title}`} href={`mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent(`Artwork inquiry: ${artwork.title}`)}`}>Inquire about this painting</a>
+      <a className="text-link" aria-label={`Inquire about ${artwork.title}`} data-analytics-artwork={path} href={`mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent(`Artwork inquiry: ${artwork.title}`)}`}>Inquire about this painting</a>
     </div>
   </article>;
 }
