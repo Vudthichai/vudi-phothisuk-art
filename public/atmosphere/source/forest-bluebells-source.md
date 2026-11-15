@@ -20,3 +20,8 @@ height rules, collection statement and all artwork photographs are unchanged.
 
 To revert, restore ForestHero.tsx's prior image src and the previous gradient/mobile
 position rules, or revert this focused PR. No other pages depend on the new assets.
+
+The collection sharing card collections--forest-and-flowers-bluebells-v3.jpg uses
+this same forest photo, existing hero gradients and Bodoni Moda ivory title in a
+1200 × 630 JPEG. Its new URL replaces only the Forest & Flowers collection's
+Open Graph/Twitter image entry, avoiding reuse of the old cached preview URL.
