@@ -22,7 +22,7 @@
 }
 .forest-collection-hero::after {
   content: '';
-  background: linear-gradient(90deg, #07150c78, #07150c24 51%, transparent 77%);
+  background: linear-gradient(0deg, #07150cc7, #07150c45 45%, transparent 78%), linear-gradient(90deg, #07150c66, transparent 70%);
 }
 .forest-collection-hero-copy {
   width: 100%;
@@ -40,10 +40,10 @@
     min-height: max(510px, calc(100svh - 110px));
   }
   .forest-collection-hero > img {
-    object-position: 77% center;
+    object-position: 64% center;
   }
   .forest-collection-hero::after {
-    background: linear-gradient(0deg, #07150cb8, #07150c50 44%, transparent 72%);
+    background: linear-gradient(0deg, #07150cde, #07150c70 48%, #07150c12 82%);
   }
   .forest-collection-hero-copy {
     padding-bottom: clamp(38px, 7svh, 68px);
