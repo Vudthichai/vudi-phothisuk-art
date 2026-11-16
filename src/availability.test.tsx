@@ -10,7 +10,7 @@ afterEach(cleanup);
 const expected = ['The Oceans', 'Mermaid Tail', 'Arctic Waves', 'Water’s Edge', 'Arctic Ocean', 'Sahara'];
 it('lists exactly the six confirmed available paintings with dimensions, detail paths and inquiry subjects', () => {
   render(<MemoryRouter><InformationPage page="available-art"/></MemoryRouter>);
-  const cards = screen.getAllByRole('article');
+  const cards = [...document.querySelectorAll<HTMLElement>('.available-painting')];
   expect(cards).toHaveLength(6);
   expect(cards.map(card => within(card).getByRole('heading').textContent).sort()).toEqual([...expected].sort());
   for (const collection of collections) for (const artwork of collection.artworks) {
@@ -24,7 +24,7 @@ it('lists exactly the six confirmed available paintings with dimensions, detail 
     expect(within(card).getByText(collection.name, {selector: '.eyebrow'})).toBeTruthy();
     expect(within(card).getByRole('link', {name: `Inquire about ${artwork.title}`}).getAttribute('href')).toBe(`mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent(`Artwork inquiry: ${artwork.title}`)}`);
   }
-  expect(document.body.textContent).not.toMatch(/\$|USD|Sold/);
+  for (const section of document.querySelectorAll('.available-collection')) expect(section.textContent).not.toMatch(/\$|USD|Sold/);
 });
 it('uses live availability data and preserves newly sold artwork detail pages without inquiry actions', () => {
   const sahara = findCollection('regal-collection')!.artworks.find(a => a.slug === 'sahara')!;

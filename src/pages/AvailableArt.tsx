@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { collections, type Artwork, type Collection } from '../data';
 import './AvailableArt.css';
+import { StudioEditions } from '../studio/StudioEditions';
 
 function AvailablePainting({ artwork, collection, featured = false }: { artwork: Artwork; collection: Collection; featured?: boolean }) {
   const path = `/collections/${collection.slug}/${artwork.slug}`;
@@ -31,5 +32,6 @@ export function AvailableArt() {
         {featured && <AvailablePainting artwork={featured} collection={collection} featured/>}
       </section>;
     })}
+    <StudioEditions/>
   </section>;
 }
