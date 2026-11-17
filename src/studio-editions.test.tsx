@@ -12,7 +12,7 @@ it('presents only the five approved reproductions with authentic photographs and
   cards.forEach((card, index) => {
     expect(within(card).getByText('Starting at $40')).toBeTruthy();
     expect(within(card).getByText('Coming Soon')).toBeTruthy();
-    expect(card.textContent).toBe(`${studioArtwork(studioEditions[index]).title}Starting at $40—Coming Soon`);
+    expect(card.textContent).toBe(`${studioArtwork(studioEditions[index]).title}Studio PrintStarting at $40—Coming Soon`);
     const artwork = studioArtwork(studioEditions[index]);
     expect(within(card).getByRole('img').getAttribute('src')).toBe(`/studio-editions/exact-gallery/${artwork.id}-1122.webp`);
     expect(studioPrintImage(studioEditions[index]).variants.map(v => v.src)).toEqual([640,1280,1920].map(size => `/studio-editions/${artwork.id}-print-${size}.webp`));

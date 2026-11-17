@@ -39,12 +39,11 @@
 .studio-product-description h2 { font-size:24px;margin-bottom:20px; }
 .studio-product-description p { font-size:.9rem;line-height:1.9; }
 /* Shadow only the standalone paper: room photographs already contain real lighting. */
-.studio-product-image.studio-paper-view { padding:clamp(14px,3vw,32px);background:#eeeae1; }
-.studio-product-image.studio-paper-view>img { box-shadow:0 1px 2px rgb(25 32 23 / 24%),0 4px 8px rgb(25 32 23 / 13%),0 18px 32px -10px rgb(25 32 23 / 24%); }
+.studio-product-image.studio-paper-view { padding:clamp(14px,3vw,32px);background:transparent; }
+.studio-product-image.studio-paper-view>img { width:auto;max-width:100%;height:auto;max-height:850px;margin-inline:auto;box-shadow:1px 1px 0 rgb(25 32 23 / 18%),2px 3px 5px rgb(25 32 23 / 12%),8px 12px 22px -6px rgb(25 32 23 / 23%); }
 .studio-explore { margin-top:clamp(64px,8vw,110px);padding-top:36px;border-top:1px solid #cdd3c8; }
 .studio-explore>h2 { font-size:clamp(32px,4vw,44px);margin-bottom:36px; }
 .studio-explore-grid { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:36px 24px; }
 .studio-explore .studio-edition-copy h3 { font-size:clamp(24px,2.5vw,30px); }
-.studio-card-identification { font-size:.8rem;margin-bottom:8px; }
 @media(max-width:1000px) { .studio-explore-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:420px) { .studio-explore-grid { gap:30px 16px; }.studio-explore .studio-edition-copy h3 { font-size:23px; } }
