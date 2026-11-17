@@ -12,7 +12,7 @@ it('presents only the five approved reproductions with authentic photographs and
   cards.forEach((card, index) => {
     expect(within(card).getByText('Starting at $40')).toBeTruthy();
     expect(within(card).getByText('Coming Soon')).toBeTruthy();
-    expect(card.textContent).toBe(`${studioArtwork(studioEditions[index]).title}Studio PrintStarting at $40—Coming Soon`);
+    expect(card.querySelector('.studio-edition-copy')?.textContent?.startsWith(`${studioArtwork(studioEditions[index]).title}Studio PrintStarting at $40—Coming Soon`)).toBe(true);
     const artwork = studioArtwork(studioEditions[index]);
     expect(within(card).getByRole('img').getAttribute('src')).toBe(`/studio-editions/exact-gallery/${artwork.id}-1122.webp`);
     expect(studioPrintImage(studioEditions[index]).variants.map(v => v.src)).toEqual([640,1280,1920].map(size => `/studio-editions/${artwork.id}-print-${size}.webp`));
@@ -22,7 +22,7 @@ it('presents only the five approved reproductions with authentic photographs and
   expect(studioCollectionBundle.editionIds).toEqual(studioEditions.map(edition => edition.id));
   expect(screen.queryByRole('button')).toBeNull();
   expect(document.querySelector('form, input, iframe, a[href^="mailto:"]')).toBeNull();
-  expect(document.body.textContent).not.toMatch(/reproduction|unsigned|profit|beneficiary|Paper|production details|View edition details/i);
+  expect(document.body.textContent).not.toMatch(/reproduction|unsigned|beneficiary|Paper|production details|View edition details/i);
 });
 it('limits individual panels to eligible art and preserves gifted originals as Not for Sale', () => {
   for (const edition of studioEditions) {
@@ -39,10 +39,10 @@ it('limits individual panels to eligible art and preserves gifted originals as N
   const { container } = render(<MemoryRouter><ArtworkStudioEdition artworkId="dragon-lily"/></MemoryRouter>);
   expect(container.innerHTML).toBe('');
 });
-it('retains unapproved contribution intentions in data without displaying them in the grid', () => {
+it('uses confirmed giving metadata while keeping unapproved print imagery unavailable', () => {
   render(<MemoryRouter><StudioEditions/></MemoryRouter>);
-  expect(document.querySelector('.studio-contribution')).toBeNull();
-  expect(studioEditions.find(e => e.artworkId === '75-leaves')?.contribution).toEqual({percentOfProfit:75,beneficiary:null,status:'pending-approval'});
-  expect(studioEditions.find(e => e.artworkId === 'a-forest-forgotten')?.contribution).toEqual({percentOfProfit:20,beneficiary:'Junglekeepers',status:'pending-approval'});
+  expect(document.querySelectorAll('.studio-card-giving')).toHaveLength(2);
+  expect(studioEditions.find(e => e.artworkId === '75-leaves')?.contribution).toMatchObject({percentOfProfit:75,beneficiary:null,status:'artist-confirmed'});
+  expect(studioEditions.find(e => e.artworkId === 'a-forest-forgotten')?.contribution).toMatchObject({percentOfProfit:20,beneficiary:'Junglekeepers',status:'artist-confirmed'});
   expect(() => studioPrintImage({id:'missing',artworkId:'unapproved'})).toThrow('Missing approved Studio print photograph');
 });

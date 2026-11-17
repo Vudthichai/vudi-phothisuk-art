@@ -40,3 +40,17 @@
 .studio-gallery-views button>img { box-shadow:0 6px 18px rgb(30 35 25 / 7%),0 1px 3px rgb(30 35 25 / 8%); }
 
 .studio-card-identification { font-size:.8rem;margin-bottom:8px; }
+
+.studio-card-giving { font-size:.75rem;line-height:1.75;margin:10px 0 0; }
+.studio-giving { margin:28px 0;padding-top:22px;border-top:1px solid #cdd3c8;color:#12351d; }
+.studio-giving h2,.studio-giving h3 { font:400 25px/1.35 'Bodoni Moda',Georgia,serif;margin-bottom:14px; }
+.studio-giving p { font-size:.9rem;line-height:1.9; }
+.studio-giving .studio-giving-scope { font-size:.8rem; }
+.forest-art-purpose { color:#12351d;margin-top:clamp(64px,8vw,100px);padding-top:36px;border-top:1px solid #cdd3c8; }
+.forest-art-purpose>h2 { font-size:clamp(32px,4vw,44px);margin-bottom:24px; }
+.forest-art-purpose>p { max-width:750px; }
+.forest-purpose-works { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 50px;margin-top:30px; }
+.forest-purpose-works h3 { font-size:28px;margin-bottom:14px; }
+.forest-purpose-works p { font-size:.9rem;line-height:1.9; }
+.forest-purpose-works a { text-decoration:underline;text-underline-offset:5px; }
+@media(max-width:700px) { .forest-purpose-works { grid-template-columns:1fr;gap:24px; } }

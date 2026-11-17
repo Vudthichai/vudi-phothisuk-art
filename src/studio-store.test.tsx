@@ -10,7 +10,7 @@ afterEach(cleanup);
 it('serves all five distinct product pages with intended sizes and no checkout or final size prices', () => {
   for (const edition of studioEditions) {
     const view=render(<MemoryRouter initialEntries={[`/studio-editions/${edition.artworkId}/`]}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
-    expect(document.querySelector('.studio-product-price')?.textContent).toContain('Starting at $40');
+    expect(document.querySelector('.studio-product-price')?.textContent).toContain('$40Starting price · Coming Soon');
     expect(screen.getAllByRole('radio')).toHaveLength(2);
     expect(studioSizes.every(s=>s.priceCents===null)).toBe(true);
     const larger=screen.getByRole('radio',{name:'12 × 16 inches'});

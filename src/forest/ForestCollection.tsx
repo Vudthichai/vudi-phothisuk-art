@@ -1,3 +1,4 @@
+import { ArtWithPurpose } from '../studio/StudioGiving';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import type { ForestArtwork } from './types';
@@ -66,6 +67,7 @@ export function ForestCollection() {
             </article>
           ))}
         </div>
+        <ArtWithPurpose/>
         <StudioEditions/>
       </>}
   </section></>;
