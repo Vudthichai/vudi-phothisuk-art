@@ -22,9 +22,10 @@ it('navigates the five prints in order, wrapping both ends without pointing to o
 it('keeps unapproved mockups out of galleries and cards, without substituting original photographs',()=>{
  const edition=studioEditions[0];
  additionalStudioViews[edition.id]=[{id:'pending-wall',kind:'lifestyle',label:'Lifestyle',image:studioPrintImage(edition),approval:'pending'}];
- expect(studioGallery(edition).map(v=>v.kind)).toEqual(['clean']);
+ expect(studioGallery(edition).some(v=>v.id==='pending-wall')).toBe(false);
+ expect(studioGallery(edition).map(v=>v.kind)).toEqual(['framed','lifestyle','clean']);
  const {container}=render(<MemoryRouter><StudioEditions/></MemoryRouter>);
- expect(container.querySelector('.has-lifestyle')).toBeNull();expect(container.querySelectorAll('img')).toHaveLength(5);
+ expect(container.querySelectorAll('.has-lifestyle')).toHaveLength(5);expect(container.querySelectorAll('img')).toHaveLength(10);
 });
 it('supports approved extra gallery views with explicit touch/keyboard controls',()=>{
  const edition=studioEditions[0];

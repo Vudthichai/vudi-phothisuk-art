@@ -1,0 +1,712 @@
+{
+  "mother-nature": {
+    "9x12": [
+      {
+        "id": "mother-nature-gallery-9x12",
+        "kind": "framed",
+        "label": "Gallery mockup",
+        "image": {
+          "id": "mother-nature-gallery-9x12",
+          "role": "full",
+          "alt": "Mother Nature 9 \u00d7 12 inch Studio Edition design in a slim matte-black frame, against warm ivory; composited mockup.",
+          "variants": [
+            {
+              "key": "mother-nature-gallery-9x12-640",
+              "src": "/studio-editions/mockups/mother-nature-gallery-9x12-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "mother-nature-gallery-9x12-1200",
+              "src": "/studio-editions/mockups/mother-nature-gallery-9x12-1200.webp",
+              "width": 960,
+              "height": 1200
+            },
+            {
+              "key": "mother-nature-gallery-9x12-1800",
+              "src": "/studio-editions/mockups/mother-nature-gallery-9x12-1800.webp",
+              "width": 1440,
+              "height": 1800
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "9x12"
+        ]
+      },
+      {
+        "id": "mother-nature-lifestyle-9x12",
+        "kind": "lifestyle",
+        "label": "Interior mockup",
+        "image": {
+          "id": "mother-nature-lifestyle-9x12",
+          "role": "full",
+          "alt": "Mother Nature 9 \u00d7 12 inch Studio Edition design in a slim matte-black frame, on a sunlit ivory wall above a dark walnut console; composited mockup.",
+          "variants": [
+            {
+              "key": "mother-nature-lifestyle-9x12-640",
+              "src": "/studio-editions/mockups/mother-nature-lifestyle-9x12-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "mother-nature-lifestyle-9x12-960",
+              "src": "/studio-editions/mockups/mother-nature-lifestyle-9x12-960.webp",
+              "width": 768,
+              "height": 960
+            },
+            {
+              "key": "mother-nature-lifestyle-9x12-1400",
+              "src": "/studio-editions/mockups/mother-nature-lifestyle-9x12-1400.webp",
+              "width": 1120,
+              "height": 1400
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "9x12"
+        ]
+      }
+    ],
+    "12x16": [
+      {
+        "id": "mother-nature-gallery-12x16",
+        "kind": "framed",
+        "label": "Gallery mockup",
+        "image": {
+          "id": "mother-nature-gallery-12x16",
+          "role": "full",
+          "alt": "Mother Nature 12 \u00d7 16 inch Studio Edition design in a slim matte-black frame, against warm ivory; composited mockup.",
+          "variants": [
+            {
+              "key": "mother-nature-gallery-12x16-640",
+              "src": "/studio-editions/mockups/mother-nature-gallery-12x16-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "mother-nature-gallery-12x16-1200",
+              "src": "/studio-editions/mockups/mother-nature-gallery-12x16-1200.webp",
+              "width": 960,
+              "height": 1200
+            },
+            {
+              "key": "mother-nature-gallery-12x16-1800",
+              "src": "/studio-editions/mockups/mother-nature-gallery-12x16-1800.webp",
+              "width": 1440,
+              "height": 1800
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "12x16"
+        ]
+      },
+      {
+        "id": "mother-nature-lifestyle-12x16",
+        "kind": "lifestyle",
+        "label": "Interior mockup",
+        "image": {
+          "id": "mother-nature-lifestyle-12x16",
+          "role": "full",
+          "alt": "Mother Nature 12 \u00d7 16 inch Studio Edition design in a slim matte-black frame, on a sunlit ivory wall above a dark walnut console; composited mockup.",
+          "variants": [
+            {
+              "key": "mother-nature-lifestyle-12x16-640",
+              "src": "/studio-editions/mockups/mother-nature-lifestyle-12x16-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "mother-nature-lifestyle-12x16-960",
+              "src": "/studio-editions/mockups/mother-nature-lifestyle-12x16-960.webp",
+              "width": 768,
+              "height": 960
+            },
+            {
+              "key": "mother-nature-lifestyle-12x16-1400",
+              "src": "/studio-editions/mockups/mother-nature-lifestyle-12x16-1400.webp",
+              "width": 1120,
+              "height": 1400
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "12x16"
+        ]
+      }
+    ]
+  },
+  "ethereal-bloom": {
+    "9x12": [
+      {
+        "id": "ethereal-bloom-gallery-9x12",
+        "kind": "framed",
+        "label": "Gallery mockup",
+        "image": {
+          "id": "ethereal-bloom-gallery-9x12",
+          "role": "full",
+          "alt": "Ethereal Bloom 9 \u00d7 12 inch Studio Edition design in a slim matte-black frame, against warm ivory; composited mockup.",
+          "variants": [
+            {
+              "key": "ethereal-bloom-gallery-9x12-640",
+              "src": "/studio-editions/mockups/ethereal-bloom-gallery-9x12-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "ethereal-bloom-gallery-9x12-1200",
+              "src": "/studio-editions/mockups/ethereal-bloom-gallery-9x12-1200.webp",
+              "width": 960,
+              "height": 1200
+            },
+            {
+              "key": "ethereal-bloom-gallery-9x12-1800",
+              "src": "/studio-editions/mockups/ethereal-bloom-gallery-9x12-1800.webp",
+              "width": 1440,
+              "height": 1800
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "9x12"
+        ]
+      },
+      {
+        "id": "ethereal-bloom-lifestyle-9x12",
+        "kind": "lifestyle",
+        "label": "Interior mockup",
+        "image": {
+          "id": "ethereal-bloom-lifestyle-9x12",
+          "role": "full",
+          "alt": "Ethereal Bloom 9 \u00d7 12 inch Studio Edition design in a slim matte-black frame, on a sunlit ivory wall above a dark walnut console; composited mockup.",
+          "variants": [
+            {
+              "key": "ethereal-bloom-lifestyle-9x12-640",
+              "src": "/studio-editions/mockups/ethereal-bloom-lifestyle-9x12-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "ethereal-bloom-lifestyle-9x12-960",
+              "src": "/studio-editions/mockups/ethereal-bloom-lifestyle-9x12-960.webp",
+              "width": 768,
+              "height": 960
+            },
+            {
+              "key": "ethereal-bloom-lifestyle-9x12-1400",
+              "src": "/studio-editions/mockups/ethereal-bloom-lifestyle-9x12-1400.webp",
+              "width": 1120,
+              "height": 1400
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "9x12"
+        ]
+      }
+    ],
+    "12x16": [
+      {
+        "id": "ethereal-bloom-gallery-12x16",
+        "kind": "framed",
+        "label": "Gallery mockup",
+        "image": {
+          "id": "ethereal-bloom-gallery-12x16",
+          "role": "full",
+          "alt": "Ethereal Bloom 12 \u00d7 16 inch Studio Edition design in a slim matte-black frame, against warm ivory; composited mockup.",
+          "variants": [
+            {
+              "key": "ethereal-bloom-gallery-12x16-640",
+              "src": "/studio-editions/mockups/ethereal-bloom-gallery-12x16-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "ethereal-bloom-gallery-12x16-1200",
+              "src": "/studio-editions/mockups/ethereal-bloom-gallery-12x16-1200.webp",
+              "width": 960,
+              "height": 1200
+            },
+            {
+              "key": "ethereal-bloom-gallery-12x16-1800",
+              "src": "/studio-editions/mockups/ethereal-bloom-gallery-12x16-1800.webp",
+              "width": 1440,
+              "height": 1800
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "12x16"
+        ]
+      },
+      {
+        "id": "ethereal-bloom-lifestyle-12x16",
+        "kind": "lifestyle",
+        "label": "Interior mockup",
+        "image": {
+          "id": "ethereal-bloom-lifestyle-12x16",
+          "role": "full",
+          "alt": "Ethereal Bloom 12 \u00d7 16 inch Studio Edition design in a slim matte-black frame, on a sunlit ivory wall above a dark walnut console; composited mockup.",
+          "variants": [
+            {
+              "key": "ethereal-bloom-lifestyle-12x16-640",
+              "src": "/studio-editions/mockups/ethereal-bloom-lifestyle-12x16-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "ethereal-bloom-lifestyle-12x16-960",
+              "src": "/studio-editions/mockups/ethereal-bloom-lifestyle-12x16-960.webp",
+              "width": 768,
+              "height": 960
+            },
+            {
+              "key": "ethereal-bloom-lifestyle-12x16-1400",
+              "src": "/studio-editions/mockups/ethereal-bloom-lifestyle-12x16-1400.webp",
+              "width": 1120,
+              "height": 1400
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "12x16"
+        ]
+      }
+    ]
+  },
+  "tiger-lily": {
+    "9x12": [
+      {
+        "id": "tiger-lily-gallery-9x12",
+        "kind": "framed",
+        "label": "Gallery mockup",
+        "image": {
+          "id": "tiger-lily-gallery-9x12",
+          "role": "full",
+          "alt": "Tiger Lily 9 \u00d7 12 inch Studio Edition design in a slim matte-black frame, against warm ivory; composited mockup.",
+          "variants": [
+            {
+              "key": "tiger-lily-gallery-9x12-640",
+              "src": "/studio-editions/mockups/tiger-lily-gallery-9x12-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "tiger-lily-gallery-9x12-1200",
+              "src": "/studio-editions/mockups/tiger-lily-gallery-9x12-1200.webp",
+              "width": 960,
+              "height": 1200
+            },
+            {
+              "key": "tiger-lily-gallery-9x12-1800",
+              "src": "/studio-editions/mockups/tiger-lily-gallery-9x12-1800.webp",
+              "width": 1440,
+              "height": 1800
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "9x12"
+        ]
+      },
+      {
+        "id": "tiger-lily-lifestyle-9x12",
+        "kind": "lifestyle",
+        "label": "Interior mockup",
+        "image": {
+          "id": "tiger-lily-lifestyle-9x12",
+          "role": "full",
+          "alt": "Tiger Lily 9 \u00d7 12 inch Studio Edition design in a slim matte-black frame, on a sunlit ivory wall above a dark walnut console; composited mockup.",
+          "variants": [
+            {
+              "key": "tiger-lily-lifestyle-9x12-640",
+              "src": "/studio-editions/mockups/tiger-lily-lifestyle-9x12-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "tiger-lily-lifestyle-9x12-960",
+              "src": "/studio-editions/mockups/tiger-lily-lifestyle-9x12-960.webp",
+              "width": 768,
+              "height": 960
+            },
+            {
+              "key": "tiger-lily-lifestyle-9x12-1400",
+              "src": "/studio-editions/mockups/tiger-lily-lifestyle-9x12-1400.webp",
+              "width": 1120,
+              "height": 1400
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "9x12"
+        ]
+      }
+    ],
+    "12x16": [
+      {
+        "id": "tiger-lily-gallery-12x16",
+        "kind": "framed",
+        "label": "Gallery mockup",
+        "image": {
+          "id": "tiger-lily-gallery-12x16",
+          "role": "full",
+          "alt": "Tiger Lily 12 \u00d7 16 inch Studio Edition design in a slim matte-black frame, against warm ivory; composited mockup.",
+          "variants": [
+            {
+              "key": "tiger-lily-gallery-12x16-640",
+              "src": "/studio-editions/mockups/tiger-lily-gallery-12x16-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "tiger-lily-gallery-12x16-1200",
+              "src": "/studio-editions/mockups/tiger-lily-gallery-12x16-1200.webp",
+              "width": 960,
+              "height": 1200
+            },
+            {
+              "key": "tiger-lily-gallery-12x16-1800",
+              "src": "/studio-editions/mockups/tiger-lily-gallery-12x16-1800.webp",
+              "width": 1440,
+              "height": 1800
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "12x16"
+        ]
+      },
+      {
+        "id": "tiger-lily-lifestyle-12x16",
+        "kind": "lifestyle",
+        "label": "Interior mockup",
+        "image": {
+          "id": "tiger-lily-lifestyle-12x16",
+          "role": "full",
+          "alt": "Tiger Lily 12 \u00d7 16 inch Studio Edition design in a slim matte-black frame, on a sunlit ivory wall above a dark walnut console; composited mockup.",
+          "variants": [
+            {
+              "key": "tiger-lily-lifestyle-12x16-640",
+              "src": "/studio-editions/mockups/tiger-lily-lifestyle-12x16-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "tiger-lily-lifestyle-12x16-960",
+              "src": "/studio-editions/mockups/tiger-lily-lifestyle-12x16-960.webp",
+              "width": 768,
+              "height": 960
+            },
+            {
+              "key": "tiger-lily-lifestyle-12x16-1400",
+              "src": "/studio-editions/mockups/tiger-lily-lifestyle-12x16-1400.webp",
+              "width": 1120,
+              "height": 1400
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "12x16"
+        ]
+      }
+    ]
+  },
+  "75-leaves": {
+    "9x12": [
+      {
+        "id": "75-leaves-gallery-9x12",
+        "kind": "framed",
+        "label": "Gallery mockup",
+        "image": {
+          "id": "75-leaves-gallery-9x12",
+          "role": "full",
+          "alt": "75 Leaves 9 \u00d7 12 inch Studio Edition design in a slim matte-black frame, against warm ivory; composited mockup.",
+          "variants": [
+            {
+              "key": "75-leaves-gallery-9x12-640",
+              "src": "/studio-editions/mockups/75-leaves-gallery-9x12-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "75-leaves-gallery-9x12-1200",
+              "src": "/studio-editions/mockups/75-leaves-gallery-9x12-1200.webp",
+              "width": 960,
+              "height": 1200
+            },
+            {
+              "key": "75-leaves-gallery-9x12-1800",
+              "src": "/studio-editions/mockups/75-leaves-gallery-9x12-1800.webp",
+              "width": 1440,
+              "height": 1800
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "9x12"
+        ]
+      },
+      {
+        "id": "75-leaves-lifestyle-9x12",
+        "kind": "lifestyle",
+        "label": "Interior mockup",
+        "image": {
+          "id": "75-leaves-lifestyle-9x12",
+          "role": "full",
+          "alt": "75 Leaves 9 \u00d7 12 inch Studio Edition design in a slim matte-black frame, on a sunlit ivory wall above a dark walnut console; composited mockup.",
+          "variants": [
+            {
+              "key": "75-leaves-lifestyle-9x12-640",
+              "src": "/studio-editions/mockups/75-leaves-lifestyle-9x12-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "75-leaves-lifestyle-9x12-960",
+              "src": "/studio-editions/mockups/75-leaves-lifestyle-9x12-960.webp",
+              "width": 768,
+              "height": 960
+            },
+            {
+              "key": "75-leaves-lifestyle-9x12-1400",
+              "src": "/studio-editions/mockups/75-leaves-lifestyle-9x12-1400.webp",
+              "width": 1120,
+              "height": 1400
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "9x12"
+        ]
+      }
+    ],
+    "12x16": [
+      {
+        "id": "75-leaves-gallery-12x16",
+        "kind": "framed",
+        "label": "Gallery mockup",
+        "image": {
+          "id": "75-leaves-gallery-12x16",
+          "role": "full",
+          "alt": "75 Leaves 12 \u00d7 16 inch Studio Edition design in a slim matte-black frame, against warm ivory; composited mockup.",
+          "variants": [
+            {
+              "key": "75-leaves-gallery-12x16-640",
+              "src": "/studio-editions/mockups/75-leaves-gallery-12x16-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "75-leaves-gallery-12x16-1200",
+              "src": "/studio-editions/mockups/75-leaves-gallery-12x16-1200.webp",
+              "width": 960,
+              "height": 1200
+            },
+            {
+              "key": "75-leaves-gallery-12x16-1800",
+              "src": "/studio-editions/mockups/75-leaves-gallery-12x16-1800.webp",
+              "width": 1440,
+              "height": 1800
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "12x16"
+        ]
+      },
+      {
+        "id": "75-leaves-lifestyle-12x16",
+        "kind": "lifestyle",
+        "label": "Interior mockup",
+        "image": {
+          "id": "75-leaves-lifestyle-12x16",
+          "role": "full",
+          "alt": "75 Leaves 12 \u00d7 16 inch Studio Edition design in a slim matte-black frame, on a sunlit ivory wall above a dark walnut console; composited mockup.",
+          "variants": [
+            {
+              "key": "75-leaves-lifestyle-12x16-640",
+              "src": "/studio-editions/mockups/75-leaves-lifestyle-12x16-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "75-leaves-lifestyle-12x16-960",
+              "src": "/studio-editions/mockups/75-leaves-lifestyle-12x16-960.webp",
+              "width": 768,
+              "height": 960
+            },
+            {
+              "key": "75-leaves-lifestyle-12x16-1400",
+              "src": "/studio-editions/mockups/75-leaves-lifestyle-12x16-1400.webp",
+              "width": 1120,
+              "height": 1400
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "12x16"
+        ]
+      }
+    ]
+  },
+  "a-forest-forgotten": {
+    "9x12": [
+      {
+        "id": "a-forest-forgotten-gallery-9x12",
+        "kind": "framed",
+        "label": "Gallery mockup",
+        "image": {
+          "id": "a-forest-forgotten-gallery-9x12",
+          "role": "full",
+          "alt": "A Forest Forgotten 9 \u00d7 12 inch Studio Edition design in a slim matte-black frame, against warm ivory; composited mockup.",
+          "variants": [
+            {
+              "key": "a-forest-forgotten-gallery-9x12-640",
+              "src": "/studio-editions/mockups/a-forest-forgotten-gallery-9x12-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "a-forest-forgotten-gallery-9x12-1200",
+              "src": "/studio-editions/mockups/a-forest-forgotten-gallery-9x12-1200.webp",
+              "width": 960,
+              "height": 1200
+            },
+            {
+              "key": "a-forest-forgotten-gallery-9x12-1800",
+              "src": "/studio-editions/mockups/a-forest-forgotten-gallery-9x12-1800.webp",
+              "width": 1440,
+              "height": 1800
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "9x12"
+        ]
+      },
+      {
+        "id": "a-forest-forgotten-lifestyle-9x12",
+        "kind": "lifestyle",
+        "label": "Interior mockup",
+        "image": {
+          "id": "a-forest-forgotten-lifestyle-9x12",
+          "role": "full",
+          "alt": "A Forest Forgotten 9 \u00d7 12 inch Studio Edition design in a slim matte-black frame, on a sunlit ivory wall above a dark walnut console; composited mockup.",
+          "variants": [
+            {
+              "key": "a-forest-forgotten-lifestyle-9x12-640",
+              "src": "/studio-editions/mockups/a-forest-forgotten-lifestyle-9x12-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "a-forest-forgotten-lifestyle-9x12-960",
+              "src": "/studio-editions/mockups/a-forest-forgotten-lifestyle-9x12-960.webp",
+              "width": 768,
+              "height": 960
+            },
+            {
+              "key": "a-forest-forgotten-lifestyle-9x12-1400",
+              "src": "/studio-editions/mockups/a-forest-forgotten-lifestyle-9x12-1400.webp",
+              "width": 1120,
+              "height": 1400
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "9x12"
+        ]
+      }
+    ],
+    "12x16": [
+      {
+        "id": "a-forest-forgotten-gallery-12x16",
+        "kind": "framed",
+        "label": "Gallery mockup",
+        "image": {
+          "id": "a-forest-forgotten-gallery-12x16",
+          "role": "full",
+          "alt": "A Forest Forgotten 12 \u00d7 16 inch Studio Edition design in a slim matte-black frame, against warm ivory; composited mockup.",
+          "variants": [
+            {
+              "key": "a-forest-forgotten-gallery-12x16-640",
+              "src": "/studio-editions/mockups/a-forest-forgotten-gallery-12x16-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "a-forest-forgotten-gallery-12x16-1200",
+              "src": "/studio-editions/mockups/a-forest-forgotten-gallery-12x16-1200.webp",
+              "width": 960,
+              "height": 1200
+            },
+            {
+              "key": "a-forest-forgotten-gallery-12x16-1800",
+              "src": "/studio-editions/mockups/a-forest-forgotten-gallery-12x16-1800.webp",
+              "width": 1440,
+              "height": 1800
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "12x16"
+        ]
+      },
+      {
+        "id": "a-forest-forgotten-lifestyle-12x16",
+        "kind": "lifestyle",
+        "label": "Interior mockup",
+        "image": {
+          "id": "a-forest-forgotten-lifestyle-12x16",
+          "role": "full",
+          "alt": "A Forest Forgotten 12 \u00d7 16 inch Studio Edition design in a slim matte-black frame, on a sunlit ivory wall above a dark walnut console; composited mockup.",
+          "variants": [
+            {
+              "key": "a-forest-forgotten-lifestyle-12x16-640",
+              "src": "/studio-editions/mockups/a-forest-forgotten-lifestyle-12x16-640.webp",
+              "width": 512,
+              "height": 640
+            },
+            {
+              "key": "a-forest-forgotten-lifestyle-12x16-960",
+              "src": "/studio-editions/mockups/a-forest-forgotten-lifestyle-12x16-960.webp",
+              "width": 768,
+              "height": 960
+            },
+            {
+              "key": "a-forest-forgotten-lifestyle-12x16-1400",
+              "src": "/studio-editions/mockups/a-forest-forgotten-lifestyle-12x16-1400.webp",
+              "width": 1120,
+              "height": 1400
+            }
+          ]
+        },
+        "approval": "approved-print-composite",
+        "modeledSizeIds": [
+          "12x16"
+        ]
+      }
+    ]
+  }
+}

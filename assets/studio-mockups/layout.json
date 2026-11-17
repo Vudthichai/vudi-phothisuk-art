@@ -1,0 +1,45 @@
+{
+  "version": 3,
+  "gallery": {
+    "canvas": [
+      1440,
+      1800
+    ],
+    "pixelsPerInch": 100,
+    "frameInches": 0.22,
+    "background": "#f7f5ef",
+    "longEdges": [
+      640,
+      1200,
+      1800
+    ],
+    "backgroundImage": "assets/studio-mockups/gallery-wall.webp"
+  },
+  "lifestyle": {
+    "background": "assets/studio-mockups/ivory-console.webp",
+    "pixelsPerInch": 62.5,
+    "referenceFieldWidthInches": 17.952,
+    "printCenterPixels": [
+      575,
+      565
+    ],
+    "frameInches": 0.22,
+    "longEdges": [
+      640,
+      960,
+      1400
+    ]
+  },
+  "note": "Reference-inspired close-up wall and partial dark-walnut console, not a wide room. Size modeled at 62.5 pixels/inch across a declared 17.952-inch camera crop. Cabinet extends beyond both image edges; no claim of measured furniture or real-room scale. Approved artwork is composited unchanged.",
+  "lighting": {
+    "direction": "upper-left",
+    "ambientOpacity": 30,
+    "contactOpacity": 70,
+    "castOpacity": 82,
+    "castOffsetInches": [
+      0.22,
+      0.28
+    ],
+    "castBlurInches": 0.08
+  }
+}

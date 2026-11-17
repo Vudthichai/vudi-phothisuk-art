@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { studioGallery } from './gallery';
+import { studioGallery, studioPrimaryImage } from './gallery';
 import { ForestPhotograph } from '../forest/ForestPhotograph';
-import { studioArtwork, studioCollectionBundle, studioEditionFor, studioEditions, studioEditionTerms, studioPrice, studioPrintImage, studioBase, studioProductPath, type StudioEdition } from './editions';
+import { studioArtwork, studioCollectionBundle, studioEditionFor, studioEditions, studioEditionTerms, studioPrice, studioBase, studioProductPath, type StudioEdition } from './editions';
 import './StudioEditions.css';
 
 function PriceStatus({ bundle = false }: { bundle?: boolean }) {
@@ -13,7 +13,7 @@ function EditionCard({ edition }: { edition: StudioEdition }) {
   const lifestyle = studioGallery(edition).find(view => view.kind === 'lifestyle');
   return <article className="studio-edition-card" aria-labelledby={`${edition.id}-title`}>
     <Link className={`studio-edition-image${lifestyle ? ' has-lifestyle' : ''}`} to={path} aria-label={`View Studio Edition information for ${artwork.title}`}>
-      <ForestPhotograph image={studioPrintImage(edition)} sizes="(max-width:700px) 86vw, (max-width:1000px) 40vw, 27vw"/>{lifestyle && <span className="studio-card-lifestyle" aria-hidden="true"><ForestPhotograph image={{...lifestyle.image,alt:''}} sizes="(max-width:700px) 86vw, 27vw"/></span>}
+      <ForestPhotograph image={studioPrimaryImage(edition)} sizes="(max-width:700px) 86vw, (max-width:1000px) 40vw, 27vw"/>{lifestyle && <span className="studio-card-lifestyle" aria-hidden="true"><ForestPhotograph image={{...lifestyle.image,alt:''}} sizes="(max-width:700px) 86vw, 27vw"/></span>}
     </Link>
     <div className="studio-edition-copy"><h3 id={`${edition.id}-title`}><Link to={path}>{artwork.title}</Link></h3><PriceStatus/></div>
   </article>;
@@ -30,7 +30,7 @@ export function ArtworkStudioEdition({ artworkId }: { artworkId: string }) {
   if (!edition) return null;
   const artwork = studioArtwork(edition);
   return <section className="studio-edition-panel" id="studio-edition" aria-labelledby="studio-edition-heading">
-    <Link to={studioProductPath(edition)} className="studio-preview-image" aria-label={`View ${artwork.title} Studio Edition`}><ForestPhotograph image={studioPrintImage(edition)} sizes="(max-width:700px) 35vw, 200px"/></Link>
+    <Link to={studioProductPath(edition)} className="studio-preview-image" aria-label={`View ${artwork.title} Studio Edition`}><ForestPhotograph image={studioPrimaryImage(edition)} sizes="(max-width:700px) 35vw, 200px"/></Link>
     <div><p className="eyebrow">Also available as a print</p><h2 id="studio-edition-heading">{artwork.title} — Studio Edition</h2><PriceStatus/><Link className="text-link" to={studioProductPath(edition)}>View Studio Edition</Link></div>
   </section>;
 }

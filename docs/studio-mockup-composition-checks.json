@@ -1,0 +1,665 @@
+{
+  "layoutVersion": 3,
+  "checks": [
+    {
+      "artworkId": "mother-nature",
+      "sizeId": "9x12",
+      "kind": "gallery",
+      "sourceSha256": "f4511adefdbb4f898c84927d50767e89423d4499ae2ff75244adc53ec7de3787",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        900,
+        1200
+      ],
+      "framePixels": [
+        944,
+        1244
+      ],
+      "positionPixels": [
+        248,
+        278
+      ],
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "mother-nature",
+      "sizeId": "9x12",
+      "kind": "lifestyle",
+      "sourceSha256": "f4511adefdbb4f898c84927d50767e89423d4499ae2ff75244adc53ec7de3787",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        562,
+        750
+      ],
+      "framePixels": [
+        590,
+        778
+      ],
+      "positionPixels": [
+        280,
+        176
+      ],
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "mother-nature",
+      "sizeId": "12x16",
+      "kind": "gallery",
+      "sourceSha256": "f4511adefdbb4f898c84927d50767e89423d4499ae2ff75244adc53ec7de3787",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        1200,
+        1600
+      ],
+      "framePixels": [
+        1244,
+        1644
+      ],
+      "positionPixels": [
+        98,
+        78
+      ],
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "mother-nature",
+      "sizeId": "12x16",
+      "kind": "lifestyle",
+      "sourceSha256": "f4511adefdbb4f898c84927d50767e89423d4499ae2ff75244adc53ec7de3787",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        750,
+        1000
+      ],
+      "framePixels": [
+        778,
+        1028
+      ],
+      "positionPixels": [
+        186,
+        51
+      ],
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "ethereal-bloom",
+      "sizeId": "9x12",
+      "kind": "gallery",
+      "sourceSha256": "a4aa653f0436b9cdb2d1396f8140097cdfe782b9ab40f622f1e4e4d7cb637f45",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        900,
+        1200
+      ],
+      "framePixels": [
+        944,
+        1244
+      ],
+      "positionPixels": [
+        248,
+        278
+      ],
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "ethereal-bloom",
+      "sizeId": "9x12",
+      "kind": "lifestyle",
+      "sourceSha256": "a4aa653f0436b9cdb2d1396f8140097cdfe782b9ab40f622f1e4e4d7cb637f45",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        562,
+        750
+      ],
+      "framePixels": [
+        590,
+        778
+      ],
+      "positionPixels": [
+        280,
+        176
+      ],
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "ethereal-bloom",
+      "sizeId": "12x16",
+      "kind": "gallery",
+      "sourceSha256": "a4aa653f0436b9cdb2d1396f8140097cdfe782b9ab40f622f1e4e4d7cb637f45",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        1200,
+        1600
+      ],
+      "framePixels": [
+        1244,
+        1644
+      ],
+      "positionPixels": [
+        98,
+        78
+      ],
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "ethereal-bloom",
+      "sizeId": "12x16",
+      "kind": "lifestyle",
+      "sourceSha256": "a4aa653f0436b9cdb2d1396f8140097cdfe782b9ab40f622f1e4e4d7cb637f45",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        750,
+        1000
+      ],
+      "framePixels": [
+        778,
+        1028
+      ],
+      "positionPixels": [
+        186,
+        51
+      ],
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "tiger-lily",
+      "sizeId": "9x12",
+      "kind": "gallery",
+      "sourceSha256": "52ce228fd36e302c96bc53097e8ed6018ef7c52c84a67455e5c5e0ba8b89e977",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        900,
+        1200
+      ],
+      "framePixels": [
+        944,
+        1244
+      ],
+      "positionPixels": [
+        248,
+        278
+      ],
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "tiger-lily",
+      "sizeId": "9x12",
+      "kind": "lifestyle",
+      "sourceSha256": "52ce228fd36e302c96bc53097e8ed6018ef7c52c84a67455e5c5e0ba8b89e977",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        562,
+        750
+      ],
+      "framePixels": [
+        590,
+        778
+      ],
+      "positionPixels": [
+        280,
+        176
+      ],
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "tiger-lily",
+      "sizeId": "12x16",
+      "kind": "gallery",
+      "sourceSha256": "52ce228fd36e302c96bc53097e8ed6018ef7c52c84a67455e5c5e0ba8b89e977",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        1200,
+        1600
+      ],
+      "framePixels": [
+        1244,
+        1644
+      ],
+      "positionPixels": [
+        98,
+        78
+      ],
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "tiger-lily",
+      "sizeId": "12x16",
+      "kind": "lifestyle",
+      "sourceSha256": "52ce228fd36e302c96bc53097e8ed6018ef7c52c84a67455e5c5e0ba8b89e977",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        750,
+        1000
+      ],
+      "framePixels": [
+        778,
+        1028
+      ],
+      "positionPixels": [
+        186,
+        51
+      ],
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "75-leaves",
+      "sizeId": "9x12",
+      "kind": "gallery",
+      "sourceSha256": "622e4aa8a274d32e832716046a979e9855941a8ac4a06c3c724f775008b19723",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        900,
+        1200
+      ],
+      "framePixels": [
+        944,
+        1244
+      ],
+      "positionPixels": [
+        248,
+        278
+      ],
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "75-leaves",
+      "sizeId": "9x12",
+      "kind": "lifestyle",
+      "sourceSha256": "622e4aa8a274d32e832716046a979e9855941a8ac4a06c3c724f775008b19723",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        562,
+        750
+      ],
+      "framePixels": [
+        590,
+        778
+      ],
+      "positionPixels": [
+        280,
+        176
+      ],
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "75-leaves",
+      "sizeId": "12x16",
+      "kind": "gallery",
+      "sourceSha256": "622e4aa8a274d32e832716046a979e9855941a8ac4a06c3c724f775008b19723",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        1200,
+        1600
+      ],
+      "framePixels": [
+        1244,
+        1644
+      ],
+      "positionPixels": [
+        98,
+        78
+      ],
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "75-leaves",
+      "sizeId": "12x16",
+      "kind": "lifestyle",
+      "sourceSha256": "622e4aa8a274d32e832716046a979e9855941a8ac4a06c3c724f775008b19723",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        750,
+        1000
+      ],
+      "framePixels": [
+        778,
+        1028
+      ],
+      "positionPixels": [
+        186,
+        51
+      ],
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "a-forest-forgotten",
+      "sizeId": "9x12",
+      "kind": "gallery",
+      "sourceSha256": "3759d5dd76203496b813b8634ccb33e5c8cd5bb1f359b1bb5ad0e8f7abb0aaf6",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        900,
+        1200
+      ],
+      "framePixels": [
+        944,
+        1244
+      ],
+      "positionPixels": [
+        248,
+        278
+      ],
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "a-forest-forgotten",
+      "sizeId": "9x12",
+      "kind": "lifestyle",
+      "sourceSha256": "3759d5dd76203496b813b8634ccb33e5c8cd5bb1f359b1bb5ad0e8f7abb0aaf6",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        562,
+        750
+      ],
+      "framePixels": [
+        590,
+        778
+      ],
+      "positionPixels": [
+        280,
+        176
+      ],
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "a-forest-forgotten",
+      "sizeId": "12x16",
+      "kind": "gallery",
+      "sourceSha256": "3759d5dd76203496b813b8634ccb33e5c8cd5bb1f359b1bb5ad0e8f7abb0aaf6",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        1200,
+        1600
+      ],
+      "framePixels": [
+        1244,
+        1644
+      ],
+      "positionPixels": [
+        98,
+        78
+      ],
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    },
+    {
+      "artworkId": "a-forest-forgotten",
+      "sizeId": "12x16",
+      "kind": "lifestyle",
+      "sourceSha256": "3759d5dd76203496b813b8634ccb33e5c8cd5bb1f359b1bb5ad0e8f7abb0aaf6",
+      "artworkPixelComparison": "exact before web encoding",
+      "printPixels": [
+        750,
+        1000
+      ],
+      "framePixels": [
+        778,
+        1028
+      ],
+      "positionPixels": [
+        186,
+        51
+      ],
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
+    }
+  ]
+}
