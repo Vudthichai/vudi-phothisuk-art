@@ -1,3 +1,4 @@
+import { AvailableArt } from './pages/AvailableArt';
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
@@ -49,8 +50,8 @@ it('preserves ten originals, two not-for-sale exceptions and the approved photog
 
 it('shows the eight approved original prices and keeps personal works not for sale', () => {
   const approved = { 'Mother Nature': 5000, 'Dragon Lily': 1200, 'Ethereal Bloom': 7000,
-    'Moss & Mushrooms': 6000, 'Blooming Desire': 3000, 'Wild Tiger Lilies': 4000,
-    'A Forest Forgotten': 4500, 'Gilded Bloom': 2500 };
+    'Moss & Mushrooms': 6000, 'Blooming Desire': 2500, 'Wild Tiger Lilies': 3500,
+    'A Forest Forgotten': 4000, 'Gilded Bloom': 2500 };
   page();
   expect(document.querySelectorAll('.forest-original-price')).toHaveLength(8);
   for (const [title, price] of Object.entries(approved)) {
@@ -69,4 +70,16 @@ it('shows the eight approved original prices and keeps personal works not for sa
     expect(card.querySelector('.forest-original-price')).toBeNull();
     expect(card.textContent).toContain('Not for Sale');
   }
+});
+
+it('uses the same original prices on Available Art without changing Studio prices', () => {
+ const {container}=render(<MemoryRouter><AvailableArt/></MemoryRouter>);
+ const cards=[...container.querySelectorAll('.available-forest-painting')];
+ expect(cards).toHaveLength(8);
+ for (const art of collection.artworks.filter(a=>a.availability!=='not-for-sale')) {
+  const card=cards.find(c=>c.querySelector('h3')?.textContent===art.title)!;
+  expect(card.querySelector('.forest-original-price')?.textContent).toBe('$'+art.priceUsd!.toLocaleString('en-US'));
+  if (art.dimensions) expect(card.querySelector('.forest-original-price')?.previousElementSibling?.textContent).toBe(art.dimensions);
+ }
+ expect([...container.querySelectorAll('.studio-edition-card .studio-price')].map(p=>p.textContent)).toEqual(Array(5).fill('Starting at $40'));
 });

@@ -1,3 +1,4 @@
+import { OriginalPrice } from '../components/OriginalPrice';
 import { ArtWithPurpose } from '../studio/StudioGiving';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
@@ -14,10 +15,6 @@ import { ArtworkStudioEdition, StudioEditions } from '../studio/StudioEditions';
 const base = '/collections/forest-and-flowers';
 function artworkInquiryUrl(artwork: ForestArtwork) {
   return `mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent('Artwork inquiry — ' + artwork.title)}`;
-}
-function OriginalPrice({ artwork }: { artwork: ForestArtwork }) {
-  if (artwork.availability === 'not-for-sale' || artwork.priceUsd === undefined) return null;
-  return <p className="forest-original-price">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(artwork.priceUsd)}</p>;
 }
 function Inquiry({ artwork }: { artwork: ForestArtwork }) {
   return artwork.availability === 'not-for-sale' ? <p className="private-availability">{artwork.availabilityNote}</p> : <div><p className="private-availability">{artwork.availabilityNote}</p><a className="text-link" data-analytics-artwork={`${base}/${artwork.slug}`} href={artworkInquiryUrl(artwork)}>{artwork.priceUsd === undefined ? 'Inquire for Pricing' : 'Inquire About This Artwork'}</a></div>;
@@ -59,7 +56,7 @@ export function ForestCollection() {
               <div className="forest-overview-copy">
                 <Link to={`${base}/${art.slug}`}><h2 id={`forest-exhibit-${art.id}`}>{art.title}</h2></Link>
                 <p>{art.dimensions ?? 'Dimensions to be confirmed'}</p>
-                <OriginalPrice artwork={art}/>
+                <OriginalPrice artwork={art} className="forest-original-price"/>
                 {art.description.slice(0, art.id === 'mother-nature' ? 1 : 2).map(paragraph => <p className="forest-featured-excerpt" key={paragraph}>{paragraph}</p>)}
                 <Inquiry artwork={art}/>
                 <Link className="text-link forest-artwork-link" to={`${base}/${art.slug}`}>View painting</Link>
@@ -121,7 +118,7 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
         <p className="eyebrow forest-editorial-number">{String(position).padStart(2, '0')} / {data.artworks.length} — Forest &amp; Flowers</p>
         <h1>{artwork.title}</h1>
         <p>{artwork.dimensions ?? 'Dimensions to be confirmed'}</p>
-        <OriginalPrice artwork={artwork}/>
+        <OriginalPrice artwork={artwork} className="forest-original-price"/>
         <p className="forest-editorial-mobile-medium">{artwork.medium ?? 'Medium to be confirmed'}</p>
       </header>
       <figure className="forest-editorial-hero">
