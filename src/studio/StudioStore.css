@@ -23,20 +23,28 @@
 .studio-inspect { margin-top:12px; }
 .studio-store :focus-visible { outline:2px solid #12351d;outline-offset:4px; }
 @media(max-width:700px) { .studio-product-layout { grid-template-columns:1fr;gap:24px; }.studio-product-copy { padding-top:0; }.studio-product-copy h1 { font-size:44px; }.studio-breadcrumbs { margin-bottom:28px; } }
-.studio-print-navigation { margin-top:clamp(48px,7vw,90px);padding-top:30px;border-top:1px solid #cdd3c8;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:28px;align-items:center; }
-.studio-print-neighbor { display:flex;gap:16px;align-items:center;min-width:0;min-height:64px; }
-.studio-print-neighbor img { width:58px;height:78px;object-fit:contain;flex:none; }
-.studio-print-neighbor small { display:block;font-size:.7rem;line-height:1.7;margin-bottom:4px; }
-.studio-print-neighbor span>span { font:400 clamp(20px,2vw,27px)/1.2 'Bodoni Moda',Georgia,serif; }
-.studio-print-neighbor.next { grid-column:3;justify-self:end; }
-.studio-print-all { grid-row:1;grid-column:2;font-size:.8rem;padding:12px 0;min-height:44px; }
 .studio-gallery-views { display:flex;flex-wrap:wrap;gap:12px;margin-top:12px; }
 .studio-gallery-views button { font:inherit;min-height:44px;background:transparent;border:1px solid #a8b4a1;padding:10px; }
 .studio-gallery-views [aria-pressed=true] { border-color:#12351d;background:#eef0e8; }
-@media(max-width:700px) { .studio-print-navigation { grid-template-columns:minmax(0,1fr);gap:22px; }.studio-print-neighbor.next { grid-column:1;justify-self:start; }.studio-print-all { grid-column:1;grid-row:3;justify-self:start; } }
+
 .studio-inspect { border:0;background:transparent;color:inherit;font:inherit;font-size:.8rem;cursor:pointer; }
 .studio-gallery-caption { font-size:.75rem;line-height:1.8;color:#526452;margin:12px 0 0; }
 .studio-gallery-views { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px; }
 .studio-gallery-views button { padding:8px;min-width:0;cursor:pointer; }
 .studio-gallery-views img { display:block;width:100%;height:100px;object-fit:contain; }
 .studio-gallery-views span { display:block;font-size:.7rem;line-height:1.5;margin-top:8px; }
+
+.studio-product-designation { font-style:italic;font-size:.95rem;margin-bottom:24px; }
+.studio-product-description { margin:32px 0 20px; }
+.studio-product-description h2 { font-size:24px;margin-bottom:20px; }
+.studio-product-description p { font-size:.9rem;line-height:1.9; }
+/* Shadow only the standalone paper: room photographs already contain real lighting. */
+.studio-product-image.studio-paper-view { padding:clamp(14px,3vw,32px);background:#eeeae1; }
+.studio-product-image.studio-paper-view>img { box-shadow:0 1px 2px rgb(25 32 23 / 24%),0 4px 8px rgb(25 32 23 / 13%),0 18px 32px -10px rgb(25 32 23 / 24%); }
+.studio-explore { margin-top:clamp(64px,8vw,110px);padding-top:36px;border-top:1px solid #cdd3c8; }
+.studio-explore>h2 { font-size:clamp(32px,4vw,44px);margin-bottom:36px; }
+.studio-explore-grid { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:36px 24px; }
+.studio-explore .studio-edition-copy h3 { font-size:clamp(24px,2.5vw,30px); }
+.studio-card-identification { font-size:.8rem;margin-bottom:8px; }
+@media(max-width:1000px) { .studio-explore-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:420px) { .studio-explore-grid { gap:30px 16px; }.studio-explore .studio-edition-copy h3 { font-size:23px; } }

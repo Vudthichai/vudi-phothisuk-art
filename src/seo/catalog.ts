@@ -68,12 +68,12 @@ for (const edition of studioEditions) {
   const image = { src: photo.variants.at(-1)!.src, alt: photo.alt };
   const path = studioProductPath(edition);
   const url = absolute(path);
-  pages.push(page(path, `${art.title} — Studio Edition`, `${art.title}, a Forest & Flowers Studio Edition print by Vudi Phothisuk. Starting at $40. Coming Soon.`, {
-    images: [image], graph: [{ '@type':'Product', '@id':url+'#print', name:art.title+' — Studio Edition', url, image:absolute(image.src), brand:{'@type':'Brand',name:'Vudi Phothisuk Art'}, isRelatedTo:{'@id':absolute(`/collections/forest-and-flowers/${art.slug}/`)+'#artwork'} }],
+  pages.push(page(path, `${art.title} — Studio Print`, `${art.title}, a Forest & Flowers Studio Print by Vudi Phothisuk. Starting at $40. Coming Soon.`, {
+    images: [image], graph: [{ '@type':'Product', '@id':url+'#print', name:art.title+' — Studio Print', url, image:absolute(image.src), brand:{'@type':'Brand',name:'Vudi Phothisuk Art'}, isRelatedTo:{'@id':absolute(`/collections/forest-and-flowers/${art.slug}/`)+'#artwork'} }],
   }));
   printItems.push({'@type':'ListItem',position:printItems.length+1,name:art.title,url});
 }
-pages.push(page(studioBase, 'Forest & Flowers — Studio Editions', 'Explore five Forest & Flowers Studio Edition print designs by Vudi Phothisuk. Starting at $40. Coming Soon.', {
+pages.push(page(studioBase, 'Forest & Flowers — Studio Editions', 'Explore five Forest & Flowers Studio Prints by Vudi Phothisuk. Starting at $40. Coming Soon.', {
   images: studioEditions.map(e=>{const p=studioPrimaryImage(e);return {src:p.variants.at(-1)!.src,alt:p.alt};}),
   graph:[{'@type':'CollectionPage','@id':absolute(studioBase+'/')+'#webpage',url:absolute(studioBase+'/'),name:'Studio Editions',mainEntity:{'@type':'ItemList',itemListElement:printItems}}],
 }));

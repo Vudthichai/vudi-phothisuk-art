@@ -16,10 +16,10 @@ it('uses each reviewed exact-room composite across both size choices, without re
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(path);
   fireEvent.click(screen.getByRole('radio',{name:'12 × 16 inches'}));
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(path);
-  expect(view.container.querySelector('.studio-gallery-caption')?.textContent).toBe('Gallery mockup');
+  expect(view.container.querySelector('.studio-gallery-caption')?.textContent).toBe('In a Space');
   expect([...view.container.querySelectorAll('img')].some(i=>i.getAttribute('src')?.includes('/mockups/'))).toBe(false);
-  expect(screen.getByText(/Starting at \$40/)).toBeTruthy();
-  fireEvent.click(screen.getByRole('button',{name:'Print design'}));
+  expect(view.container.querySelector('.studio-product-price')?.textContent).toContain('Starting at $40');
+  fireEvent.click(screen.getByRole('button',{name:'Artwork Detail'}));
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toContain(`/studio-editions/${edition.artworkId}-print-`);
   view.unmount();
  }

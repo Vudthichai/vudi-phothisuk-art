@@ -4,7 +4,7 @@ import { NotFound } from '../pages/Pages';
 import { ForestPhotograph } from '../forest/ForestPhotograph';
 import { FullscreenArtworkViewer } from '../forest/FullscreenArtworkViewer';
 import { studioGallery } from './gallery';
-import { StudioPrintNavigation } from './StudioPrintNavigation';
+import { ExploreStudioCollection } from './ExploreStudioCollection';
 import { StudioEditions } from './StudioEditions';
 import { studioArtwork, studioBase, studioEditionFor, studioEditionTerms, studioPrice, studioSizes } from './editions';
 import './StudioStore.css';
@@ -27,14 +27,15 @@ function Product({ edition }: { edition: NonNullable<ReturnType<typeof studioEdi
   const selected = studioSizes.find(option => option.id === size)!;
   return <section className="section page studio-store">
     <nav className="studio-breadcrumbs" aria-label="Studio navigation"><Link to={studioBase}>Studio Editions</Link><Link to="/available-art">Available Art</Link><Link to="/collections/forest-and-flowers">Forest &amp; Flowers</Link></nav>
-    <div className="studio-product-layout"><div className="studio-product-gallery"><button type="button" className="studio-product-image" aria-label={`Enlarge ${artwork.title} ${views[viewIndex].label.toLowerCase()}`} onClick={() => setOpen(true)}><ForestPhotograph image={image} eager sizes="(max-width:700px) 86vw, 52vw"/></button><p className="studio-gallery-caption">{views[viewIndex].label}{views[viewIndex].kind !== 'clean' && views[viewIndex].kind !== 'reference' && ` · ${selected.label}`}</p><button type="button" className="text-link studio-inspect" onClick={() => setOpen(true)}>Inspect print detail</button>{views.length > 1 && <div className="studio-gallery-views" role="group" aria-label="Print views">{views.map((view,index) => <button key={view.id} type="button" aria-pressed={index === viewIndex} onClick={() => setViewIndex(index)}><ForestPhotograph image={{...view.image,alt:''}} sizes="100px"/><span>{view.label}</span></button>)}</div>}</div>
-      <div className="studio-product-copy"><p className="eyebrow">Studio Edition</p><h1>{artwork.title}</h1><p className="studio-product-price">Starting at {studioPrice(studioEditionTerms.priceCents)} <span>· Coming Soon</span></p>
-        <fieldset className="studio-size-options"><legend>Print size</legend>{studioSizes.map(option => <label key={option.id}><input type="radio" name="print-size" value={option.id} checked={size === option.id} onChange={() => { setSize(option.id); setViewIndex(0); }}/><span>{option.label}</span></label>)}</fieldset>
-        <p className="studio-size-note" aria-live="polite">{selected.label}. Size-specific pricing to be confirmed.</p>
+    <div className="studio-product-layout"><div className="studio-product-gallery"><button type="button" className={`studio-product-image${views[viewIndex].kind === 'clean' ? ' studio-paper-view' : ''}`} aria-label={`Enlarge ${artwork.title} ${views[viewIndex].label.toLowerCase()}`} onClick={() => setOpen(true)}><ForestPhotograph image={image} eager sizes="(max-width:700px) 86vw, 52vw"/></button><p className="studio-gallery-caption">{views[viewIndex].label}{views[viewIndex].kind !== 'clean' && views[viewIndex].kind !== 'reference' && ` · ${selected.label}`}</p><button type="button" className="text-link studio-inspect" onClick={() => setOpen(true)}>Inspect print detail</button>{views.length > 1 && <div className="studio-gallery-views" role="group" aria-label="Print views">{views.map((view,index) => <button key={view.id} type="button" aria-pressed={index === viewIndex} onClick={() => setViewIndex(index)}><ForestPhotograph image={{...view.image,alt:''}} sizes="100px"/><span>{view.label}</span></button>)}</div>}</div>
+      <div className="studio-product-copy"><h1>{artwork.title}</h1><p className="studio-product-designation">Studio Print · Forest &amp; Flowers</p><p className="studio-product-price">Starting at {studioPrice(studioEditionTerms.priceCents)} <span>· Coming Soon</span></p>
+        <fieldset className="studio-size-options"><legend>Print size (provisional)</legend>{studioSizes.map(option => <label key={option.id}><input type="radio" name="print-size" value={option.id} checked={size === option.id} onChange={() => { setSize(option.id); setViewIndex(0); }}/><span>{option.label}</span></label>)}</fieldset>
+        <p className="studio-size-note" aria-live="polite">{selected.label} — provisional size. Starting price: {studioPrice(studioEditionTerms.priceCents)}; pricing for this size is not yet confirmed.</p>
+        <section className="studio-product-description" aria-labelledby="studio-description-title"><h2 id="studio-description-title">About the original painting</h2>{artwork.description.slice(0,2).map(paragraph => <p key={paragraph}>{paragraph}</p>)}<p>A fine-art reproduction of the original mixed-media painting.</p></section>
         <Link className="text-link" to={`/collections/forest-and-flowers/${artwork.slug}/`}>View the original artwork</Link>
       </div>
     </div>
-    <StudioPrintNavigation edition={edition}/>
-    {open && <FullscreenArtworkViewer title={`${artwork.title} Studio Edition`} images={views.map(view => view.image)} initialIndex={viewIndex} onClose={() => setOpen(false)}/>}
+    <ExploreStudioCollection edition={edition}/>
+    {open && <FullscreenArtworkViewer title={`${artwork.title} Studio Print`} images={views.map(view => view.image)} initialIndex={viewIndex} onClose={() => setOpen(false)}/>}
   </section>;
 }

@@ -19,7 +19,7 @@ export function studioGallery(edition: StudioEdition, sizeId = studioSizes[0].id
   const image = approvedImages[edition.artworkId];
   if (!image) throw new Error(`Missing reviewed gallery composite: ${edition.artworkId}`);
   const supplied = (additionalStudioViews[edition.id] ?? []).filter(view => view.approval === 'artist-approved' && (!['framed','lifestyle'].includes(view.kind) || view.verifiedSizeIds?.includes(sizeId)));
-  return [{ id:`${edition.id}-exact-room`, kind:'reference', label:'Gallery mockup', image, approval:'artist-approved' },
-    { id:`${edition.id}-clean`, kind:'clean', label:'Print design', image:studioPrintImage(edition), approval:'artist-approved' }, ...supplied];
+  return [{ id:`${edition.id}-exact-room`, kind:'reference', label:'In a Space', image, approval:'artist-approved' },
+    { id:`${edition.id}-clean`, kind:'clean', label:'Artwork Detail', image:studioPrintImage(edition), approval:'artist-approved' }, ...supplied];
 }
 export function studioPrimaryImage(edition: StudioEdition) { return studioGallery(edition)[0].image; }

@@ -3,23 +3,27 @@ import { afterEach, expect, it } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { StudioProduct, StudioListing } from './studio/StudioStore';
-import { studioEditions, studioSizes } from './studio/editions';
+import { studioArtwork, studioEditions, studioSizes } from './studio/editions';
 import { metadata } from './seo/catalog';
 import { AvailableArt } from './pages/AvailableArt';
 afterEach(cleanup);
 it('serves all five distinct product pages with intended sizes and no checkout or final size prices', () => {
   for (const edition of studioEditions) {
     const view=render(<MemoryRouter initialEntries={[`/studio-editions/${edition.artworkId}/`]}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
-    expect(screen.getByText(/Starting at \$40/)).toBeTruthy();
+    expect(document.querySelector('.studio-product-price')?.textContent).toContain('Starting at $40');
     expect(screen.getAllByRole('radio')).toHaveLength(2);
     expect(studioSizes.every(s=>s.priceCents===null)).toBe(true);
     const larger=screen.getByRole('radio',{name:'12 × 16 inches'});
     fireEvent.click(larger);expect((larger as HTMLInputElement).checked).toBe(true);
-    expect(screen.getByText('12 × 16 inches. Size-specific pricing to be confirmed.')).toBeTruthy();
+    expect(screen.getByText('12 × 16 inches — provisional size. Starting price: $40; pricing for this size is not yet confirmed.')).toBeTruthy();
     expect(screen.getByRole('link',{name:'View the original artwork'}).getAttribute('href')).toBe(`/collections/forest-and-flowers/${edition.artworkId}/`);
     expect(document.querySelector('input[type="email"],input[name="card"],a[href*="checkout"]')).toBeNull();
     expect(screen.queryByRole('button',{name:/buy|cart|checkout/i})).toBeNull();
     const meta=metadata(`/studio-editions/${edition.artworkId}/`);
+    expect(meta.title).toContain('Studio Print');expect(meta.description).toContain('Studio Print');
+    expect(screen.getByText('Studio Print · Forest & Flowers')).toBeTruthy();
+    studioArtwork(edition).description.slice(0,2).forEach(p=>expect(screen.getByText(p)).toBeTruthy());
+    expect(screen.getByText('A fine-art reproduction of the original mixed-media painting.')).toBeTruthy();
     expect(meta.indexable).toBe(true);expect(meta.graph[0]['@type']).toBe('Product');expect(meta.graph[0]).not.toHaveProperty('offers');expect(meta.social).toBeTruthy();
     view.unmount();
   }

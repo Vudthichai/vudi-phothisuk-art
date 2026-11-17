@@ -5,18 +5,17 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { StudioProduct } from './studio/StudioStore';
 import { StudioEditions } from './studio/StudioEditions';
 import { studioArtwork, studioEditions, studioProductPath, studioPrintImage } from './studio/editions';
-import { printNeighbors, StudioPrintNavigation } from './studio/StudioPrintNavigation';
+import { ExploreStudioCollection } from './studio/ExploreStudioCollection';
 import { additionalStudioViews, studioGallery } from './studio/gallery';
 afterEach(()=>{cleanup();delete additionalStudioViews[studioEditions[0].id];});
-it('navigates the five prints in order, wrapping both ends without pointing to original artwork pages',()=>{
- expect(studioEditions.map(e=>e.artworkId)).toEqual(['mother-nature','ethereal-bloom','tiger-lily','75-leaves','a-forest-forgotten']);
- studioEditions.forEach((edition,i)=>{
-  const neighbors=printNeighbors(edition);
-  expect(neighbors.previous).toBe(studioEditions[(i+4)%5]);expect(neighbors.next).toBe(studioEditions[(i+1)%5]);
-  const view=render(<MemoryRouter><StudioPrintNavigation edition={edition}/></MemoryRouter>);
-  expect(screen.getByRole('link',{name:`Previous Studio Edition: ${studioArtwork(neighbors.previous).title}`}).getAttribute('href')).toBe(studioProductPath(neighbors.previous));
-  expect(screen.getByRole('link',{name:`Next Studio Edition: ${studioArtwork(neighbors.next).title}`}).getAttribute('href')).toBe(studioProductPath(neighbors.next));
-  expect(screen.getByRole('link',{name:'View All Studio Editions'}).getAttribute('href')).toBe('/studio-editions');view.unmount();
+it('offers the other four prints without previous/next navigation',()=>{
+ studioEditions.forEach(edition=>{
+  const view=render(<MemoryRouter><ExploreStudioCollection edition={edition}/></MemoryRouter>);
+  expect(screen.getByRole('heading',{name:'Explore the Collection'})).toBeTruthy();
+  const cards=[...view.container.querySelectorAll('article')];expect(cards).toHaveLength(4);
+  expect(cards.map(card=>card.querySelector('h3')?.textContent)).toEqual(studioEditions.filter(e=>e.id!==edition.id).map(e=>studioArtwork(e).title));
+  cards.forEach(card=>{expect(card.textContent).toContain('Studio Print');expect(card.textContent).toContain('Starting at $40');expect(card.querySelector('a')?.getAttribute('href')).toMatch(/^\/studio-editions\//);});
+  expect(screen.queryByRole('link',{name:/Previous|Next/})).toBeNull();view.unmount();
  });
 });
 it('keeps unapproved mockups out of galleries and cards, without substituting original photographs',()=>{
