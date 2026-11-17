@@ -30,21 +30,42 @@ def composite(background, artwork, center, pixels_per_inch, width, height, borde
     frame_size = (size[0]+2*border, size[1]+2*border)
     x, y = round(center[0]-frame_size[0]/2), round(center[1]-frame_size[1]/2)
     assert x >= 0 and y >= 0 and x+frame_size[0] <= canvas.width and y+frame_size[1] <= canvas.height
-    mask = Image.new('L',canvas.size,0)
-    ImageDraw.Draw(mask).rectangle((x+5,y+7,x+frame_size[0]+5,y+frame_size[1]+7),fill=65)
-    shadow = Image.new('RGBA',canvas.size,(25,22,18,0))
-    shadow.putalpha(mask.filter(ImageFilter.GaussianBlur(max(3,pixels_per_inch*.11))))
-    canvas = Image.alpha_composite(canvas,shadow)
-    frame = Image.new('RGBA',frame_size,(26,27,26,255))
+    lighting = layout['lighting']
+    def cast_shadow(dx, dy, blur, opacity):
+        nonlocal canvas
+        mask = Image.new('L',canvas.size,0)
+        ImageDraw.Draw(mask).rectangle((x+dx,y+dy,x+frame_size[0]+dx,y+frame_size[1]+dy),fill=opacity)
+        layer = Image.new('RGBA',canvas.size,(26,23,18,0))
+        layer.putalpha(mask.filter(ImageFilter.GaussianBlur(blur)))
+        canvas = Image.alpha_composite(canvas,layer)
+    cast_shadow(0,2,max(4,pixels_per_inch*.13),lighting['ambientOpacity'])
+    cast_shadow(round(pixels_per_inch*lighting['castOffsetInches'][0]),round(pixels_per_inch*lighting['castOffsetInches'][1]),max(3,pixels_per_inch*lighting['castBlurInches']),lighting['castOpacity'])
+    cast_shadow(1,2,max(1,pixels_per_inch*.02),lighting['contactOpacity'])
+    frame = Image.new('RGBA',frame_size,(30,31,28,255))
     draw = ImageDraw.Draw(frame)
-    draw.line((0,0,frame_size[0]-1,0),fill=(58,58,55,255),width=1)
-    draw.line((0,0,0,frame_size[1]-1),fill=(48,49,46,255),width=1)
+    fw,fh = frame_size
+    # Directional matte frame faces and restrained bevel highlights. All outside art.
+    draw.polygon([(0,0),(fw-1,0),(fw-border-1,border-1),(border-1,border-1)],fill=(57,55,49,255))
+    draw.polygon([(0,0),(border-1,border-1),(border-1,fh-border),(0,fh-1)],fill=(46,46,41,255))
+    draw.polygon([(fw-1,0),(fw-1,fh-1),(fw-border,fh-border),(fw-border,border)],fill=(20,22,20,255))
+    draw.polygon([(0,fh-1),(fw-1,fh-1),(fw-border,fh-border),(border,fh-border)],fill=(23,25,22,255))
+    draw.line((1,1,fw-2,1),fill=(87,83,73,255),width=1)
+    draw.line((1,1,1,fh-2),fill=(65,65,56,255),width=1)
+    lip=max(1,round(border*.16))
+    draw.rectangle((border-lip,border-lip,fw-border+lip-1,fh-border+lip-1),fill=(17,19,17,255))
+    draw.line((border-1,border-1,fw-border,border-1),fill=(75,72,62,255),width=1)
+    draw.line((border-1,border-1,border-1,fh-border),fill=(60,60,51,255),width=1)
+    highlight = frame.getpixel((fw//2,max(2,border//3)))[:3]
+    shadow_face = frame.getpixel((fw//2,fh-max(2,border//3)-1))[:3]
+    assert sum(highlight) > sum(shadow_face)
+    shadow_point = (x+fw+max(1,round(pixels_per_inch*lighting['castOffsetInches'][0]/2)),y+fh//2)
+    assert sum(canvas.getpixel(shadow_point)[:3]) < sum(background.convert('RGB').getpixel(shadow_point))
     frame.paste(print_image,(border,border))
     canvas.alpha_composite(frame,(x,y))
     # Verify every composited artwork pixel equals the proportional source resize.
     roi = canvas.crop((x+border,y+border,x+border+size[0],y+border+size[1]))
     assert ImageChops.difference(roi.convert('RGB'),print_image.convert('RGB')).getbbox() is None
-    return canvas.convert('RGB'), {'printPixels':size,'framePixels':frame_size,'positionPixels':[x,y],'pixelsPerInch':pixels_per_inch}
+    return canvas.convert('RGB'), {'printPixels':size,'framePixels':frame_size,'positionPixels':[x,y],'pixelsPerInch':pixels_per_inch,'frameLighting':{'highlightRGB':highlight,'shadowFaceRGB':shadow_face,'castShadowDarkensWall':True}}
 
 for record in records:
     slug = record['artworkId']

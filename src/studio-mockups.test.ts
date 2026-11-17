@@ -28,3 +28,12 @@ it('records complete, unchanged artwork composites and 4:3 physical-size ratios'
   expect(large.printPixels[1]/small.printPixels[1]).toBeCloseTo(4/3,2);
  }
 });
+
+it('records directional frame highlights and cast shadows outside the untouched design',()=>{
+ expect(checks.layoutVersion).toBe(3);
+ for(const check of checks.checks){
+  expect(check.frameLighting.highlightRGB.reduce((a,b)=>a+b,0)).toBeGreaterThan(check.frameLighting.shadowFaceRGB.reduce((a,b)=>a+b,0));
+  expect(check.frameLighting.castShadowDarkensWall).toBe(true);
+  expect(check.artworkPixelComparison).toBe('exact before web encoding');
+ }
+});

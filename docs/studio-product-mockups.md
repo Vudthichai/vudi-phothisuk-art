@@ -97,7 +97,7 @@ Run `npm run dev`: `/studio-editions/mother-nature/` and `/studio-editions/`.
 The task response supplies desktop/mobile and all-five contact-sheet previews.
 No merge or production deployment is authorized until the artist approves.
 
-Validation: TypeScript, all 118 tests, production build and SEO checks passed.
+Validation: TypeScript, all 119 tests, production build and SEO checks passed.
 Desktop/mobile Chromium at 390/1440px verified all five image pairs, both intended
 sizes, gallery reset on size change, image decoding, viewer opening/closing,
 collection thumbnails, navigation presence and no horizontal overflow/runtime
@@ -114,3 +114,27 @@ the new visual reference. Gallery and lifestyle plates share this visual identit
 Only empty backgrounds were generated; all five approved designs are still placed
 by the same exact RGB-verified compositing process. Both provisional sizes have
 updated compositions. No layout, pricing, navigation or original artwork changes.
+
+## Highlight and shadow polish
+
+The reference's depth is reproduced in the frame, not by changing the print:
+upper-left warm bevel highlights, darker right/bottom matte faces, a recessed
+inner lip, soft ambient/contact shadows and a directional lower-right cast shadow.
+Frame face is modeled at 0.22 inches, still a restrained black profile. Each source
+artwork rectangle continues to pass exact RGB comparison before encoding. New
+checks verify highlight brightness exceeds the shadow-facing edge and that the
+cast shadow darkens the wall outside the print.
+
+A shared subtle CSS surface shadow applies to Studio product images, listing cards
+(including Available Art and the Forest collection), lifestyle swaps, gallery
+thumbnails, original-page print previews and previous/next print thumbnails. Those
+compact previews also use the finished gallery mockup, so frame lighting and cast
+shadows remain consistent rather than switching back to a flat print image.
+No global shadow is added to unrelated original painting photography or navigation.
+The original painting data, prices, stories and art pixels remain unchanged.
+
+The polished revision was also browser-checked for computed shadows across Studio
+products, gallery thumbnails, listings, Available Art, Forest collection, original
+print previews and print navigation at 390/1440px. All 60 build derivatives match
+the polished files; frame-lighting and untouched-design checks pass for all 20
+compositions. No production merge or deployment was performed.

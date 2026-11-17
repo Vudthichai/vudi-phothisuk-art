@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { studioGallery, studioPrimaryImage } from './gallery';
 import { ForestPhotograph } from '../forest/ForestPhotograph';
-import { studioArtwork, studioCollectionBundle, studioEditionFor, studioEditions, studioEditionTerms, studioPrice, studioPrintImage, studioBase, studioProductPath, type StudioEdition } from './editions';
+import { studioArtwork, studioCollectionBundle, studioEditionFor, studioEditions, studioEditionTerms, studioPrice, studioBase, studioProductPath, type StudioEdition } from './editions';
 import './StudioEditions.css';
 
 function PriceStatus({ bundle = false }: { bundle?: boolean }) {
@@ -30,7 +30,7 @@ export function ArtworkStudioEdition({ artworkId }: { artworkId: string }) {
   if (!edition) return null;
   const artwork = studioArtwork(edition);
   return <section className="studio-edition-panel" id="studio-edition" aria-labelledby="studio-edition-heading">
-    <Link to={studioProductPath(edition)} className="studio-preview-image" aria-label={`View ${artwork.title} Studio Edition`}><ForestPhotograph image={studioPrintImage(edition)} sizes="(max-width:700px) 35vw, 200px"/></Link>
+    <Link to={studioProductPath(edition)} className="studio-preview-image" aria-label={`View ${artwork.title} Studio Edition`}><ForestPhotograph image={studioPrimaryImage(edition)} sizes="(max-width:700px) 35vw, 200px"/></Link>
     <div><p className="eyebrow">Also available as a print</p><h2 id="studio-edition-heading">{artwork.title} — Studio Edition</h2><PriceStatus/><Link className="text-link" to={studioProductPath(edition)}>View Studio Edition</Link></div>
   </section>;
 }

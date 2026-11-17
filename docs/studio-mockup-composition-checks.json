@@ -1,5 +1,5 @@
 {
-  "layoutVersion": 2,
+  "layoutVersion": 3,
   "checks": [
     {
       "artworkId": "mother-nature",
@@ -12,14 +12,27 @@
         1200
       ],
       "framePixels": [
-        930,
-        1230
+        944,
+        1244
       ],
       "positionPixels": [
-        255,
-        285
+        248,
+        278
       ],
-      "pixelsPerInch": 100
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "mother-nature",
@@ -32,14 +45,27 @@
         750
       ],
       "framePixels": [
-        580,
-        768
+        590,
+        778
       ],
       "positionPixels": [
-        285,
-        181
+        280,
+        176
       ],
-      "pixelsPerInch": 62.5
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "mother-nature",
@@ -52,14 +78,27 @@
         1600
       ],
       "framePixels": [
-        1230,
-        1630
+        1244,
+        1644
       ],
       "positionPixels": [
-        105,
-        85
+        98,
+        78
       ],
-      "pixelsPerInch": 100
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "mother-nature",
@@ -72,14 +111,27 @@
         1000
       ],
       "framePixels": [
-        768,
-        1018
+        778,
+        1028
       ],
       "positionPixels": [
-        191,
-        56
+        186,
+        51
       ],
-      "pixelsPerInch": 62.5
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "ethereal-bloom",
@@ -92,14 +144,27 @@
         1200
       ],
       "framePixels": [
-        930,
-        1230
+        944,
+        1244
       ],
       "positionPixels": [
-        255,
-        285
+        248,
+        278
       ],
-      "pixelsPerInch": 100
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "ethereal-bloom",
@@ -112,14 +177,27 @@
         750
       ],
       "framePixels": [
-        580,
-        768
+        590,
+        778
       ],
       "positionPixels": [
-        285,
-        181
+        280,
+        176
       ],
-      "pixelsPerInch": 62.5
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "ethereal-bloom",
@@ -132,14 +210,27 @@
         1600
       ],
       "framePixels": [
-        1230,
-        1630
+        1244,
+        1644
       ],
       "positionPixels": [
-        105,
-        85
+        98,
+        78
       ],
-      "pixelsPerInch": 100
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "ethereal-bloom",
@@ -152,14 +243,27 @@
         1000
       ],
       "framePixels": [
-        768,
-        1018
+        778,
+        1028
       ],
       "positionPixels": [
-        191,
-        56
+        186,
+        51
       ],
-      "pixelsPerInch": 62.5
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "tiger-lily",
@@ -172,14 +276,27 @@
         1200
       ],
       "framePixels": [
-        930,
-        1230
+        944,
+        1244
       ],
       "positionPixels": [
-        255,
-        285
+        248,
+        278
       ],
-      "pixelsPerInch": 100
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "tiger-lily",
@@ -192,14 +309,27 @@
         750
       ],
       "framePixels": [
-        580,
-        768
+        590,
+        778
       ],
       "positionPixels": [
-        285,
-        181
+        280,
+        176
       ],
-      "pixelsPerInch": 62.5
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "tiger-lily",
@@ -212,14 +342,27 @@
         1600
       ],
       "framePixels": [
-        1230,
-        1630
+        1244,
+        1644
       ],
       "positionPixels": [
-        105,
-        85
+        98,
+        78
       ],
-      "pixelsPerInch": 100
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "tiger-lily",
@@ -232,14 +375,27 @@
         1000
       ],
       "framePixels": [
-        768,
-        1018
+        778,
+        1028
       ],
       "positionPixels": [
-        191,
-        56
+        186,
+        51
       ],
-      "pixelsPerInch": 62.5
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "75-leaves",
@@ -252,14 +408,27 @@
         1200
       ],
       "framePixels": [
-        930,
-        1230
+        944,
+        1244
       ],
       "positionPixels": [
-        255,
-        285
+        248,
+        278
       ],
-      "pixelsPerInch": 100
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "75-leaves",
@@ -272,14 +441,27 @@
         750
       ],
       "framePixels": [
-        580,
-        768
+        590,
+        778
       ],
       "positionPixels": [
-        285,
-        181
+        280,
+        176
       ],
-      "pixelsPerInch": 62.5
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "75-leaves",
@@ -292,14 +474,27 @@
         1600
       ],
       "framePixels": [
-        1230,
-        1630
+        1244,
+        1644
       ],
       "positionPixels": [
-        105,
-        85
+        98,
+        78
       ],
-      "pixelsPerInch": 100
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "75-leaves",
@@ -312,14 +507,27 @@
         1000
       ],
       "framePixels": [
-        768,
-        1018
+        778,
+        1028
       ],
       "positionPixels": [
-        191,
-        56
+        186,
+        51
       ],
-      "pixelsPerInch": 62.5
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "a-forest-forgotten",
@@ -332,14 +540,27 @@
         1200
       ],
       "framePixels": [
-        930,
-        1230
+        944,
+        1244
       ],
       "positionPixels": [
-        255,
-        285
+        248,
+        278
       ],
-      "pixelsPerInch": 100
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "a-forest-forgotten",
@@ -352,14 +573,27 @@
         750
       ],
       "framePixels": [
-        580,
-        768
+        590,
+        778
       ],
       "positionPixels": [
-        285,
-        181
+        280,
+        176
       ],
-      "pixelsPerInch": 62.5
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "a-forest-forgotten",
@@ -372,14 +606,27 @@
         1600
       ],
       "framePixels": [
-        1230,
-        1630
+        1244,
+        1644
       ],
       "positionPixels": [
-        105,
-        85
+        98,
+        78
       ],
-      "pixelsPerInch": 100
+      "pixelsPerInch": 100,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     },
     {
       "artworkId": "a-forest-forgotten",
@@ -392,14 +639,27 @@
         1000
       ],
       "framePixels": [
-        768,
-        1018
+        778,
+        1028
       ],
       "positionPixels": [
-        191,
-        56
+        186,
+        51
       ],
-      "pixelsPerInch": 62.5
+      "pixelsPerInch": 62.5,
+      "frameLighting": {
+        "highlightRGB": [
+          57,
+          55,
+          49
+        ],
+        "shadowFaceRGB": [
+          23,
+          25,
+          22
+        ],
+        "castShadowDarkensWall": true
+      }
     }
   ]
 }
