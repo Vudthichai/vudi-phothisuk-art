@@ -1,0 +1,38 @@
+/* Forest & Flowers' established serif, shared by gallery headings and artwork titles.
+   Existing component font sizes, tracking, margins and responsive breakpoints remain. */
+:root {
+  --gallery-serif: 'Bodoni Moda', Didot, Georgia, serif;
+  --gallery-title-weight: 400;
+  --gallery-title-leading: 1.12;
+}
+
+.private-forest .forest-overview-copy h2,
+.private-forest .forest-editorial-title h1,
+.ocean-exhibition .ocean-exhibit-caption h3,
+.regal-collection .regal-work-copy h2,
+.available-art .available-painting h4,
+.available-art .available-forest-painting h3,
+.artwork-page .artwork-story h1,
+.gallery .artwork-card figcaption,
+.studio-store .studio-product-copy h1,
+.studio-editions .studio-edition-copy h3,
+.studio-explore .studio-edition-copy h3 {
+  font-family: var(--gallery-serif);
+  font-weight: var(--gallery-title-weight);
+  line-height: var(--gallery-title-leading);
+  overflow-wrap: break-word;
+}
+
+.forest-collection-hero .forest-collection-hero-copy h1,
+.private-forest .private-forest-intro h2,
+.ocean-experience .ocean-title-block h1,
+.ocean-gallery .ocean-gallery-intro h2,
+.regal-collection .regal-intro h1,
+.regal-collection .regal-statement h2,
+.available-art h1,
+.available-art h2,
+.available-art .available-collection-title,
+.studio-store>h1 {
+  font-family: var(--gallery-serif);
+  font-weight: var(--gallery-title-weight);
+}
