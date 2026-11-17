@@ -140,27 +140,27 @@
     "image": "collections--regal-collection--ciaran.jpg"
   },
   "/studio-editions/mother-nature": {
-    "image": "studio-editions--mother-nature.jpg",
-    "alt": "Mother Nature Studio Edition print design with complete border and branding."
+    "image": "studio-editions--mother-nature-exact-room.jpg",
+    "alt": "Mother Nature Studio Edition in the approved exact-room gallery composition."
   },
   "/studio-editions/ethereal-bloom": {
-    "image": "studio-editions--ethereal-bloom.jpg",
-    "alt": "Ethereal Bloom Studio Edition print design with complete border and branding."
+    "image": "studio-editions--ethereal-bloom-exact-room.jpg",
+    "alt": "Ethereal Bloom Studio Edition in the approved exact-room gallery composition."
   },
   "/studio-editions/tiger-lily": {
-    "image": "studio-editions--tiger-lily.jpg",
-    "alt": "Tiger Lily Studio Edition print design with complete border and branding."
+    "image": "studio-editions--tiger-lily-exact-room.jpg",
+    "alt": "Tiger Lily Studio Edition in the approved exact-room gallery composition."
   },
   "/studio-editions/75-leaves": {
-    "image": "studio-editions--75-leaves.jpg",
-    "alt": "75 Leaves Studio Edition print design with complete border and branding."
+    "image": "studio-editions--75-leaves-exact-room.jpg",
+    "alt": "75 Leaves Studio Edition in the approved exact-room gallery composition."
   },
   "/studio-editions/a-forest-forgotten": {
-    "image": "studio-editions--a-forest-forgotten.jpg",
-    "alt": "A Forest Forgotten Studio Edition print design with complete border and branding."
+    "image": "studio-editions--a-forest-forgotten-exact-room.jpg",
+    "alt": "A Forest Forgotten Studio Edition in the approved exact-room gallery composition."
   },
   "/studio-editions": {
-    "image": "studio-editions--mother-nature.jpg",
-    "alt": "Mother Nature Studio Edition print design with complete border and branding."
+    "image": "studio-editions--mother-nature-exact-room.jpg",
+    "alt": "Mother Nature Studio Edition in the approved exact-room gallery composition."
   }
 }

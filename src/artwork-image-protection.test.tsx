@@ -42,7 +42,6 @@ it('keeps Studio card sources web-resolution, including on Retina displays', () 
       expect(variant.src).toMatch(/\.webp$/);
     }
     const longest = Math.max(...photo.variants.flatMap(v=>[v.width,v.height]));
-    if (edition.artworkId === 'mother-nature') expect(longest).toBe(1402);
-    else expect(longest).toBeGreaterThanOrEqual(1600);
+    expect(longest).toBe(1402);
   }
 });

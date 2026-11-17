@@ -1,5 +1,9 @@
 # Mother Nature exact photograph — Phase 1 only
 
+> The artist subsequently approved the full five-image set for site integration.
+> See [the current integration](exact-gallery-site-integration.md); this is the
+> earlier Mother Nature-only phase record.
+
 The artist supplied `Mother Nature Gallery Still Life.png.zip`. Its single PNG
 is the exact approved still-life photograph, 1122 × 1402 RGB. Source SHA256:
 `4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215`.

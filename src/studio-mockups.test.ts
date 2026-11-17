@@ -1,44 +1,21 @@
 import { expect, it } from 'vitest';
-import { studioEditions } from './studio/editions';
+import { studioEditions, studioSizes } from './studio/editions';
 import { studioGallery } from './studio/gallery';
-import checks from '../docs/studio-mockup-composition-checks.json';
-it('uses the correct two size-specific mockups before the approved design for every product',()=>{
- for(const edition of studioEditions) for(const size of ['9x12','12x16']) {
-  const views=studioGallery(edition,size);
-  if (edition.artworkId === 'mother-nature') {
-   expect(views.map(v=>v.kind)).toEqual(['reference','clean']);
-   expect(views[0].image.variants.at(-1)?.src).toBe('/studio-editions/approved/mother-nature-gallery-still-life-1122.webp');
-   continue;
-  }
-  expect(views.map(v=>v.kind)).toEqual(['framed','lifestyle','clean']);
-  for(const view of views.slice(0,2)){
-   expect(view.modeledSizeIds).toEqual([size]);
-   expect(view.image.alt.toLowerCase()).toContain('mockup');
-   for(const variant of view.image.variants){
-    expect(variant.src).toContain(`/mockups/${edition.artworkId}-`);
-    expect(variant.src).toContain(`-${size}-`);
-    expect(Math.max(variant.width,variant.height)).toBeLessThanOrEqual(1800);
-   }
-  }
+import audit from '../docs/exact-gallery-published-assets.json';
+it('uses one reviewed room composition and an authentic print detail for every product and size',()=>{
+ for(const edition of studioEditions)for(const size of studioSizes){
+  const views=studioGallery(edition,size.id);
+  expect(views.map(v=>v.kind)).toEqual(['reference','clean']);
+  expect(views[0].image.variants.at(-1)?.src).toBe(`/studio-editions/exact-gallery/${edition.artworkId}-1122.webp`);
+  expect(views[0].modeledSizeIds).toBeUndefined();
+  for(const variant of views[0].image.variants){expect(Math.max(variant.width,variant.height)).toBeLessThanOrEqual(1402);expect(variant.src).not.toContain('/mockups/');}
  }
 });
-it('records complete, unchanged artwork composites and 4:3 physical-size ratios',()=>{
- expect(checks.checks).toHaveLength(20);
- for(const edition of studioEditions)for(const kind of ['gallery','lifestyle']){
-  const small=checks.checks.find(c=>c.artworkId===edition.artworkId&&c.kind===kind&&c.sizeId==='9x12')!;
-  const large=checks.checks.find(c=>c.artworkId===edition.artworkId&&c.kind===kind&&c.sizeId==='12x16')!;
-  expect(small.artworkPixelComparison).toBe('exact before web encoding');
-  expect(large.sourceSha256).toBe(small.sourceSha256);
-  expect(large.printPixels[0]/small.printPixels[0]).toBeCloseTo(4/3,2);
-  expect(large.printPixels[1]/small.printPixels[1]).toBeCloseTo(4/3,2);
- }
-});
-
-it('records directional frame highlights and cast shadows outside the untouched design',()=>{
- expect(checks.layoutVersion).toBe(3);
- for(const check of checks.checks){
-  expect(check.frameLighting.highlightRGB.reduce((a,b)=>a+b,0)).toBeGreaterThan(check.frameLighting.shadowFaceRGB.reduce((a,b)=>a+b,0));
-  expect(check.frameLighting.castShadowDarkensWall).toBe(true);
-  expect(check.artworkPixelComparison).toBe('exact before web encoding');
+it('records pixel preservation against the exact same approved room for all five published composites',()=>{
+ expect(audit.map(a=>a.artworkId)).toEqual(studioEditions.map(e=>e.artworkId));
+ for(const entry of audit){
+  expect(entry.roomMasterSha256).toBe('4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215');
+  expect(entry.outsideMaskChangedPixels).toBe(0);expect(entry.nativeSize).toEqual([1122,1402]);
+  expect(entry.reviewedPngSha256).toMatch(/^[a-f0-9]{64}$/);expect(entry.nativeDecodedRgbSha256).toMatch(/^[a-f0-9]{64}$/);
  }
 });

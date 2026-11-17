@@ -7,23 +7,26 @@ import { StudioEditions } from './studio/StudioEditions';
 import { studioGallery, studioPrimaryImage } from './studio/gallery';
 import { studioEditions } from './studio/editions';
 afterEach(cleanup);
-const path='/studio-editions/approved/mother-nature-gallery-still-life-1122.webp';
-it('uses the same exact approved photograph across size choices without generic Mother Nature mockups',()=>{
- const edition=studioEditions[0];
- expect(studioPrimaryImage(edition).variants.at(-1)?.src).toBe(path);
- expect(studioGallery(edition,'9x12')[0].image).toEqual(studioGallery(edition,'12x16')[0].image);
- const {container}=render(<MemoryRouter initialEntries={['/studio-editions/mother-nature/']}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
- expect(container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(path);
- fireEvent.click(screen.getByRole('radio',{name:'12 × 16 inches'}));
- expect(container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(path);
- expect(container.querySelector('.studio-gallery-caption')?.textContent).toBe('Gallery photograph');
- expect([...container.querySelectorAll('img')].some(i=>i.getAttribute('src')?.includes('/mockups/mother-nature-'))).toBe(false);
- expect(screen.getByText(/Starting at \$40/)).toBeTruthy();
+it('uses each reviewed exact-room composite across both size choices, without retired generic views',()=>{
+ for(const edition of studioEditions){
+  const path=`/studio-editions/exact-gallery/${edition.artworkId}-1122.webp`;
+  expect(studioPrimaryImage(edition).variants.at(-1)?.src).toBe(path);
+  expect(studioGallery(edition,'9x12')[0].image).toEqual(studioGallery(edition,'12x16')[0].image);
+  const view=render(<MemoryRouter initialEntries={[`/studio-editions/${edition.artworkId}/`]}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
+  expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(path);
+  fireEvent.click(screen.getByRole('radio',{name:'12 × 16 inches'}));
+  expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(path);
+  expect(view.container.querySelector('.studio-gallery-caption')?.textContent).toBe('Gallery mockup');
+  expect([...view.container.querySelectorAll('img')].some(i=>i.getAttribute('src')?.includes('/mockups/'))).toBe(false);
+  expect(screen.getByText(/Starting at \$40/)).toBeTruthy();
+  fireEvent.click(screen.getByRole('button',{name:'Print design'}));
+  expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toContain(`/studio-editions/${edition.artworkId}-print-`);
+  view.unmount();
+ }
 });
-it('uses the approved photo for the Mother Nature card and disables its old generic hover view',()=>{
+it('uses only reviewed composites for all five cards, without generic-room hover alternates',()=>{
  const {container}=render(<MemoryRouter><StudioEditions/></MemoryRouter>);
- const card=container.querySelector('article')!;
- expect(card.querySelector('.studio-edition-image>img')?.getAttribute('src')).toBe(path);
- expect(card.querySelector('.studio-card-lifestyle')).toBeNull();
- expect(container.querySelectorAll('.has-lifestyle')).toHaveLength(4);
+ const cards=[...container.querySelectorAll('article')];expect(cards).toHaveLength(5);
+ cards.forEach((card,index)=>expect(card.querySelector('.studio-edition-image>img')?.getAttribute('src')).toBe(`/studio-editions/exact-gallery/${studioEditions[index].artworkId}-1122.webp`));
+ expect(container.querySelector('.studio-card-lifestyle')).toBeNull();
 });

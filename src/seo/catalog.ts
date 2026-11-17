@@ -1,7 +1,8 @@
+import { studioPrimaryImage } from '../studio/gallery';
 import { collections, informationPages } from '../data';
 import { forestCollection } from '../forest/collection';
 import { primaryForestImage } from '../forest/types';
-import { studioEditions, studioArtwork, studioPrintImage, studioProductPath, studioBase } from '../studio/editions';
+import { studioEditions, studioArtwork, studioProductPath, studioBase } from '../studio/editions';
 import previews from '../../scripts/sharing-previews.json';
 
 export const site = 'https://vudiphothisukart.com';
@@ -63,7 +64,7 @@ for (const collection of collections) {
 const printItems: Node[] = [];
 for (const edition of studioEditions) {
   const art = studioArtwork(edition);
-  const photo = studioPrintImage(edition);
+  const photo = studioPrimaryImage(edition);
   const image = { src: photo.variants.at(-1)!.src, alt: photo.alt };
   const path = studioProductPath(edition);
   const url = absolute(path);
@@ -73,7 +74,7 @@ for (const edition of studioEditions) {
   printItems.push({'@type':'ListItem',position:printItems.length+1,name:art.title,url});
 }
 pages.push(page(studioBase, 'Forest & Flowers — Studio Editions', 'Explore five Forest & Flowers Studio Edition print designs by Vudi Phothisuk. Starting at $40. Coming Soon.', {
-  images: studioEditions.map(e=>{const p=studioPrintImage(e);return {src:p.variants.at(-1)!.src,alt:p.alt};}),
+  images: studioEditions.map(e=>{const p=studioPrimaryImage(e);return {src:p.variants.at(-1)!.src,alt:p.alt};}),
   graph:[{'@type':'CollectionPage','@id':absolute(studioBase+'/')+'#webpage',url:absolute(studioBase+'/'),name:'Studio Editions',mainEntity:{'@type':'ItemList',itemListElement:printItems}}],
 }));
 const collectionPages = pages.filter(p => /^\/collections\/[^/]+\/$/.test(p.path));

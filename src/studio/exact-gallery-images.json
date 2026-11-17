@@ -1,0 +1,127 @@
+{
+  "mother-nature": {
+    "id": "mother-nature-exact-gallery",
+    "role": "full",
+    "alt": "Mother Nature Studio Edition in the approved black frame above a wooden cabinet, with flowering vase, art books and natural sunlight; composited gallery view.",
+    "variants": [
+      {
+        "key": "mother-nature-480",
+        "src": "/studio-editions/exact-gallery/mother-nature-480.webp",
+        "width": 480,
+        "height": 600
+      },
+      {
+        "key": "mother-nature-768",
+        "src": "/studio-editions/exact-gallery/mother-nature-768.webp",
+        "width": 768,
+        "height": 960
+      },
+      {
+        "key": "mother-nature-1122",
+        "src": "/studio-editions/exact-gallery/mother-nature-1122.webp",
+        "width": 1122,
+        "height": 1402
+      }
+    ]
+  },
+  "ethereal-bloom": {
+    "id": "ethereal-bloom-exact-gallery",
+    "role": "full",
+    "alt": "Ethereal Bloom Studio Edition in the approved black frame above a wooden cabinet, with flowering vase, art books and natural sunlight; composited gallery view.",
+    "variants": [
+      {
+        "key": "ethereal-bloom-480",
+        "src": "/studio-editions/exact-gallery/ethereal-bloom-480.webp",
+        "width": 480,
+        "height": 600
+      },
+      {
+        "key": "ethereal-bloom-768",
+        "src": "/studio-editions/exact-gallery/ethereal-bloom-768.webp",
+        "width": 768,
+        "height": 960
+      },
+      {
+        "key": "ethereal-bloom-1122",
+        "src": "/studio-editions/exact-gallery/ethereal-bloom-1122.webp",
+        "width": 1122,
+        "height": 1402
+      }
+    ]
+  },
+  "tiger-lily": {
+    "id": "tiger-lily-exact-gallery",
+    "role": "full",
+    "alt": "Tiger Lily Studio Edition in the approved black frame above a wooden cabinet, with flowering vase, art books and natural sunlight; composited gallery view.",
+    "variants": [
+      {
+        "key": "tiger-lily-480",
+        "src": "/studio-editions/exact-gallery/tiger-lily-480.webp",
+        "width": 480,
+        "height": 600
+      },
+      {
+        "key": "tiger-lily-768",
+        "src": "/studio-editions/exact-gallery/tiger-lily-768.webp",
+        "width": 768,
+        "height": 960
+      },
+      {
+        "key": "tiger-lily-1122",
+        "src": "/studio-editions/exact-gallery/tiger-lily-1122.webp",
+        "width": 1122,
+        "height": 1402
+      }
+    ]
+  },
+  "75-leaves": {
+    "id": "75-leaves-exact-gallery",
+    "role": "full",
+    "alt": "75 Leaves Studio Edition in the approved black frame above a wooden cabinet, with flowering vase, art books and natural sunlight; composited gallery view.",
+    "variants": [
+      {
+        "key": "75-leaves-480",
+        "src": "/studio-editions/exact-gallery/75-leaves-480.webp",
+        "width": 480,
+        "height": 600
+      },
+      {
+        "key": "75-leaves-768",
+        "src": "/studio-editions/exact-gallery/75-leaves-768.webp",
+        "width": 768,
+        "height": 960
+      },
+      {
+        "key": "75-leaves-1122",
+        "src": "/studio-editions/exact-gallery/75-leaves-1122.webp",
+        "width": 1122,
+        "height": 1402
+      }
+    ]
+  },
+  "a-forest-forgotten": {
+    "id": "a-forest-forgotten-exact-gallery",
+    "role": "full",
+    "alt": "A Forest Forgotten Studio Edition in the approved black frame above a wooden cabinet, with flowering vase, art books and natural sunlight; composited gallery view.",
+    "variants": [
+      {
+        "key": "a-forest-forgotten-480",
+        "src": "/studio-editions/exact-gallery/a-forest-forgotten-480.webp",
+        "width": 480,
+        "height": 600
+      },
+      {
+        "key": "a-forest-forgotten-768",
+        "src": "/studio-editions/exact-gallery/a-forest-forgotten-768.webp",
+        "width": 768,
+        "height": 960
+      },
+      {
+        "key": "a-forest-forgotten-1122",
+        "src": "/studio-editions/exact-gallery/a-forest-forgotten-1122.webp",
+        "width": 1122,
+        "height": 1402
+      }
+    ]
+  }
+}

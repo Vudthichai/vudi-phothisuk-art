@@ -1,0 +1,50 @@
+{
+  "reference": "../../../public/studio-editions/approved/mother-nature-gallery-still-life.png",
+  "source": "STUDIO  F&F 75L 9x12.jpeg",
+  "referenceSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+  "sourceSha256": "622e4aa8a274d32e832716046a979e9855941a8ac4a06c3c724f775008b19723",
+  "sourceArtwork": [
+    426,
+    313,
+    4259,
+    5692
+  ],
+  "destinationArtwork": [
+    290,
+    177,
+    840,
+    933
+  ],
+  "sourceTitle": [
+    680,
+    5954,
+    1009,
+    6025
+  ],
+  "destinationTitlePatch": [
+    330,
+    970,
+    411,
+    984
+  ],
+  "titleRenderedSize": [
+    46,
+    10
+  ],
+  "titleOrigin": [
+    332,
+    971
+  ],
+  "slug": "75-leaves",
+  "title": "75 Leaves",
+  "titlePaperSamples": [
+    [
+      324,
+      330
+    ],
+    [
+      412,
+      421
+    ]
+  ]
+}
