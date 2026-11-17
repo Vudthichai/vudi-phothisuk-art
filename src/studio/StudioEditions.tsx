@@ -7,7 +7,7 @@ import './StudioEditions.css';
 function PriceStatus({ bundle = false }: { bundle?: boolean }) {
   return <p className="studio-price-status"><span className="studio-price">{!bundle && 'Starting at '}{studioPrice(bundle ? studioCollectionBundle.priceCents : studioEditionTerms.priceCents)}</span><span aria-hidden="true">—</span><span className="studio-status">{studioEditionTerms.status}</span></p>;
 }
-function EditionCard({ edition }: { edition: StudioEdition }) {
+export function EditionCard({ edition, identifyPrint = false }: { edition: StudioEdition; identifyPrint?: boolean }) {
   const artwork = studioArtwork(edition);
   const path = studioProductPath(edition);
   const lifestyle = studioGallery(edition).find(view => view.kind === 'lifestyle');
@@ -15,7 +15,7 @@ function EditionCard({ edition }: { edition: StudioEdition }) {
     <Link className={`studio-edition-image${lifestyle ? ' has-lifestyle' : ''}`} to={path} aria-label={`View Studio Edition information for ${artwork.title}`}>
       <ForestPhotograph image={studioPrimaryImage(edition)} sizes="(max-width:700px) 86vw, (max-width:1000px) 40vw, 27vw"/>{lifestyle && <span className="studio-card-lifestyle" aria-hidden="true"><ForestPhotograph image={{...lifestyle.image,alt:''}} sizes="(max-width:700px) 86vw, 27vw"/></span>}
     </Link>
-    <div className="studio-edition-copy"><h3 id={`${edition.id}-title`}><Link to={path}>{artwork.title}</Link></h3><PriceStatus/></div>
+    <div className="studio-edition-copy"><h3 id={`${edition.id}-title`}><Link to={path}>{artwork.title}</Link></h3>{identifyPrint && <p className="studio-card-identification">Studio Print</p>}<PriceStatus/></div>
   </article>;
 }
 export function StudioEditions({ title = 'Studio Editions', listingLink = true }: { title?: string; listingLink?: boolean }) {

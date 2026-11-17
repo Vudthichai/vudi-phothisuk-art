@@ -1,3 +1,4 @@
+import { OriginalPrice } from '../components/OriginalPrice';
 import { Link } from 'react-router-dom';
 import { collections, type Artwork, type Collection } from '../data';
 import './AvailableArt.css';
@@ -14,6 +15,7 @@ function AvailablePainting({ artwork, collection, featured = false }: { artwork:
       <p className="eyebrow">{collection.name}</p>
       <h4 id={`available-${artwork.id}`}><Link to={path}>{artwork.title}</Link></h4>
       {artwork.dimensions && <p className="available-dimensions">{artwork.dimensions}</p>}
+      <OriginalPrice artwork={artwork}/>
       {artwork.description?.[0] && <p className="available-description">{artwork.description[0]}</p>}
       <a className="text-link" aria-label={`Inquire about ${artwork.title}`} data-analytics-artwork={path} href={`mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent(`Artwork inquiry: ${artwork.title}`)}`}>Inquire about this painting</a>
     </div>

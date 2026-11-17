@@ -15,6 +15,7 @@ export type Artwork = {
   dimensions?: string;
   medium?: string;
   availability?: string;
+  priceUsd?: number;
   sourceUrl?: string;
 };
 export type Collection = { slug: string; name: string; summary: string; artworks: Artwork[]; artworkCount?: number };

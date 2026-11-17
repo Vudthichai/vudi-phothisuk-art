@@ -132,6 +132,7 @@
       "id": "art_6ee75f26-09bc-5943-9657-1cb9fb724ded",
       "slug": "mermaid-tail",
       "title": "Mermaid Tail",
+      "priceUsd": 2000,
       "image": {
         "src": "/artworks/oceans/mermaid-tail-artist-selection-1200.webp",
         "alt": "Pale sculpted scales with iridescent green, blue, pink, and metallic accents.",
@@ -202,6 +203,7 @@
       "id": "art_1168c63e-8d93-5379-b706-ed131bc5fefd",
       "slug": "arctic-waves",
       "title": "Arctic Waves",
+      "priceUsd": 2000,
       "image": {
         "src": "/artworks/oceans/arctic-waves-canvas-v2-1200.webp",
         "alt": "Dark textured water fading into blue beside white surf and a bronze-toned shore.",
@@ -259,6 +261,7 @@
       "id": "art_3069371f-c31d-5497-9c10-07b6ddca7b39",
       "slug": "water-s-edge",
       "title": "Water’s Edge",
+      "priceUsd": 2000,
       "image": {
         "src": "/artworks/oceans/water-s-edge-12-1200.webp",
         "alt": "Blue water meeting a warm sandy shoreline along a sculpted white wave.",
@@ -375,6 +378,7 @@
       "id": "art_8089058f-6b28-5849-8793-f013133a5bb6",
       "slug": "arctic-ocean",
       "title": "Arctic Ocean",
+      "priceUsd": 2000,
       "image": {
         "src": "/artworks/oceans/arctic-ocean-01-1200.webp",
         "alt": "Diagonal white surf and green water meeting a deeply textured dark shore.",
@@ -410,6 +414,7 @@
       "id": "art_5b38bc6b-ea27-514e-9d7e-728620ff9df9",
       "slug": "the-oceans",
       "title": "The Oceans",
+      "priceUsd": 2000,
       "image": {
         "src": "/artworks/oceans/the-oceans-dng-preview-1200.webp",
         "alt": "A panoramic shoreline of pale aqua water, white breaking surf, and layered warm sand.",
