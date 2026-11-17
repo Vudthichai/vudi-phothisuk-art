@@ -4,7 +4,7 @@
     "image": "home-v2.jpg"
   },
   "/collections": {
-    "alt": "Vudi Phothisuk’s signature above the title Collections.",
+    "alt": "Vudi Phothisuk\u2019s signature above the title Collections.",
     "image": "collections.jpg"
   },
   "/available-art": {
@@ -16,7 +16,7 @@
     "image": "about.jpg"
   },
   "/exhibitions": {
-    "alt": "Field Day’s brick exterior with two blue entrances and large industrial windows in Lawrenceville, Pittsburgh.",
+    "alt": "Field Day\u2019s brick exterior with two blue entrances and large industrial windows in Lawrenceville, Pittsburgh.",
     "image": "exhibitions.jpg"
   },
   "/contact": {
@@ -28,43 +28,43 @@
     "image": "collections--forest-and-flowers-v2.jpg"
   },
   "/collections/forest-and-flowers/mother-nature": {
-    "alt": "Mother Nature — full composition",
+    "alt": "Mother Nature \u2014 full composition",
     "image": "collections--forest-and-flowers--mother-nature.jpg"
   },
   "/collections/forest-and-flowers/blooming-desire": {
-    "alt": "Blooming Desire — full composition",
+    "alt": "Blooming Desire \u2014 full composition",
     "image": "collections--forest-and-flowers--blooming-desire.jpg"
   },
   "/collections/forest-and-flowers/wild-tiger-lilies": {
-    "alt": "Wild Tiger Lilies — full composition",
+    "alt": "Wild Tiger Lilies \u2014 full composition",
     "image": "collections--forest-and-flowers--wild-tiger-lilies.jpg"
   },
   "/collections/forest-and-flowers/gilded-bloom": {
-    "alt": "Gilded Bloom — full composition",
+    "alt": "Gilded Bloom \u2014 full composition",
     "image": "collections--forest-and-flowers--gilded-bloom.jpg"
   },
   "/collections/forest-and-flowers/a-forest-forgotten": {
-    "alt": "A Forest Forgotten — full composition",
+    "alt": "A Forest Forgotten \u2014 full composition",
     "image": "collections--forest-and-flowers--a-forest-forgotten.jpg"
   },
   "/collections/forest-and-flowers/moss-and-mushrooms": {
-    "alt": "Moss & Mushrooms — full composition",
+    "alt": "Moss & Mushrooms \u2014 full composition",
     "image": "collections--forest-and-flowers--moss-and-mushrooms.jpg"
   },
   "/collections/forest-and-flowers/ethereal-bloom": {
-    "alt": "Ethereal Bloom — full composition",
+    "alt": "Ethereal Bloom \u2014 full composition",
     "image": "collections--forest-and-flowers--ethereal-bloom.jpg"
   },
   "/collections/forest-and-flowers/tiger-lily": {
-    "alt": "Tiger Lily — full composition",
+    "alt": "Tiger Lily \u2014 full composition",
     "image": "collections--forest-and-flowers--tiger-lily.jpg"
   },
   "/collections/forest-and-flowers/75-leaves": {
-    "alt": "75 Leaves — full composition",
+    "alt": "75 Leaves \u2014 full composition",
     "image": "collections--forest-and-flowers--75-leaves.jpg"
   },
   "/collections/forest-and-flowers/dragon-lily": {
-    "alt": "Dragon Lily — full composition",
+    "alt": "Dragon Lily \u2014 full composition",
     "image": "collections--forest-and-flowers--dragon-lily.jpg"
   },
   "/collections/oceans": {
@@ -138,5 +138,29 @@
   "/collections/regal-collection/ciaran": {
     "alt": "Ornamental green, pink, ivory, and gold forms in sculpted relief.",
     "image": "collections--regal-collection--ciaran.jpg"
+  },
+  "/studio-editions/mother-nature": {
+    "image": "studio-editions--mother-nature.jpg",
+    "alt": "Mother Nature Studio Edition print design with complete border and branding."
+  },
+  "/studio-editions/ethereal-bloom": {
+    "image": "studio-editions--ethereal-bloom.jpg",
+    "alt": "Ethereal Bloom Studio Edition print design with complete border and branding."
+  },
+  "/studio-editions/tiger-lily": {
+    "image": "studio-editions--tiger-lily.jpg",
+    "alt": "Tiger Lily Studio Edition print design with complete border and branding."
+  },
+  "/studio-editions/75-leaves": {
+    "image": "studio-editions--75-leaves.jpg",
+    "alt": "75 Leaves Studio Edition print design with complete border and branding."
+  },
+  "/studio-editions/a-forest-forgotten": {
+    "image": "studio-editions--a-forest-forgotten.jpg",
+    "alt": "A Forest Forgotten Studio Edition print design with complete border and branding."
+  },
+  "/studio-editions": {
+    "image": "studio-editions--mother-nature.jpg",
+    "alt": "Mother Nature Studio Edition print design with complete border and branding."
   }
 }

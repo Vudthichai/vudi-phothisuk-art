@@ -19,3 +19,10 @@
 .studio-editions :focus-visible, .studio-edition-panel :focus-visible { outline: 2px solid #12351d; outline-offset: 4px; }
 @media(max-width:1000px) { .studio-editions-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 40px 28px; } }
 @media(max-width:700px) { .studio-editions-grid { grid-template-columns: minmax(0,1fr); gap: 40px; } .studio-edition-panel, .studio-bundle { flex-direction: column; align-items: start; gap: 16px; } .studio-section-intro { margin-bottom: 30px; } }
+.studio-section-intro { display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap; }
+.studio-section-intro>.text-link { min-height:44px;padding:10px 0;font-size:.8rem; }
+.studio-edition-panel { display:grid;grid-template-columns:minmax(100px,180px) minmax(0,1fr);align-items:center;gap:36px;margin-top:0;padding:36px 0; }
+.studio-preview-image img { width:100%;height:auto;display:block; }
+.studio-edition-panel h2 { font-size:clamp(24px,3vw,36px);margin:14px 0; }
+.studio-edition-panel .text-link { display:inline-block;min-height:44px;padding:12px 0;margin-top:8px; }
+@media(max-width:700px) { .studio-edition-panel { grid-template-columns:minmax(80px,110px) minmax(0,1fr);gap:20px; }.studio-edition-panel .eyebrow { font-size:9px; }.studio-edition-panel h2 { font-size:24px; } }

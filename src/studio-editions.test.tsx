@@ -10,13 +10,13 @@ it('presents only the five approved reproductions with authentic photographs and
   const cards = screen.getAllByRole('article');
   expect(cards.map(card => within(card).getByRole('heading').textContent)).toEqual(['Mother Nature','Ethereal Bloom','Tiger Lily','75 Leaves','A Forest Forgotten']);
   cards.forEach((card, index) => {
-    expect(within(card).getByText('$40')).toBeTruthy();
+    expect(within(card).getByText('Starting at $40')).toBeTruthy();
     expect(within(card).getByText('Coming Soon')).toBeTruthy();
-    expect(card.textContent).toBe(`${studioArtwork(studioEditions[index]).title}$40—Coming Soon`);
+    expect(card.textContent).toBe(`${studioArtwork(studioEditions[index]).title}Starting at $40—Coming Soon`);
     const artwork = studioArtwork(studioEditions[index]);
     expect(within(card).getByRole('img').getAttribute('src')).toBe(`/studio-editions/${artwork.id}-print-1920.webp`);
     expect(studioPrintImage(studioEditions[index]).variants.map(v => v.src)).toEqual([640,1280,1920].map(size => `/studio-editions/${artwork.id}-print-${size}.webp`));
-    expect(within(card).getByRole('link',{name:artwork.title}).getAttribute('href')).toBe(`/collections/forest-and-flowers/${artwork.slug}/#studio-edition`);
+    expect(within(card).getByRole('link',{name:artwork.title}).getAttribute('href')).toBe(`/studio-editions/${artwork.id}/`);
   });
   expect(screen.getByText('$175')).toBeTruthy();
   expect(studioCollectionBundle.editionIds).toEqual(studioEditions.map(edition => edition.id));
@@ -28,12 +28,12 @@ it('limits individual panels to eligible art and preserves gifted originals as N
   for (const edition of studioEditions) {
     const artwork = studioArtwork(edition);
     const view = render(<MemoryRouter><ArtworkStudioEdition artworkId={artwork.id}/></MemoryRouter>);
-    expect(screen.getByRole('heading',{name:'Studio Edition Print'})).toBeTruthy();
+    expect(screen.getByRole('heading',{name:`${artwork.title} — Studio Edition`})).toBeTruthy();
     if (['tiger-lily','75-leaves'].includes(artwork.id)) {
       expect(artwork.availability).toBe('not-for-sale');
     }
-    expect(view.container.textContent).toBe('Studio Edition Print$40—Coming Soon');
-    expect(screen.queryByRole('link')).toBeNull();
+    expect(view.container.textContent).toContain('Starting at $40—Coming Soon');
+    expect(screen.getByRole('link',{name:'View Studio Edition'}).getAttribute('href')).toBe(`/studio-editions/${artwork.id}/`);
     view.unmount();
   }
   const { container } = render(<MemoryRouter><ArtworkStudioEdition artworkId="dragon-lily"/></MemoryRouter>);

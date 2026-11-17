@@ -28,7 +28,7 @@ it('preserves linked artwork context menus, navigation and accessible names', ()
     expect(fireEvent.contextMenu(photograph)).toBe(true);
     expect(fireEvent.dragStart(photograph)).toBe(false);
     const link = photograph.closest('a')!;
-    expect(link.getAttribute('href')).toMatch(/^\/collections\/forest-and-flowers\/.*\/#studio-edition$/);
+    expect(link.getAttribute('href')).toMatch(/^\/studio-editions\/[^/]+\/$/);
     expect(link.getAttribute('aria-label')).toMatch(/^View Studio Edition information/);
     expect(fireEvent.pointerDown(photograph,{pointerType:'touch'})).toBe(true);
   }

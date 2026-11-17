@@ -54,3 +54,8 @@ measurements in `artwork-image-protection.md`. The earlier public-source exposur
 findings still apply; no pre-existing artwork assets were removed or changed.
 
 Do not merge or deploy this revision without explicit artist approval.
+
+## Standalone storefront revision
+
+See [the storefront review notes](studio-storefront.md) for current product routes,
+central size options, inquiry-only original grouping and Mother Nature template.

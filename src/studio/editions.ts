@@ -1,5 +1,6 @@
 import { forestCollection } from '../forest/collection';
 import type { ForestImage } from '../forest/types';
+import { studioContributions, type ContributionIntention } from './contributions';
 import printPhotographs from './print-photographs.json';
 
 /** Presentation only. No provider products, checkout URLs, stock promises or payment hooks. */
@@ -13,14 +14,14 @@ export const studioEditionTerms = {
 export type StudioEdition = {
   id: string;
   artworkId: string;
-  contribution?: { percentOfProfit: number; beneficiary: string | null; status: 'pending-approval' };
+  contribution?: ContributionIntention;
 };
 export const studioEditions: readonly StudioEdition[] = [
   { id: 'studio-mother-nature', artworkId: 'mother-nature' },
   { id: 'studio-ethereal-bloom', artworkId: 'ethereal-bloom' },
   { id: 'studio-tiger-lily', artworkId: 'tiger-lily' },
-  { id: 'studio-75-leaves', artworkId: '75-leaves', contribution: { percentOfProfit: 75, beneficiary: null, status: 'pending-approval' } },
-  { id: 'studio-a-forest-forgotten', artworkId: 'a-forest-forgotten', contribution: { percentOfProfit: 20, beneficiary: 'Junglekeepers', status: 'pending-approval' } },
+  { id: 'studio-75-leaves', artworkId: '75-leaves', contribution: studioContributions['75-leaves'] },
+  { id: 'studio-a-forest-forgotten', artworkId: 'a-forest-forgotten', contribution: studioContributions['a-forest-forgotten'] },
 ];
 export const studioCollectionBundle = {
   id: 'studio-forest-and-flowers-collection',
@@ -45,3 +46,11 @@ export function studioPrintImage(edition: StudioEdition): ForestImage {
   if (!photograph) throw new Error(`Missing approved Studio print photograph: ${edition.artworkId}`);
   return { ...photograph, role: 'full' };
 }
+
+export const studioBase = '/studio-editions';
+export const studioProductPath = (edition: StudioEdition) => `${studioBase}/${edition.artworkId}/`;
+/** Starting price is independent of size; null means no final size-specific price. */
+export const studioSizes: readonly { id: string; width: number; height: number; label: string; priceCents: number | null }[] = [
+  { id: '9x12', width: 9, height: 12, label: '9 × 12 inches', priceCents: null },
+  { id: '12x16', width: 12, height: 16, label: '12 × 16 inches', priceCents: null },
+];

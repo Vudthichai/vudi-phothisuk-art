@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
 import { collections, type Artwork, type Collection } from '../data';
 import './AvailableArt.css';
+import { forestCollection } from '../forest/collection';
+import { ForestPhotograph } from '../forest/ForestPhotograph';
+import { primaryForestImage } from '../forest/types';
 import { StudioEditions } from '../studio/StudioEditions';
 
 function AvailablePainting({ artwork, collection, featured = false }: { artwork: Artwork; collection: Collection; featured?: boolean }) {
@@ -19,9 +22,11 @@ function AvailablePainting({ artwork, collection, featured = false }: { artwork:
 
 export function AvailableArt() {
   return <section className="section page available-art" aria-labelledby="available-title">
-    <p className="eyebrow">Original paintings</p>
+    <p className="eyebrow">Original artworks &amp; prints</p>
     <h1 id="available-title">Available Art</h1>
-    <p className="page-intro">Explore available paintings from The Oceans and The Regal Collection. For pricing and inquiries, get in touch.</p>
+    <p className="page-intro">Explore Forest & Flowers originals and Studio Edition prints, alongside available paintings from earlier collections.</p>
+    <section className="available-forest-originals" aria-labelledby="available-forest-title"><h2 id="available-forest-title" className="available-collection-title">Forest &amp; Flowers — Original Artworks</h2><p className="page-intro">Original artwork availability by inquiry.</p><div className="available-grid">{forestCollection.artworks.filter(art => art.availability !== 'not-for-sale').map(art => <article key={art.id} className="available-forest-painting"><Link className="available-image" to={`/collections/forest-and-flowers/${art.slug}/`} aria-label={`Explore original ${art.title}`}><ForestPhotograph image={primaryForestImage(art)} sizes="(max-width:700px) 86vw, 27vw"/></Link><h3><Link to={`/collections/forest-and-flowers/${art.slug}/`}>{art.title}</Link></h3><p>Inquire about the original</p></article>)}</div><Link className="text-link" to="/collections/forest-and-flowers">View Forest &amp; Flowers</Link></section>
+    <StudioEditions title="Forest & Flowers — Studio Editions"/>
     {collections.map(collection => {
       const available = collection.artworks.filter(artwork => artwork.availability === 'available');
       if (!available.length) return null;
@@ -32,6 +37,5 @@ export function AvailableArt() {
         {featured && <AvailablePainting artwork={featured} collection={collection} featured/>}
       </section>;
     })}
-    <StudioEditions/>
   </section>;
 }
