@@ -34,7 +34,7 @@ it('links listing cards to standalone products and rejects unknown products',()=
 it('places inquiry-only Forest originals and Studio Editions before earlier collections without changing inventory',()=>{
  const {container}=render(<MemoryRouter><AvailableArt/></MemoryRouter>);
  const groups=[...container.querySelector('.available-art')!.children].filter(n=>n.tagName==='SECTION');
- expect(groups.map(n=>n.querySelector('h2')?.textContent)).toEqual(['Forest & Flowers — Original Artworks','Forest & Flowers — Studio Editions','The Oceans Collection','The Regal Collection']);
+ expect(groups.map(n=>n.querySelector('h2')?.textContent)).toEqual(['Forest & Flowers — Original Artworks','Forest & Flowers — Studio Editions','Earlier Collections']);
  expect(container.querySelectorAll('.available-painting')).toHaveLength(6);
  expect(container.querySelectorAll('.available-forest-painting')).toHaveLength(8);
  expect(container.querySelector('.available-forest-originals')?.textContent).toContain('availability by inquiry');

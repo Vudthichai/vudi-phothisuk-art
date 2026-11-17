@@ -85,3 +85,8 @@ Local review: `/studio-editions/mother-nature/`, the original Mother Nature page
 Screenshots are supplied in the task response. No merge or publication is
 permitted until explicit approval; the Mother Nature wall template is still a
 proposal, not an approved rollout to all artworks.
+
+## V2 audit and refinement
+
+See [V2 notes](studio-storefront-v2.md) for print navigation, image alignment,
+approval-aware gallery slots, missing assets and future fulfillment contracts.
