@@ -80,3 +80,12 @@
 .artwork-status,.ocean-exhibit-meta>span,.regal-work-meta>span{text-transform:uppercase;letter-spacing:.07em;font-size:11px}
 
 .collections-dropdown{background:#f7f5ef}
+
+/* Original painting prices: shared across galleries and detail pages. */
+.original-retail-price, .forest-original-price,
+.available-forest-painting .forest-original-price {
+  color:#12351d;font-weight:600;font-size:1rem;font-variant-numeric:tabular-nums;
+}
+.artwork-page .artwork-story>.original-retail-price, .forest-editorial-title>.forest-original-price {
+  font-size:1.25rem;line-height:1.5;
+}
