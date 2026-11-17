@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, type PointerEvent } from 'react';
+import { artworkImageDeterrents } from './artworkImageDeterrents';
 import { ForestPhotograph, imageRoleLabel } from './ForestPhotograph';
 import type { ForestImage } from './types';
 import './FullscreenArtworkViewer.css';
@@ -214,7 +215,7 @@ function ZoomablePhotograph({ image, move }: { image: ForestImage; move: (by: nu
       <div className="forest-fullscreen-photo" ref={frame}
         style={{ transform: `translate(${view.x}px, ${view.y}px) scale(${view.scale})` }}>
         <ForestPhotograph image={image} eager sizes="100vw"/>
-        {large && <img className="forest-fullscreen-hires" src={large.src} width={large.width} height={large.height}
+        {large && <img {...artworkImageDeterrents} className="forest-fullscreen-hires" src={large.src} width={large.width} height={large.height}
           alt="" aria-hidden="true" data-ready={loaded} decoding="async" onLoad={() => setLoaded(true)}/>}
       </div>
     </div>

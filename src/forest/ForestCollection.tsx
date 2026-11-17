@@ -9,6 +9,7 @@ import { ForestHero } from './ForestHero';
 import { FullscreenArtworkViewer } from './FullscreenArtworkViewer';
 import { ForestPhotograph as Photograph } from './ForestPhotograph';
 import { primaryForestImage } from './types';
+import { ArtworkStudioEdition, StudioEditions } from '../studio/StudioEditions';
 const base = '/collections/forest-and-flowers';
 function artworkInquiryUrl(artwork: ForestArtwork) {
   return `mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent('Artwork inquiry — ' + artwork.title)}`;
@@ -60,6 +61,7 @@ export function ForestCollection() {
             </article>
           ))}
         </div>
+        <StudioEditions/>
       </>}
   </section></>;
 }
@@ -191,6 +193,7 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
         {next && <ArtworkNeighbor artwork={next} direction="next"/>}
       </nav>
     </footer>
+    <ArtworkStudioEdition artworkId={artwork.id}/>
   </article>;
 }
 
