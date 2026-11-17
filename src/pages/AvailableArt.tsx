@@ -22,12 +22,15 @@ function AvailablePainting({ artwork, collection, featured = false }: { artwork:
   </article>;
 }
 
+// Curated for Available Art only; the source collection order remains unchanged.
+const forestAvailableOrder = ['mother-nature', 'a-forest-forgotten', 'wild-tiger-lilies', 'ethereal-bloom', 'gilded-bloom', 'moss-and-mushrooms', 'blooming-desire', 'dragon-lily'];
+
 export function AvailableArt() {
   return <section className="section page available-art" aria-labelledby="available-title">
     <p className="eyebrow">Original artworks &amp; prints</p>
     <h1 id="available-title">Available Art</h1>
     <p className="page-intro">Explore Forest & Flowers originals and Studio Edition prints, alongside available paintings from earlier collections.</p>
-    <section className="available-forest-originals" aria-labelledby="available-forest-title"><h2 id="available-forest-title" className="available-collection-title">Forest &amp; Flowers — Original Artworks</h2><p className="page-intro">Original artwork availability by inquiry.</p><div className="available-grid">{forestCollection.artworks.filter(art => art.availability !== 'not-for-sale').map(art => <article key={art.id} className="available-forest-painting"><Link className="available-image" to={`/collections/forest-and-flowers/${art.slug}/`} aria-label={`Explore original ${art.title}`}><ForestPhotograph image={primaryForestImage(art)} sizes="(max-width:700px) 86vw, 27vw"/></Link><h3><Link to={`/collections/forest-and-flowers/${art.slug}/`}>{art.title}</Link></h3>{art.dimensions && <p>{art.dimensions}</p>}<OriginalPrice artwork={art} className="forest-original-price"/><p>Inquire about the original</p></article>)}</div><Link className="text-link" to="/collections/forest-and-flowers">View Forest &amp; Flowers</Link></section>
+    <section className="available-forest-originals" aria-labelledby="available-forest-title"><h2 id="available-forest-title" className="available-collection-title">Forest &amp; Flowers — Original Artworks</h2><p className="page-intro">Original artwork availability by inquiry.</p><div className="available-grid">{forestCollection.artworks.filter(art => art.availability !== 'not-for-sale').sort((a,b) => forestAvailableOrder.indexOf(a.id) - forestAvailableOrder.indexOf(b.id)).map(art => <article key={art.id} className="available-forest-painting"><Link className="available-image" to={`/collections/forest-and-flowers/${art.slug}/`} aria-label={`Explore original ${art.title}`}><ForestPhotograph image={primaryForestImage(art)} sizes="(max-width:700px) 86vw, 27vw"/></Link><h3><Link to={`/collections/forest-and-flowers/${art.slug}/`}>{art.title}</Link></h3>{art.dimensions && <p>{art.dimensions}</p>}<OriginalPrice artwork={art} className="forest-original-price"/><p>Inquire about the original</p></article>)}</div><Link className="text-link" to="/collections/forest-and-flowers">View Forest &amp; Flowers</Link></section>
     <StudioEditions title="Forest & Flowers — Studio Editions"/>
     <section className="available-earlier" aria-labelledby="available-earlier-title"><h2 id="available-earlier-title">Earlier Collections</h2>
     {collections.map(collection => {

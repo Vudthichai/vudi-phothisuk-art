@@ -76,6 +76,7 @@ it('uses the same original prices on Available Art without changing Studio price
  const {container}=render(<MemoryRouter><AvailableArt/></MemoryRouter>);
  const cards=[...container.querySelectorAll('.available-forest-painting')];
  expect(cards).toHaveLength(8);
+ expect(cards.map(card=>card.querySelector('h3')?.textContent)).toEqual(['Mother Nature','A Forest Forgotten','Wild Tiger Lilies','Ethereal Bloom','Gilded Bloom','Moss & Mushrooms','Blooming Desire','Dragon Lily']);
  for (const art of collection.artworks.filter(a=>a.availability!=='not-for-sale')) {
   const card=cards.find(c=>c.querySelector('h3')?.textContent===art.title)!;
   expect(card.querySelector('.forest-original-price')?.textContent).toBe('$'+art.priceUsd!.toLocaleString('en-US'));
