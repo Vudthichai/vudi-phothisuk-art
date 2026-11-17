@@ -1,0 +1,122 @@
+{
+  "mother-nature": {
+    "id": "mother-nature-studio-print",
+    "alt": "Mother Nature Studio Edition print design, including its border, Forest & Flowers branding and artist signature.",
+    "variants": [
+      {
+        "key": "mother-nature-print-640",
+        "src": "/studio-editions/mother-nature-print-640.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "key": "mother-nature-print-1280",
+        "src": "/studio-editions/mother-nature-print-1280.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "key": "mother-nature-print-1920",
+        "src": "/studio-editions/mother-nature-print-1920.webp",
+        "width": 1440,
+        "height": 1920
+      }
+    ]
+  },
+  "ethereal-bloom": {
+    "id": "ethereal-bloom-studio-print",
+    "alt": "Ethereal Bloom Studio Edition print design, including its border, Forest & Flowers branding and artist signature.",
+    "variants": [
+      {
+        "key": "ethereal-bloom-print-640",
+        "src": "/studio-editions/ethereal-bloom-print-640.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "key": "ethereal-bloom-print-1280",
+        "src": "/studio-editions/ethereal-bloom-print-1280.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "key": "ethereal-bloom-print-1920",
+        "src": "/studio-editions/ethereal-bloom-print-1920.webp",
+        "width": 1440,
+        "height": 1920
+      }
+    ]
+  },
+  "tiger-lily": {
+    "id": "tiger-lily-studio-print",
+    "alt": "Tiger Lily Studio Edition print design, including its border, Forest & Flowers branding and artist signature.",
+    "variants": [
+      {
+        "key": "tiger-lily-print-640",
+        "src": "/studio-editions/tiger-lily-print-640.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "key": "tiger-lily-print-1280",
+        "src": "/studio-editions/tiger-lily-print-1280.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "key": "tiger-lily-print-1920",
+        "src": "/studio-editions/tiger-lily-print-1920.webp",
+        "width": 1440,
+        "height": 1920
+      }
+    ]
+  },
+  "75-leaves": {
+    "id": "75-leaves-studio-print",
+    "alt": "75 Leaves Studio Edition print design, including its border, Forest & Flowers branding and artist signature.",
+    "variants": [
+      {
+        "key": "75-leaves-print-640",
+        "src": "/studio-editions/75-leaves-print-640.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "key": "75-leaves-print-1280",
+        "src": "/studio-editions/75-leaves-print-1280.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "key": "75-leaves-print-1920",
+        "src": "/studio-editions/75-leaves-print-1920.webp",
+        "width": 1440,
+        "height": 1920
+      }
+    ]
+  },
+  "a-forest-forgotten": {
+    "id": "a-forest-forgotten-studio-print",
+    "alt": "A Forest Forgotten Studio Edition print design, including its border, Forest & Flowers branding and artist signature.",
+    "variants": [
+      {
+        "key": "a-forest-forgotten-print-640",
+        "src": "/studio-editions/a-forest-forgotten-print-640.webp",
+        "width": 480,
+        "height": 640
+      },
+      {
+        "key": "a-forest-forgotten-print-1280",
+        "src": "/studio-editions/a-forest-forgotten-print-1280.webp",
+        "width": 960,
+        "height": 1280
+      },
+      {
+        "key": "a-forest-forgotten-print-1920",
+        "src": "/studio-editions/a-forest-forgotten-print-1920.webp",
+        "width": 1440,
+        "height": 1920
+      }
+    ]
+  }
+}

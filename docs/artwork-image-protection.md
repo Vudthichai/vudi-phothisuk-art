@@ -1,5 +1,8 @@
 # Forest & Flowers image protection review
 
+> Studio card imagery and visible copy have since been revised; see
+> [the approved print-design revision](studio-print-revision.md) for current behavior.
+
 ## Scope and findings
 
 Read-only file inspection measured actual image headers, not filename suffixes.
