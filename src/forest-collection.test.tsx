@@ -46,3 +46,27 @@ it('preserves ten originals, two not-for-sale exceptions and the approved photog
  expect(collection.artworks.filter(a=>a.availability==='provisional')).toHaveLength(8);
  expect(collection.artworks.find(a=>a.slug==='dragon-lily')?.dimensions).toBeNull();
 });
+
+it('shows the eight approved original prices and keeps personal works not for sale', () => {
+  const approved = { 'Mother Nature': 5000, 'Dragon Lily': 1200, 'Ethereal Bloom': 7000,
+    'Moss & Mushrooms': 6000, 'Blooming Desire': 3000, 'Wild Tiger Lilies': 4000,
+    'A Forest Forgotten': 4500, 'Gilded Bloom': 2500 };
+  page();
+  expect(document.querySelectorAll('.forest-original-price')).toHaveLength(8);
+  for (const [title, price] of Object.entries(approved)) {
+    const art = collection.artworks.find(a => a.title === title)!;
+    expect('priceUsd' in art && art.priceUsd).toBe(price);
+    const card = screen.getByRole('heading', { name: title, level: 2 }).closest('article')!;
+    expect(card.querySelector('.forest-original-price')?.textContent).toBe('$' + price.toLocaleString('en-US'));
+    cleanup();
+    page(`${base}/${art.slug}`);
+    expect(document.querySelector('.forest-original-price')?.textContent).toBe('$' + price.toLocaleString('en-US'));
+    cleanup();
+    page();
+  }
+  for (const title of ['Tiger Lily', '75 Leaves']) {
+    const card = screen.getByRole('heading', { name: title, level: 2 }).closest('article')!;
+    expect(card.querySelector('.forest-original-price')).toBeNull();
+    expect(card.textContent).toContain('Not for Sale');
+  }
+});
