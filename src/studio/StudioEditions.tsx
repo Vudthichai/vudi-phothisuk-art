@@ -7,7 +7,7 @@ import './StudioEditions.css';
 function PriceStatus({ bundle = false }: { bundle?: boolean }) {
   return <p className="studio-price-status"><span className="studio-price">{!bundle && 'Starting at '}{studioPrice(bundle ? studioCollectionBundle.priceCents : studioEditionTerms.priceCents)}</span><span aria-hidden="true">—</span><span className="studio-status">{studioEditionTerms.status}</span></p>;
 }
-export function EditionCard({ edition, identifyPrint = false }: { edition: StudioEdition; identifyPrint?: boolean }) {
+export function EditionCard({ edition, identifyPrint = true }: { edition: StudioEdition; identifyPrint?: boolean }) {
   const artwork = studioArtwork(edition);
   const path = studioProductPath(edition);
   const lifestyle = studioGallery(edition).find(view => view.kind === 'lifestyle');
