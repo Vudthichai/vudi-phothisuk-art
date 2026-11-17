@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { contributionStatement } from './contributions';
+import { contributionStatement, contributionSummary } from './contributions';
 import { studioArtwork, studioEditions, studioProductPath, type StudioEdition } from './editions';
 
 export function StudioGiving({ edition, original = false }: { edition: StudioEdition; original?: boolean }) {
@@ -23,4 +23,11 @@ export function ArtWithPurpose() {
       <article key={edition.id}><h3><Link to={studioProductPath(edition)}>{studioArtwork(edition).title}</Link></h3><p>{contributionStatement(edition.contribution!)}</p></article>
     )}</div>
   </section>;
+}
+
+export function StudioGivingSummary({ edition }: { edition: StudioEdition }) {
+  const giving = edition.contribution;
+  if (!giving) return null;
+  const percentage = `${giving.percentOfProfit}%`;
+  return <p className="studio-giving-summary"><strong>{percentage}</strong>{contributionSummary(giving).slice(percentage.length)}</p>;
 }

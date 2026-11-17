@@ -25,12 +25,18 @@ it('places confirmed giving after descriptions only on the two selected product 
   const giving=view.container.querySelector('.studio-product-copy .studio-giving');
   if(edition.contribution){
    expect(giving).not.toBeNull();
+   const summary=view.container.querySelector('.studio-giving-summary');
+   expect(summary?.previousElementSibling?.className).toBe('studio-product-price');
+   expect(summary?.querySelector('strong')?.textContent).toBe(`${edition.contribution.percentOfProfit}%`);
+   expect(summary?.textContent).toBe(edition.artworkId==='75-leaves'
+     ? '75% of profits from this Studio Print will support a veterans foundation. Recipient to be announced.'
+     : '20% of profits from this Studio Print will be donated to Junglekeepers in support of rainforest conservation.');
    expect(giving?.previousElementSibling?.className).toBe('studio-product-description');
    expect(giving?.textContent).toContain(`${edition.contribution.percentOfProfit}% of profits from this Studio Print`);
    expect(giving?.textContent).not.toMatch(/proceeds|revenue|tax.deductible|partner|endorse/i);
    if(edition.artworkId==='75-leaves')expect(giving?.textContent).toContain('The recipient organization will be announced.');
    else expect(giving?.textContent).toContain('Junglekeepers');
-  }else expect(giving).toBeNull();
+  }else { expect(giving).toBeNull();expect(view.container.querySelector('.studio-giving-summary')).toBeNull(); }
   view.unmount();
  }
 });

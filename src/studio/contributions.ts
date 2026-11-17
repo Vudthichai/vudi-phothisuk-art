@@ -18,3 +18,9 @@ export function contributionStatement(giving: ContributionIntention) {
 export function contributionCardLine(giving: ContributionIntention) {
   return `${giving.percentOfProfit}% of profits support ${giving.cause}`;
 }
+
+export function contributionSummary(giving: ContributionIntention) {
+  return giving.cause === 'veterans'
+    ? `${giving.percentOfProfit}% of profits from this Studio Print will support a veterans foundation. Recipient to be announced.`
+    : contributionStatement(giving);
+}
