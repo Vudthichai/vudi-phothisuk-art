@@ -26,3 +26,6 @@
 .studio-edition-panel h2 { font-size:clamp(24px,3vw,36px);margin:14px 0; }
 .studio-edition-panel .text-link { display:inline-block;min-height:44px;padding:12px 0;margin-top:8px; }
 @media(max-width:700px) { .studio-edition-panel { grid-template-columns:minmax(80px,110px) minmax(0,1fr);gap:20px; }.studio-edition-panel .eyebrow { font-size:9px; }.studio-edition-panel h2 { font-size:24px; } }
+.studio-card-lifestyle { position:absolute;inset:0;opacity:0;pointer-events:none; }
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) { .studio-card-lifestyle { transition:opacity .3s ease; }.has-lifestyle:hover>.studio-card-lifestyle { opacity:1; } }
+.has-lifestyle:focus-visible>.studio-card-lifestyle { opacity:1; }

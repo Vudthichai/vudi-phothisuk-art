@@ -23,3 +23,15 @@
 .studio-inspect { margin-top:12px; }
 .studio-store :focus-visible { outline:2px solid #12351d;outline-offset:4px; }
 @media(max-width:700px) { .studio-product-layout { grid-template-columns:1fr;gap:24px; }.studio-product-copy { padding-top:0; }.studio-product-copy h1 { font-size:44px; }.studio-breadcrumbs { margin-bottom:28px; } }
+.studio-print-navigation { margin-top:clamp(48px,7vw,90px);padding-top:30px;border-top:1px solid #cdd3c8;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:28px;align-items:center; }
+.studio-print-neighbor { display:flex;gap:16px;align-items:center;min-width:0;min-height:64px; }
+.studio-print-neighbor img { width:58px;height:78px;object-fit:contain;flex:none; }
+.studio-print-neighbor small { display:block;font-size:.7rem;line-height:1.7;margin-bottom:4px; }
+.studio-print-neighbor span>span { font:400 clamp(20px,2vw,27px)/1.2 'Bodoni Moda',Georgia,serif; }
+.studio-print-neighbor.next { grid-column:3;justify-self:end; }
+.studio-print-all { grid-row:1;grid-column:2;font-size:.8rem;padding:12px 0;min-height:44px; }
+.studio-gallery-views { display:flex;flex-wrap:wrap;gap:12px;margin-top:12px; }
+.studio-gallery-views button { font:inherit;min-height:44px;background:transparent;border:1px solid #a8b4a1;padding:10px; }
+.studio-gallery-views [aria-pressed=true] { border-color:#12351d;background:#eef0e8; }
+@media(max-width:700px) { .studio-print-navigation { grid-template-columns:minmax(0,1fr);gap:22px; }.studio-print-neighbor.next { grid-column:1;justify-self:start; }.studio-print-all { grid-column:1;grid-row:3;justify-self:start; } }
+.studio-inspect { border:0;background:transparent;color:inherit;font:inherit;font-size:.8rem;cursor:pointer; }

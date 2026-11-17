@@ -64,9 +64,9 @@ it('places the four Oceans portraits before the horizontal feature and Sahara in
   const { container } = render(<MemoryRouter><InformationPage page="available-art"/></MemoryRouter>);
   const sections = container.querySelectorAll('.available-collection');
   expect(sections).toHaveLength(2);
-  expect([...sections[0].querySelectorAll('h3')].map(h => h.textContent)).toEqual(['Mermaid Tail', 'Arctic Waves', 'Water’s Edge', 'Arctic Ocean', 'The Oceans']);
+  expect([...sections[0].querySelectorAll('.available-painting h4')].map(h => h.textContent)).toEqual(['Mermaid Tail', 'Arctic Waves', 'Water’s Edge', 'Arctic Ocean', 'The Oceans']);
   expect(sections[0].querySelector('.available-grid .available-featured')).toBeNull();
-  expect(sections[0].querySelector('.available-featured h3')?.textContent).toBe('The Oceans');
-  expect([...sections[1].querySelectorAll('h3')].map(h => h.textContent)).toEqual(['Sahara']);
+  expect(sections[0].querySelector('.available-featured h4')?.textContent).toBe('The Oceans');
+  expect([...sections[1].querySelectorAll('.available-painting h4')].map(h => h.textContent)).toEqual(['Sahara']);
   expect(findCollection('regal-collection')!.artworks.filter(a => a.availability === 'available').map(a => a.title)).toEqual(['Sahara']);
 });
