@@ -14,7 +14,7 @@ it('presents only the five approved reproductions with authentic photographs and
     expect(within(card).getByText('Coming Soon')).toBeTruthy();
     expect(card.textContent).toBe(`${studioArtwork(studioEditions[index]).title}Starting at $40—Coming Soon`);
     const artwork = studioArtwork(studioEditions[index]);
-    expect(within(card).getByRole('img').getAttribute('src')).toBe(`/studio-editions/mockups/${artwork.id}-gallery-9x12-1800.webp`);
+    expect(within(card).getByRole('img').getAttribute('src')).toBe(artwork.id === 'mother-nature' ? '/studio-editions/approved/mother-nature-gallery-still-life-1122.webp' : `/studio-editions/mockups/${artwork.id}-gallery-9x12-1800.webp`);
     expect(studioPrintImage(studioEditions[index]).variants.map(v => v.src)).toEqual([640,1280,1920].map(size => `/studio-editions/${artwork.id}-print-${size}.webp`));
     expect(within(card).getByRole('link',{name:artwork.title}).getAttribute('href')).toBe(`/studio-editions/${artwork.id}/`);
   });

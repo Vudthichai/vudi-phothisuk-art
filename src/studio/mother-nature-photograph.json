@@ -1,0 +1,25 @@
+{
+  "id": "mother-nature-approved-still-life",
+  "alt": "Mother Nature Studio Edition in the exact artist-approved gallery photograph, showing the black frame, sunlit wall, flowering vase, bowl, art books, sphere and wooden cabinet.",
+  "role": "full",
+  "variants": [
+    {
+      "key": "mother-nature-gallery-still-life-480",
+      "src": "/studio-editions/approved/mother-nature-gallery-still-life-480.webp",
+      "width": 480,
+      "height": 600
+    },
+    {
+      "key": "mother-nature-gallery-still-life-768",
+      "src": "/studio-editions/approved/mother-nature-gallery-still-life-768.webp",
+      "width": 768,
+      "height": 960
+    },
+    {
+      "key": "mother-nature-gallery-still-life-1122",
+      "src": "/studio-editions/approved/mother-nature-gallery-still-life-1122.webp",
+      "width": 1122,
+      "height": 1402
+    }
+  ]
+}

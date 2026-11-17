@@ -5,6 +5,11 @@ import checks from '../docs/studio-mockup-composition-checks.json';
 it('uses the correct two size-specific mockups before the approved design for every product',()=>{
  for(const edition of studioEditions) for(const size of ['9x12','12x16']) {
   const views=studioGallery(edition,size);
+  if (edition.artworkId === 'mother-nature') {
+   expect(views.map(v=>v.kind)).toEqual(['reference','clean']);
+   expect(views[0].image.variants.at(-1)?.src).toBe('/studio-editions/approved/mother-nature-gallery-still-life-1122.webp');
+   continue;
+  }
   expect(views.map(v=>v.kind)).toEqual(['framed','lifestyle','clean']);
   for(const view of views.slice(0,2)){
    expect(view.modeledSizeIds).toEqual([size]);
