@@ -1,0 +1,40 @@
+{
+  "reference": "../../../public/studio-editions/approved/mother-nature-gallery-still-life.png",
+  "source": "STUDIO  F&F EB 9x12.jpeg",
+  "referenceSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+  "sourceSha256": "a4aa653f0436b9cdb2d1396f8140097cdfe782b9ab40f622f1e4e4d7cb637f45",
+  "sourceArtwork": [
+    426,
+    313,
+    4259,
+    5692
+  ],
+  "destinationArtwork": [
+    290,
+    177,
+    840,
+    933
+  ],
+  "sourceTitle": [
+    680,
+    5954,
+    1222,
+    6025
+  ],
+  "destinationTitlePatch": [
+    330,
+    970,
+    411,
+    984
+  ],
+  "titleRenderedSize": [
+    76,
+    10
+  ],
+  "titleOrigin": [
+    332,
+    971
+  ],
+  "slug": "ethereal-bloom",
+  "title": "Ethereal Bloom"
+}

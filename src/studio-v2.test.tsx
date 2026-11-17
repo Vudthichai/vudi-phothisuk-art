@@ -23,9 +23,9 @@ it('keeps unapproved mockups out of galleries and cards, without substituting or
  const edition=studioEditions[0];
  additionalStudioViews[edition.id]=[{id:'pending-wall',kind:'lifestyle',label:'Lifestyle',image:studioPrintImage(edition),approval:'pending'}];
  expect(studioGallery(edition).some(v=>v.id==='pending-wall')).toBe(false);
- expect(studioGallery(edition).map(v=>v.kind)).toEqual(['framed','lifestyle','clean']);
+ expect(studioGallery(edition).map(v=>v.kind)).toEqual(['reference','clean']);
  const {container}=render(<MemoryRouter><StudioEditions/></MemoryRouter>);
- expect(container.querySelectorAll('.has-lifestyle')).toHaveLength(5);expect(container.querySelectorAll('img')).toHaveLength(10);
+ expect(container.querySelectorAll('.has-lifestyle')).toHaveLength(0);expect(container.querySelectorAll('img')).toHaveLength(5);
 });
 it('supports approved extra gallery views with explicit touch/keyboard controls',()=>{
  const edition=studioEditions[0];

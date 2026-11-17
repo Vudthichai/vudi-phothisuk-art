@@ -1,0 +1,50 @@
+{
+  "reference": "../../../public/studio-editions/approved/mother-nature-gallery-still-life.png",
+  "source": "STUDIO  F&F MN 9x12-4.jpeg",
+  "referenceSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+  "sourceSha256": "f4511adefdbb4f898c84927d50767e89423d4499ae2ff75244adc53ec7de3787",
+  "sourceArtwork": [
+    426,
+    313,
+    4259,
+    5692
+  ],
+  "destinationArtwork": [
+    290,
+    177,
+    840,
+    933
+  ],
+  "sourceTitle": [
+    693,
+    5951,
+    1184,
+    6019
+  ],
+  "destinationTitlePatch": [
+    330,
+    970,
+    411,
+    984
+  ],
+  "titleRenderedSize": [
+    69,
+    10
+  ],
+  "titleOrigin": [
+    332,
+    971
+  ],
+  "slug": "mother-nature",
+  "title": "Mother Nature",
+  "titlePaperSamples": [
+    [
+      324,
+      330
+    ],
+    [
+      412,
+      421
+    ]
+  ]
+}

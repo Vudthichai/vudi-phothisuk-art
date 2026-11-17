@@ -1,5 +1,8 @@
 # Studio Edition product mockups — review revision
 
+> The active site imagery is superseded by [the reviewed exact-room set](exact-gallery-site-integration.md).
+> The generic scene process below is retained as history, not used by current galleries.
+
 ## Asset integrity and provenance
 
 All five supplied source files are present. Their SHA256 hashes were checked against

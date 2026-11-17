@@ -1,0 +1,50 @@
+{
+  "reference": "../../../public/studio-editions/approved/mother-nature-gallery-still-life.png",
+  "source": "STUDIO  F&F AFF 9x12.jpeg",
+  "referenceSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+  "sourceSha256": "3759d5dd76203496b813b8634ccb33e5c8cd5bb1f359b1bb5ad0e8f7abb0aaf6",
+  "sourceArtwork": [
+    426,
+    313,
+    4259,
+    5692
+  ],
+  "destinationArtwork": [
+    290,
+    177,
+    840,
+    933
+  ],
+  "sourceTitle": [
+    695,
+    5949,
+    1313,
+    6035
+  ],
+  "destinationTitlePatch": [
+    330,
+    970,
+    421,
+    985
+  ],
+  "titleRenderedSize": [
+    87,
+    12
+  ],
+  "titleOrigin": [
+    332,
+    971
+  ],
+  "slug": "a-forest-forgotten",
+  "title": "A Forest Forgotten",
+  "titlePaperSamples": [
+    [
+      324,
+      330
+    ],
+    [
+      422,
+      431
+    ]
+  ]
+}

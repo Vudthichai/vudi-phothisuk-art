@@ -41,6 +41,7 @@ it('keeps Studio card sources web-resolution, including on Retina displays', () 
       expect(Math.max(variant.width,variant.height)).toBeLessThanOrEqual(2000);
       expect(variant.src).toMatch(/\.webp$/);
     }
-    expect(Math.max(...photo.variants.flatMap(v=>[v.width,v.height]))).toBeGreaterThanOrEqual(1600);
+    const longest = Math.max(...photo.variants.flatMap(v=>[v.width,v.height]));
+    expect(longest).toBe(1402);
   }
 });

@@ -1,0 +1,67 @@
+[
+  {
+    "artworkId": "mother-nature",
+    "reviewedPngSha256": "f1ff96711de0e00d4f11dc8d4cf5fe3e8a59ae44f06c97be052f7c20fcc68110",
+    "approvedPrintSourceSha256": "f4511adefdbb4f898c84927d50767e89423d4499ae2ff75244adc53ec7de3787",
+    "roomMasterSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+    "outsideMaskChangedPixels": 0,
+    "nativeSize": [
+      1122,
+      1402
+    ],
+    "nativeDecodedRgbSha256": "04a6fdecc9a43b0b311a1059f9f9e350aeb36caa92440cb3ebf779e0d9dd45c4",
+    "delivery": "lossless WebP; native decoded pixels identical to reviewed PNG; smaller copies resized proportionally"
+  },
+  {
+    "artworkId": "ethereal-bloom",
+    "reviewedPngSha256": "ec37b15876acfda5ec4ed18d625db6d57e42309e73a7dba2ea1c2cd9206117e7",
+    "approvedPrintSourceSha256": "a4aa653f0436b9cdb2d1396f8140097cdfe782b9ab40f622f1e4e4d7cb637f45",
+    "roomMasterSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+    "outsideMaskChangedPixels": 0,
+    "nativeSize": [
+      1122,
+      1402
+    ],
+    "nativeDecodedRgbSha256": "98d3cb6b3392edf3ef4df1c03ae1843c9beae6b06baae975b659b97d24d027f9",
+    "delivery": "lossless WebP; native decoded pixels identical to reviewed PNG; smaller copies resized proportionally"
+  },
+  {
+    "artworkId": "tiger-lily",
+    "reviewedPngSha256": "87b9a3f7d1b48fbb7f0d2a93d3c6f76c51255fce07063ae56d1c5a4d60bee68c",
+    "approvedPrintSourceSha256": "52ce228fd36e302c96bc53097e8ed6018ef7c52c84a67455e5c5e0ba8b89e977",
+    "roomMasterSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+    "outsideMaskChangedPixels": 0,
+    "nativeSize": [
+      1122,
+      1402
+    ],
+    "nativeDecodedRgbSha256": "c6a933ed29cc2b8fbb281dd234b39b3111a340fb652181839e483dcb93192ece",
+    "delivery": "lossless WebP; native decoded pixels identical to reviewed PNG; smaller copies resized proportionally"
+  },
+  {
+    "artworkId": "75-leaves",
+    "reviewedPngSha256": "786c3193032c4cd1d4fa733ca0bab3cc3bc5c8989efebf539d8694591f442a80",
+    "approvedPrintSourceSha256": "622e4aa8a274d32e832716046a979e9855941a8ac4a06c3c724f775008b19723",
+    "roomMasterSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+    "outsideMaskChangedPixels": 0,
+    "nativeSize": [
+      1122,
+      1402
+    ],
+    "nativeDecodedRgbSha256": "58cf33c2267829c57f4ef8b671207b995298695f87065c87007ab80d3f7b63f5",
+    "delivery": "lossless WebP; native decoded pixels identical to reviewed PNG; smaller copies resized proportionally"
+  },
+  {
+    "artworkId": "a-forest-forgotten",
+    "reviewedPngSha256": "081929d58fa8a77ddd716352abc918d34e750321ac82f52809938c13dd21b04b",
+    "approvedPrintSourceSha256": "3759d5dd76203496b813b8634ccb33e5c8cd5bb1f359b1bb5ad0e8f7abb0aaf6",
+    "roomMasterSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+    "outsideMaskChangedPixels": 0,
+    "nativeSize": [
+      1122,
+      1402
+    ],
+    "nativeDecodedRgbSha256": "93df0eae2c3cd7d67c373250d761cb4c4d3c4d6cd9a41c1e000f6fc60874b34c",
+    "delivery": "lossless WebP; native decoded pixels identical to reviewed PNG; smaller copies resized proportionally"
+  }
+]

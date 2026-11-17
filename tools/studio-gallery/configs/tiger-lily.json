@@ -1,0 +1,50 @@
+{
+  "reference": "../../../public/studio-editions/approved/mother-nature-gallery-still-life.png",
+  "source": "STUDIO  F&F TL 9x12.jpeg",
+  "referenceSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+  "sourceSha256": "52ce228fd36e302c96bc53097e8ed6018ef7c52c84a67455e5c5e0ba8b89e977",
+  "sourceArtwork": [
+    426,
+    313,
+    4259,
+    5692
+  ],
+  "destinationArtwork": [
+    290,
+    177,
+    840,
+    933
+  ],
+  "sourceTitle": [
+    681,
+    5954,
+    981,
+    6033
+  ],
+  "destinationTitlePatch": [
+    330,
+    970,
+    411,
+    984
+  ],
+  "titleRenderedSize": [
+    42,
+    11
+  ],
+  "titleOrigin": [
+    332,
+    971
+  ],
+  "slug": "tiger-lily",
+  "title": "Tiger Lily",
+  "titlePaperSamples": [
+    [
+      324,
+      330
+    ],
+    [
+      412,
+      421
+    ]
+  ]
+}
