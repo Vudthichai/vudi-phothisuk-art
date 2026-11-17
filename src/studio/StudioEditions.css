@@ -29,3 +29,4 @@
 .studio-card-lifestyle { position:absolute;inset:0;opacity:0;pointer-events:none; }
 @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) { .studio-card-lifestyle { transition:opacity .3s ease; }.has-lifestyle:hover>.studio-card-lifestyle { opacity:1; } }
 .has-lifestyle:focus-visible>.studio-card-lifestyle { opacity:1; }
+.studio-edition-image { aspect-ratio:4/5; }

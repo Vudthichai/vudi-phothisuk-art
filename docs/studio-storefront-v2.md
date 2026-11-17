@@ -146,3 +146,8 @@ no horizontal overflow/runtime errors. Targeted gallery tests also check pending
 asset rejection and resetting to clean when another size lacks verified imagery.
 No actual Safari/device testing was performed; no new dependencies or image
 assets were installed. Existing provisional-original metadata warnings remain.
+
+## Product mockup revision
+
+See [mockup review notes](studio-product-mockups.md) for newly composited gallery/
+lifestyle views from the approved designs and explicit modeled-size assumptions.

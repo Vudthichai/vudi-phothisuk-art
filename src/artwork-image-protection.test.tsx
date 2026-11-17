@@ -4,7 +4,8 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ForestPhotograph } from './forest/ForestPhotograph';
 import { StudioEditions } from './studio/StudioEditions';
-import { studioArtwork, studioEditions, studioPrintImage } from './studio/editions';
+import { studioArtwork, studioEditions } from './studio/editions';
+import { studioPrimaryImage } from './studio/gallery';
 import { primaryForestImage } from './forest/types';
 afterEach(cleanup);
 const image = primaryForestImage(studioArtwork(studioEditions[0]));
@@ -35,7 +36,7 @@ it('preserves linked artwork context menus, navigation and accessible names', ()
 });
 it('keeps Studio card sources web-resolution, including on Retina displays', () => {
   for (const edition of studioEditions) {
-    const photo = studioPrintImage(edition);
+    const photo = studioPrimaryImage(edition);
     for (const variant of photo.variants) {
       expect(Math.max(variant.width,variant.height)).toBeLessThanOrEqual(2000);
       expect(variant.src).toMatch(/\.webp$/);

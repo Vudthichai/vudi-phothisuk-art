@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { studioGallery } from './gallery';
+import { studioGallery, studioPrimaryImage } from './gallery';
 import { ForestPhotograph } from '../forest/ForestPhotograph';
 import { studioArtwork, studioCollectionBundle, studioEditionFor, studioEditions, studioEditionTerms, studioPrice, studioPrintImage, studioBase, studioProductPath, type StudioEdition } from './editions';
 import './StudioEditions.css';
@@ -13,7 +13,7 @@ function EditionCard({ edition }: { edition: StudioEdition }) {
   const lifestyle = studioGallery(edition).find(view => view.kind === 'lifestyle');
   return <article className="studio-edition-card" aria-labelledby={`${edition.id}-title`}>
     <Link className={`studio-edition-image${lifestyle ? ' has-lifestyle' : ''}`} to={path} aria-label={`View Studio Edition information for ${artwork.title}`}>
-      <ForestPhotograph image={studioPrintImage(edition)} sizes="(max-width:700px) 86vw, (max-width:1000px) 40vw, 27vw"/>{lifestyle && <span className="studio-card-lifestyle" aria-hidden="true"><ForestPhotograph image={{...lifestyle.image,alt:''}} sizes="(max-width:700px) 86vw, 27vw"/></span>}
+      <ForestPhotograph image={studioPrimaryImage(edition)} sizes="(max-width:700px) 86vw, (max-width:1000px) 40vw, 27vw"/>{lifestyle && <span className="studio-card-lifestyle" aria-hidden="true"><ForestPhotograph image={{...lifestyle.image,alt:''}} sizes="(max-width:700px) 86vw, 27vw"/></span>}
     </Link>
     <div className="studio-edition-copy"><h3 id={`${edition.id}-title`}><Link to={path}>{artwork.title}</Link></h3><PriceStatus/></div>
   </article>;

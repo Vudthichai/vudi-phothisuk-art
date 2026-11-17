@@ -1,3 +1,4 @@
+import mockupImages from './mockup-images.json';
 import type { ForestImage } from '../forest/types';
 import { studioPrintImage, studioSizes, type StudioEdition } from './editions';
 export type StudioGalleryView = {
@@ -5,15 +6,20 @@ export type StudioGalleryView = {
   kind: 'clean' | 'framed' | 'lifestyle' | 'detail';
   label: string;
   image: ForestImage;
-  approval: 'pending' | 'artist-approved';
+  approval: 'pending' | 'artist-approved' | 'approved-print-composite';
+  /** Proportions computed from a declared mockup scale, not a measured real room. */
+  modeledSizeIds?: readonly string[];
   /** Required review evidence before any claim of physical room scale. */
   verifiedSizeIds?: readonly string[];
 };
-/** Add only supplied/approved public web derivatives here, never print masters.
- * No framed/lifestyle files have been approved yet; do not fabricate fallbacks.
+/** Derived compositions use approved source designs, not generated artwork.
+ * Artist approval of the final compositions occurs at PR review/merge.
  */
+const compositions = mockupImages as Record<string, Record<string, readonly StudioGalleryView[]>>;
 export const additionalStudioViews: Partial<Record<string, readonly StudioGalleryView[]>> = {};
 export function studioGallery(edition: StudioEdition, sizeId = studioSizes[0].id): readonly StudioGalleryView[] {
-  return [{ id: `${edition.id}-clean`, kind: 'clean', label: 'Print design', image: studioPrintImage(edition), approval: 'artist-approved' },
-    ...(additionalStudioViews[edition.id] ?? []).filter(view => view.approval === 'artist-approved' && (!['framed','lifestyle'].includes(view.kind) || view.verifiedSizeIds?.includes(sizeId)))];
+  const derived = (compositions[edition.artworkId]?.[sizeId] ?? []).filter(view => view.approval === 'approved-print-composite' && view.modeledSizeIds?.includes(sizeId));
+  const supplied = (additionalStudioViews[edition.id] ?? []).filter(view => view.approval === 'artist-approved' && (!['framed','lifestyle'].includes(view.kind) || view.verifiedSizeIds?.includes(sizeId)));
+  return [...derived, { id: `${edition.id}-clean`, kind: 'clean', label: 'Print design', image: studioPrintImage(edition), approval: 'artist-approved' }, ...supplied];
 }
+export function studioPrimaryImage(edition: StudioEdition) { return studioGallery(edition)[0].image; }

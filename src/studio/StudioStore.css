@@ -35,3 +35,8 @@
 .studio-gallery-views [aria-pressed=true] { border-color:#12351d;background:#eef0e8; }
 @media(max-width:700px) { .studio-print-navigation { grid-template-columns:minmax(0,1fr);gap:22px; }.studio-print-neighbor.next { grid-column:1;justify-self:start; }.studio-print-all { grid-column:1;grid-row:3;justify-self:start; } }
 .studio-inspect { border:0;background:transparent;color:inherit;font:inherit;font-size:.8rem;cursor:pointer; }
+.studio-gallery-caption { font-size:.75rem;line-height:1.8;color:#526452;margin:12px 0 0; }
+.studio-gallery-views { display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px; }
+.studio-gallery-views button { padding:8px;min-width:0;cursor:pointer; }
+.studio-gallery-views img { display:block;width:100%;height:100px;object-fit:contain; }
+.studio-gallery-views span { display:block;font-size:.7rem;line-height:1.5;margin-top:8px; }

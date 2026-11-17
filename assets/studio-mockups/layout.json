@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "gallery": {"canvas": [1440, 1800], "pixelsPerInch": 100, "frameInches": 0.125, "background": "#f7f5ef", "longEdges": [640, 1200, 1800]},
+  "lifestyle": {"background": "assets/studio-mockups/ivory-console.webp", "consoleSpanPixels": [86, 1022], "assumedConsoleWidthInches": 36, "printCenterPixels": [561, 620], "frameInches": 0.125, "longEdges": [640, 960, 1400]},
+  "note": "Synthetic empty-room background, with a declared 36-inch console assumption for proportional mockup scale. Not a measured real interior or a physical print photograph. Artwork is composited unchanged from approved sources."
+}
