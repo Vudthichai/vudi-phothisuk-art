@@ -100,3 +100,10 @@ been introduced by this phase.
 - [Square webhook signature validation](https://developer.squareup.com/docs/webhooks/step3validate)
 - [Square payment events](https://developer.squareup.com/docs/payments-api/webhooks)
 - [Printful API: orders, confirmation, shipping rates and webhooks](https://developers.printful.com/docs/)
+
+## Image protection review
+
+See [the image pipeline and public-source audit](artwork-image-protection.md) for
+measured resolutions, existing oversized-file exposure, reversible image-only
+saving/dragging deterrents, and the recommended separately reviewed cleanup.
+No existing public image files have been removed or changed.
