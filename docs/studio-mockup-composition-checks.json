@@ -1,5 +1,5 @@
 {
-  "layoutVersion": 1,
+  "layoutVersion": 2,
   "checks": [
     {
       "artworkId": "mother-nature",
@@ -12,12 +12,12 @@
         1200
       ],
       "framePixels": [
-        924,
-        1224
+        930,
+        1230
       ],
       "positionPixels": [
-        258,
-        288
+        255,
+        285
       ],
       "pixelsPerInch": 100
     },
@@ -28,18 +28,18 @@
       "sourceSha256": "f4511adefdbb4f898c84927d50767e89423d4499ae2ff75244adc53ec7de3787",
       "artworkPixelComparison": "exact before web encoding",
       "printPixels": [
-        234,
-        312
+        562,
+        750
       ],
       "framePixels": [
-        240,
-        318
+        580,
+        768
       ],
       "positionPixels": [
-        441,
-        461
+        285,
+        181
       ],
-      "pixelsPerInch": 26.0
+      "pixelsPerInch": 62.5
     },
     {
       "artworkId": "mother-nature",
@@ -52,12 +52,12 @@
         1600
       ],
       "framePixels": [
-        1224,
-        1624
+        1230,
+        1630
       ],
       "positionPixels": [
-        108,
-        88
+        105,
+        85
       ],
       "pixelsPerInch": 100
     },
@@ -68,18 +68,18 @@
       "sourceSha256": "f4511adefdbb4f898c84927d50767e89423d4499ae2ff75244adc53ec7de3787",
       "artworkPixelComparison": "exact before web encoding",
       "printPixels": [
-        312,
-        416
+        750,
+        1000
       ],
       "framePixels": [
-        318,
-        422
+        768,
+        1018
       ],
       "positionPixels": [
-        402,
-        409
+        191,
+        56
       ],
-      "pixelsPerInch": 26.0
+      "pixelsPerInch": 62.5
     },
     {
       "artworkId": "ethereal-bloom",
@@ -92,12 +92,12 @@
         1200
       ],
       "framePixels": [
-        924,
-        1224
+        930,
+        1230
       ],
       "positionPixels": [
-        258,
-        288
+        255,
+        285
       ],
       "pixelsPerInch": 100
     },
@@ -108,18 +108,18 @@
       "sourceSha256": "a4aa653f0436b9cdb2d1396f8140097cdfe782b9ab40f622f1e4e4d7cb637f45",
       "artworkPixelComparison": "exact before web encoding",
       "printPixels": [
-        234,
-        312
+        562,
+        750
       ],
       "framePixels": [
-        240,
-        318
+        580,
+        768
       ],
       "positionPixels": [
-        441,
-        461
+        285,
+        181
       ],
-      "pixelsPerInch": 26.0
+      "pixelsPerInch": 62.5
     },
     {
       "artworkId": "ethereal-bloom",
@@ -132,12 +132,12 @@
         1600
       ],
       "framePixels": [
-        1224,
-        1624
+        1230,
+        1630
       ],
       "positionPixels": [
-        108,
-        88
+        105,
+        85
       ],
       "pixelsPerInch": 100
     },
@@ -148,18 +148,18 @@
       "sourceSha256": "a4aa653f0436b9cdb2d1396f8140097cdfe782b9ab40f622f1e4e4d7cb637f45",
       "artworkPixelComparison": "exact before web encoding",
       "printPixels": [
-        312,
-        416
+        750,
+        1000
       ],
       "framePixels": [
-        318,
-        422
+        768,
+        1018
       ],
       "positionPixels": [
-        402,
-        409
+        191,
+        56
       ],
-      "pixelsPerInch": 26.0
+      "pixelsPerInch": 62.5
     },
     {
       "artworkId": "tiger-lily",
@@ -172,12 +172,12 @@
         1200
       ],
       "framePixels": [
-        924,
-        1224
+        930,
+        1230
       ],
       "positionPixels": [
-        258,
-        288
+        255,
+        285
       ],
       "pixelsPerInch": 100
     },
@@ -188,18 +188,18 @@
       "sourceSha256": "52ce228fd36e302c96bc53097e8ed6018ef7c52c84a67455e5c5e0ba8b89e977",
       "artworkPixelComparison": "exact before web encoding",
       "printPixels": [
-        234,
-        312
+        562,
+        750
       ],
       "framePixels": [
-        240,
-        318
+        580,
+        768
       ],
       "positionPixels": [
-        441,
-        461
+        285,
+        181
       ],
-      "pixelsPerInch": 26.0
+      "pixelsPerInch": 62.5
     },
     {
       "artworkId": "tiger-lily",
@@ -212,12 +212,12 @@
         1600
       ],
       "framePixels": [
-        1224,
-        1624
+        1230,
+        1630
       ],
       "positionPixels": [
-        108,
-        88
+        105,
+        85
       ],
       "pixelsPerInch": 100
     },
@@ -228,18 +228,18 @@
       "sourceSha256": "52ce228fd36e302c96bc53097e8ed6018ef7c52c84a67455e5c5e0ba8b89e977",
       "artworkPixelComparison": "exact before web encoding",
       "printPixels": [
-        312,
-        416
+        750,
+        1000
       ],
       "framePixels": [
-        318,
-        422
+        768,
+        1018
       ],
       "positionPixels": [
-        402,
-        409
+        191,
+        56
       ],
-      "pixelsPerInch": 26.0
+      "pixelsPerInch": 62.5
     },
     {
       "artworkId": "75-leaves",
@@ -252,12 +252,12 @@
         1200
       ],
       "framePixels": [
-        924,
-        1224
+        930,
+        1230
       ],
       "positionPixels": [
-        258,
-        288
+        255,
+        285
       ],
       "pixelsPerInch": 100
     },
@@ -268,18 +268,18 @@
       "sourceSha256": "622e4aa8a274d32e832716046a979e9855941a8ac4a06c3c724f775008b19723",
       "artworkPixelComparison": "exact before web encoding",
       "printPixels": [
-        234,
-        312
+        562,
+        750
       ],
       "framePixels": [
-        240,
-        318
+        580,
+        768
       ],
       "positionPixels": [
-        441,
-        461
+        285,
+        181
       ],
-      "pixelsPerInch": 26.0
+      "pixelsPerInch": 62.5
     },
     {
       "artworkId": "75-leaves",
@@ -292,12 +292,12 @@
         1600
       ],
       "framePixels": [
-        1224,
-        1624
+        1230,
+        1630
       ],
       "positionPixels": [
-        108,
-        88
+        105,
+        85
       ],
       "pixelsPerInch": 100
     },
@@ -308,18 +308,18 @@
       "sourceSha256": "622e4aa8a274d32e832716046a979e9855941a8ac4a06c3c724f775008b19723",
       "artworkPixelComparison": "exact before web encoding",
       "printPixels": [
-        312,
-        416
+        750,
+        1000
       ],
       "framePixels": [
-        318,
-        422
+        768,
+        1018
       ],
       "positionPixels": [
-        402,
-        409
+        191,
+        56
       ],
-      "pixelsPerInch": 26.0
+      "pixelsPerInch": 62.5
     },
     {
       "artworkId": "a-forest-forgotten",
@@ -332,12 +332,12 @@
         1200
       ],
       "framePixels": [
-        924,
-        1224
+        930,
+        1230
       ],
       "positionPixels": [
-        258,
-        288
+        255,
+        285
       ],
       "pixelsPerInch": 100
     },
@@ -348,18 +348,18 @@
       "sourceSha256": "3759d5dd76203496b813b8634ccb33e5c8cd5bb1f359b1bb5ad0e8f7abb0aaf6",
       "artworkPixelComparison": "exact before web encoding",
       "printPixels": [
-        234,
-        312
+        562,
+        750
       ],
       "framePixels": [
-        240,
-        318
+        580,
+        768
       ],
       "positionPixels": [
-        441,
-        461
+        285,
+        181
       ],
-      "pixelsPerInch": 26.0
+      "pixelsPerInch": 62.5
     },
     {
       "artworkId": "a-forest-forgotten",
@@ -372,12 +372,12 @@
         1600
       ],
       "framePixels": [
-        1224,
-        1624
+        1230,
+        1630
       ],
       "positionPixels": [
-        108,
-        88
+        105,
+        85
       ],
       "pixelsPerInch": 100
     },
@@ -388,18 +388,18 @@
       "sourceSha256": "3759d5dd76203496b813b8634ccb33e5c8cd5bb1f359b1bb5ad0e8f7abb0aaf6",
       "artworkPixelComparison": "exact before web encoding",
       "printPixels": [
-        312,
-        416
+        750,
+        1000
       ],
       "framePixels": [
-        318,
-        422
+        768,
+        1018
       ],
       "positionPixels": [
-        402,
-        409
+        191,
+        56
       ],
-      "pixelsPerInch": 26.0
+      "pixelsPerInch": 62.5
     }
   ]
 }

@@ -1,6 +1,34 @@
 {
-  "version": 1,
-  "gallery": {"canvas": [1440, 1800], "pixelsPerInch": 100, "frameInches": 0.125, "background": "#f7f5ef", "longEdges": [640, 1200, 1800]},
-  "lifestyle": {"background": "assets/studio-mockups/ivory-console.webp", "consoleSpanPixels": [86, 1022], "assumedConsoleWidthInches": 36, "printCenterPixels": [561, 620], "frameInches": 0.125, "longEdges": [640, 960, 1400]},
-  "note": "Synthetic empty-room background, with a declared 36-inch console assumption for proportional mockup scale. Not a measured real interior or a physical print photograph. Artwork is composited unchanged from approved sources."
+  "version": 2,
+  "gallery": {
+    "canvas": [
+      1440,
+      1800
+    ],
+    "pixelsPerInch": 100,
+    "frameInches": 0.15,
+    "background": "#f7f5ef",
+    "longEdges": [
+      640,
+      1200,
+      1800
+    ],
+    "backgroundImage": "assets/studio-mockups/gallery-wall.webp"
+  },
+  "lifestyle": {
+    "background": "assets/studio-mockups/ivory-console.webp",
+    "pixelsPerInch": 62.5,
+    "referenceFieldWidthInches": 17.952,
+    "printCenterPixels": [
+      575,
+      565
+    ],
+    "frameInches": 0.15,
+    "longEdges": [
+      640,
+      960,
+      1400
+    ]
+  },
+  "note": "Reference-inspired close-up wall and partial dark-walnut console, not a wide room. Size modeled at 62.5 pixels/inch across a declared 17.952-inch camera crop. Cabinet extends beyond both image edges; no claim of measured furniture or real-room scale. Approved artwork is composited unchanged."
 }

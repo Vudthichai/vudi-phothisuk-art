@@ -58,13 +58,13 @@ for record in records:
         for kind in ['gallery','lifestyle']:
             spec = layout[kind]
             if kind == 'gallery':
-                bg = Image.new('RGB',tuple(spec['canvas']),spec['background'])
+                bg = Image.open(ROOT/spec['backgroundImage']).convert('RGB') if spec.get('backgroundImage') else Image.new('RGB',tuple(spec['canvas']),spec['background'])
                 ppi = spec['pixelsPerInch']
                 center = (bg.width/2,bg.height/2)
                 label = 'Gallery mockup'
             else:
                 bg = Image.open(ROOT/spec['background']).convert('RGB')
-                ppi = (spec['consoleSpanPixels'][1]-spec['consoleSpanPixels'][0])/spec['assumedConsoleWidthInches']
+                ppi = spec.get('pixelsPerInch') or (spec['consoleSpanPixels'][1]-spec['consoleSpanPixels'][0])/spec['assumedConsoleWidthInches']
                 center = spec['printCenterPixels']
                 label = 'Interior mockup'
             image,check = composite(bg,art,center,ppi,width,height,spec['frameInches'])
@@ -79,7 +79,7 @@ for record in records:
                     with Image.open(output/filename) as existing:
                         assert existing.size == derivative.size
                 variants.append({'key':filename[:-5],'src':f'/studio-editions/mockups/{filename}','width':derivative.width,'height':derivative.height})
-            manifest[slug][size_id].append({'id':f'{slug}-{kind}-{size_id}', 'kind':'framed' if kind=='gallery' else 'lifestyle', 'label':label, 'image':{'id':f'{slug}-{kind}-{size_id}','role':'full','alt':f"{slug.replace('-',' ').title()} {width} × {height} inch Studio Edition design in a slim matte-black frame, {'against warm ivory' if kind=='gallery' else 'on an ivory wall above an oak console'}; composited mockup.",'variants':variants},'approval':'approved-print-composite','modeledSizeIds':[size_id]})
+            manifest[slug][size_id].append({'id':f'{slug}-{kind}-{size_id}', 'kind':'framed' if kind=='gallery' else 'lifestyle', 'label':label, 'image':{'id':f'{slug}-{kind}-{size_id}','role':'full','alt':f"{slug.replace('-',' ').title()} {width} × {height} inch Studio Edition design in a slim matte-black frame, {'against warm ivory' if kind=='gallery' else 'on a sunlit ivory wall above a dark walnut console'}; composited mockup.",'variants':variants},'approval':'approved-print-composite','modeledSizeIds':[size_id]})
             checks.append({'artworkId':slug,'sizeId':size_id,'kind':kind,'sourceSha256':record['sourceSha256'],'artworkPixelComparison':'exact before web encoding',**check})
             print(slug,size_id,kind,'composited and verified')
 (ROOT/'src/studio/mockup-images.json').write_text(json.dumps(manifest,indent=2)+'\n')

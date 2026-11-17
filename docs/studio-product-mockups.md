@@ -12,10 +12,11 @@ the repository and public deployment. The artist must retain their own permanent
 backup; a workspace is not permanent storage. Only web-resolution composites and
 previously approved web derivatives are served.
 
-An image-generation tool created **only the empty interior background**: ivory
-wall, oak console, daylight and small vase. The unmodified generated original is
+An image-generation tool created **only the empty interior background**: sunlit ivory
+wall, cropped dark-walnut console, blossom vase, dark bowl and blank-spined books. The unmodified generated original is
 retained in `/workspace/generated_images/`. A compact background-only web copy lives
-in `assets/studio-mockups/ivory-console.webp`, outside the public folder. No print
+in `assets/studio-mockups/ivory-console.webp`, with a cropped texture plate for the
+gallery shot, both outside the public folder. No print
 file was sent to image generation. All artwork was placed deterministically with
 Pillow, using proportional resize and direct paste, without image-model editing.
 
@@ -37,13 +38,16 @@ development Pillow:
 python scripts/compose-studio-mockups.py --sources /private/source-directory
 ```
 
-The gallery view is a straight-on slim matte-black frame on warm ivory, with soft
-cast shadow. The lifestyle view uses one shared synthetic room. Each of the ten
+The gallery view is a straight-on slim matte-black frame on textured warm ivory,
+with dappled window light and soft cast shadow. The updated close composition
+follows the artist-supplied reference, without regenerating its artwork or text. The lifestyle view uses one shared synthetic room. Each of the ten
 views has **two size-specific compositions** (20 compositions total): 9×12 and
 12×16 inches. Artwork dimensions, frame thickness and shadow geometry are computed
 from one scale per scene; changing size increases print width/height by 4/3.
-The lifestyle scale uses a declared **36-inch console assumption**, with its
-936-pixel span giving 26 pixels/inch in the source plate. This is a dimensioned
+The lifestyle scale uses a declared **62.5 pixels/inch camera crop** (17.952 inches
+across the rendered field), with the dark console extending outside both edges.
+It no longer infers scale from a whole-console width. The tighter crop makes the
+print prominent while retaining 4/3 relative sizing between the two options. This is a dimensioned
 illustrative mockup, **not a measured real room or photograph of a finished print**.
 The frame is presentation styling, not a promised included product or selected
 vendor frame. Final product materials and larger-size prices remain unconfirmed.
@@ -74,7 +78,7 @@ there is no checkout, payment, production or fulfillment connection.
 ## Output and loading
 
 Ten primary mockup views × two modeled sizes × three responsive derivatives = 60
-WebP assets (approximately 11 MiB total, not all downloaded per visitor). Gallery
+WebP assets (approximately 18 MiB total, not all downloaded per visitor). Gallery
 variants have 640/1200/1800 longest edges; lifestyle has 640/960/1400, avoiding
 upsampling the 1122×1402 generated background. Existing raw-design detail view
 remains capped at 1920. WebP quality is 92; no production-resolution source is public.
@@ -101,3 +105,12 @@ exceptions. All 60 derivative files were verified in the build output; no suppli
 source JPEGs were copied there. Physical Safari/device testing was not performed.
 No new runtime dependencies or commerce services were introduced. Existing original
 catalog warnings remain unchanged.
+
+## Reference revision
+
+Replaced the original wide console setting with a close-up sunlit textured wall,
+cropped dark walnut console and restrained blossom/ceramic/book styling, following
+the new visual reference. Gallery and lifestyle plates share this visual identity.
+Only empty backgrounds were generated; all five approved designs are still placed
+by the same exact RGB-verified compositing process. Both provisional sizes have
+updated compositions. No layout, pricing, navigation or original artwork changes.
