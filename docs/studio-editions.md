@@ -1,5 +1,8 @@
 # Studio Editions: staged presentation and future commerce
 
+> Studio card imagery and visible copy have since been revised; see
+> [the approved print-design revision](studio-print-revision.md) for current behavior.
+
 ## Review this phase
 
 Run `npm run dev` and open `/available-art/#studio-editions`,

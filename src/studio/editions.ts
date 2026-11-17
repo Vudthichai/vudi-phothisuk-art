@@ -1,4 +1,6 @@
 import { forestCollection } from '../forest/collection';
+import type { ForestImage } from '../forest/types';
+import printPhotographs from './print-photographs.json';
 
 /** Presentation only. No provider products, checkout URLs, stock promises or payment hooks. */
 export const studioEditionTerms = {
@@ -35,4 +37,11 @@ export function studioArtwork(edition: StudioEdition) {
 export function studioEditionFor(artworkId: string) { return studioEditions.find(edition => edition.artworkId === artworkId); }
 export function studioPrice(cents: number) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency: studioEditionTerms.currency, minimumFractionDigits: 0 }).format(cents / 100);
+}
+
+/** Artist-supplied print designs only; never fall back to original painting photos. */
+export function studioPrintImage(edition: StudioEdition): ForestImage {
+  const photograph = printPhotographs[edition.artworkId as keyof typeof printPhotographs];
+  if (!photograph) throw new Error(`Missing approved Studio print photograph: ${edition.artworkId}`);
+  return { ...photograph, role: 'full' };
 }

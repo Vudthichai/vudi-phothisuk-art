@@ -1,0 +1,52 @@
+[
+  {
+    "artworkId": "mother-nature",
+    "sourceFilename": "STUDIO  F&F MN 9x12-4.jpeg",
+    "sourceSha256": "f4511adefdbb4f898c84927d50767e89423d4499ae2ff75244adc53ec7de3787",
+    "sourceSize": [
+      4687,
+      6249
+    ],
+    "processing": "EXIF orientation applied, resized proportionally, WebP quality 92. No crop, tonal edit, sharpening, replacement branding or generated artwork. Source retained outside repository."
+  },
+  {
+    "artworkId": "ethereal-bloom",
+    "sourceFilename": "STUDIO  F&F EB 9x12.jpeg",
+    "sourceSha256": "a4aa653f0436b9cdb2d1396f8140097cdfe782b9ab40f622f1e4e4d7cb637f45",
+    "sourceSize": [
+      4687,
+      6249
+    ],
+    "processing": "EXIF orientation applied, resized proportionally, WebP quality 92. No crop, tonal edit, sharpening, replacement branding or generated artwork. Source retained outside repository."
+  },
+  {
+    "artworkId": "tiger-lily",
+    "sourceFilename": "STUDIO  F&F TL 9x12.jpeg",
+    "sourceSha256": "52ce228fd36e302c96bc53097e8ed6018ef7c52c84a67455e5c5e0ba8b89e977",
+    "sourceSize": [
+      4687,
+      6249
+    ],
+    "processing": "EXIF orientation applied, resized proportionally, WebP quality 92. No crop, tonal edit, sharpening, replacement branding or generated artwork. Source retained outside repository."
+  },
+  {
+    "artworkId": "75-leaves",
+    "sourceFilename": "STUDIO  F&F 75L 9x12.jpeg",
+    "sourceSha256": "622e4aa8a274d32e832716046a979e9855941a8ac4a06c3c724f775008b19723",
+    "sourceSize": [
+      4687,
+      6249
+    ],
+    "processing": "EXIF orientation applied, resized proportionally, WebP quality 92. No crop, tonal edit, sharpening, replacement branding or generated artwork. Source retained outside repository."
+  },
+  {
+    "artworkId": "a-forest-forgotten",
+    "sourceFilename": "STUDIO  F&F AFF 9x12.jpeg",
+    "sourceSha256": "3759d5dd76203496b813b8634ccb33e5c8cd5bb1f359b1bb5ad0e8f7abb0aaf6",
+    "sourceSize": [
+      4687,
+      6249
+    ],
+    "processing": "EXIF orientation applied, resized proportionally, WebP quality 92. No crop, tonal edit, sharpening, replacement branding or generated artwork. Source retained outside repository."
+  }
+]
