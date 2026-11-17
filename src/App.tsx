@@ -5,6 +5,7 @@ import { Layout } from './components/Layout';
 import { Home, Collections, CollectionPage, ArtworkPage, InformationPage, NotFound } from './pages/Pages';
 import { informationPages } from './data';
 import './styles.css';
+import './gallery-typography.css';
 import { ForestCollection } from './forest/ForestCollection';
 import { Analytics } from './analytics/Analytics';
 import { RouteMetadata } from './seo/RouteMetadata';
