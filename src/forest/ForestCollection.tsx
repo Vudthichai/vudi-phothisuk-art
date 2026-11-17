@@ -184,6 +184,7 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
           </a>
         </>}
       </section>
+      <ArtworkStudioEdition artworkId={artwork.id}/>
       <nav className={`forest-acquisition-navigation${previous && next ? ' has-both-neighbors' : ''}`} aria-label="More paintings">
         {previous && <ArtworkNeighbor artwork={previous} direction="previous"/>}
         <div className="forest-acquisition-collection">
@@ -193,7 +194,6 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
         {next && <ArtworkNeighbor artwork={next} direction="next"/>}
       </nav>
     </footer>
-    <ArtworkStudioEdition artworkId={artwork.id}/>
   </article>;
 }
 

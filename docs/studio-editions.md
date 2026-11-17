@@ -110,3 +110,8 @@ See [the image pipeline and public-source audit](artwork-image-protection.md) fo
 measured resolutions, existing oversized-file exposure, reversible image-only
 saving/dragging deterrents, and the recommended separately reviewed cleanup.
 No existing public image files have been removed or changed.
+
+## Standalone storefront revision
+
+See [the storefront review notes](studio-storefront.md) for current product routes,
+central size options, inquiry-only original grouping and Mother Nature template.

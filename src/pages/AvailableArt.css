@@ -17,3 +17,9 @@
 .available-featured h3{font-size:38px}
 @media(max-width:1000px){.available-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:48px 30px}.available-featured{gap:30px}}
 @media(max-width:700px){.available-collection{margin-top:40px}.available-collection+.available-collection{padding-top:35px}.available-grid{grid-template-columns:1fr;gap:40px}.available-painting h3{font-size:28px}.available-featured{grid-template-columns:1fr;gap:24px;margin-top:45px}.available-featured h3{font-size:32px}}
+.available-forest-originals { margin-top:60px; }
+.available-forest-originals .available-image img { width:100%;height:100%;object-fit:contain; }
+.available-forest-painting { min-width:0; }
+.available-forest-painting h3 { font:400 30px/1.2 'Bodoni Moda',Georgia,serif;margin-bottom:12px; }
+.available-forest-painting p { font-size:.8rem;line-height:1.8;color:#596456; }
+.available-forest-originals>.text-link { display:inline-block;min-height:44px;margin-top:28px;padding:12px 0; }

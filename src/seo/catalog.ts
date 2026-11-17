@@ -1,6 +1,7 @@
 import { collections, informationPages } from '../data';
 import { forestCollection } from '../forest/collection';
 import { primaryForestImage } from '../forest/types';
+import { studioEditions, studioArtwork, studioPrintImage, studioProductPath, studioBase } from '../studio/editions';
 import previews from '../../scripts/sharing-previews.json';
 
 export const site = 'https://vudiphothisukart.com';
@@ -59,6 +60,22 @@ for (const collection of collections) {
     mainEntity: { '@type': 'ItemList', itemListElement: items },
   }] }));
 }
+const printItems: Node[] = [];
+for (const edition of studioEditions) {
+  const art = studioArtwork(edition);
+  const photo = studioPrintImage(edition);
+  const image = { src: photo.variants.at(-1)!.src, alt: photo.alt };
+  const path = studioProductPath(edition);
+  const url = absolute(path);
+  pages.push(page(path, `${art.title} — Studio Edition`, `${art.title}, a Forest & Flowers Studio Edition print by Vudi Phothisuk. Starting at $40. Coming Soon.`, {
+    images: [image], graph: [{ '@type':'Product', '@id':url+'#print', name:art.title+' — Studio Edition', url, image:absolute(image.src), brand:{'@type':'Brand',name:'Vudi Phothisuk Art'}, isRelatedTo:{'@id':absolute(`/collections/forest-and-flowers/${art.slug}/`)+'#artwork'} }],
+  }));
+  printItems.push({'@type':'ListItem',position:printItems.length+1,name:art.title,url});
+}
+pages.push(page(studioBase, 'Forest & Flowers — Studio Editions', 'Explore five Forest & Flowers Studio Edition print designs by Vudi Phothisuk. Starting at $40. Coming Soon.', {
+  images: studioEditions.map(e=>{const p=studioPrintImage(e);return {src:p.variants.at(-1)!.src,alt:p.alt};}),
+  graph:[{'@type':'CollectionPage','@id':absolute(studioBase+'/')+'#webpage',url:absolute(studioBase+'/'),name:'Studio Editions',mainEntity:{'@type':'ItemList',itemListElement:printItems}}],
+}));
 const collectionPages = pages.filter(p => /^\/collections\/[^/]+\/$/.test(p.path));
 pages.find(p => p.path === '/collections/')!.graph.push({ '@type': 'CollectionPage', '@id': `${site}/collections/#webpage`, url: `${site}/collections/`, name: 'Collections', mainEntity: { '@type': 'ItemList', itemListElement: collectionPages.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title.split(' | ')[0], url: absolute(p.path) })) } });
 export const findPage = (path: string) => pages.find(p => p.path === canonicalPath(path));
@@ -80,7 +97,7 @@ export function metadata(path: string) {
   const url = absolute(current.path);
   const graph = found ? [artist, ...current.graph,
     ...(!current.graph.some(n => n['@type'] === 'CollectionPage') ? [{ '@type': current.path === '/about/' ? 'AboutPage' : current.path === '/contact/' ? 'ContactPage' : 'WebPage', '@id': url + '#webpage', url, name: current.title, description: current.description,
-      ...(current.graph.find(n => n['@type'] === 'VisualArtwork' || n['@type'] === 'ExhibitionEvent') ? { mainEntity: { '@id': current.graph[0]['@id'] } } : { about: artistRef }) }] : []),
+      ...(current.graph.find(n => n['@type'] === 'VisualArtwork' || n['@type'] === 'ExhibitionEvent' || n['@type'] === 'Product') ? { mainEntity: { '@id': current.graph[0]['@id'] } } : { about: artistRef }) }] : []),
     ...(current.path !== '/' ? [{ '@type': 'BreadcrumbList', '@id': url + '#breadcrumbs', itemListElement: crumbs }] : [])] : [];
   return { ...current, url, social, indexable: Boolean(found), jsonLd: { '@context': 'https://schema.org', '@graph': graph } };
 }

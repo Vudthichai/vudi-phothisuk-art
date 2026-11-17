@@ -8,7 +8,9 @@ const dom = html => new JSDOM(html).window.document;
 const documentFor = async page => dom(await readFile(`dist${page.path === '/' ? '' : page.path.slice(0, -1)}/index.html`, 'utf8'));
 
 test('every catalog route ships meaningful HTML, unique standard metadata, social tags and valid linked schema', async () => {
-  assert.equal(pages.length, 35);
+  assert.equal(pages.filter(page => !page.path.startsWith('/studio-editions/')).length, 35);
+  assert.equal(pages.filter(page => page.path.startsWith('/studio-editions/')).length, 6);
+  assert(!pages.some(page => page.path.startsWith('/dev/')));
   const titles = new Set();
   const descriptions = new Set();
   for (const page of pages) {

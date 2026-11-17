@@ -1,0 +1,5 @@
+.studio-template>p { max-width:70ch;line-height:1.8; }
+.studio-template select { margin:20px;padding:12px;font:inherit; }
+.studio-template-wall { background:#ebe7df;max-width:850px;aspect-ratio:1/1;display:flex;justify-content:center;align-items:center;margin:30px 0; }
+.studio-template-frame { box-sizing:content-box;padding:8px;background:#302f29;box-shadow:7px 10px 16px #25282022; }
+.studio-template-frame img { width:100%;height:auto;display:block; }
