@@ -1,0 +1,352 @@
+[
+  {
+    "artworkId": "ethereal-bloom",
+    "sourcePrintSha256": "a4aa653f0436b9cdb2d1396f8140097cdfe782b9ab40f622f1e4e4d7cb637f45",
+    "cleanRoomSha256": "38c7dd02372b81ef9930722b0038cd17d9a51b2e8f11f5fb93b73213572549d2",
+    "frameReferenceSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+    "nativeCanvas": [
+      1122,
+      1402
+    ],
+    "sizeReference": "artist-confirmed 12x16 composition; not independent measured room calibration",
+    "pixelsPerInch": 55,
+    "smallerLinearScale": 0.75,
+    "stationaryBackgroundOutsideUnion": true,
+    "completeAuthenticDesign": true,
+    "paperOnlyWarmth": true,
+    "foregroundFrameFragmentCleanedPixels": 600,
+    "foregroundLeafRestoredAtFixedScenePosition": true,
+    "sizes": [
+      {
+        "sizeId": "12x16",
+        "sheetPixels": [
+          660,
+          880
+        ],
+        "sheetBounds": [
+          235.0,
+          132.0,
+          895.0,
+          1012.0
+        ],
+        "frameBounds": [
+          213,
+          100,
+          917,
+          1044
+        ],
+        "center": [
+          565,
+          572
+        ],
+        "outsideCompositeRegionChangedPixels": 0,
+        "nativeRgbSha256": "1eb629cf87cb0963db15b4d4615d6f141d295e3882f3070cff0c3d38d2d28f48"
+      },
+      {
+        "sizeId": "9x12",
+        "sheetPixels": [
+          495.0,
+          660.0
+        ],
+        "sheetBounds": [
+          317.5,
+          242.0,
+          812.5,
+          902.0
+        ],
+        "frameBounds": [
+          301,
+          218,
+          829,
+          926
+        ],
+        "center": [
+          565,
+          572
+        ],
+        "outsideCompositeRegionChangedPixels": 0,
+        "nativeRgbSha256": "1ab44d196abaaef0eef7cc8116eb093857ebd2ce5e21449bc8bb85dec7bb879f"
+      }
+    ]
+  },
+  {
+    "artworkId": "mother-nature",
+    "sourcePrintSha256": "f4511adefdbb4f898c84927d50767e89423d4499ae2ff75244adc53ec7de3787",
+    "cleanRoomSha256": "38c7dd02372b81ef9930722b0038cd17d9a51b2e8f11f5fb93b73213572549d2",
+    "frameReferenceSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+    "nativeCanvas": [
+      1122,
+      1402
+    ],
+    "sizeReference": "artist-confirmed 12x16 composition; not independent measured room calibration",
+    "pixelsPerInch": 55,
+    "smallerLinearScale": 0.75,
+    "stationaryBackgroundOutsideUnion": true,
+    "completeAuthenticDesign": true,
+    "paperOnlyWarmth": true,
+    "foregroundFrameFragmentCleanedPixels": 600,
+    "foregroundLeafRestoredAtFixedScenePosition": true,
+    "sizes": [
+      {
+        "sizeId": "12x16",
+        "sheetPixels": [
+          660,
+          880
+        ],
+        "sheetBounds": [
+          235.0,
+          132.0,
+          895.0,
+          1012.0
+        ],
+        "frameBounds": [
+          213,
+          100,
+          917,
+          1044
+        ],
+        "center": [
+          565,
+          572
+        ],
+        "outsideCompositeRegionChangedPixels": 0,
+        "nativeRgbSha256": "bf6b91d42fcb602aa4decb4f4af741eca578d03426b36945b2b5795e62514e40"
+      },
+      {
+        "sizeId": "9x12",
+        "sheetPixels": [
+          495.0,
+          660.0
+        ],
+        "sheetBounds": [
+          317.5,
+          242.0,
+          812.5,
+          902.0
+        ],
+        "frameBounds": [
+          301,
+          218,
+          829,
+          926
+        ],
+        "center": [
+          565,
+          572
+        ],
+        "outsideCompositeRegionChangedPixels": 0,
+        "nativeRgbSha256": "8300c64925cde7fd1d37529a1875bf490e67b679505edd88a85eb66384031963"
+      }
+    ]
+  },
+  {
+    "artworkId": "a-forest-forgotten",
+    "sourcePrintSha256": "3759d5dd76203496b813b8634ccb33e5c8cd5bb1f359b1bb5ad0e8f7abb0aaf6",
+    "cleanRoomSha256": "38c7dd02372b81ef9930722b0038cd17d9a51b2e8f11f5fb93b73213572549d2",
+    "frameReferenceSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+    "nativeCanvas": [
+      1122,
+      1402
+    ],
+    "sizeReference": "artist-confirmed 12x16 composition; not independent measured room calibration",
+    "pixelsPerInch": 55,
+    "smallerLinearScale": 0.75,
+    "stationaryBackgroundOutsideUnion": true,
+    "completeAuthenticDesign": true,
+    "paperOnlyWarmth": true,
+    "foregroundFrameFragmentCleanedPixels": 600,
+    "foregroundLeafRestoredAtFixedScenePosition": true,
+    "sizes": [
+      {
+        "sizeId": "12x16",
+        "sheetPixels": [
+          660,
+          880
+        ],
+        "sheetBounds": [
+          235.0,
+          132.0,
+          895.0,
+          1012.0
+        ],
+        "frameBounds": [
+          213,
+          100,
+          917,
+          1044
+        ],
+        "center": [
+          565,
+          572
+        ],
+        "outsideCompositeRegionChangedPixels": 0,
+        "nativeRgbSha256": "fcc1c3fe89f8cd91683b0578d81fd9612fc171659a5077713a81f861e9cdd73c"
+      },
+      {
+        "sizeId": "9x12",
+        "sheetPixels": [
+          495.0,
+          660.0
+        ],
+        "sheetBounds": [
+          317.5,
+          242.0,
+          812.5,
+          902.0
+        ],
+        "frameBounds": [
+          301,
+          218,
+          829,
+          926
+        ],
+        "center": [
+          565,
+          572
+        ],
+        "outsideCompositeRegionChangedPixels": 0,
+        "nativeRgbSha256": "403eb874ee2f74735c70d35c57da2895d08679d3e422f2d650d4877c25d00cde"
+      }
+    ]
+  },
+  {
+    "artworkId": "75-leaves",
+    "sourcePrintSha256": "622e4aa8a274d32e832716046a979e9855941a8ac4a06c3c724f775008b19723",
+    "cleanRoomSha256": "38c7dd02372b81ef9930722b0038cd17d9a51b2e8f11f5fb93b73213572549d2",
+    "frameReferenceSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+    "nativeCanvas": [
+      1122,
+      1402
+    ],
+    "sizeReference": "artist-confirmed 12x16 composition; not independent measured room calibration",
+    "pixelsPerInch": 55,
+    "smallerLinearScale": 0.75,
+    "stationaryBackgroundOutsideUnion": true,
+    "completeAuthenticDesign": true,
+    "paperOnlyWarmth": true,
+    "foregroundFrameFragmentCleanedPixels": 600,
+    "foregroundLeafRestoredAtFixedScenePosition": true,
+    "sizes": [
+      {
+        "sizeId": "12x16",
+        "sheetPixels": [
+          660,
+          880
+        ],
+        "sheetBounds": [
+          235.0,
+          132.0,
+          895.0,
+          1012.0
+        ],
+        "frameBounds": [
+          213,
+          100,
+          917,
+          1044
+        ],
+        "center": [
+          565,
+          572
+        ],
+        "outsideCompositeRegionChangedPixels": 0,
+        "nativeRgbSha256": "ab392755494402ace26da44d2f808325ee7c153d66a5bb9aa6ed5796a2212d70"
+      },
+      {
+        "sizeId": "9x12",
+        "sheetPixels": [
+          495.0,
+          660.0
+        ],
+        "sheetBounds": [
+          317.5,
+          242.0,
+          812.5,
+          902.0
+        ],
+        "frameBounds": [
+          301,
+          218,
+          829,
+          926
+        ],
+        "center": [
+          565,
+          572
+        ],
+        "outsideCompositeRegionChangedPixels": 0,
+        "nativeRgbSha256": "eaf4b13bcb48ed29ec9552a41b22708ffda081d62da8842e8752ee5507b2dba3"
+      }
+    ]
+  },
+  {
+    "artworkId": "tiger-lily",
+    "sourcePrintSha256": "52ce228fd36e302c96bc53097e8ed6018ef7c52c84a67455e5c5e0ba8b89e977",
+    "cleanRoomSha256": "38c7dd02372b81ef9930722b0038cd17d9a51b2e8f11f5fb93b73213572549d2",
+    "frameReferenceSha256": "4715d3d84251d59a936fe11a78442248f70fbc722c46b94eca1d4ab50fc2b215",
+    "nativeCanvas": [
+      1122,
+      1402
+    ],
+    "sizeReference": "artist-confirmed 12x16 composition; not independent measured room calibration",
+    "pixelsPerInch": 55,
+    "smallerLinearScale": 0.75,
+    "stationaryBackgroundOutsideUnion": true,
+    "completeAuthenticDesign": true,
+    "paperOnlyWarmth": true,
+    "foregroundFrameFragmentCleanedPixels": 600,
+    "foregroundLeafRestoredAtFixedScenePosition": true,
+    "sizes": [
+      {
+        "sizeId": "12x16",
+        "sheetPixels": [
+          660,
+          880
+        ],
+        "sheetBounds": [
+          235.0,
+          132.0,
+          895.0,
+          1012.0
+        ],
+        "frameBounds": [
+          213,
+          100,
+          917,
+          1044
+        ],
+        "center": [
+          565,
+          572
+        ],
+        "outsideCompositeRegionChangedPixels": 0,
+        "nativeRgbSha256": "e3e593bc14412dce3f9553becf64875ff77b6180eca8b13032e9fe0945a34230"
+      },
+      {
+        "sizeId": "9x12",
+        "sheetPixels": [
+          495.0,
+          660.0
+        ],
+        "sheetBounds": [
+          317.5,
+          242.0,
+          812.5,
+          902.0
+        ],
+        "frameBounds": [
+          301,
+          218,
+          829,
+          926
+        ],
+        "center": [
+          565,
+          572
+        ],
+        "outsideCompositeRegionChangedPixels": 0,
+        "nativeRgbSha256": "e9b247a74d29308a4742bfe586f8e2d257b325d033a34a484336136cc027aa31"
+      }
+    ]
+  }
+]

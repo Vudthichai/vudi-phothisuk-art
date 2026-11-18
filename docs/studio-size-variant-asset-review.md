@@ -1,5 +1,7 @@
 # Size-specific Studio mockups: asset review and blocked work
 
+> Historical inspection: the artist subsequently supplied the clean room and confirmed the 12 × 16 reference. See [size-aware mockups](size-aware-studio-mockups.md) for the implemented solution and current verification.
+
 ## Verified existing behavior
 
 All five Studio Prints offer 9 × 12 at $40 and 12 × 16 at $95. Selecting a size

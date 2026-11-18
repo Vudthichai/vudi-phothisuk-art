@@ -12,7 +12,7 @@ it('serves all five distinct product pages with confirmed size pricing and no ch
     const view=render(<MemoryRouter initialEntries={[`/studio-editions/${edition.artworkId}/`]}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
     expect(document.querySelector('.studio-product-price')?.textContent).toContain('$45Selected size · Coming Soon');
     expect(screen.getAllByRole('radio')).toHaveLength(2);
-    expect(document.querySelector('.studio-framing-note')?.textContent).toBe('Prints are sold unframed. Room view is illustrative and does not show the selected size to scale.');
+    expect(document.querySelector('.studio-framing-note')?.textContent).toBe('Prints are sold unframed. Room view and framing are illustrative.');
     expect(studioSizes.map(s=>s.priceCents)).toEqual([4500,9500]);
     const larger=screen.getByRole('radio',{name:'12 × 16 inches — $95'});
     fireEvent.click(larger);expect((larger as HTMLInputElement).checked).toBe(true);
