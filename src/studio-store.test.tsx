@@ -7,15 +7,18 @@ import { studioArtwork, studioEditions, studioSizes } from './studio/editions';
 import { metadata } from './seo/catalog';
 import { AvailableArt } from './pages/AvailableArt';
 afterEach(cleanup);
-it('serves all five distinct product pages with intended sizes and no checkout or final size prices', () => {
+it('serves all five distinct product pages with confirmed size pricing and no checkout', () => {
   for (const edition of studioEditions) {
     const view=render(<MemoryRouter initialEntries={[`/studio-editions/${edition.artworkId}/`]}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
-    expect(document.querySelector('.studio-product-price')?.textContent).toContain('$40Starting price · Coming Soon');
+    expect(document.querySelector('.studio-product-price')?.textContent).toContain('$40Selected size · Coming Soon');
     expect(screen.getAllByRole('radio')).toHaveLength(2);
-    expect(studioSizes.every(s=>s.priceCents===null)).toBe(true);
-    const larger=screen.getByRole('radio',{name:'12 × 16 inches'});
+    expect(studioSizes.map(s=>s.priceCents)).toEqual([4000,9500]);
+    const larger=screen.getByRole('radio',{name:'12 × 16 inches — $95'});
     fireEvent.click(larger);expect((larger as HTMLInputElement).checked).toBe(true);
-    expect(screen.getByText('12 × 16 inches — provisional size. Starting price: $40; pricing for this size is not yet confirmed.')).toBeTruthy();
+    expect(screen.getByText('12 × 16 inches — $95 · Coming Soon')).toBeTruthy();
+    expect(document.querySelector('.studio-product-price strong')?.textContent).toBe('$95');
+    fireEvent.click(screen.getByRole('radio',{name:'9 × 12 inches — $40'}));
+    expect(document.querySelector('.studio-product-price strong')?.textContent).toBe('$40');
     expect(screen.getByRole('link',{name:'View the original artwork'}).getAttribute('href')).toBe(`/collections/forest-and-flowers/${edition.artworkId}/`);
     expect(document.querySelector('input[type="email"],input[name="card"],a[href*="checkout"]')).toBeNull();
     expect(screen.queryByRole('button',{name:/buy|cart|checkout/i})).toBeNull();
