@@ -21,8 +21,8 @@ export const pages: SeoPage[] = [
   page('/', 'Home', 'Make some art today. Explore dimensional mixed-media paintings and the stories behind the work of Vudi Phothisuk.'),
   page('/collections', 'Collections', 'Explore the collections of Vudi Phothisuk Art.'),
   page('/available-art', informationPages['available-art'].title, informationPages['available-art'].description),
-  page('/about', 'About the Artist', 'Meet Vudi Phothisuk and discover the sculptural texture, layered color, and deliberate form behind his paintings.'),
-  page('/contact', 'Commissions & Contact', 'Contact Vudi Phothisuk about an original painting, a commission, or the story behind the work.'),
+  page('/about', 'About & Contact', 'Meet Vudi Phothisuk, explore his sculptural mixed-media process, and get in touch about artwork, commissions, or exhibitions.'),
+  page('/contact', 'Contact & Commissions', 'Contact Vudi Phothisuk for artwork, commissions, collaborations, and exhibitions, and discover the artist behind the work.'),
   page('/exhibitions', 'Forest & Flowers — Exhibitions', informationPages.exhibitions.description, { graph: [{
     '@type': 'ExhibitionEvent', '@id': `${site}/exhibitions/#event`, name: 'Forest & Flowers',
     url: `${site}/exhibitions/`, description: informationPages.exhibitions.description,

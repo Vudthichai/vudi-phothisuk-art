@@ -7,3 +7,5 @@ Contact detail: `mother-nature-contact-detail.jpg` is an unchanged copy of the a
 Contact full detail: `mother-nature-contact-full.jpeg` is an unchanged copy of the artist-supplied `IMG_6687.jpeg`. CSS crops the presentation to feature the pink and orange flowers; the original source remains unchanged.
 
 About editorial photographs: artist-supplied `IMG_8771.jpg` (1179 × 2077) and `IMG_8772.jpg` (1179 × 2045), provided in Archive.zip. Unchanged originals retained in `assets/artist-sources/` outside public assets. EXIF orientation normalized and embedded color profiles converted to sRGB when present; proportional WebP derivatives at 560, 840, and 1179 pixels wide, quality 88. No tonal adjustment, retouching, sharpening, artificial texture, or crop. IMG_8773 was not used.
+
+Combined About & Contact: photographs above are displayed with reversible CSS crops to emphasize the artist and brushwork. Original files and WebP color values remain unchanged. The MSAT caption uses a transparent 192-pixel lossless WebP derivative of the existing authentic `public/brand/msat-floral.png`; no logo recreation.

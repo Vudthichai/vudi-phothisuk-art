@@ -4,7 +4,7 @@ import { MotherNature } from '../components/MotherNature';
 import { RegalPreview } from '../components/RegalPreview';
 import { AvailableArt } from './AvailableArt';
 import { ExhibitionsPage } from './Exhibitions';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import './Home.css';
 import './Contact.css';
 import './About.css';
@@ -87,8 +87,9 @@ export function ArtworkPage() {
   return <section className={`section page artwork-page artwork-theme-${artwork.slug}`}><PageMeta title={artwork.title} description={artwork.description?.[0] ?? artwork.title}/><Link className="text-link" to={`/collections/${slug}`}>← {collection.name}</Link><div className="artwork-detail"><div><img className="artwork-primary" src={artwork.image.src} srcSet={artwork.image.srcSet} sizes="(max-width: 700px) 86vw, 50vw" alt={artwork.image.alt} width={artwork.image.width} height={artwork.image.height} fetchPriority="high" decoding="async"/></div><div className="artwork-story"><p className="eyebrow">{collection.name}</p><h1>{artwork.title}</h1>{artwork.description?.map(paragraph => <p key={paragraph}>{paragraph}</p>)}<dl className="artwork-facts">{artwork.dimensions && <><dt>Dimensions</dt><dd>{artwork.dimensions}</dd></>}{artwork.medium && <><dt>Medium</dt><dd>{artwork.medium}</dd></>}</dl><OriginalPrice artwork={artwork}/>{artwork.availability === 'sold' ? <p className="artwork-status">Sold</p> : <a className="text-link" data-analytics-artwork={`/collections/${slug}/${artwork.slug}`} href={`mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent(`Artwork inquiry: ${artwork.title}`)}`}>Inquire about this artwork →</a>}</div></div><ArtworkViews artwork={artwork}/><nav className="artwork-pagination" aria-label="Artwork navigation"><div>{previous && <Link to={`/collections/${slug}/${previous.slug}`} rel="prev" aria-label={`Previous painting: ${previous.title}`}><span>← Previous painting</span><strong>{previous.title}</strong></Link>}</div><Link className="text-link" to={`/collections/${slug}`}>View the collection</Link><div>{next && <Link to={`/collections/${slug}/${next.slug}`} rel="next" aria-label={`Next painting: ${next.title}`}><span>Next painting →</span><strong>{next.title}</strong></Link>}</div></nav></section>;
 }
 export function ContactPage() {
-  return <section className="contact-page" aria-labelledby="contact-title">
-    <PageMeta title="Commissions & Contact" description="Contact Vudi Phothisuk about an original painting, a commission, or the story behind the work."/>
+  const contactEntry = useLocation().pathname.startsWith('/contact');
+  return <article className="contact-page artist-contact-page" aria-labelledby="contact-title">
+    <PageMeta title={contactEntry ? 'Contact & Commissions' : 'About & Contact'} description={contactEntry ? 'Contact Vudi Phothisuk for artwork, commissions, collaborations, and exhibitions, and discover the artist behind the work.' : 'Meet Vudi Phothisuk, explore his sculptural mixed-media process, and get in touch about artwork, commissions, or exhibitions.'}/>
     <div className="contact-hero">
       <img
         className="contact-hero-image"
@@ -100,51 +101,40 @@ export function ContactPage() {
         alt="An angled close-up of Mother Nature, with a soft waterfall beside sculpted green and gold leaves and pink and orange flowers."
         fetchPriority="high"
       />
-      <div className="contact-copy"><p className="eyebrow">Commissions & Contact</p><h1 id="contact-title">Let’s talk art.</h1>
+      <div className="contact-copy"><p className="eyebrow">About &amp; Contact</p><h1 id="contact-title"><span>Life isn’t 2D.</span><span>Why should your art be?</span></h1>
         <p className="contact-intro">Have a painting in mind, a question about the work, or an idea for something personal? I’d love to hear from you.</p>
         <a className="contact-email" href="mailto:vudiphothisukart@gmail.com">vudiphothisukart@gmail.com</a>
       </div>
     </div>
-    <div className="contact-details">
-      <div className="contact-topics">
-        <div><h2>A painting you love</h2><p>Include the painting’s title and anything you’d like to know about it.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Artwork%20inquiry">Ask about an artwork</a></div>
-        <div><h2>Something personal</h2><p>Tell me about your idea, the space, and any size or timing you have in mind. It’s fine if you’re still figuring it out.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Commission%20conversation">Start a commission conversation</a></div>
-      </div>
+    <div className="artist-profile">
+      <section className="artist-story" aria-labelledby="artist-story-title">
+        <figure className="artist-working">
+          <img src="/artist/about-8771-1179.webp" srcSet="/artist/about-8771-560.webp 560w, /artist/about-8771-840.webp 840w, /artist/about-8771-1179.webp 1179w" sizes="(max-width:760px) 88vw, 42vw" alt="Vudi Phothisuk at his easel, painting a textured blue-and-white canvas beside a sunlit window" width="1179" height="2077" loading="lazy" decoding="async"/>
+          <figcaption><img src="/brand/msat-floral-192.webp" alt="MSAT — Make some art today floral monogram" width="64" height="65" loading="lazy"/><div><span>Vudi Phothisuk</span><p>Make some art today.</p></div></figcaption>
+        </figure>
+        <div className="artist-statement"><p className="eyebrow">The artist behind the work</p><h2 id="artist-story-title">Art, experienced.</h2>
+          <p>To me, art is more than something to look at. It's something to experience — a conversation starter, a memory holder, and a way to bring life into a space.</p>
+          <p>I create mixed-media paintings that bring together sculptural texture, layered color, and organic forms.</p>
+          <p>Through each collection, I explore the relationship between nature, form, and the world around us.</p>
+          <p>I want my work to invite people to pause, look closer, and discover something new each time.</p>
+          <p className="artist-signoff">Vudi Phothisuk</p><a className="text-link" href="#artist-contact">Let’s talk art</a>
+        </div>
+      </section>
+      <section className="artist-process" aria-labelledby="artist-process-title">
+        <div><h2 id="artist-process-title">Art You Can Feel.</h2><p>My process is physical and intuitive. I build layers of material, texture, and color to create paintings that extend beyond the traditional flat canvas.</p><p>Every raised surface, sculpted form, and deliberate detail contributes to the experience of the finished work.</p></div>
+        <img src="/artist/about-8772-1179.webp" srcSet="/artist/about-8772-560.webp 560w, /artist/about-8772-840.webp 840w, /artist/about-8772-1179.webp 1179w" sizes="(max-width:760px) 88vw, 42vw" alt="Vudi’s hand brushing color across the raised ridges of a sculptural painting" width="1179" height="2045" loading="lazy" decoding="async"/>
+      </section>
     </div>
-  </section>;
-}
-export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'available-art') return <><PageMeta title={informationPages[page].title} description={informationPages[page].description}/><AvailableArt/></>; if (page === 'contact') return <ContactPage/>; if (page === 'about') return <AboutPage/>; if (page === 'exhibitions') return <><PageMeta title="Forest & Flowers — Exhibitions" description={informationPages.exhibitions.description}/><ExhibitionsPage/></>; return <NotFound/>; }
-export function NotFound() { return <section className="section page"><PageMeta title="Page not found" description="This page could not be found in the Vudi Phothisuk Art portfolio."/><p className="eyebrow">404</p><h1>Page not found.</h1><Link className="button-link" to="/">Return home →</Link></section>; }
-
-function AboutPage() {
-  return <article className="about-page">
-    <PageMeta title="About the Artist" description="Meet Vudi Phothisuk and discover the sculptural texture, layered color, and deliberate form behind his paintings."/>
-    <section className="about-introduction" aria-labelledby="about-title">
-      <div className="about-copy">
-        <p className="eyebrow">About the artist</p>
-        <h1 id="about-title">Life isn't 2D.<br/>Why should your art be?</h1>
-        <p>To me, art is more than something to look at. It's something to experience — a conversation starter, a memory holder, and a way to bring life into a space.</p>
-        <p>I create mixed-media paintings that bring together sculptural texture, layered color, and organic forms.</p>
-        <p>Through each collection, I explore the relationship between nature, form, and the world around us.</p>
-        <p>I want my work to invite people to pause, look closer, and discover something new each time.</p>
-        <p className="about-signoff">Vudi Phothisuk</p>
-        <Link className="text-link" to="/contact">Let's talk art</Link>
-      </div>
-      <img className="about-portrait" src="/artist/about-8771-1179.webp" srcSet="/artist/about-8771-560.webp 560w, /artist/about-8771-840.webp 840w, /artist/about-8771-1179.webp 1179w" sizes="(max-width: 760px) 88vw, 40vw" alt="Vudi Phothisuk painting a raised blue-and-white canvas on an easel beside a sunlit window" width="1179" height="2077" fetchPriority="high" decoding="async"/>
-    </section>
-    <section className="about-process" aria-labelledby="about-process-title">
-      <img src="/artist/about-8772-1179.webp" srcSet="/artist/about-8772-560.webp 560w, /artist/about-8772-840.webp 840w, /artist/about-8772-1179.webp 1179w" sizes="(max-width: 760px) 88vw, 36vw" alt="Vudi's hand brushing color across deep sculptural ridges in a mixed-media painting" width="1179" height="2045" loading="lazy" decoding="async"/>
-      <div className="about-copy">
-        <h2 id="about-process-title">Art You Can Feel.</h2>
-        <p>My process is physical and intuitive. I build layers of material, texture, and color to create paintings that extend beyond the traditional flat canvas.</p>
-        <p>Every raised surface, sculpted form, and deliberate detail contributes to the experience of the finished work.</p>
-      </div>
-    </section>
-    <section className="about-contact" aria-labelledby="about-contact-title">
-      <h2 id="about-contact-title">Let's Talk Art.</h2>
-      <div><p>For artwork inquiries, commissions, collaborations, or exhibition opportunities, I'd love to hear from you.</p>
-        <a className="text-link" href="mailto:vudiphothisukart@gmail.com">vudiphothisukart@gmail.com</a>
+    <section className="contact-details artist-inquiries" id="artist-contact" aria-labelledby="artist-contact-title">
+      <div className="artist-contact-intro"><h2 id="artist-contact-title">Let’s Talk Art.</h2><p>For artwork inquiries, commissions, collaborations, or exhibition opportunities, I'd love to hear from you.</p><a className="contact-email" href="mailto:vudiphothisukart@gmail.com">vudiphothisukart@gmail.com</a></div>
+      <div className="contact-topics">
+        <div><h3>A painting you love</h3><p>Include the painting’s title and anything you’d like to know about it.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Artwork%20inquiry">Ask about an artwork</a></div>
+        <div><h3>Something personal</h3><p>Tell me about your idea, the space, and any size or timing you have in mind. It’s fine if you’re still figuring it out.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Commission%20conversation">Start a commission conversation</a></div>
       </div>
     </section>
   </article>;
 }
+export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'available-art') return <><PageMeta title={informationPages[page].title} description={informationPages[page].description}/><AvailableArt/></>; if (page === 'contact') return <ContactPage/>; if (page === 'about') return <AboutPage/>; if (page === 'exhibitions') return <><PageMeta title="Forest & Flowers — Exhibitions" description={informationPages.exhibitions.description}/><ExhibitionsPage/></>; return <NotFound/>; }
+export function NotFound() { return <section className="section page"><PageMeta title="Page not found" description="This page could not be found in the Vudi Phothisuk Art portfolio."/><p className="eyebrow">404</p><h1>Page not found.</h1><Link className="button-link" to="/">Return home →</Link></section>; }
+
+function AboutPage() { return <ContactPage/>; }
