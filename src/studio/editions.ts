@@ -3,10 +3,16 @@ import type { ForestImage } from '../forest/types';
 import { studioContributions, type ContributionIntention } from './contributions';
 import printPhotographs from './print-photographs.json';
 
+export type StudioSize = { id: string; width: number; height: number; label: string; priceCents: number };
+export const studioSizes: readonly StudioSize[] = [
+  { id: '9x12', width: 9, height: 12, label: '9 × 12 inches', priceCents: 4000 },
+  { id: '12x16', width: 12, height: 16, label: '12 × 16 inches', priceCents: 9500 },
+];
+
 /** Presentation only. No provider products, checkout URLs, stock promises or payment hooks. */
 export const studioEditionTerms = {
   label: 'Studio Edition — Fine Art Print',
-  priceCents: 4000,
+  priceCents: studioSizes[0].priceCents,
   currency: 'USD',
   status: 'Coming Soon',
   description: 'Unsigned, open-edition reproduction',
@@ -27,7 +33,25 @@ export const studioCollectionBundle = {
   id: 'studio-forest-and-flowers-collection',
   title: 'Forest & Flowers — Studio Edition Collection',
   editionIds: studioEditions.map(edition => edition.id),
-  priceCents: 17500,
+  // Approved gallery-wall photography can be supplied later; null renders nothing.
+  galleryWallImage: null as ForestImage | null,
+  options: studioSizes.map(size => {
+    const priceCents = size.id === '9x12' ? 17500 : 42500;
+    const retailValueCents = size.priceCents * studioEditions.length;
+    return {
+      id: `forest-collection-${size.id}`, sizeId: size.id, sizeLabel: size.label,
+      priceCents, retailValueCents, savingsCents: retailValueCents - priceCents,
+      status: 'Coming Soon',
+      revenueAllocation: {
+        basis: 'relative-standalone-retail' as const,
+        denominatorCents: retailValueCents,
+        lines: studioEditions.map(edition => ({ editionId: edition.id, artworkId: edition.artworkId,
+          quantity: 1, weightCents: size.priceCents, contribution: edition.contribution ?? null })),
+      },
+      profitCalculation: { status: 'blocked-pending-confirmed-expenses' as const,
+        requiredInputs: ['productionCosts', 'paymentFees', 'fulfillmentExpenses'] as const },
+    };
+  }),
   status: 'Coming Soon',
 } as const;
 export function studioArtwork(edition: StudioEdition) {
@@ -49,8 +73,3 @@ export function studioPrintImage(edition: StudioEdition): ForestImage {
 
 export const studioBase = '/studio-editions';
 export const studioProductPath = (edition: StudioEdition) => `${studioBase}/${edition.artworkId}/`;
-/** Starting price is independent of size; null means no final size-specific price. */
-export const studioSizes: readonly { id: string; width: number; height: number; label: string; priceCents: number | null }[] = [
-  { id: '9x12', width: 9, height: 12, label: '9 × 12 inches', priceCents: null },
-  { id: '12x16', width: 12, height: 16, label: '12 × 16 inches', priceCents: null },
-];

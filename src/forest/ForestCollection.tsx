@@ -1,5 +1,5 @@
 import { OriginalPrice } from '../components/OriginalPrice';
-import { ArtWithPurpose } from '../studio/StudioGiving';
+import { originalDescription } from './originalDescription';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import type { ForestArtwork } from './types';
@@ -57,14 +57,13 @@ export function ForestCollection() {
                 <Link to={`${base}/${art.slug}`}><h2 id={`forest-exhibit-${art.id}`}>{art.title}</h2></Link>
                 <p>{art.dimensions ?? 'Dimensions to be confirmed'}</p>
                 <OriginalPrice artwork={art} className="forest-original-price"/>
-                {art.description.slice(0, art.id === 'mother-nature' ? 1 : 2).map(paragraph => <p className="forest-featured-excerpt" key={paragraph}>{paragraph}</p>)}
+                {originalDescription(art).slice(0, art.id === 'mother-nature' ? 1 : 2).map(paragraph => <p className="forest-featured-excerpt" key={paragraph}>{paragraph}</p>)}
                 <Inquiry artwork={art}/>
                 <Link className="text-link forest-artwork-link" to={`${base}/${art.slug}`}>View painting</Link>
               </div>
             </article>
           ))}
         </div>
-        <ArtWithPurpose/>
         <StudioEditions/>
       </>}
   </section></>;
@@ -138,7 +137,7 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
         <section className="forest-editorial-story" aria-labelledby="forest-artwork-story">
           <h2 id="forest-artwork-story">About the painting</h2>
           {artwork.copyStatus === 'provisional' && <p className="private-copy-note">Provisional description — pending artist approval.</p>}
-          {artwork.description.slice(0, 2).map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+          {originalDescription(artwork).slice(0, 2).map(paragraph => <p key={paragraph}>{paragraph}</p>)}
           {artwork.description.length > 2 && <aside aria-label="Conservation pledge">
             {artwork.description.slice(2).map(paragraph => <p key={paragraph}>{paragraph}</p>)}
           </aside>}

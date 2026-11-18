@@ -1,4 +1,3 @@
-import { StudioGiving } from './StudioGiving';
 import { contributionCardLine } from './contributions';
 import { Link } from 'react-router-dom';
 import { studioGallery, studioPrimaryImage } from './gallery';
@@ -6,8 +5,8 @@ import { ForestPhotograph } from '../forest/ForestPhotograph';
 import { studioArtwork, studioCollectionBundle, studioEditionFor, studioEditions, studioEditionTerms, studioPrice, studioBase, studioProductPath, type StudioEdition } from './editions';
 import './StudioEditions.css';
 
-function PriceStatus({ bundle = false }: { bundle?: boolean }) {
-  return <p className="studio-price-status"><span className="studio-price">{!bundle && 'Starting at '}{studioPrice(bundle ? studioCollectionBundle.priceCents : studioEditionTerms.priceCents)}</span><span aria-hidden="true">—</span><span className="studio-status">{studioEditionTerms.status}</span></p>;
+function PriceStatus() {
+  return <p className="studio-price-status"><span className="studio-price">Starting at {studioPrice(studioEditionTerms.priceCents)}</span><span aria-hidden="true">—</span><span className="studio-status">{studioEditionTerms.status}</span></p>;
 }
 export function EditionCard({ edition, identifyPrint = true }: { edition: StudioEdition; identifyPrint?: boolean }) {
   const artwork = studioArtwork(edition);
@@ -24,7 +23,17 @@ export function StudioEditions({ title = 'Studio Editions', listingLink = true }
   return <section className="studio-editions" id="studio-editions" aria-labelledby="studio-editions-title">
     <header className="studio-section-intro"><h2 id="studio-editions-title">{title}</h2>{listingLink && <Link className="text-link" to={studioBase}>View all Studio Editions</Link>}</header>
     <div className="studio-editions-grid">{studioEditions.map(edition => <EditionCard key={edition.id} edition={edition}/>)}</div>
-    <aside className="studio-bundle" aria-labelledby="studio-bundle-title"><h3 id="studio-bundle-title">{studioCollectionBundle.title}</h3><PriceStatus bundle/></aside>
+    <aside className="studio-bundle" aria-labelledby="studio-bundle-title">
+      <h3 id="studio-bundle-title">{studioCollectionBundle.title}</h3>
+      {studioCollectionBundle.galleryWallImage && <figure className="studio-bundle-gallery"><ForestPhotograph image={studioCollectionBundle.galleryWallImage} sizes="86vw"/></figure>}
+      <div className="studio-bundle-options">{studioCollectionBundle.options.map(option => <section className="studio-bundle-option" key={option.id} aria-labelledby={option.id}>
+        <h4 id={option.id}>{option.sizeLabel.replace(' inches', '')} Collection Bundle</h4>
+        <p>All five Forest &amp; Flowers Studio Prints in {option.sizeLabel}.</p>
+        <p className="studio-bundle-retail">Individual retail value: {studioPrice(option.retailValueCents)}</p>
+        <p className="studio-price-status"><span className="studio-price">{studioPrice(option.priceCents)}</span><span aria-hidden="true">—</span><span className="studio-status">{option.status}</span></p>
+        <p className="studio-bundle-savings">Save {studioPrice(option.savingsCents)}</p>
+      </section>)}</div>
+    </aside>
   </section>;
 }
 export function ArtworkStudioEdition({ artworkId }: { artworkId: string }) {
@@ -33,6 +42,6 @@ export function ArtworkStudioEdition({ artworkId }: { artworkId: string }) {
   const artwork = studioArtwork(edition);
   return <section className="studio-edition-panel" id="studio-edition" aria-labelledby="studio-edition-heading">
     <Link to={studioProductPath(edition)} className="studio-preview-image" aria-label={`View ${artwork.title} Studio Edition`}><ForestPhotograph image={studioPrimaryImage(edition)} sizes="(max-width:700px) 35vw, 200px"/></Link>
-    <div><p className="eyebrow">Also available as a print</p><h2 id="studio-edition-heading">{artwork.title} — Studio Edition</h2><PriceStatus/><StudioGiving edition={edition} original/><Link className="text-link" to={studioProductPath(edition)}>View Studio Edition</Link></div>
+    <div><p className="eyebrow">Also available as a print</p><h2 id="studio-edition-heading">{artwork.title} — Studio Edition</h2><PriceStatus/><Link className="text-link" to={studioProductPath(edition)}>View Studio Edition</Link></div>
   </section>;
 }

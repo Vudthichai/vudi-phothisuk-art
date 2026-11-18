@@ -32,7 +32,7 @@ it('supports approved extra gallery views with explicit touch/keyboard controls'
  render(<MemoryRouter initialEntries={['/studio-editions/mother-nature/']}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
  const control=screen.getByRole('button',{name:'Framed print'});fireEvent.click(control);
  expect(control.getAttribute('aria-pressed')).toBe('true');expect(screen.getByRole('img',{name:'Approved test fixture'})).toBeTruthy();
- fireEvent.click(screen.getByRole('radio',{name:'12 × 16 inches'}));
+ fireEvent.click(screen.getByRole('radio',{name:'12 × 16 inches — $95'}));
  expect(screen.queryByRole('button',{name:'Framed print'})).toBeNull();
  expect(screen.queryByRole('img',{name:'Approved test fixture'})).toBeNull();
  expect(screen.queryByRole('button',{name:/checkout|buy|cart/i})).toBeNull();

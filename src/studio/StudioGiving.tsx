@@ -1,27 +1,14 @@
-import { Link } from 'react-router-dom';
 import { contributionStatement, contributionSummary } from './contributions';
-import { studioArtwork, studioEditions, studioProductPath, type StudioEdition } from './editions';
+import { studioArtwork, type StudioEdition } from './editions';
 
-export function StudioGiving({ edition, original = false }: { edition: StudioEdition; original?: boolean }) {
+export function StudioGiving({ edition }: { edition: StudioEdition }) {
   const giving = edition.contribution;
   if (!giving) return null;
   const artwork = studioArtwork(edition);
-  const headingId = `${edition.id}-giving-${original ? 'original' : 'print'}`;
-  const Heading = original ? 'h3' : 'h2';
+  const headingId = `${edition.id}-giving-print`;
   return <section className="studio-giving" aria-labelledby={headingId}>
-    <Heading id={headingId}>{artwork.title} — {giving.heading}</Heading>
+    <h2 id={headingId}>{artwork.title} — {giving.heading}</h2>
     <p>{contributionStatement(giving)}</p>
-    {original && <p className="studio-giving-scope">These percentages apply to Studio Print sales, not to this original artwork.</p>}
-  </section>;
-}
-
-export function ArtWithPurpose() {
-  return <section className="forest-art-purpose" aria-labelledby="art-purpose-title">
-    <h2 id="art-purpose-title">Art With Purpose</h2>
-    <p>Selected Studio Prints from Forest &amp; Flowers contribute a portion of their profits to causes connected to the stories of the original paintings.</p>
-    <div className="forest-purpose-works">{studioEditions.filter(edition => edition.contribution).map(edition =>
-      <article key={edition.id}><h3><Link to={studioProductPath(edition)}>{studioArtwork(edition).title}</Link></h3><p>{contributionStatement(edition.contribution!)}</p></article>
-    )}</div>
   </section>;
 }
 

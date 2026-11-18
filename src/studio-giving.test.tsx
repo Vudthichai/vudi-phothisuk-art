@@ -44,15 +44,19 @@ it('preserves original descriptions and availability while explicitly limiting p
  for(const slug of Object.keys(expected)){
   const art=forestCollection.artworks.find(a=>a.slug===slug)!;
   const view=render(<MemoryRouter initialEntries={[`${base}/${slug}`]}><Routes><Route path={`${base}/:artworkSlug`} element={<ForestCollection/>}/></Routes></MemoryRouter>);
-  const giving=view.container.querySelector('.studio-edition-panel .studio-giving');
-  expect(giving?.textContent).toContain('These percentages apply to Studio Print sales, not to this original artwork.');
+  expect(view.container.querySelector('.forest-editorial-story')?.textContent).toContain(`${art.title} Studio Print`);
+  expect(view.container.querySelector('.forest-editorial-story')?.textContent).toContain('profits from its sales');
+  expect(view.container.querySelector('.studio-edition-panel .studio-giving')).toBeNull();
   art.description.forEach(p=>expect(view.container.textContent).toContain(p));
   if(slug==='75-leaves')expect(view.container.textContent).toContain('Not for Sale');
   view.unmount();
  }
  const {container}=render(<MemoryRouter><ForestCollection/></MemoryRouter>);
- expect(container.querySelector('.forest-art-purpose h2')?.textContent).toBe('Art With Purpose');
- expect(container.querySelectorAll('.forest-purpose-works article')).toHaveLength(2);
- expect(container.querySelector('.forest-art-purpose')?.textContent).toContain('75% of profits from this Studio Print');
- expect(container.querySelector('.forest-art-purpose')?.textContent).toContain('20% of profits from this Studio Print');
+ expect(container.querySelector('.forest-art-purpose')).toBeNull();
+ for(const slug of Object.keys(expected)) {
+  const art=forestCollection.artworks.find(a=>a.slug===slug)!;
+  const card=container.querySelector(`[aria-labelledby="forest-exhibit-${slug}"]`)!;
+  expect(card.querySelector('.forest-overview-copy')?.textContent).toContain(`${art.title} Studio Print`);
+  expect(card.querySelector('.forest-overview-copy')?.textContent).toContain('profits from its sales');
+ }
 });
