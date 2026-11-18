@@ -15,7 +15,9 @@ it('changes each product room image with size while retaining authentic detail a
   const view=render(<MemoryRouter initialEntries={[`/studio-editions/${edition.artworkId}/`]}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(`/studio-editions/size-gallery/${edition.artworkId}-9x12-1122.webp`);
   fireEvent.click(screen.getByRole('radio',{name:'12 × 16 inches — $95'}));
-  expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(`/studio-editions/size-gallery/${edition.artworkId}-12x16-1122.webp`);
+  expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(path);
+  expect(view.container.querySelector('.studio-gallery-views button img')?.getAttribute('src')).toBe(path);
+  expect(studioGallery(edition,'12x16')[0].image).toBe(studioPrimaryImage(edition));
   expect(view.container.querySelector('.studio-gallery-caption')?.textContent).toBe('In a Space · 12 × 16 inches');
   expect([...view.container.querySelectorAll('img')].some(i=>i.getAttribute('src')?.includes('/mockups/'))).toBe(false);
   expect(view.container.querySelector('.studio-product-price')?.textContent).toContain('$95Selected size · Coming Soon');

@@ -7,7 +7,7 @@ it('uses a distinct size-specific room composition and unchanged authentic print
  for(const edition of studioEditions)for(const size of studioSizes){
   const views=studioGallery(edition,size.id);
   expect(views.map(v=>v.kind)).toEqual(['reference','clean']);
-  expect(views[0].image.variants.at(-1)?.src).toBe(`/studio-editions/size-gallery/${edition.artworkId}-${size.id}-1122.webp`);
+  expect(views[0].image.variants.at(-1)?.src).toBe(size.id === '12x16' ? `/studio-editions/exact-gallery/${edition.artworkId}-1122.webp` : `/studio-editions/size-gallery/${edition.artworkId}-${size.id}-1122.webp`);
   expect(views[0].modeledSizeIds).toEqual([size.id]);
   for(const variant of views[0].image.variants){expect(Math.max(variant.width,variant.height)).toBeLessThanOrEqual(1402);expect(variant.src).not.toContain('/mockups/');}
  }

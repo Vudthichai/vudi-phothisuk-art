@@ -18,10 +18,10 @@ const approvedImages = exactGalleryImages as Record<string, ForestImage>;
 const sizedImages = sizeGalleryImages as Record<string, Record<string, ForestImage>>;
 export const additionalStudioViews: Partial<Record<string, readonly StudioGalleryView[]>> = {};
 export function studioGallery(edition: StudioEdition, sizeId = studioSizes[0].id): readonly StudioGalleryView[] {
-  const image = sizedImages[edition.artworkId]?.[sizeId];
+  const image = sizeId === '12x16' ? studioPrimaryImage(edition) : sizedImages[edition.artworkId]?.[sizeId];
   if (!image) throw new Error(`Missing size-specific gallery composite: ${edition.artworkId}/${sizeId}`);
   const supplied = (additionalStudioViews[edition.id] ?? []).filter(view => view.approval === 'artist-approved' && (!['framed','lifestyle'].includes(view.kind) || view.verifiedSizeIds?.includes(sizeId)));
-  return [{ id:`${edition.id}-room-${sizeId}`, kind:'reference', label:'In a Space', image, approval:'approved-print-composite', modeledSizeIds:[sizeId] },
+  return [{ id:`${edition.id}-room-${sizeId}`, kind:'reference', label:'In a Space', image, approval:sizeId === '12x16' ? 'artist-approved' : 'approved-print-composite', modeledSizeIds:[sizeId] },
     { id:`${edition.id}-clean`, kind:'clean', label:'Artwork Detail', image:studioPrintImage(edition), approval:'artist-approved' }, ...supplied];
 }
 // Keep reviewed collection-card/sharing imagery unchanged; only the product gallery varies by size.
