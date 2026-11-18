@@ -4,9 +4,7 @@
 .artist-contact-page .contact-intro { max-width:390px; }
 .artist-contact-page .contact-copy h1>span { display:block;text-wrap:balance; }
 .artist-profile { width:88%;max-width:1260px;margin:clamp(48px,6vw,80px) auto 0; }
-.artist-story { display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:start; }
-.artist-working { margin:0;min-width:0; }
-.artist-working>img { display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:50% 60%; }
+.artist-story { display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:clamp(32px,5vw,72px);align-items:center; }
 .artist-contact-page .artist-profile h2 { font-size:clamp(32px,3vw,43px);line-height:1.2;margin:8px 0 22px; }
 .artist-profile p { font-size:16px;line-height:1.8;margin:0 0 14px; }
 .artist-profile .eyebrow { font-size:11px;margin:0 0 12px; }
@@ -20,7 +18,11 @@
 @media(max-width:760px) {
  .artist-contact-page .contact-copy h1 { font-size:clamp(38px,8vw,48px);max-width:520px; }
  .artist-story { grid-template-columns:minmax(0,1fr);gap:28px; }
- .artist-working>img { aspect-ratio:4/5;object-position:50% 60%; }
  .artist-brand-signoff { margin-top:28px;justify-content:flex-start; }
  .artist-profile p { font-size:16px; }
 }
+.artist-process-media { min-width:0;aspect-ratio:718/1198; }
+.artist-process-media>video,.artist-process-media>img { display:block;width:100%;height:auto;aspect-ratio:718/1198;object-fit:contain; }
+.artist-process-media>video { cursor:pointer; }
+.artist-process-media>video:focus-visible { outline:2px solid #12351d;outline-offset:5px; }
+@media(max-width:760px) { .artist-process-media { width:min(100%,380px);justify-self:center; } }
