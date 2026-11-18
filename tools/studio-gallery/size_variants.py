@@ -37,48 +37,49 @@ for config in configs:
  if im.info.get('icc_profile'):
   im=ImageCms.profileToProfile(im,ImageCms.ImageCmsProfile(io.BytesIO(im.info['icc_profile'])),ImageCms.createProfile('sRGB'),outputMode='RGB')
  else:im=im.convert('RGB') # existing untagged originals interpreted as sRGB
- sheet=im.resize((660*SUPER,880*SUPER),Image.Resampling.LANCZOS)
- pixels=np.asarray(sheet).copy()
- # Warm only unprinted light paper; exclude the entire artwork window and ink.
- sx0,sy0,sx1,sy1=config['sourceArtwork'];h,w=pixels.shape[:2]
- paper=(pixels.min(axis=2)>215)&((pixels.max(axis=2).astype(int)-pixels.min(axis=2))<35)
- paper[round(sy0/im.height*h):round(sy1/im.height*h),round(sx0/im.width*w):round(sx1/im.width*w)]=False
- yy,xx=np.mgrid[0:h,0:w];shade=.985+.015*(1-(.35*xx/max(w-1,1)+.65*yy/max(h-1,1)))
- edge=1-.12*np.exp(-xx/(7*SUPER))-.04*np.exp(-(w-1-xx)/(6*SUPER))
- warmed=np.round(pixels.astype(float)*(shade*edge)[:,:,None]*np.array([1,.985,.95])).clip(0,255).astype('uint8')
- pixels[paper]=warmed[paper]
- sheet=Image.fromarray(pixels,'RGB').convert('RGBA')
- # The old photographed frame has a few foreground leaf pixels crossing its
- # left edge. Clean only those frame pixels using the same frame column above;
- # the supplied scene's leaf is restored at its fixed room coordinate below.
- frame_pixels=np.asarray(reference.crop(FRAME)).copy()
- fy,fx=np.indices(frame_pixels.shape[:2])
- leaf=(fx<18)&(frame_pixels[:,:,1].astype(int)-frame_pixels[:,:,2]>22)&(frame_pixels[:,:,0]<200)&(frame_pixels.max(axis=2)>70)
- cleanup=np.asarray(Image.fromarray((leaf*255).astype('uint8')).filter(ImageFilter.MaxFilter(5))).copy()>0
- cleanup[655:705,:12]=True # include the photographed branch's neutral antialiased fringe
- donor=np.median(frame_pixels[200:400],axis=0).astype('uint8')
- frame_pixels[cleanup]=np.broadcast_to(donor,frame_pixels.shape)[cleanup]
- frame=Image.fromarray(frame_pixels).resize((704*SUPER,944*SUPER),Image.Resampling.LANCZOS).convert('RGBA')
- # Replace the whole old paper opening, including the ten-pixel strips
- # above/below the complete sheet. Extend only its blank outer paper edge;
- # never retain old print pixels or stretch the authentic design to fit.
- opening=np.pad(np.asarray(sheet),((10*SUPER,10*SUPER),(0,0),(0,0)),mode='edge')
- oh=opening.shape[0];oy=np.arange(oh)[:,None]
- inner_shade=1-.08*np.exp(-oy/(8*SUPER))-.04*np.exp(-(oh-1-oy)/(6*SUPER))
- opening[:,:,:3]=np.round(opening[:,:,:3].astype(float)*inner_shade[:,:,None]).clip(0,255).astype('uint8')
- frame.alpha_composite(Image.fromarray(opening),(SHEET[0]*SUPER,(SHEET[1]-10)*SUPER))
  registry[slug]={};records=[];size_results=[]
  for size,factor in [('12x16',1),('9x12',.75)]:
+  refined=size=='9x12' # approved 12x16 checkpoint is immutable
+  sheet=im.resize((660*SUPER,880*SUPER),Image.Resampling.LANCZOS)
+  pixels=np.asarray(sheet).copy()
+  # Warm only unprinted light paper; exclude the entire artwork window and ink.
+  sx0,sy0,sx1,sy1=config['sourceArtwork'];h,w=pixels.shape[:2]
+  paper=(pixels.min(axis=2)>215)&((pixels.max(axis=2).astype(int)-pixels.min(axis=2))<35)
+  paper[round(sy0/im.height*h):round(sy1/im.height*h),round(sx0/im.width*w):round(sx1/im.width*w)]=False
+  yy,xx=np.mgrid[0:h,0:w];shade=(.98 if refined else .985)+( .02 if refined else .015)*(1-(.35*xx/max(w-1,1)+.65*yy/max(h-1,1)))
+  edge=1-(.14 if refined else .12)*np.exp(-xx/(7*SUPER))-.04*np.exp(-(w-1-xx)/(6*SUPER))
+  warmed=np.round(pixels.astype(float)*(shade*edge)[:,:,None]*np.array([1,.98,.935] if refined else [1,.985,.95])).clip(0,255).astype('uint8')
+  pixels[paper]=warmed[paper]
+  sheet=Image.fromarray(pixels,'RGB').convert('RGBA')
+  # The old photographed frame has a few foreground leaf pixels crossing its
+  # left edge. Clean only those frame pixels using the same frame column above;
+  # the supplied scene's leaf is restored at its fixed room coordinate below.
+  frame_pixels=np.asarray(reference.crop(FRAME)).copy()
+  fy,fx=np.indices(frame_pixels.shape[:2])
+  leaf=(fx<18)&(frame_pixels[:,:,1].astype(int)-frame_pixels[:,:,2]>22)&(frame_pixels[:,:,0]<200)&(frame_pixels.max(axis=2)>70)
+  cleanup=np.asarray(Image.fromarray((leaf*255).astype('uint8')).filter(ImageFilter.MaxFilter(5))).copy()>0
+  cleanup[655:705,:12]=True # include the photographed branch's neutral antialiased fringe
+  donor=np.median(frame_pixels[200:400],axis=0).astype('uint8')
+  frame_pixels[cleanup]=np.broadcast_to(donor,frame_pixels.shape)[cleanup]
+  frame=Image.fromarray(frame_pixels).resize((704*SUPER,944*SUPER),Image.Resampling.LANCZOS).convert('RGBA')
+  # Replace the whole old paper opening, including the ten-pixel strips
+  # above/below the complete sheet. Extend only its blank outer paper edge;
+  # never retain old print pixels or stretch the authentic design to fit.
+  opening=np.pad(np.asarray(sheet),((10*SUPER,10*SUPER),(0,0),(0,0)),mode='edge')
+  oh=opening.shape[0];oy=np.arange(oh)[:,None]
+  inner_shade=1-(.10 if refined else .08)*np.exp(-oy/(8*SUPER))-.04*np.exp(-(oh-1-oy)/(6*SUPER))
+  opening[:,:,:3]=np.round(opening[:,:,:3].astype(float)*inner_shade[:,:,None]).clip(0,255).astype('uint8')
+  frame.alpha_composite(Image.fromarray(opening),(SHEET[0]*SUPER,(SHEET[1]-10)*SUPER))
   fw,fh=round(704*factor),round(944*factor)
   x,y=CENTER[0]-fw//2,CENTER[1]-fh//2
   layer=frame.resize((fw,fh),Image.Resampling.LANCZOS)
   mask=Image.new('L',clean.size);ImageDraw.Draw(mask).rectangle((x,y,x+fw-1,y+fh-1),fill=255)
   # Upper-left light: independent contact and soft cast shadows, not a wall patch.
-  cast=Image.new('L',clean.size);ImageDraw.Draw(cast).rectangle((x+round(10*factor),y+round(14*factor),x+fw-1+round(10*factor),y+fh-1+round(14*factor)),fill=255)
-  cast=cast.filter(ImageFilter.GaussianBlur(9*factor))
+  cast=Image.new('L',clean.size);ImageDraw.Draw(cast).rectangle((x+round((12 if refined else 10)*factor),y+round((18 if refined else 14)*factor),x+fw-1+round((12 if refined else 10)*factor),y+fh-1+round((18 if refined else 14)*factor)),fill=255)
+  cast=cast.filter(ImageFilter.GaussianBlur((11 if refined else 9)*factor))
   contact=Image.new('L',clean.size);ImageDraw.Draw(contact).rectangle((x+2,y+3,x+fw+1,y+fh+2),fill=255)
   contact=contact.filter(ImageFilter.GaussianBlur(1.6*factor))
-  a=np.asarray(cast,dtype=float)/255*.20+np.asarray(contact,dtype=float)/255*.13
+  a=np.asarray(cast,dtype=float)/255*(.25 if refined else .20)+np.asarray(contact,dtype=float)/255*(.11 if refined else .13)
   base=np.asarray(clean,dtype=float)
   shadowed=np.round(base*(1-a[:,:,None])).clip(0,255).astype('uint8')
   composed=Image.fromarray(shadowed,'RGB').convert('RGBA');composed.alpha_composite(layer,(x,y));final=composed.convert('RGB')
@@ -93,7 +94,12 @@ for config in configs:
   variants=[]
   for width in [480,768,1122]:
    image=final if width==1122 else final.resize((width,round(final.height*width/final.width)),Image.Resampling.LANCZOS)
-   path=out/f'{slug}-{size}-{width}.webp';image.save(path,'WEBP',lossless=True,method=6,icc_profile=profile)
+   path=out/f'{slug}-{size}-{width}.webp'
+   # Preserve approved larger files, including their original embedded metadata.
+   if size=='12x16' and path.exists():
+    assert np.array_equal(np.asarray(Image.open(path).convert('RGB')),np.asarray(image))
+   else:
+    image.save(path,'WEBP',lossless=True,method=6,icc_profile=profile)
    assert np.array_equal(np.asarray(Image.open(path).convert('RGB')),np.asarray(image))
    variants.append({'key':f'{slug}-{size}-{width}','src':'/'+str(path.relative_to(repo/'public')),'width':image.width,'height':image.height})
   registry[slug][size]={'id':f'{slug}-room-{size}','role':'full','alt':f'{config["title"]} {size.replace("x"," × ")} inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.','variants':variants}
