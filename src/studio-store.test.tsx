@@ -26,7 +26,7 @@ it('serves all five distinct product pages with confirmed size pricing and no ch
     const meta=metadata(`/studio-editions/${edition.artworkId}/`);
     expect(meta.title).toContain('Studio Print');expect(meta.description).toContain('Studio Print');
     expect(screen.getByText('Studio Print · Forest & Flowers')).toBeTruthy();
-    studioArtwork(edition).description.slice(0,2).forEach(p=>expect(screen.getByText(p)).toBeTruthy());
+    studioArtwork(edition).description.slice(0,2).forEach(p=>expect([...document.querySelectorAll('.studio-product-description p')].some(node=>node.textContent===p)).toBe(true));
     expect(screen.getByText('A fine-art reproduction of the original mixed-media painting.')).toBeTruthy();
     expect(meta.indexable).toBe(true);expect(meta.graph[0]['@type']).toBe('Product');expect(meta.graph[0]).not.toHaveProperty('offers');expect(meta.social).toBeTruthy();
     view.unmount();

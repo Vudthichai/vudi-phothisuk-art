@@ -1,3 +1,5 @@
+export const junglekeepersUrl = 'https://www.junglekeepers.org';
+
 /** Artist-confirmed profit commitments with explicit product scope; no payment automation. */
 export type ContributionIntention = {
   percentOfProfit: number;

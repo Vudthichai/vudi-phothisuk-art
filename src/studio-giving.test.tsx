@@ -35,7 +35,7 @@ it('places confirmed giving after descriptions only on the two selected product 
    expect(giving?.textContent).toContain(`${edition.contribution.percentOfProfit}% of profits from this Studio Print`);
    expect(giving?.textContent).not.toMatch(/proceeds|revenue|tax.deductible|partner|endorse/i);
    if(edition.artworkId==='75-leaves')expect(giving?.textContent).toContain('The recipient organization will be announced.');
-   else expect(giving?.textContent).toContain('Junglekeepers');
+   else { expect(giving?.textContent).toContain('Junglekeepers');expect(giving?.querySelector('a')?.getAttribute('href')).toBe('https://www.junglekeepers.org'); }
   }else { expect(giving).toBeNull();expect(view.container.querySelector('.studio-giving-summary')).toBeNull(); }
   view.unmount();
  }
@@ -56,6 +56,7 @@ it('separates print giving from exact original paragraphs without duplicating it
   else {
    expect(story.querySelector('aside[aria-label="Conservation pledge"]')).toBeNull();
    expect(statement).toBe(art.description[2]);
+   expect(sections[0].querySelector('a')?.getAttribute('href')).toBe('https://www.junglekeepers.org');
    expect(story.textContent).not.toMatch(/10%|sale price/);
    expect(sections[0].textContent).not.toContain('10%');
   }
