@@ -1,0 +1,132 @@
+[
+  {
+    "artworkId": "mother-nature",
+    "approvedLargeRgbSha256": "04a6fdecc9a43b0b311a1059f9f9e350aeb36caa92440cb3ebf779e0d9dd45c4",
+    "largeFrameBounds": [
+      213,
+      100,
+      917,
+      1044
+    ],
+    "smallFrameBounds": [
+      301,
+      218,
+      829,
+      926
+    ],
+    "linearScale": 0.75,
+    "sameCenter": [
+      565,
+      572
+    ],
+    "directApprovedFrameResample": true,
+    "paperRecolored": false,
+    "roomOutsideCompositeChangedPixels": 0,
+    "nativeRgbSha256": "2ca937513cba8080840952a076564faba2ffe4d2a24226437143d9cbc140f206",
+    "foregroundFrameCleanupPixels": 600
+  },
+  {
+    "artworkId": "ethereal-bloom",
+    "approvedLargeRgbSha256": "98d3cb6b3392edf3ef4df1c03ae1843c9beae6b06baae975b659b97d24d027f9",
+    "largeFrameBounds": [
+      213,
+      100,
+      917,
+      1044
+    ],
+    "smallFrameBounds": [
+      301,
+      218,
+      829,
+      926
+    ],
+    "linearScale": 0.75,
+    "sameCenter": [
+      565,
+      572
+    ],
+    "directApprovedFrameResample": true,
+    "paperRecolored": false,
+    "roomOutsideCompositeChangedPixels": 0,
+    "nativeRgbSha256": "2cea39b27ebc39cb91a7116843afcab521a4aaf209d200340c2d7937b4d4db0e",
+    "foregroundFrameCleanupPixels": 600
+  },
+  {
+    "artworkId": "tiger-lily",
+    "approvedLargeRgbSha256": "c6a933ed29cc2b8fbb281dd234b39b3111a340fb652181839e483dcb93192ece",
+    "largeFrameBounds": [
+      213,
+      100,
+      917,
+      1044
+    ],
+    "smallFrameBounds": [
+      301,
+      218,
+      829,
+      926
+    ],
+    "linearScale": 0.75,
+    "sameCenter": [
+      565,
+      572
+    ],
+    "directApprovedFrameResample": true,
+    "paperRecolored": false,
+    "roomOutsideCompositeChangedPixels": 0,
+    "nativeRgbSha256": "5fd7d02b95d86a8255881878bc3df61db17b363b7cd5def0aa3349943015eb97",
+    "foregroundFrameCleanupPixels": 600
+  },
+  {
+    "artworkId": "75-leaves",
+    "approvedLargeRgbSha256": "58cf33c2267829c57f4ef8b671207b995298695f87065c87007ab80d3f7b63f5",
+    "largeFrameBounds": [
+      213,
+      100,
+      917,
+      1044
+    ],
+    "smallFrameBounds": [
+      301,
+      218,
+      829,
+      926
+    ],
+    "linearScale": 0.75,
+    "sameCenter": [
+      565,
+      572
+    ],
+    "directApprovedFrameResample": true,
+    "paperRecolored": false,
+    "roomOutsideCompositeChangedPixels": 0,
+    "nativeRgbSha256": "4e59a01c032a529e3dc73b9850e42d13d03b3c7466dbdfb5b3320a5f7266e31b",
+    "foregroundFrameCleanupPixels": 600
+  },
+  {
+    "artworkId": "a-forest-forgotten",
+    "approvedLargeRgbSha256": "93df0eae2c3cd7d67c373250d761cb4c4d3c4d6cd9a41c1e000f6fc60874b34c",
+    "largeFrameBounds": [
+      213,
+      100,
+      917,
+      1044
+    ],
+    "smallFrameBounds": [
+      301,
+      218,
+      829,
+      926
+    ],
+    "linearScale": 0.75,
+    "sameCenter": [
+      565,
+      572
+    ],
+    "directApprovedFrameResample": true,
+    "paperRecolored": false,
+    "roomOutsideCompositeChangedPixels": 0,
+    "nativeRgbSha256": "6c9fb771ad2ace439e5a865ec762365b3dec6bdee59b33e76ab868253db15ccb",
+    "foregroundFrameCleanupPixels": 600
+  }
+]

@@ -45,3 +45,7 @@ Changing size now preserves the selected gallery view, including Artwork Detail.
 ## Approved 12 × 16 collection reference
 
 The artist subsequently requested that product pages reuse the collection-card photograph for the 12 × 16 In a Space view. `studioGallery` therefore uses `studioPrimaryImage` for 12 × 16, sharing the exact image object and responsive variants with collection cards. The 9 × 12 view retains its size-gallery assets and reviewed lighting. The main image, thumbnail, and fullscreen view use the same selected source. No image assets are modified by this reference correction. Earlier geometry audits describe the generated size-gallery composites; they are not a pixel-calibration assertion about the collection photograph now selected at runtime.
+
+## Direct smaller-version source
+
+The smaller mockups now scale the approved collection frame/print directly. See [approved smaller mockups](approved-small-mockups.md) for the current generator, source verification, shadow method, and limitations. Earlier rebuilt-paper and lighting audits remain historical records.
