@@ -49,9 +49,10 @@ it('preserves ten originals, two not-for-sale exceptions and the approved photog
 });
 
 it('shows the eight approved original prices and keeps personal works not for sale', () => {
-  const approved = { 'Mother Nature': 5000, 'Dragon Lily': 1200, 'Ethereal Bloom': 7000,
-    'Moss & Mushrooms': 6000, 'Blooming Desire': 2500, 'Wild Tiger Lilies': 3500,
-    'A Forest Forgotten': 4000, 'Gilded Bloom': 2500 };
+  const approved = { 'Mother Nature': 6000, 'Dragon Lily': 3000, 'Ethereal Bloom': 7000,
+    'Moss & Mushrooms': 5000, 'Blooming Desire': 4000, 'Wild Tiger Lilies': 4500,
+    'A Forest Forgotten': 5000, 'Gilded Bloom': 3000 };
+  expect(Object.values(approved).reduce((sum, price) => sum + price, 0)).toBe(37500);
   page();
   expect(document.querySelectorAll('.forest-original-price')).toHaveLength(8);
   for (const [title, price] of Object.entries(approved)) {
