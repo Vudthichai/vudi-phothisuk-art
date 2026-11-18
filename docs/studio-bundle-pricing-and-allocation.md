@@ -1,13 +1,13 @@
 # Studio size pricing and collection bundles
 
-The shared `studioSizes` metadata confirms 9 × 12 at $40 and 12 × 16 at $95.
+The shared `studioSizes` metadata confirms 9 × 12 at $45 and 12 × 16 at $95.
 Product pages show the selected size's price and announce it through the existing
-live size note. Individual cards retain Starting at $40 — Coming Soon. All five
+live size note. Individual cards retain Starting at $45 — Coming Soon. All five
 prints use the same size/price definitions. Checkout remains absent.
 
 | Bundle | Prints | Retail value | Collection price | Savings |
 | --- | --- | --- | --- | --- |
-| 9 × 12 inches | All five, one each | $200 | $175 | $25 |
+| 9 × 12 inches | All five, one each | $225 | $175 | $50 |
 | 12 × 16 inches | All five, one each | $475 | $425 | $50 |
 
 Both options remain Coming Soon. No buy-four/get-one promotion is introduced.
@@ -15,7 +15,7 @@ Both options remain Coming Soon. No buy-four/get-one promotion is introduced.
 ## Future revenue allocation; no donation calculation
 
 Each bundle records all five edition/artwork IDs, quantity one, standalone-retail
-allocation weights, and their common denominator. Weights are 4,000/20,000 for
+allocation weights, and their common denominator. Weights are 4,500/22,500 for
 9×12 and 9,500/47,500 for 12×16: each print accounts for one fifth of its bundle.
 A future sales adapter can apply these ratios to actual bundle revenue and retain
 an auditable per-print allocation. Monetary rounding must reconcile to the actual
@@ -31,14 +31,18 @@ expense attribution and accounting inputs before calculating contributions.
 
 ## Description integration and future photography
 
-`originalDescription` preserves every original source paragraph and appends a
-Studio-Print-specific giving reference to the second paragraph for 75 Leaves and
-A Forest Forgotten. The same function renders collection and individual original
-pages. This leaves the centralized original catalog, its $37,500 prices, order,
-photography, dimensions and availability unchanged. A Forest Forgotten's separate
-existing 10%-of-original-sale pledge is preserved. The standalone Art With Purpose
-section and the redundant original-page print-panel giving section are removed;
-concise card/product notes and detailed print-page giving remain.
+A Forest Forgotten now commits 20% of profits from its original artwork,
+individual Studio Prints and applicable bundle share to Junglekeepers. The prior
+10%-of-original-sale commitment is superseded. Original pages use one shared
+statement covering the original and its Studio Prints; print pages retain their
+print-specific 20% wording. Available Art's original card has a concise giving
+note. The scope is explicit in contribution metadata and carried into bundle
+allocation lines. 75 Leaves remains 75% of Studio Print profits with recipient
+unannounced; it does not acquire an original-artwork donation commitment.
+
+The original story paragraphs remain unchanged; giving stays in a separate section.
+No original painting prices or availability change. POD costs remain unknown.
+No cost defaults, profit calculations, donation amounts or transfers are added.
 
 `studioCollectionBundle.galleryWallImage` is an optional approved image slot, set
 to null. Its conditional figure renders nothing until an authentic, approved image

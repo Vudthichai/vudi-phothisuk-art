@@ -89,3 +89,5 @@
 .artwork-page .artwork-story>.original-retail-price, .forest-editorial-title>.forest-original-price {
   font-size:1.25rem;line-height:1.5;
 }
+
+.charity-organization-link { text-decoration:underline;text-underline-offset:3px; }

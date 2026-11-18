@@ -83,5 +83,5 @@ it('uses the same original prices on Available Art without changing Studio price
   expect(card.querySelector('.forest-original-price')?.textContent).toBe('$'+art.priceUsd!.toLocaleString('en-US'));
   if (art.dimensions) expect(card.querySelector('.forest-original-price')?.previousElementSibling?.textContent).toBe(art.dimensions);
  }
- expect([...container.querySelectorAll('.studio-edition-card .studio-price')].map(p=>p.textContent)).toEqual(Array(5).fill('Starting at $40'));
+ expect([...container.querySelectorAll('.studio-edition-card .studio-price')].map(p=>p.textContent)).toEqual(Array(5).fill('Starting at $45'));
 });

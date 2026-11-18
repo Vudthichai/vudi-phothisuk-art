@@ -1,3 +1,4 @@
+import { JunglekeepersText } from '../components/JunglekeepersText';
 import { StudioGiving, StudioGivingSummary } from './StudioGiving';
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
@@ -32,7 +33,7 @@ function Product({ edition }: { edition: NonNullable<ReturnType<typeof studioEdi
       <div className="studio-product-copy"><h1>{artwork.title}</h1><p className="studio-product-designation">Studio Print · Forest &amp; Flowers</p><p className="studio-product-price"><strong>{studioPrice(selected.priceCents)}</strong><span>Selected size · Coming Soon</span></p><StudioGivingSummary edition={edition}/>
         <fieldset className="studio-size-options"><legend>Print size</legend>{studioSizes.map(option => <label key={option.id}><input type="radio" name="print-size" value={option.id} checked={size === option.id} onChange={() => { setSize(option.id); setViewIndex(0); }}/><span>{option.label} — {studioPrice(option.priceCents)}</span></label>)}</fieldset>
         <p className="studio-size-note" aria-live="polite">{selected.label} — {studioPrice(selected.priceCents)} · Coming Soon</p>
-        <section className="studio-product-description" aria-labelledby="studio-description-title"><h2 id="studio-description-title">About the original painting</h2>{artwork.description.slice(0,2).map(paragraph => <p key={paragraph}>{paragraph}</p>)}<p>A fine-art reproduction of the original mixed-media painting.</p></section>
+        <section className="studio-product-description" aria-labelledby="studio-description-title"><h2 id="studio-description-title">About the original painting</h2>{artwork.description.slice(0,2).map(paragraph => <p key={paragraph}><JunglekeepersText text={paragraph}/></p>)}<p>A fine-art reproduction of the original mixed-media painting.</p></section>
         <StudioGiving edition={edition}/>
         <Link className="text-link" to={`/collections/forest-and-flowers/${artwork.slug}/`}>View the original artwork</Link>
       </div>
