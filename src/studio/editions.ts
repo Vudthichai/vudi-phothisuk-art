@@ -5,7 +5,7 @@ import printPhotographs from './print-photographs.json';
 
 export type StudioSize = { id: string; width: number; height: number; label: string; priceCents: number };
 export const studioSizes: readonly StudioSize[] = [
-  { id: '9x12', width: 9, height: 12, label: '9 × 12 inches', priceCents: 4000 },
+  { id: '9x12', width: 9, height: 12, label: '9 × 12 inches', priceCents: 4500 },
   { id: '12x16', width: 12, height: 16, label: '12 × 16 inches', priceCents: 9500 },
 ];
 

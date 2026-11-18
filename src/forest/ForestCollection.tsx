@@ -59,7 +59,7 @@ export function ForestCollection() {
                 <p>{art.dimensions ?? 'Dimensions to be confirmed'}</p>
                 <OriginalPrice artwork={art} className="forest-original-price"/>
                 {art.description.slice(0, art.id === 'mother-nature' ? 1 : 2).map(paragraph => <p className="forest-featured-excerpt" key={paragraph}>{paragraph}</p>)}
-                {studioEditionFor(art.id) && <StudioGiving edition={studioEditionFor(art.id)!} headingLevel="h3"/>}
+                {studioEditionFor(art.id) && <StudioGiving edition={studioEditionFor(art.id)!} headingLevel="h3" includeOriginal/>}
                 <Inquiry artwork={art}/>
                 <Link className="text-link forest-artwork-link" to={`${base}/${art.slug}`}>View painting</Link>
               </div>
@@ -140,10 +140,10 @@ function ForestArtworkEditorial({ artwork }: { artwork: ForestArtwork }) {
           <h2 id="forest-artwork-story">About the painting</h2>
           {artwork.copyStatus === 'provisional' && <p className="private-copy-note">Provisional description — pending artist approval.</p>}
           {artwork.description.slice(0, 2).map(paragraph => <p key={paragraph}>{paragraph}</p>)}
-          {artwork.description.length > 2 && <aside aria-label="Conservation pledge">
+          {artwork.description.length > 2 && artwork.id !== 'a-forest-forgotten' && <aside aria-label="Conservation pledge">
             {artwork.description.slice(2).map(paragraph => <p key={paragraph}>{paragraph}</p>)}
           </aside>}
-          {studioEditionFor(artwork.id) && <StudioGiving edition={studioEditionFor(artwork.id)!} headingLevel="h3"/>}
+          {studioEditionFor(artwork.id) && <StudioGiving edition={studioEditionFor(artwork.id)!} headingLevel="h3" includeOriginal/>}
         </section>
       </div>
     </div>

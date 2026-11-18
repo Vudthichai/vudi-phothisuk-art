@@ -40,7 +40,7 @@ it('places confirmed giving after descriptions only on the two selected product 
   view.unmount();
  }
 });
-it('separates print giving from exact original paragraphs without duplicating it, preserving the original-sale pledge',()=>{
+it('separates print giving from exact original paragraphs without duplicating it, applying the updated profit pledge',()=>{
  for(const slug of Object.keys(expected)){
   const art=forestCollection.artworks.find(a=>a.slug===slug)!;
   const view=render(<MemoryRouter initialEntries={[`${base}/${slug}`]}><Routes><Route path={`${base}/:artworkSlug`} element={<ForestCollection/>}/></Routes></MemoryRouter>);
@@ -51,11 +51,12 @@ it('separates print giving from exact original paragraphs without duplicating it
   expect(sections[0].querySelector('h3')?.textContent).toBe(art.title+' — '+(slug==='75-leaves'?'Giving Back':'Art for Conservation'));
   const statement=sections[0].querySelector('p')!.textContent!;
   expect(story.textContent!.split(statement)).toHaveLength(2);
-  expect(statement).toContain(slug==='75-leaves'?'75% of profits from this Studio Print':'20% of profits from this Studio Print');
+  expect(statement).toContain(slug==='75-leaves'?'75% of profits from this Studio Print':'20% of profits from this original artwork and its Studio Prints');
   if(slug==='75-leaves')expect(view.container.textContent).toContain('Not for Sale');
   else {
-   expect(story.querySelector('aside[aria-label="Conservation pledge"]')?.textContent).toBe(art.description[2]);
-   expect(story.querySelector('aside')?.textContent).toContain('10% of the sale price of this original artwork');
+   expect(story.querySelector('aside[aria-label="Conservation pledge"]')).toBeNull();
+   expect(statement).toBe(art.description[2]);
+   expect(story.textContent).not.toMatch(/10%|sale price/);
    expect(sections[0].textContent).not.toContain('10%');
   }
   expect(view.container.querySelector('.studio-edition-panel .studio-giving')).toBeNull();

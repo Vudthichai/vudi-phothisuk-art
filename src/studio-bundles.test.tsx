@@ -9,7 +9,7 @@ it('presents both size bundles with confirmed retail values, prices and savings,
  const {container}=render(<MemoryRouter><StudioEditions/></MemoryRouter>);
  const options=[...container.querySelectorAll('.studio-bundle-option')];
  expect(options).toHaveLength(2);
- for(const [i,amounts] of [[0,['$200','$175','$25']],[1,['$475','$425','$50']]] as const){
+ for(const [i,amounts] of [[0,['$225','$175','$50']],[1,['$475','$425','$50']]] as const){
   amounts.forEach(amount=>expect(options[i].textContent).toContain(amount));
   expect(within(options[i] as HTMLElement).getByText('Coming Soon')).toBeTruthy();
  }
@@ -19,7 +19,7 @@ it('presents both size bundles with confirmed retail values, prices and savings,
  expect(container.textContent).not.toMatch(/buy four|get one free/i);
 });
 it('records auditable proportional revenue weights and defers profit/donation calculations',()=>{
- const expected=[[20000,17500,2500,4000],[47500,42500,5000,9500]];
+ const expected=[[22500,17500,5000,4500],[47500,42500,5000,9500]];
  studioCollectionBundle.options.forEach((bundle,i)=>{
   const [retail,price,savings,weight]=expected[i];
   expect([bundle.retailValueCents,bundle.priceCents,bundle.savingsCents]).toEqual([retail,price,savings]);
@@ -28,6 +28,7 @@ it('records auditable proportional revenue weights and defers profit/donation ca
   expect(bundle.revenueAllocation.lines.reduce((sum,l)=>sum+l.weightCents,0)).toBe(bundle.revenueAllocation.denominatorCents);
   expect(bundle.revenueAllocation.lines.find(l=>l.artworkId==='75-leaves')?.contribution).toMatchObject({percentOfProfit:75,beneficiary:null});
   expect(bundle.revenueAllocation.lines.find(l=>l.artworkId==='a-forest-forgotten')?.contribution).toMatchObject({percentOfProfit:20,beneficiary:'Junglekeepers'});
+  expect(bundle.revenueAllocation.lines.find(l=>l.artworkId==='a-forest-forgotten')?.contribution?.appliesTo).toEqual(['original','studio-print','bundle-share']);
   expect(bundle.profitCalculation.status).toBe('blocked-pending-confirmed-expenses');
   expect(bundle.profitCalculation.requiredInputs).toEqual(['productionCosts','paymentFees','fulfillmentExpenses']);
   expect(bundle).not.toHaveProperty('donationAmount');

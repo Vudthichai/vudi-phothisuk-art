@@ -14,7 +14,7 @@ it('offers the other four prints without previous/next navigation',()=>{
   expect(screen.getByRole('heading',{name:'Explore the Collection'})).toBeTruthy();
   const cards=[...view.container.querySelectorAll('article')];expect(cards).toHaveLength(4);
   expect(cards.map(card=>card.querySelector('h3')?.textContent)).toEqual(studioEditions.filter(e=>e.id!==edition.id).map(e=>studioArtwork(e).title));
-  cards.forEach(card=>{expect(card.textContent).toContain('Studio Print');expect(card.textContent).toContain('Starting at $40');expect(card.querySelector('a')?.getAttribute('href')).toMatch(/^\/studio-editions\//);});
+  cards.forEach(card=>{expect(card.textContent).toContain('Studio Print');expect(card.textContent).toContain('Starting at $45');expect(card.querySelector('a')?.getAttribute('href')).toMatch(/^\/studio-editions\//);});
   expect(screen.queryByRole('link',{name:/Previous|Next/})).toBeNull();view.unmount();
  });
 });

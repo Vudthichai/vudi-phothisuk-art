@@ -10,16 +10,16 @@ afterEach(cleanup);
 it('serves all five distinct product pages with confirmed size pricing and no checkout', () => {
   for (const edition of studioEditions) {
     const view=render(<MemoryRouter initialEntries={[`/studio-editions/${edition.artworkId}/`]}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
-    expect(document.querySelector('.studio-product-price')?.textContent).toContain('$40Selected size · Coming Soon');
+    expect(document.querySelector('.studio-product-price')?.textContent).toContain('$45Selected size · Coming Soon');
     expect(screen.getAllByRole('radio')).toHaveLength(2);
     expect(document.querySelector('.studio-framing-note')?.textContent).toBe('Prints are sold unframed. Room view is illustrative and does not show the selected size to scale.');
-    expect(studioSizes.map(s=>s.priceCents)).toEqual([4000,9500]);
+    expect(studioSizes.map(s=>s.priceCents)).toEqual([4500,9500]);
     const larger=screen.getByRole('radio',{name:'12 × 16 inches — $95'});
     fireEvent.click(larger);expect((larger as HTMLInputElement).checked).toBe(true);
     expect(screen.getByText('12 × 16 inches — $95 · Coming Soon')).toBeTruthy();
     expect(document.querySelector('.studio-product-price strong')?.textContent).toBe('$95');
-    fireEvent.click(screen.getByRole('radio',{name:'9 × 12 inches — $40'}));
-    expect(document.querySelector('.studio-product-price strong')?.textContent).toBe('$40');
+    fireEvent.click(screen.getByRole('radio',{name:'9 × 12 inches — $45'}));
+    expect(document.querySelector('.studio-product-price strong')?.textContent).toBe('$45');
     expect(screen.getByRole('link',{name:'View the original artwork'}).getAttribute('href')).toBe(`/collections/forest-and-flowers/${edition.artworkId}/`);
     expect(document.querySelector('input[type="email"],input[name="card"],a[href*="checkout"]')).toBeNull();
     expect(screen.queryByRole('button',{name:/buy|cart|checkout/i})).toBeNull();

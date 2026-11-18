@@ -1,7 +1,7 @@
 import { contributionStatement, contributionSummary } from './contributions';
 import { studioArtwork, type StudioEdition } from './editions';
 
-export function StudioGiving({ edition, headingLevel = 'h2' }: { edition: StudioEdition; headingLevel?: 'h2' | 'h3' }) {
+export function StudioGiving({ edition, headingLevel = 'h2', includeOriginal = false }: { edition: StudioEdition; headingLevel?: 'h2' | 'h3'; includeOriginal?: boolean }) {
   const giving = edition.contribution;
   if (!giving) return null;
   const artwork = studioArtwork(edition);
@@ -9,7 +9,7 @@ export function StudioGiving({ edition, headingLevel = 'h2' }: { edition: Studio
   const headingId = `${edition.id}-giving-print`;
   return <section className="studio-giving" aria-labelledby={headingId}>
     <Heading id={headingId}>{artwork.title} — {giving.heading}</Heading>
-    <p>{contributionStatement(giving)}</p>
+    <p>{contributionStatement(giving, includeOriginal)}</p>
   </section>;
 }
 
