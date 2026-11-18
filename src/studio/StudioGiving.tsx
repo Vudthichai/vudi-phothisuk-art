@@ -1,13 +1,14 @@
 import { contributionStatement, contributionSummary } from './contributions';
 import { studioArtwork, type StudioEdition } from './editions';
 
-export function StudioGiving({ edition }: { edition: StudioEdition }) {
+export function StudioGiving({ edition, headingLevel = 'h2' }: { edition: StudioEdition; headingLevel?: 'h2' | 'h3' }) {
   const giving = edition.contribution;
   if (!giving) return null;
   const artwork = studioArtwork(edition);
+  const Heading = headingLevel;
   const headingId = `${edition.id}-giving-print`;
   return <section className="studio-giving" aria-labelledby={headingId}>
-    <h2 id={headingId}>{artwork.title} — {giving.heading}</h2>
+    <Heading id={headingId}>{artwork.title} — {giving.heading}</Heading>
     <p>{contributionStatement(giving)}</p>
   </section>;
 }
