@@ -25,7 +25,7 @@ it('lists exactly the six confirmed available paintings with dimensions, detail 
     expect(within(card).getByRole('link', {name: `Inquire about ${artwork.title}`}).getAttribute('href')).toBe(`mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent(`Artwork inquiry: ${artwork.title}`)}`);
   }
   expect(document.querySelectorAll('.available-painting .original-retail-price')).toHaveLength(6);
-  for (const card of cards) expect(card.querySelector('.original-retail-price')?.textContent).toBe('$2,000');
+  for (const card of cards) expect(card.querySelector('.original-retail-price')?.textContent).toBe(within(card).getByRole('heading').textContent === 'The Oceans' ? '$4,500' : '$2,000');
 });
 it('uses live availability data and preserves newly sold artwork detail pages without inquiry actions', () => {
   const sahara = findCollection('regal-collection')!.artworks.find(a => a.slug === 'sahara')!;
@@ -72,12 +72,12 @@ it('places the four Oceans portraits before the horizontal feature and Sahara in
   expect(findCollection('regal-collection')!.artworks.filter(a => a.availability === 'available').map(a => a.title)).toEqual(['Sahara']);
 });
 
-it('shows $2,000 only on the six available original detail pages', () => {
+it('shows the approved prices only on available original detail pages', () => {
   for (const collection of collections.filter(c=>['oceans','regal-collection'].includes(c.slug))) for (const art of collection.artworks) {
     if (art.availability !== 'available') { expect(art.priceUsd).toBeUndefined(); continue; }
-    expect(art.priceUsd).toBe(2000);
+    expect(art.priceUsd).toBe(art.title === 'The Oceans' ? 4500 : 2000);
     const view=render(<MemoryRouter initialEntries={[`/collections/${collection.slug}/${art.slug}`]}><Routes><Route path="/collections/:slug/:artworkSlug" element={<ArtworkPage/>}/></Routes></MemoryRouter>);
-    expect(view.container.querySelector('.original-retail-price')?.textContent).toBe('$2,000');
+    expect(view.container.querySelector('.original-retail-price')?.textContent).toBe(art.title === 'The Oceans' ? '$4,500' : '$2,000');
     view.unmount();
   }
 });
