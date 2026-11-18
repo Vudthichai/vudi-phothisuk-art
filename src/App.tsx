@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { StudioListing, StudioProduct } from './studio/StudioStore';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { Home, Collections, CollectionPage, ArtworkPage, InformationPage, NotFound } from './pages/Pages';
 import { informationPages } from './data';
@@ -10,4 +10,8 @@ import { ForestCollection } from './forest/ForestCollection';
 import { Analytics } from './analytics/Analytics';
 import { RouteMetadata } from './seo/RouteMetadata';
 const StudioTemplatePreview = import.meta.env.DEV ? lazy(() => import('./studio/StudioTemplatePreview')) : null;
-export function App() { return <><Routes><Route element={<Layout/>}><Route index element={<Home/>}/><Route path="studio-editions" element={<StudioListing/>}/><Route path="studio-editions/:productSlug" element={<StudioProduct/>}/>{StudioTemplatePreview && <Route path="dev/studio-template" element={<Suspense fallback={<p>Loading presentation study…</p>}><StudioTemplatePreview/></Suspense>}/> }<Route path="collections" element={<Collections/>}/><Route path="collections/forest-and-flowers" element={<ForestCollection/>}/><Route path="collections/forest-and-flowers/:artworkSlug" element={<ForestCollection/>}/><Route path="collections/:slug" element={<CollectionPage/>}/><Route path="collections/:slug/:artworkSlug" element={<ArtworkPage/>}/>{(Object.keys(informationPages) as (keyof typeof informationPages)[]).map(page => <Route key={page} path={page} element={<InformationPage page={page}/>}/>)}<Route path="*" element={<NotFound/>}/></Route></Routes><RouteMetadata/><Analytics/></>; }
+function LegacyContactRedirect() {
+  const { search, hash } = useLocation();
+  return <Navigate to={{ pathname:'/about', search, hash }} replace/>;
+}
+export function App() { return <><Routes><Route element={<Layout/>}><Route index element={<Home/>}/><Route path="studio-editions" element={<StudioListing/>}/><Route path="studio-editions/:productSlug" element={<StudioProduct/>}/>{StudioTemplatePreview && <Route path="dev/studio-template" element={<Suspense fallback={<p>Loading presentation study…</p>}><StudioTemplatePreview/></Suspense>}/> }<Route path="collections" element={<Collections/>}/><Route path="collections/forest-and-flowers" element={<ForestCollection/>}/><Route path="collections/forest-and-flowers/:artworkSlug" element={<ForestCollection/>}/><Route path="collections/:slug" element={<CollectionPage/>}/><Route path="collections/:slug/:artworkSlug" element={<ArtworkPage/>}/>{(Object.keys(informationPages) as (keyof typeof informationPages)[]).map(page => <Route key={page} path={page} element={<InformationPage page={page}/>}/>)}<Route path="contact" element={<LegacyContactRedirect/>}/><Route path="*" element={<NotFound/>}/></Route></Routes><RouteMetadata/><Analytics/></>; }

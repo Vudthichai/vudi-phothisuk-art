@@ -26,8 +26,7 @@ export const collections: Collection[] = [
 ];
 export const informationPages = {
   'available-art': { title: 'Available Art', description: 'Explore available original paintings from The Oceans and The Regal Collection. Contact Vudi for pricing and inquiries.' },
-  about: { title: 'About the Artist', description: 'Vudi Phothisuk is a multimedia artist specializing in textured paintings and sensory experiences.' },
+  about: { title: 'About', description: 'Vudi Phothisuk is a multimedia artist specializing in textured paintings and sensory experiences.' },
   exhibitions: { title: 'Exhibitions', description: 'Forest & Flowers exhibition — December 5, 2026, at Field Day, Lawrenceville, Pittsburgh, 4:00–7:00 PM.' },
-  contact: { title: 'Commissions & Contact', description: 'Commission information and verified contact details will be added here.' },
 };
 export function findCollection(slug: string) { return collections.find(collection => collection.slug === slug); }

@@ -9,7 +9,6 @@ export function Footer() {
         <Link to="/available-art">Available Art</Link>
         <Link to="/about">About</Link>
         <Link to="/exhibitions">Exhibitions</Link>
-        <Link to="/contact">Contact</Link>
       </nav>
     </div>
     <div className="footer-msat">
