@@ -23,6 +23,11 @@ it('changes each product room image with size while retaining authentic detail a
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toContain(`/studio-editions/${edition.artworkId}-print-`);
   expect(screen.getByRole('radio',{name:'12 × 16 inches — $95'}).getAttribute('value')).toBe('12x16');
   expect((screen.getByRole('radio',{name:'12 × 16 inches — $95'}) as HTMLInputElement).checked).toBe(true);
+  fireEvent.click(screen.getByRole('radio',{name:'9 × 12 inches — $45'}));
+  expect(view.container.querySelector('.studio-gallery-caption')?.textContent).toBe('Artwork Detail');
+  expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toContain(`/studio-editions/${edition.artworkId}-print-`);
+  fireEvent.click(screen.getByRole('radio',{name:'12 × 16 inches — $95'}));
+  expect(view.container.querySelector('.studio-gallery-caption')?.textContent).toBe('Artwork Detail');
   fireEvent.click(screen.getByRole('button',{name:'In a Space'}));
   expect(view.container.querySelector('.studio-product-price strong')?.textContent).toBe('$95');
   expect((screen.getByRole('radio',{name:'12 × 16 inches — $95'}) as HTMLInputElement).checked).toBe(true);

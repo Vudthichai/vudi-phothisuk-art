@@ -44,7 +44,7 @@ for config in configs:
  paper=(pixels.min(axis=2)>215)&((pixels.max(axis=2).astype(int)-pixels.min(axis=2))<35)
  paper[round(sy0/im.height*h):round(sy1/im.height*h),round(sx0/im.width*w):round(sx1/im.width*w)]=False
  yy,xx=np.mgrid[0:h,0:w];shade=.985+.015*(1-(.35*xx/max(w-1,1)+.65*yy/max(h-1,1)))
- edge=1-.12*np.exp(-xx/(7*SUPER))-.08*np.exp(-yy/(8*SUPER))-.04*np.exp(-(w-1-xx)/(6*SUPER))-.04*np.exp(-(h-1-yy)/(6*SUPER))
+ edge=1-.12*np.exp(-xx/(7*SUPER))-.04*np.exp(-(w-1-xx)/(6*SUPER))
  warmed=np.round(pixels.astype(float)*(shade*edge)[:,:,None]*np.array([1,.985,.95])).clip(0,255).astype('uint8')
  pixels[paper]=warmed[paper]
  sheet=Image.fromarray(pixels,'RGB').convert('RGBA')
@@ -59,7 +59,14 @@ for config in configs:
  donor=np.median(frame_pixels[200:400],axis=0).astype('uint8')
  frame_pixels[cleanup]=np.broadcast_to(donor,frame_pixels.shape)[cleanup]
  frame=Image.fromarray(frame_pixels).resize((704*SUPER,944*SUPER),Image.Resampling.LANCZOS).convert('RGBA')
- frame.alpha_composite(sheet,(SHEET[0]*SUPER,SHEET[1]*SUPER))
+ # Replace the whole old paper opening, including the ten-pixel strips
+ # above/below the complete sheet. Extend only its blank outer paper edge;
+ # never retain old print pixels or stretch the authentic design to fit.
+ opening=np.pad(np.asarray(sheet),((10*SUPER,10*SUPER),(0,0),(0,0)),mode='edge')
+ oh=opening.shape[0];oy=np.arange(oh)[:,None]
+ inner_shade=1-.08*np.exp(-oy/(8*SUPER))-.04*np.exp(-(oh-1-oy)/(6*SUPER))
+ opening[:,:,:3]=np.round(opening[:,:,:3].astype(float)*inner_shade[:,:,None]).clip(0,255).astype('uint8')
+ frame.alpha_composite(Image.fromarray(opening),(SHEET[0]*SUPER,(SHEET[1]-10)*SUPER))
  registry[slug]={};records=[];size_results=[]
  for size,factor in [('12x16',1),('9x12',.75)]:
   fw,fh=round(704*factor),round(944*factor)

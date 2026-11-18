@@ -35,3 +35,9 @@ The generator validates authentic source hashes, exact decoded WebP pixels, and 
 - Browser screenshots and the side-by-side review are saved outside the production build in `/workspace/previews/size-gallery-site/`; ten native PNG proofs are in `/workspace/previews/size-gallery/`.
 
 The images are illustrative framed presentations of prints sold unframed. Review approval is still required; no production deployment is authorized by this change.
+
+## Paper-edge correction
+
+The initial composition retained ten-pixel strips of the previous photographed paper above and below the new sheet. Their different tones created visible horizontal seams. The compositor now replaces the entire inner paper opening, extending only the authentic sheet’s blank edge into those strips. Inner-frame shading is applied at the actual opening edge rather than partway down the paper. Complete printed designs and the 75% size relationship remain unchanged.
+
+Changing size now preserves the selected gallery view, including Artwork Detail. If an optional size-restricted extra view is unavailable for the next size, it falls back safely to the room view. Focus remains on the size control and there is no navigation or page reload. Updated desktop/mobile comparison screenshots are in `/workspace/previews/paper-edge-site/`.
