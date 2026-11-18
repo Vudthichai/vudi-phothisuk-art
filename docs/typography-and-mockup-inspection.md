@@ -1,5 +1,7 @@
 # Gallery typography and Studio mockup inspection
 
+> Historical inspection: the artist subsequently supplied the clean room and confirmed the 12 × 16 reference. See [size-aware mockups](size-aware-studio-mockups.md) for the implemented solution and current verification.
+
 ## Typography scope
 
 A shared Bodoni Moda token and scoped rules align original artwork titles across

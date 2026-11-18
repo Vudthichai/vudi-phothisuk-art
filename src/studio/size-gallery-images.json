@@ -1,0 +1,262 @@
+{
+  "ethereal-bloom": {
+    "12x16": {
+      "id": "ethereal-bloom-room-12x16",
+      "role": "full",
+      "alt": "Ethereal Bloom 12 \u00d7 16 inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.",
+      "variants": [
+        {
+          "key": "ethereal-bloom-12x16-480",
+          "src": "/studio-editions/size-gallery/ethereal-bloom-12x16-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "key": "ethereal-bloom-12x16-768",
+          "src": "/studio-editions/size-gallery/ethereal-bloom-12x16-768.webp",
+          "width": 768,
+          "height": 960
+        },
+        {
+          "key": "ethereal-bloom-12x16-1122",
+          "src": "/studio-editions/size-gallery/ethereal-bloom-12x16-1122.webp",
+          "width": 1122,
+          "height": 1402
+        }
+      ]
+    },
+    "9x12": {
+      "id": "ethereal-bloom-room-9x12",
+      "role": "full",
+      "alt": "Ethereal Bloom 9 \u00d7 12 inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.",
+      "variants": [
+        {
+          "key": "ethereal-bloom-9x12-480",
+          "src": "/studio-editions/size-gallery/ethereal-bloom-9x12-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "key": "ethereal-bloom-9x12-768",
+          "src": "/studio-editions/size-gallery/ethereal-bloom-9x12-768.webp",
+          "width": 768,
+          "height": 960
+        },
+        {
+          "key": "ethereal-bloom-9x12-1122",
+          "src": "/studio-editions/size-gallery/ethereal-bloom-9x12-1122.webp",
+          "width": 1122,
+          "height": 1402
+        }
+      ]
+    }
+  },
+  "mother-nature": {
+    "12x16": {
+      "id": "mother-nature-room-12x16",
+      "role": "full",
+      "alt": "Mother Nature 12 \u00d7 16 inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.",
+      "variants": [
+        {
+          "key": "mother-nature-12x16-480",
+          "src": "/studio-editions/size-gallery/mother-nature-12x16-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "key": "mother-nature-12x16-768",
+          "src": "/studio-editions/size-gallery/mother-nature-12x16-768.webp",
+          "width": 768,
+          "height": 960
+        },
+        {
+          "key": "mother-nature-12x16-1122",
+          "src": "/studio-editions/size-gallery/mother-nature-12x16-1122.webp",
+          "width": 1122,
+          "height": 1402
+        }
+      ]
+    },
+    "9x12": {
+      "id": "mother-nature-room-9x12",
+      "role": "full",
+      "alt": "Mother Nature 9 \u00d7 12 inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.",
+      "variants": [
+        {
+          "key": "mother-nature-9x12-480",
+          "src": "/studio-editions/size-gallery/mother-nature-9x12-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "key": "mother-nature-9x12-768",
+          "src": "/studio-editions/size-gallery/mother-nature-9x12-768.webp",
+          "width": 768,
+          "height": 960
+        },
+        {
+          "key": "mother-nature-9x12-1122",
+          "src": "/studio-editions/size-gallery/mother-nature-9x12-1122.webp",
+          "width": 1122,
+          "height": 1402
+        }
+      ]
+    }
+  },
+  "a-forest-forgotten": {
+    "12x16": {
+      "id": "a-forest-forgotten-room-12x16",
+      "role": "full",
+      "alt": "A Forest Forgotten 12 \u00d7 16 inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.",
+      "variants": [
+        {
+          "key": "a-forest-forgotten-12x16-480",
+          "src": "/studio-editions/size-gallery/a-forest-forgotten-12x16-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "key": "a-forest-forgotten-12x16-768",
+          "src": "/studio-editions/size-gallery/a-forest-forgotten-12x16-768.webp",
+          "width": 768,
+          "height": 960
+        },
+        {
+          "key": "a-forest-forgotten-12x16-1122",
+          "src": "/studio-editions/size-gallery/a-forest-forgotten-12x16-1122.webp",
+          "width": 1122,
+          "height": 1402
+        }
+      ]
+    },
+    "9x12": {
+      "id": "a-forest-forgotten-room-9x12",
+      "role": "full",
+      "alt": "A Forest Forgotten 9 \u00d7 12 inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.",
+      "variants": [
+        {
+          "key": "a-forest-forgotten-9x12-480",
+          "src": "/studio-editions/size-gallery/a-forest-forgotten-9x12-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "key": "a-forest-forgotten-9x12-768",
+          "src": "/studio-editions/size-gallery/a-forest-forgotten-9x12-768.webp",
+          "width": 768,
+          "height": 960
+        },
+        {
+          "key": "a-forest-forgotten-9x12-1122",
+          "src": "/studio-editions/size-gallery/a-forest-forgotten-9x12-1122.webp",
+          "width": 1122,
+          "height": 1402
+        }
+      ]
+    }
+  },
+  "75-leaves": {
+    "12x16": {
+      "id": "75-leaves-room-12x16",
+      "role": "full",
+      "alt": "75 Leaves 12 \u00d7 16 inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.",
+      "variants": [
+        {
+          "key": "75-leaves-12x16-480",
+          "src": "/studio-editions/size-gallery/75-leaves-12x16-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "key": "75-leaves-12x16-768",
+          "src": "/studio-editions/size-gallery/75-leaves-12x16-768.webp",
+          "width": 768,
+          "height": 960
+        },
+        {
+          "key": "75-leaves-12x16-1122",
+          "src": "/studio-editions/size-gallery/75-leaves-12x16-1122.webp",
+          "width": 1122,
+          "height": 1402
+        }
+      ]
+    },
+    "9x12": {
+      "id": "75-leaves-room-9x12",
+      "role": "full",
+      "alt": "75 Leaves 9 \u00d7 12 inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.",
+      "variants": [
+        {
+          "key": "75-leaves-9x12-480",
+          "src": "/studio-editions/size-gallery/75-leaves-9x12-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "key": "75-leaves-9x12-768",
+          "src": "/studio-editions/size-gallery/75-leaves-9x12-768.webp",
+          "width": 768,
+          "height": 960
+        },
+        {
+          "key": "75-leaves-9x12-1122",
+          "src": "/studio-editions/size-gallery/75-leaves-9x12-1122.webp",
+          "width": 1122,
+          "height": 1402
+        }
+      ]
+    }
+  },
+  "tiger-lily": {
+    "12x16": {
+      "id": "tiger-lily-room-12x16",
+      "role": "full",
+      "alt": "Tiger Lily 12 \u00d7 16 inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.",
+      "variants": [
+        {
+          "key": "tiger-lily-12x16-480",
+          "src": "/studio-editions/size-gallery/tiger-lily-12x16-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "key": "tiger-lily-12x16-768",
+          "src": "/studio-editions/size-gallery/tiger-lily-12x16-768.webp",
+          "width": 768,
+          "height": 960
+        },
+        {
+          "key": "tiger-lily-12x16-1122",
+          "src": "/studio-editions/size-gallery/tiger-lily-12x16-1122.webp",
+          "width": 1122,
+          "height": 1402
+        }
+      ]
+    },
+    "9x12": {
+      "id": "tiger-lily-room-9x12",
+      "role": "full",
+      "alt": "Tiger Lily 9 \u00d7 12 inch Studio Print shown in a black frame above the same sunlit walnut cabinet; illustrative framing, print sold unframed.",
+      "variants": [
+        {
+          "key": "tiger-lily-9x12-480",
+          "src": "/studio-editions/size-gallery/tiger-lily-9x12-480.webp",
+          "width": 480,
+          "height": 600
+        },
+        {
+          "key": "tiger-lily-9x12-768",
+          "src": "/studio-editions/size-gallery/tiger-lily-9x12-768.webp",
+          "width": 768,
+          "height": 960
+        },
+        {
+          "key": "tiger-lily-9x12-1122",
+          "src": "/studio-editions/size-gallery/tiger-lily-9x12-1122.webp",
+          "width": 1122,
+          "height": 1402
+        }
+      ]
+    }
+  }
+}
