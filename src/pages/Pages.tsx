@@ -110,28 +110,25 @@ export function ContactPage() {
       <section className="artist-story" aria-labelledby="artist-story-title">
         <figure className="artist-working">
           <img src="/artist/about-8771-1179.webp" srcSet="/artist/about-8771-560.webp 560w, /artist/about-8771-840.webp 840w, /artist/about-8771-1179.webp 1179w" sizes="(max-width:760px) 88vw, 42vw" alt="Vudi Phothisuk at his easel, painting a textured blue-and-white canvas beside a sunlit window" width="1179" height="2077" loading="lazy" decoding="async"/>
-          <figcaption><img src="/brand/msat-floral-192.webp" alt="MSAT — Make some art today floral monogram" width="64" height="65" loading="lazy"/><div><span>Vudi Phothisuk</span><p>Make some art today.</p></div></figcaption>
+
         </figure>
         <div className="artist-statement"><p className="eyebrow">The artist behind the work</p><h2 id="artist-story-title">Art, experienced.</h2>
           <p>To me, art is more than something to look at. It's something to experience — a conversation starter, a memory holder, and a way to bring life into a space.</p>
           <p>I create mixed-media paintings that bring together sculptural texture, layered color, and organic forms.</p>
           <p>Through each collection, I explore the relationship between nature, form, and the world around us.</p>
           <p>I want my work to invite people to pause, look closer, and discover something new each time.</p>
-          <p className="artist-signoff">Vudi Phothisuk</p><a className="text-link" href="#artist-contact">Let’s talk art</a>
+          <section className="artist-contact-inline" id="artist-contact" aria-labelledby="artist-contact-title">
+            <h2 id="artist-contact-title">Let's Talk Art.</h2>
+            <p>For original artwork, commissions, collaborations, or exhibition opportunities, I'd love to hear from you.</p>
+            <a className="contact-email" href="mailto:vudiphothisukart@gmail.com">vudiphothisukart@gmail.com</a>
+          </section>
         </div>
       </section>
-      <section className="artist-process" aria-labelledby="artist-process-title">
-        <div><h2 id="artist-process-title">Art You Can Feel.</h2><p>My process is physical and intuitive. I build layers of material, texture, and color to create paintings that extend beyond the traditional flat canvas.</p><p>Every raised surface, sculpted form, and deliberate detail contributes to the experience of the finished work.</p></div>
-        <img src="/artist/about-8772-1179.webp" srcSet="/artist/about-8772-560.webp 560w, /artist/about-8772-840.webp 840w, /artist/about-8772-1179.webp 1179w" sizes="(max-width:760px) 88vw, 42vw" alt="Vudi’s hand brushing color across the raised ridges of a sculptural painting" width="1179" height="2045" loading="lazy" decoding="async"/>
-      </section>
     </div>
-    <section className="contact-details artist-inquiries" id="artist-contact" aria-labelledby="artist-contact-title">
-      <div className="artist-contact-intro"><h2 id="artist-contact-title">Let’s Talk Art.</h2><p>For artwork inquiries, commissions, collaborations, or exhibition opportunities, I'd love to hear from you.</p><a className="contact-email" href="mailto:vudiphothisukart@gmail.com">vudiphothisukart@gmail.com</a></div>
-      <div className="contact-topics">
-        <div><h3>A painting you love</h3><p>Include the painting’s title and anything you’d like to know about it.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Artwork%20inquiry">Ask about an artwork</a></div>
-        <div><h3>Something personal</h3><p>Tell me about your idea, the space, and any size or timing you have in mind. It’s fine if you’re still figuring it out.</p><a className="text-link" href="mailto:vudiphothisukart@gmail.com?subject=Commission%20conversation">Start a commission conversation</a></div>
-      </div>
-    </section>
+    <div className="artist-brand-signoff" aria-label="Artist signature and monogram">
+      <img src="/brand/msat-floral-192.webp" alt="MSAT floral monogram" width="56" height="57" loading="lazy"/>
+      <div><span>Vudi Phothisuk</span><p>Make some art today.</p></div>
+    </div>
   </article>;
 }
 export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'available-art') return <><PageMeta title={informationPages[page].title} description={informationPages[page].description}/><AvailableArt/></>; if (page === 'contact') return <ContactPage/>; if (page === 'about') return <AboutPage/>; if (page === 'exhibitions') return <><PageMeta title="Forest & Flowers — Exhibitions" description={informationPages.exhibitions.description}/><ExhibitionsPage/></>; return <NotFound/>; }
