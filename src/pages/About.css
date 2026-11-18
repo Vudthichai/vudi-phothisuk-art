@@ -11,14 +11,9 @@
 .artist-contact-inline { margin-top:26px;scroll-margin-top:30px; }
 .artist-contact-page .artist-contact-inline h2 { font-size:clamp(27px,2.4vw,34px);margin:0 0 12px; }
 .artist-contact-inline .contact-email { font-size:clamp(14px,1.25vw,17px);min-height:44px; }
-.artist-brand-signoff { width:88%;max-width:1260px;margin:40px auto 0;display:flex;align-items:center;justify-content:center;gap:16px;padding:20px 0 8px; }
-.artist-brand-signoff>img { width:52px;height:auto; }
-.artist-brand-signoff span { font:400 23px/1.3 'Bodoni Moda',Georgia,serif; }
-.artist-brand-signoff p { margin:4px 0 0;font-size:12px;letter-spacing:.03em; }
 @media(max-width:760px) {
  .artist-contact-page .contact-copy h1 { font-size:clamp(38px,8vw,48px);max-width:520px; }
  .artist-story { grid-template-columns:minmax(0,1fr);gap:28px; }
- .artist-brand-signoff { margin-top:28px;justify-content:flex-start; }
  .artist-profile p { font-size:16px; }
 }
 .artist-process-media { min-width:0;aspect-ratio:718/1198; }
@@ -26,3 +21,5 @@
 .artist-process-media>video { cursor:pointer; }
 .artist-process-media>video:focus-visible { outline:2px solid #12351d;outline-offset:5px; }
 @media(max-width:760px) { .artist-process-media { width:min(100%,380px);justify-self:center; } }
+
+.contact-page.artist-contact-page { padding-bottom:clamp(28px,4vw,48px); }

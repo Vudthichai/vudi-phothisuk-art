@@ -13,7 +13,8 @@ it('navigates to each site section from the shared footer', async () => {
   const user = userEvent.setup(); openPage();
   const footer = screen.getByRole('contentinfo');
   expect(within(footer).getByText('Vudi Phothisuk Art')).toBeTruthy();
-  expect(within(footer).getByText('Make some art today.')).toBeTruthy();
+  expect(within(footer).getAllByText('Make some art today.')).toHaveLength(1);
+  expect(within(footer).getByRole('img', {name:'MSAT floral monogram'}).getAttribute('src')).toBe('/brand/msat-floral-192.webp');
   const nav = within(footer).getByRole('navigation', {name:'Footer navigation'});
   for (const [label,path] of [['Collections','collections'],['Available Art','available-art'],['About','about'],['Exhibitions','exhibitions'],['Contact','contact']]) {
     await user.click(within(nav).getByRole('link', {name:label}));
