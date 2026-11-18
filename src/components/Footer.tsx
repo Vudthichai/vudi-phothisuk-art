@@ -2,15 +2,20 @@ import { Link } from 'react-router-dom';
 
 export function Footer() {
   return <footer className="site-footer">
-    <Link className="footer-name" to="/">Vudi Phothisuk Art</Link>
-    <p>Make some art today.</p>
-    <nav className="footer-navigation" aria-label="Footer navigation">
-      <Link to="/collections">Collections</Link>
-      <Link to="/available-art">Available Art</Link>
-      <Link to="/about">About</Link>
-      <Link to="/exhibitions">Exhibitions</Link>
-      <Link to="/contact">Contact</Link>
-    </nav>
+    <div className="footer-links">
+      <Link className="footer-name" to="/">Vudi Phothisuk Art</Link>
+      <nav className="footer-navigation" aria-label="Footer navigation">
+        <Link to="/collections">Collections</Link>
+        <Link to="/available-art">Available Art</Link>
+        <Link to="/about">About</Link>
+        <Link to="/exhibitions">Exhibitions</Link>
+        <Link to="/contact">Contact</Link>
+      </nav>
+    </div>
+    <div className="footer-msat">
+      <img src="/brand/msat-floral-192.webp" alt="MSAT floral monogram" width="48" height="49" loading="lazy"/>
+      <p>Make some art today.</p>
+    </div>
     <a className="back-to-top" href="#page-top" onClick={event => {
       event.preventDefault();
       const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;

@@ -122,10 +122,6 @@ export function ContactPage() {
         </div>
       </section>
     </div>
-    <div className="artist-brand-signoff" aria-label="Artist signature and monogram">
-      <img src="/brand/msat-floral-192.webp" alt="MSAT floral monogram" width="56" height="57" loading="lazy"/>
-      <div><span>Vudi Phothisuk</span><p>Make some art today.</p></div>
-    </div>
   </article>;
 }
 export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'available-art') return <><PageMeta title={informationPages[page].title} description={informationPages[page].description}/><AvailableArt/></>; if (page === 'contact') return <ContactPage/>; if (page === 'about') return <AboutPage/>; if (page === 'exhibitions') return <><PageMeta title="Forest & Flowers — Exhibitions" description={informationPages.exhibitions.description}/><ExhibitionsPage/></>; return <NotFound/>; }
