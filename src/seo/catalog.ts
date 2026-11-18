@@ -21,8 +21,7 @@ export const pages: SeoPage[] = [
   page('/', 'Home', 'Make some art today. Explore dimensional mixed-media paintings and the stories behind the work of Vudi Phothisuk.'),
   page('/collections', 'Collections', 'Explore the collections of Vudi Phothisuk Art.'),
   page('/available-art', informationPages['available-art'].title, informationPages['available-art'].description),
-  page('/about', 'About & Contact', 'Meet Vudi Phothisuk, explore his sculptural mixed-media process, and get in touch about artwork, commissions, or exhibitions.'),
-  page('/contact', 'Contact & Commissions', 'Contact Vudi Phothisuk for artwork, commissions, collaborations, and exhibitions, and discover the artist behind the work.'),
+  page('/about', 'About', 'Meet Vudi Phothisuk, explore his sculptural mixed-media process, and get in touch about artwork, commissions, or exhibitions.', { legacy:'/contact' }),
   page('/exhibitions', 'Forest & Flowers — Exhibitions', informationPages.exhibitions.description, { graph: [{
     '@type': 'ExhibitionEvent', '@id': `${site}/exhibitions/#event`, name: 'Forest & Flowers',
     url: `${site}/exhibitions/`, description: informationPages.exhibitions.description,
@@ -81,7 +80,7 @@ const collectionPages = pages.filter(p => /^\/collections\/[^/]+\/$/.test(p.path
 pages.find(p => p.path === '/collections/')!.graph.push({ '@type': 'CollectionPage', '@id': `${site}/collections/#webpage`, url: `${site}/collections/`, name: 'Collections', mainEntity: { '@type': 'ItemList', itemListElement: collectionPages.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title.split(' | ')[0], url: absolute(p.path) })) } });
 export const findPage = (path: string) => pages.find(p => p.path === canonicalPath(path));
 export function metadata(path: string) {
-  const found = findPage(path);
+  const found = findPage(canonicalPath(path) === '/contact/' ? '/about/' : path);
   const current = found ?? page(path, 'Page not found', 'This page could not be found in the Vudi Phothisuk Art portfolio.');
   const key = current.path === '/' ? '/' : current.path.slice(0, -1);
   const preview = (previews as Record<string, { image: string; alt: string }>)[key];
@@ -97,7 +96,7 @@ export function metadata(path: string) {
   }
   const url = absolute(current.path);
   const graph = found ? [artist, ...current.graph,
-    ...(!current.graph.some(n => n['@type'] === 'CollectionPage') ? [{ '@type': current.path === '/about/' ? 'AboutPage' : current.path === '/contact/' ? 'ContactPage' : 'WebPage', '@id': url + '#webpage', url, name: current.title, description: current.description,
+    ...(!current.graph.some(n => n['@type'] === 'CollectionPage') ? [{ '@type': current.path === '/about/' ? 'AboutPage' : 'WebPage', '@id': url + '#webpage', url, name: current.title, description: current.description,
       ...(current.graph.find(n => n['@type'] === 'VisualArtwork' || n['@type'] === 'ExhibitionEvent' || n['@type'] === 'Product') ? { mainEntity: { '@id': current.graph[0]['@id'] } } : { about: artistRef }) }] : []),
     ...(current.path !== '/' ? [{ '@type': 'BreadcrumbList', '@id': url + '#breadcrumbs', itemListElement: crumbs }] : [])] : [];
   return { ...current, url, social, indexable: Boolean(found), jsonLd: { '@context': 'https://schema.org', '@graph': graph } };

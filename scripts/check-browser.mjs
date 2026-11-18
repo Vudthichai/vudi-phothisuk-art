@@ -19,8 +19,9 @@ const routes=['/','/collections/forest-and-flowers/','/collections/forest-and-fl
 for(const route of routes){
  await page.goto(base+route,{waitUntil:'networkidle'});
  assert(await page.locator('main h1').count());
- assert.equal(await page.locator('link[rel=canonical]').getAttribute('href'),'https://vudiphothisukart.com'+route);
- assert.equal(await page.locator('meta[property="og:url"]').getAttribute('content'),'https://vudiphothisukart.com'+route);
+ const canonicalRoute=route === '/contact/' ? '/about/' : route;
+ assert.equal(await page.locator('link[rel=canonical]').getAttribute('href'),'https://vudiphothisukart.com'+canonicalRoute);
+ assert.equal(await page.locator('meta[property="og:url"]').getAttribute('content'),'https://vudiphothisukart.com'+canonicalRoute);
  const broken=await page.locator('main img').evaluateAll(imgs=>imgs.filter(i=>i.loading!=='lazy' && (!i.complete || i.naturalWidth===0)).map(i=>i.src));assert.deepEqual(broken,[]);
  console.log('DIRECT',route,'OK');
 }

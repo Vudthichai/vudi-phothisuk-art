@@ -6,7 +6,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 function openPage() {
-  return render(<MemoryRouter initialEntries={['/available-art']}><Routes><Route element={<Layout/>}>{['collections','available-art','about','exhibitions','contact'].map(path => <Route key={path} path={path} element={<h1>{path}</h1>}/>)}</Route></Routes></MemoryRouter>);
+  return render(<MemoryRouter initialEntries={['/available-art']}><Routes><Route element={<Layout/>}>{['collections','available-art','about','exhibitions'].map(path => <Route key={path} path={path} element={<h1>{path}</h1>}/>)}</Route></Routes></MemoryRouter>);
 }
 it('navigates to each site section from the shared footer', async () => {
   vi.spyOn(window, 'scrollTo').mockImplementation(() => {});
@@ -16,7 +16,7 @@ it('navigates to each site section from the shared footer', async () => {
   expect(within(footer).getAllByText('Make some art today.')).toHaveLength(1);
   expect(within(footer).getByRole('img', {name:'MSAT floral monogram'}).getAttribute('src')).toBe('/brand/msat-floral-192.webp');
   const nav = within(footer).getByRole('navigation', {name:'Footer navigation'});
-  for (const [label,path] of [['Collections','collections'],['Available Art','available-art'],['About','about'],['Exhibitions','exhibitions'],['Contact','contact']]) {
+  for (const [label,path] of [['Collections','collections'],['Available Art','available-art'],['About','about'],['Exhibitions','exhibitions']]) {
     await user.click(within(nav).getByRole('link', {name:label}));
     expect(screen.getByRole('heading', {level:1}).textContent).toBe(path);
   }

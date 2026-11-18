@@ -87,10 +87,15 @@ export function ArtworkPage() {
   const next = ordered[index + 1];
   return <section className={`section page artwork-page artwork-theme-${artwork.slug}`}><PageMeta title={artwork.title} description={artwork.description?.[0] ?? artwork.title}/><Link className="text-link" to={`/collections/${slug}`}>← {collection.name}</Link><div className="artwork-detail"><div><img className="artwork-primary" src={artwork.image.src} srcSet={artwork.image.srcSet} sizes="(max-width: 700px) 86vw, 50vw" alt={artwork.image.alt} width={artwork.image.width} height={artwork.image.height} fetchPriority="high" decoding="async"/></div><div className="artwork-story"><p className="eyebrow">{collection.name}</p><h1>{artwork.title}</h1>{artwork.description?.map(paragraph => <p key={paragraph}>{paragraph}</p>)}<dl className="artwork-facts">{artwork.dimensions && <><dt>Dimensions</dt><dd>{artwork.dimensions}</dd></>}{artwork.medium && <><dt>Medium</dt><dd>{artwork.medium}</dd></>}</dl><OriginalPrice artwork={artwork}/>{artwork.availability === 'sold' ? <p className="artwork-status">Sold</p> : <a className="text-link" data-analytics-artwork={`/collections/${slug}/${artwork.slug}`} href={`mailto:vudiphothisukart@gmail.com?subject=${encodeURIComponent(`Artwork inquiry: ${artwork.title}`)}`}>Inquire about this artwork →</a>}</div></div><ArtworkViews artwork={artwork}/><nav className="artwork-pagination" aria-label="Artwork navigation"><div>{previous && <Link to={`/collections/${slug}/${previous.slug}`} rel="prev" aria-label={`Previous painting: ${previous.title}`}><span>← Previous painting</span><strong>{previous.title}</strong></Link>}</div><Link className="text-link" to={`/collections/${slug}`}>View the collection</Link><div>{next && <Link to={`/collections/${slug}/${next.slug}`} rel="next" aria-label={`Next painting: ${next.title}`}><span>Next painting →</span><strong>{next.title}</strong></Link>}</div></nav></section>;
 }
-export function ContactPage() {
-  const contactEntry = useLocation().pathname.startsWith('/contact');
+export function AboutPage() {
+  const { hash } = useLocation();
+  useEffect(() => {
+    if (hash !== '#artist-contact') return;
+    const frame = requestAnimationFrame(() => document.getElementById('artist-contact')?.scrollIntoView({ block:'start' }));
+    return () => cancelAnimationFrame(frame);
+  }, [hash]);
   return <article className="contact-page artist-contact-page" aria-labelledby="contact-title">
-    <PageMeta title={contactEntry ? 'Contact & Commissions' : 'About & Contact'} description={contactEntry ? 'Contact Vudi Phothisuk for artwork, commissions, collaborations, and exhibitions, and discover the artist behind the work.' : 'Meet Vudi Phothisuk, explore his sculptural mixed-media process, and get in touch about artwork, commissions, or exhibitions.'}/>
+    <PageMeta title="About" description="Meet Vudi Phothisuk, explore his sculptural mixed-media process, and get in touch about artwork, commissions, or exhibitions."/>
     <div className="contact-hero">
       <img
         className="contact-hero-image"
@@ -102,7 +107,7 @@ export function ContactPage() {
         alt="An angled close-up of Mother Nature, with a soft waterfall beside sculpted green and gold leaves and pink and orange flowers."
         fetchPriority="high"
       />
-      <div className="contact-copy"><p className="eyebrow">About &amp; Contact</p><h1 id="contact-title"><span>Life isn’t 2D.</span><span>Why should your art be?</span></h1>
+      <div className="contact-copy"><p className="eyebrow">About</p><h1 id="contact-title"><span>Life isn’t 2D.</span><span>Why should your art be?</span></h1>
         <p className="contact-intro">Have a painting in mind, a question about the work, or an idea for something personal? I’d love to hear from you.</p>
         <a className="contact-email" href="mailto:vudiphothisukart@gmail.com">vudiphothisukart@gmail.com</a>
       </div>
@@ -124,7 +129,5 @@ export function ContactPage() {
     </div>
   </article>;
 }
-export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'available-art') return <><PageMeta title={informationPages[page].title} description={informationPages[page].description}/><AvailableArt/></>; if (page === 'contact') return <ContactPage/>; if (page === 'about') return <AboutPage/>; if (page === 'exhibitions') return <><PageMeta title="Forest & Flowers — Exhibitions" description={informationPages.exhibitions.description}/><ExhibitionsPage/></>; return <NotFound/>; }
+export function InformationPage({ page }: { page: keyof typeof informationPages }) { if (page === 'available-art') return <><PageMeta title={informationPages[page].title} description={informationPages[page].description}/><AvailableArt/></>; if (page === 'about') return <AboutPage/>; if (page === 'exhibitions') return <><PageMeta title="Forest & Flowers — Exhibitions" description={informationPages.exhibitions.description}/><ExhibitionsPage/></>; return <NotFound/>; }
 export function NotFound() { return <section className="section page"><PageMeta title="Page not found" description="This page could not be found in the Vudi Phothisuk Art portfolio."/><p className="eyebrow">404</p><h1>Page not found.</h1><Link className="button-link" to="/">Return home →</Link></section>; }
-
-function AboutPage() { return <ContactPage/>; }
