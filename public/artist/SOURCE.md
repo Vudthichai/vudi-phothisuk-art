@@ -5,3 +5,5 @@ Contact room v1: generated blank interior with built-in image_gen. Prompt: photo
 Contact detail: `mother-nature-contact-detail.jpg` is an unchanged copy of the artist-supplied `codex-clipboard-cd481be4-2b52-4260-af4b-83def8f3d3c6.jpg` (4280 × 3057). Displayed with a CSS white gradient for text readability; source pixels and colors are unchanged.
 
 Contact full detail: `mother-nature-contact-full.jpeg` is an unchanged copy of the artist-supplied `IMG_6687.jpeg`. CSS crops the presentation to feature the pink and orange flowers; the original source remains unchanged.
+
+About editorial photographs: artist-supplied `IMG_8771.jpg` (1179 × 2077) and `IMG_8772.jpg` (1179 × 2045), provided in Archive.zip. Unchanged originals retained in `assets/artist-sources/` outside public assets. EXIF orientation normalized and embedded color profiles converted to sRGB when present; proportional WebP derivatives at 560, 840, and 1179 pixels wide, quality 88. No tonal adjustment, retouching, sharpening, artificial texture, or crop. IMG_8773 was not used.

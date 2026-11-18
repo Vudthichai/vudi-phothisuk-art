@@ -117,5 +117,34 @@ export function InformationPage({ page }: { page: keyof typeof informationPages 
 export function NotFound() { return <section className="section page"><PageMeta title="Page not found" description="This page could not be found in the Vudi Phothisuk Art portfolio."/><p className="eyebrow">404</p><h1>Page not found.</h1><Link className="button-link" to="/">Return home →</Link></section>; }
 
 function AboutPage() {
-  return <section className="about-page"><PageMeta title="About the Artist" description="Meet Vudi Phothisuk and discover the sculptural texture, layered color, and deliberate form behind his paintings."/><div className="about-copy"><p className="eyebrow">About the artist</p><h1>Life isn’t 2D.<br/>Why should your art be?</h1><p>To me, a painting is not simply something to view — it’s something to feel. It’s a conversation starter, a memory holder, a lived experience embedded in pigment and form.</p><p>My work blends sculptural texture, layered color, and deliberate form, brought to life through collections that act as immersive environments.</p><p>I chase presence over trends and look for purpose in the middle of utility and design.</p><p>I hope the pieces I make offer space to pause — to notice, to reflect, to feel something textured and real, even in a world that rarely allows for it.</p><p className="about-signoff">Vudi Phothisuk</p><Link className="text-link" to="/contact">Let’s talk art</Link></div><img src="/artist/vudi-about.jpg" alt="Vudi Phothisuk holding a textured turquoise shoreline painting" width="1161" height="2035"/></section>;
+  return <article className="about-page">
+    <PageMeta title="About the Artist" description="Meet Vudi Phothisuk and discover the sculptural texture, layered color, and deliberate form behind his paintings."/>
+    <section className="about-introduction" aria-labelledby="about-title">
+      <div className="about-copy">
+        <p className="eyebrow">About the artist</p>
+        <h1 id="about-title">Life isn't 2D.<br/>Why should your art be?</h1>
+        <p>To me, art is more than something to look at. It's something to experience — a conversation starter, a memory holder, and a way to bring life into a space.</p>
+        <p>I create mixed-media paintings that bring together sculptural texture, layered color, and organic forms.</p>
+        <p>Through each collection, I explore the relationship between nature, form, and the world around us.</p>
+        <p>I want my work to invite people to pause, look closer, and discover something new each time.</p>
+        <p className="about-signoff">Vudi Phothisuk</p>
+        <Link className="text-link" to="/contact">Let's talk art</Link>
+      </div>
+      <img className="about-portrait" src="/artist/about-8771-1179.webp" srcSet="/artist/about-8771-560.webp 560w, /artist/about-8771-840.webp 840w, /artist/about-8771-1179.webp 1179w" sizes="(max-width: 760px) 88vw, 40vw" alt="Vudi Phothisuk painting a raised blue-and-white canvas on an easel beside a sunlit window" width="1179" height="2077" fetchPriority="high" decoding="async"/>
+    </section>
+    <section className="about-process" aria-labelledby="about-process-title">
+      <img src="/artist/about-8772-1179.webp" srcSet="/artist/about-8772-560.webp 560w, /artist/about-8772-840.webp 840w, /artist/about-8772-1179.webp 1179w" sizes="(max-width: 760px) 88vw, 36vw" alt="Vudi's hand brushing color across deep sculptural ridges in a mixed-media painting" width="1179" height="2045" loading="lazy" decoding="async"/>
+      <div className="about-copy">
+        <h2 id="about-process-title">Art You Can Feel.</h2>
+        <p>My process is physical and intuitive. I build layers of material, texture, and color to create paintings that extend beyond the traditional flat canvas.</p>
+        <p>Every raised surface, sculpted form, and deliberate detail contributes to the experience of the finished work.</p>
+      </div>
+    </section>
+    <section className="about-contact" aria-labelledby="about-contact-title">
+      <h2 id="about-contact-title">Let's Talk Art.</h2>
+      <div><p>For artwork inquiries, commissions, collaborations, or exhibition opportunities, I'd love to hear from you.</p>
+        <a className="text-link" href="mailto:vudiphothisukart@gmail.com">vudiphothisukart@gmail.com</a>
+      </div>
+    </section>
+  </article>;
 }
