@@ -10,7 +10,7 @@ are available, so replacement artwork is not needed.
 
 The existing below-price notes are already exact for 75 Leaves and A Forest
 Forgotten, with emphasized percentages and subtle forest-green text. They remain
-unchanged, as do their integrated original-artwork descriptions and all giving
+unchanged, as do their original-artwork giving commitments and all giving
 percentages/recipients. No new charity box, banner or standalone section is added.
 
 ## Inspected assets
@@ -78,3 +78,31 @@ exceptions. The test explicitly records that the same room image is reused and
 that physical size-accurate variants remain blocked; it does not certify their
 accuracy. No assets, prices, giving metadata, original descriptions or navigation
 were modified. Actual iOS Safari hardware was unavailable. No merge/deployment.
+
+
+## Follow-up: separated original charity presentation
+
+The collection and individual original pages now render their exact original
+story paragraphs, followed by a separate Studio Print giving section with the
+existing Bodoni Moda styling. Only A Forest Forgotten and 75 Leaves receive these
+sections. Their full print-giving statement occurs once per original context;
+the earlier description-appending helper is removed. A Forest Forgotten's
+separate 10%-of-original-sale pledge stays in its original conservation aside,
+distinct from the 20%-of-Studio-Print-profits section. Existing Studio Print-page
+notes and sections remain unchanged, as requested.
+
+The latest main contains no new matching clean wall plate or layered approved
+room asset. Therefore the physical 0.75 width/height lifestyle change is still
+unimplemented. No attempt was made to resize the whole scene or hide newly
+exposed background. The asset requirements above still apply. Authentic print
+files are available; the missing input is scene/background/frame/shadow layering
+and verified size registration, or accurate fixed-camera size-specific images.
+
+Validation: TypeScript, 128 tests/23 files, production build, SEO and diff checks
+pass. Browser checks cover mobile, tablet and desktop, both prices on all five
+prints, Artwork Detail/In a Space round trips without resetting selected size,
+primary/thumbnail source synchronization, original charity separation, unchanged
+Studio charity sections and preserved 10% original-sale pledge. The shared image
+identity is explicitly recorded as an unresolved size-accuracy limitation, not
+certified as a working physical-size preview. No pricing, availability, image,
+ordering, navigation, checkout or fulfillment data changed. No merge/deployment.

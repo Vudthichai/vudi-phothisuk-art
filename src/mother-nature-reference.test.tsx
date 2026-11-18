@@ -21,6 +21,11 @@ it('uses each reviewed exact-room composite across both size choices, without re
   expect(view.container.querySelector('.studio-product-price')?.textContent).toContain('$95Selected size · Coming Soon');
   fireEvent.click(screen.getByRole('button',{name:'Artwork Detail'}));
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toContain(`/studio-editions/${edition.artworkId}-print-`);
+  expect(screen.getByRole('radio',{name:'12 × 16 inches — $95'}).getAttribute('value')).toBe('12x16');
+  expect((screen.getByRole('radio',{name:'12 × 16 inches — $95'}) as HTMLInputElement).checked).toBe(true);
+  fireEvent.click(screen.getByRole('button',{name:'In a Space'}));
+  expect(view.container.querySelector('.studio-product-price strong')?.textContent).toBe('$95');
+  expect((screen.getByRole('radio',{name:'12 × 16 inches — $95'}) as HTMLInputElement).checked).toBe(true);
   view.unmount();
  }
 });

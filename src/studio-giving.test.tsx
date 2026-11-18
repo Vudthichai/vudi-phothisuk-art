@@ -40,23 +40,34 @@ it('places confirmed giving after descriptions only on the two selected product 
   view.unmount();
  }
 });
-it('preserves original descriptions and availability while explicitly limiting percentages to prints',()=>{
+it('separates print giving from exact original paragraphs without duplicating it, preserving the original-sale pledge',()=>{
  for(const slug of Object.keys(expected)){
   const art=forestCollection.artworks.find(a=>a.slug===slug)!;
   const view=render(<MemoryRouter initialEntries={[`${base}/${slug}`]}><Routes><Route path={`${base}/:artworkSlug`} element={<ForestCollection/>}/></Routes></MemoryRouter>);
-  expect(view.container.querySelector('.forest-editorial-story')?.textContent).toContain(`${art.title} Studio Print`);
-  expect(view.container.querySelector('.forest-editorial-story')?.textContent).toContain('profits from its sales');
-  expect(view.container.querySelector('.studio-edition-panel .studio-giving')).toBeNull();
-  art.description.forEach(p=>expect(view.container.textContent).toContain(p));
+  const story=view.container.querySelector('.forest-editorial-story')!;
+  const paragraphs=[...story.querySelectorAll(':scope > p')].map(p=>p.textContent);
+  expect(paragraphs).toEqual(art.description.slice(0,2));
+  const sections=story.querySelectorAll('.studio-giving');expect(sections).toHaveLength(1);
+  expect(sections[0].querySelector('h3')?.textContent).toBe(art.title+' — '+(slug==='75-leaves'?'Giving Back':'Art for Conservation'));
+  const statement=sections[0].querySelector('p')!.textContent!;
+  expect(story.textContent!.split(statement)).toHaveLength(2);
+  expect(statement).toContain(slug==='75-leaves'?'75% of profits from this Studio Print':'20% of profits from this Studio Print');
   if(slug==='75-leaves')expect(view.container.textContent).toContain('Not for Sale');
+  else {
+   expect(story.querySelector('aside[aria-label="Conservation pledge"]')?.textContent).toBe(art.description[2]);
+   expect(story.querySelector('aside')?.textContent).toContain('10% of the sale price of this original artwork');
+   expect(sections[0].textContent).not.toContain('10%');
+  }
+  expect(view.container.querySelector('.studio-edition-panel .studio-giving')).toBeNull();
   view.unmount();
  }
  const {container}=render(<MemoryRouter><ForestCollection/></MemoryRouter>);
+ expect(container.querySelectorAll('.forest-overview-copy .studio-giving')).toHaveLength(2);
  expect(container.querySelector('.forest-art-purpose')).toBeNull();
  for(const slug of Object.keys(expected)) {
   const art=forestCollection.artworks.find(a=>a.slug===slug)!;
   const card=container.querySelector(`[aria-labelledby="forest-exhibit-${slug}"]`)!;
-  expect(card.querySelector('.forest-overview-copy')?.textContent).toContain(`${art.title} Studio Print`);
-  expect(card.querySelector('.forest-overview-copy')?.textContent).toContain('profits from its sales');
+  expect([...card.querySelectorAll('.forest-featured-excerpt')].map(p=>p.textContent)).toEqual(art.description.slice(0,2));
+  expect(card.querySelectorAll('.studio-giving')).toHaveLength(1);
  }
 });
