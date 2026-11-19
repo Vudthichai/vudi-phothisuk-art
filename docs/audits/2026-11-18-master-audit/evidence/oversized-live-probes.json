@@ -1,0 +1,74 @@
+[
+  {
+    "path": "/artworks/forest/mother-nature-detail-sdr.png",
+    "status": 200,
+    "type": "image/png",
+    "bytes": "9448280",
+    "cache": "public,max-age=0,must-revalidate",
+    "url": "https://vudiphothisukart.com/artworks/forest/mother-nature-detail-sdr.png"
+  },
+  {
+    "path": "/artist/lilies-source.jpeg",
+    "status": 200,
+    "type": "image/jpeg",
+    "bytes": "5460246",
+    "cache": "public,max-age=0,must-revalidate",
+    "url": "https://vudiphothisukart.com/artist/lilies-source.jpeg"
+  },
+  {
+    "path": "/artist/mother-nature-contact-full.jpeg",
+    "status": 200,
+    "type": "image/jpeg",
+    "bytes": "5154001",
+    "cache": "public,max-age=0,must-revalidate",
+    "url": "https://vudiphothisukart.com/artist/mother-nature-contact-full.jpeg"
+  },
+  {
+    "path": "/artist/mother-nature-contact-detail.jpg",
+    "status": 200,
+    "type": "image/jpeg",
+    "bytes": "4192678",
+    "cache": "public,max-age=0,must-revalidate",
+    "url": "https://vudiphothisukart.com/artist/mother-nature-contact-detail.jpg"
+  },
+  {
+    "path": "/artworks/forest/mother-nature-2800.webp",
+    "status": 200,
+    "type": "image/webp",
+    "bytes": "2998412",
+    "cache": "public,max-age=0,must-revalidate",
+    "url": "https://vudiphothisukart.com/artworks/forest/mother-nature-2800.webp"
+  },
+  {
+    "path": "/forest-preview/images/ethereal-bloom-img-8260-rollout-enlarge-2400.webp",
+    "status": 200,
+    "type": "image/webp",
+    "bytes": "2501394",
+    "cache": "public,max-age=0,must-revalidate",
+    "url": "https://vudiphothisukart.com/forest-preview/images/ethereal-bloom-img-8260-rollout-enlarge-2400.webp"
+  },
+  {
+    "path": "/brand/msat-floral.png",
+    "status": 200,
+    "type": "image/png",
+    "bytes": "2187509",
+    "cache": "public,max-age=0,must-revalidate",
+    "url": "https://vudiphothisukart.com/brand/msat-floral.png"
+  },
+  {
+    "path": "/artist/artist-process.mp4",
+    "status": 200,
+    "type": "video/mp4",
+    "bytes": "4387661",
+    "cache": "public,max-age=0,must-revalidate",
+    "url": "https://vudiphothisukart.com/artist/artist-process.mp4"
+  },
+  {
+    "path": "/fonts/bodoni-moda-regular.ttf",
+    "status": 200,
+    "type": "font/ttf",
+    "bytes": "44752",
+    "cache": "public,max-age=0,must-revalidate",
+    "url": "https://vudiphothisukart.com/fonts/bodoni-moda-regular.ttf"
+  }
+]

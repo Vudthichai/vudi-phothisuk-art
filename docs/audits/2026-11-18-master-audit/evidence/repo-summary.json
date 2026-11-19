@@ -1,0 +1,112 @@
+{
+  "canonicalCount": 40,
+  "incompleteArtwork": [
+    "Mother Nature: availability unconfirmed",
+    "Blooming Desire: availability unconfirmed",
+    "Wild Tiger Lilies: availability unconfirmed",
+    "Gilded Bloom: availability unconfirmed",
+    "A Forest Forgotten: availability unconfirmed",
+    "Moss & Mushrooms: availability unconfirmed",
+    "Ethereal Bloom: availability unconfirmed",
+    "Dragon Lily: dimensions missing, medium missing, copy provisional, availability unconfirmed"
+  ],
+  "brokenInternal": [],
+  "headings": [
+    {
+      "path": "/collections/",
+      "jumps": [
+        "1→3: Forest & Flowers"
+      ]
+    }
+  ],
+  "longDescriptions": [
+    {
+      "path": "/collections/forest-and-flowers/mother-nature/",
+      "length": 310
+    },
+    {
+      "path": "/collections/forest-and-flowers/wild-tiger-lilies/",
+      "length": 264
+    },
+    {
+      "path": "/collections/forest-and-flowers/gilded-bloom/",
+      "length": 364
+    },
+    {
+      "path": "/collections/forest-and-flowers/a-forest-forgotten/",
+      "length": 353
+    },
+    {
+      "path": "/collections/forest-and-flowers/moss-and-mushrooms/",
+      "length": 332
+    },
+    {
+      "path": "/collections/forest-and-flowers/ethereal-bloom/",
+      "length": 343
+    },
+    {
+      "path": "/collections/forest-and-flowers/tiger-lily/",
+      "length": 313
+    },
+    {
+      "path": "/collections/forest-and-flowers/dragon-lily/",
+      "length": 416
+    },
+    {
+      "path": "/collections/forest-and-flowers/",
+      "length": 270
+    },
+    {
+      "path": "/collections/oceans/summer-swells/",
+      "length": 324
+    },
+    {
+      "path": "/collections/oceans/manta/",
+      "length": 317
+    },
+    {
+      "path": "/collections/oceans/dark-scales/",
+      "length": 309
+    },
+    {
+      "path": "/collections/oceans/mermaid-tail/",
+      "length": 363
+    },
+    {
+      "path": "/collections/oceans/beach-day/",
+      "length": 319
+    },
+    {
+      "path": "/collections/oceans/arctic-waves/",
+      "length": 286
+    },
+    {
+      "path": "/collections/oceans/water-s-edge/",
+      "length": 324
+    },
+    {
+      "path": "/collections/oceans/golden-sand-beach/",
+      "length": 250
+    },
+    {
+      "path": "/collections/oceans/sunset-waves/",
+      "length": 279
+    },
+    {
+      "path": "/collections/oceans/arctic-ocean/",
+      "length": 307
+    },
+    {
+      "path": "/collections/oceans/the-oceans/",
+      "length": 304
+    },
+    {
+      "path": "/collections/oceans/",
+      "length": 502
+    }
+  ],
+  "missingAlt": [],
+  "zeroMainImages": [
+    "/collections/"
+  ]
+}

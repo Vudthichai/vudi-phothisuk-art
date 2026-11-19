@@ -1,0 +1,39 @@
+
+> vudi-phothisuk-art@0.1.0 build
+> tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir .prerender && node scripts/write-sharing-pages.mjs
+
+vite v7.3.7 building client environment for production...
+transforming...
+✓ 104 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                    0.61 kB │ gzip:   0.38 kB
+dist/assets/petal-rose-pink-WGIE35Ci.webp          5.32 kB
+dist/assets/leaf-green-IockHObb.webp               5.71 kB
+dist/assets/petal-tiger-lily-hzVGyW6P.webp         6.17 kB
+dist/assets/petal-rose-red-a0oZ37wQ.webp           6.48 kB
+dist/assets/petal-cream-kYKeTx8O.webp              6.71 kB
+dist/assets/petal-carnation-pink-qcO0KEMV.webp     8.23 kB
+dist/assets/petal-carnation-peach-BqQGrfY_.webp    8.34 kB
+dist/assets/leaf-orange-dUq8B_nO.webp             11.07 kB
+dist/assets/leaf-red-Bi7Rqj2K.webp                11.09 kB
+dist/assets/leaf-dark-BfAnpj1k.webp               12.37 kB
+dist/assets/leaf-gold-DGqB704p.webp               13.04 kB
+dist/assets/index-a7QnDQyL.css                    84.56 kB │ gzip:  17.05 kB
+dist/assets/index-BgeRn0pf.js                    450.51 kB │ gzip: 132.61 kB
+✓ built in 3.57s
+vite v7.3.7 building ssr environment for production...
+transforming...
+✓ 66 modules transformed.
+rendering chunks...
+.prerender/entry-server.js  234.99 kB
+✓ built in 2.37s
+Generated 40 public HTML pages, image sitemap, robots.txt, redirects and 404.html.
+Catalog review required: Mother Nature: availability unconfirmed
+Catalog review required: Blooming Desire: availability unconfirmed
+Catalog review required: Wild Tiger Lilies: availability unconfirmed
+Catalog review required: Gilded Bloom: availability unconfirmed
+Catalog review required: A Forest Forgotten: availability unconfirmed
+Catalog review required: Moss & Mushrooms: availability unconfirmed
+Catalog review required: Ethereal Bloom: availability unconfirmed
+Catalog review required: Dragon Lily: dimensions missing, medium missing, copy provisional, availability unconfirmed

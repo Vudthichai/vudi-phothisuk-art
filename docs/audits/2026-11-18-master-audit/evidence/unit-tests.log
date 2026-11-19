@@ -1,0 +1,51 @@
+
+> vudi-phothisuk-art@0.1.0 test
+> vitest run
+
+
+ RUN  v3.2.7 /workspace/vudi-phothisuk-art
+
+ ✓ src/forest-collection.test.tsx (6 tests) 1415ms
+   ✓ shows all ten public artwork links without a preview entrance  360ms
+   ✓ shows the eight approved original prices and keeps personal works not for sale  965ms
+ ✓ src/mobile-forest.test.tsx (12 tests) 759ms
+ ✓ src/foundation.test.tsx (17 tests) 887ms
+ ✓ src/availability.test.tsx (5 tests) 1724ms
+   ✓ lists exactly the six confirmed available paintings with dimensions, detail paths and inquiry subjects  615ms
+   ✓ uses live availability data and preserves newly sold artwork detail pages without inquiry actions  399ms
+   ✓ places the four Oceans portraits before the horizontal feature and Sahara in the Regal section  542ms
+ ✓ src/mother-nature-reference.test.tsx (2 tests) 1146ms
+   ✓ changes each product room image with size while retaining authentic detail and selection  1125ms
+ ✓ src/analytics.test.tsx (10 tests) 1173ms
+   ✓ makes no Google requests/commands until acceptance; StrictMode emits one initial view  345ms
+ ✓ src/studio-store.test.tsx (3 tests) 718ms
+   ✓ serves all five distinct product pages with confirmed size pricing and no checkout  660ms
+ ✓ src/studio-v2.test.tsx (3 tests) 709ms
+   ✓ offers the other four prints without previous/next navigation  445ms
+ ✓ src/forest-image-gallery.test.tsx (6 tests) 670ms
+   ✓ shows one main image and changes it using thumbnail buttons  392ms
+ ✓ src/regal.test.tsx (2 tests) 637ms
+   ✓ presents all five Regal works with working collection-scoped links  497ms
+ ✓ src/footer.test.tsx (3 tests) 676ms
+   ✓ navigates to each site section from the shared footer  581ms
+ ✓ src/ocean-motion.test.tsx (5 tests) 648ms
+   ✓ cinematic Oceans entrance > takes visitors straight to the gallery and moves keyboard focus  313ms
+ ✓ src/artwork-experiences.test.tsx (9 tests) 644ms
+   ✓ starts/replays approved botanical steps and skips immediately to unobstructed artwork  377ms
+ ✓ src/studio-editions.test.tsx (3 tests) 331ms
+ ✓ src/studio-giving.test.tsx (3 tests) 277ms
+ ✓ src/forest-environment.test.tsx (10 tests) 269ms
+ ✓ src/room-loading.test.tsx (1 test) 142ms
+ ✓ src/artwork-image-protection.test.tsx (3 tests) 229ms
+ ✓ src/botanical-library.test.tsx (4 tests) 88ms
+ ✓ src/studio-bundles.test.tsx (2 tests) 112ms
+ ✓ src/flower-bloom.test.tsx (5 tests) 100ms
+ ✓ src/artist-process-video.test.tsx (2 tests) 54ms
+ ✓ src/campaign.test.ts (12 tests) 5ms
+ ✓ src/studio-mockups.test.ts (3 tests) 12ms
+
+ Test Files  24 passed (24)
+      Tests  131 passed (131)
+   Start at  01:42:16
+   Duration  42.14s (transform 1.12s, setup 0ms, collect 5.47s, tests 13.43s, environment 16.54s, prepare 2.35s)
+

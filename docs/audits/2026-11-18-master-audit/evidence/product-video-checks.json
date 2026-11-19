@@ -1,0 +1,107 @@
+{
+  "products": [
+    {
+      "slug": "mother-nature",
+      "states": [
+        {
+          "src": "/studio-editions/size-gallery/mother-nature-9x12-1122.webp",
+          "selected": "9x12",
+          "price": "$45",
+          "thumbnail": "/studio-editions/size-gallery/mother-nature-9x12-1122.webp"
+        },
+        {
+          "src": "/studio-editions/exact-gallery/mother-nature-1122.webp",
+          "selected": "12x16",
+          "price": "$95",
+          "thumbnail": "/studio-editions/exact-gallery/mother-nature-1122.webp"
+        }
+      ],
+      "detailPreserved": true
+    },
+    {
+      "slug": "ethereal-bloom",
+      "states": [
+        {
+          "src": "/studio-editions/size-gallery/ethereal-bloom-9x12-1122.webp",
+          "selected": "9x12",
+          "price": "$45",
+          "thumbnail": "/studio-editions/size-gallery/ethereal-bloom-9x12-1122.webp"
+        },
+        {
+          "src": "/studio-editions/exact-gallery/ethereal-bloom-1122.webp",
+          "selected": "12x16",
+          "price": "$95",
+          "thumbnail": "/studio-editions/exact-gallery/ethereal-bloom-1122.webp"
+        }
+      ],
+      "detailPreserved": true
+    },
+    {
+      "slug": "tiger-lily",
+      "states": [
+        {
+          "src": "/studio-editions/size-gallery/tiger-lily-9x12-1122.webp",
+          "selected": "9x12",
+          "price": "$45",
+          "thumbnail": "/studio-editions/size-gallery/tiger-lily-9x12-1122.webp"
+        },
+        {
+          "src": "/studio-editions/exact-gallery/tiger-lily-1122.webp",
+          "selected": "12x16",
+          "price": "$95",
+          "thumbnail": "/studio-editions/exact-gallery/tiger-lily-1122.webp"
+        }
+      ],
+      "detailPreserved": true
+    },
+    {
+      "slug": "75-leaves",
+      "states": [
+        {
+          "src": "/studio-editions/size-gallery/75-leaves-9x12-1122.webp",
+          "selected": "9x12",
+          "price": "$45",
+          "thumbnail": "/studio-editions/size-gallery/75-leaves-9x12-1122.webp"
+        },
+        {
+          "src": "/studio-editions/exact-gallery/75-leaves-1122.webp",
+          "selected": "12x16",
+          "price": "$95",
+          "thumbnail": "/studio-editions/exact-gallery/75-leaves-1122.webp"
+        }
+      ],
+      "detailPreserved": true
+    },
+    {
+      "slug": "a-forest-forgotten",
+      "states": [
+        {
+          "src": "/studio-editions/size-gallery/a-forest-forgotten-9x12-1122.webp",
+          "selected": "9x12",
+          "price": "$45",
+          "thumbnail": "/studio-editions/size-gallery/a-forest-forgotten-9x12-1122.webp"
+        },
+        {
+          "src": "/studio-editions/exact-gallery/a-forest-forgotten-1122.webp",
+          "selected": "12x16",
+          "price": "$95",
+          "thumbnail": "/studio-editions/exact-gallery/a-forest-forgotten-1122.webp"
+        }
+      ],
+      "detailPreserved": true
+    }
+  ],
+  "reducedPoster": true,
+  "video": {
+    "muted": true,
+    "inline": true,
+    "autoplay": true,
+    "controls": false,
+    "loop": true,
+    "time": 1.206286,
+    "paused": false,
+    "role": "button",
+    "label": "Pause process video: Vudi shaping flowing sculptural ridges across a mixed-media painting in the studio. Activate with Enter or Space."
+  },
+  "methodNote": "Size/price/video observations from live interaction; detail persistence replaced by correctly awaited sequential interaction test. Earlier synchronous diagnostic was not a defect."
+}
