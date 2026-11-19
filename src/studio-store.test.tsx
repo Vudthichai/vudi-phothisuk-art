@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { StudioProduct, StudioListing } from './studio/StudioStore';
 import { studioArtwork, studioEditions, studioSizes } from './studio/editions';
@@ -10,15 +10,18 @@ afterEach(cleanup);
 it('serves all five distinct product pages with confirmed size pricing and no checkout', () => {
   for (const edition of studioEditions) {
     const view=render(<MemoryRouter initialEntries={[`/studio-editions/${edition.artworkId}/`]}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
+    const details=within(view.container.querySelector<HTMLFieldSetElement>('.studio-size-options-details')!);
+    const gallery=within(view.container.querySelector<HTMLFieldSetElement>('.studio-size-options-gallery')!);
     expect(document.querySelector('.studio-product-price')?.textContent).toContain('$45Selected size · Coming Soon');
-    expect(screen.getAllByRole('radio')).toHaveLength(2);
+    expect(details.getAllByRole('radio')).toHaveLength(2);
+    expect(gallery.getAllByRole('radio')).toHaveLength(2);
     expect(document.querySelector('.studio-framing-note')?.textContent).toBe('Prints are sold unframed. Room view and framing are illustrative.');
     expect(studioSizes.map(s=>s.priceCents)).toEqual([4500,9500]);
-    const larger=screen.getByRole('radio',{name:'12 × 16 inches — $95'});
+    const larger=details.getByRole('radio',{name:'12 × 16 inches — $95'});
     fireEvent.click(larger);expect((larger as HTMLInputElement).checked).toBe(true);
     expect(screen.getByText('12 × 16 inches — $95 · Coming Soon')).toBeTruthy();
     expect(document.querySelector('.studio-product-price strong')?.textContent).toBe('$95');
-    fireEvent.click(screen.getByRole('radio',{name:'9 × 12 inches — $45'}));
+    fireEvent.click(details.getByRole('radio',{name:'9 × 12 inches — $45'}));
     expect(document.querySelector('.studio-product-price strong')?.textContent).toBe('$45');
     expect(screen.getByRole('link',{name:'View the original artwork'}).getAttribute('href')).toBe(`/collections/forest-and-flowers/${edition.artworkId}/`);
     expect(document.querySelector('input[type="email"],input[name="card"],a[href*="checkout"]')).toBeNull();
