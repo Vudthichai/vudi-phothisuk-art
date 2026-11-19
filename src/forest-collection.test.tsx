@@ -28,6 +28,8 @@ it('opens an artwork directly without a stored session', () => {
   sessionStorage.clear();
   page(`${base}/dragon-lily`);
   expect(screen.getByRole('heading', { level: 1, name: 'Dragon Lily' })).toBeDefined();
+  expect(screen.getByText('18 × 24 in.')).toBeDefined();
+  expect(screen.getAllByText('Medium to be confirmed').length).toBeGreaterThan(0);
   expect(screen.getByRole('link', { name: 'Inquire About This Artwork' }).getAttribute('href')).toContain('Dragon%20Lily');
   expect(screen.getByText(/Provisional description/)).toBeDefined();
 });
@@ -45,7 +47,10 @@ it('preserves ten originals, two not-for-sale exceptions and the approved photog
  expect(collection.artworks.slice(1).map(art => art.images.filter(image => image.role === 'detail').length)).toEqual([2, 2, 2, 2, 2, 2, 3, 2, 2]);
  expect(collection.artworks.filter(a=>a.availability==='not-for-sale').map(a=>a.title)).toEqual(['Tiger Lily','75 Leaves']);
  expect(collection.artworks.filter(a=>a.availability==='provisional')).toHaveLength(8);
- expect(collection.artworks.find(a=>a.slug==='dragon-lily')?.dimensions).toBeNull();
+ expect(collection.artworks.find(a=>a.slug==='dragon-lily')).toMatchObject({
+  dimensions: '18 × 24 in.', medium: null, copyStatus: 'provisional',
+  availability: 'provisional', availabilityNote: 'Availability to be confirmed',
+ });
 });
 
 it('shows the eight approved original prices and keeps personal works not for sale', () => {

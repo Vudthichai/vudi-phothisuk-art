@@ -81,7 +81,8 @@ test('exhibition dates/venue are accurate and incomplete catalog fields are omit
   assert.equal(event.endDate, '2026-12-05T19:00:00-05:00');
   assert.equal(event.location.address.streetAddress, '3706 Butler Street');
   const dragon = metadata('/collections/forest-and-flowers/dragon-lily/').graph[0];
-  assert(!('artMedium' in dragon)); assert(!('size' in dragon)); assert(!('description' in dragon));
+  assert.equal(dragon.size, '18 × 24 in.');
+  assert(!('artMedium' in dragon)); assert(!('description' in dragon));
   assert(incompleteArtwork.some(w => w.includes('Dragon Lily')));
 });
 
