@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { StudioProduct } from './studio/StudioStore';
 import { StudioEditions } from './studio/StudioEditions';
@@ -29,10 +29,11 @@ it('keeps unapproved mockups out of galleries and cards, without substituting or
 it('supports approved extra gallery views with explicit touch/keyboard controls',()=>{
  const edition=studioEditions[0];
  additionalStudioViews[edition.id]=[{id:'fixture-frame',kind:'framed',label:'Framed print',image:{...studioPrintImage(edition),alt:'Approved test fixture'},approval:'artist-approved',verifiedSizeIds:['9x12']}];
- render(<MemoryRouter initialEntries={['/studio-editions/mother-nature/']}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
+ const {container}=render(<MemoryRouter initialEntries={['/studio-editions/mother-nature/']}><Routes><Route path="/studio-editions/:productSlug" element={<StudioProduct/>}/></Routes></MemoryRouter>);
  const control=screen.getByRole('button',{name:'Framed print'});fireEvent.click(control);
  expect(control.getAttribute('aria-pressed')).toBe('true');expect(screen.getByRole('img',{name:'Approved test fixture'})).toBeTruthy();
- fireEvent.click(screen.getByRole('radio',{name:'12 × 16 inches — $95'}));
+ const details=within(container.querySelector<HTMLFieldSetElement>('.studio-size-options-details')!);
+ fireEvent.click(details.getByRole('radio',{name:'12 × 16 inches — $95'}));
  expect(screen.queryByRole('button',{name:'Framed print'})).toBeNull();
  expect(screen.queryByRole('img',{name:'Approved test fixture'})).toBeNull();
  expect(screen.queryByRole('button',{name:/checkout|buy|cart/i})).toBeNull();
