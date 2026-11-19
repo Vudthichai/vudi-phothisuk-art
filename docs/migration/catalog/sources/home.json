@@ -1,0 +1,146 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/home",
+  "path": "/home",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"\" style=\"white-space:pre-wrap;\">Vudi Phothisuk is a multidisciplinary artist exploring the emotional depth of landscape, memory, and design. His work blends texture, color, and collaboration to create timeless pieces that feel both ancient and current. Each collection invites a pause — a moment to reflect on beauty, presence, and the quiet weight of experience</p></div>",
+      "text": "Vudi Phothisuk is a multidisciplinary artist exploring the emotional depth of landscape, memory, and design. His work blends texture, color, and collaboration to create timeless pieces that feel both ancient and current. Each collection invites a pause — a moment to reflect on beauty, presence, and the quiet weight of experience"
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "alt": "",
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0964f30c-57ad-4384-83c6-93c953e4a633/Navy.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0964f30c-57ad-4384-83c6-93c953e4a633/Navy.jpg",
+        "data-image-dimensions": "4160x6240",
+        "data-image-focal-point": "0.5,0.5",
+        "src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0964f30c-57ad-4384-83c6-93c953e4a633/Navy.jpg",
+        "width": "4160",
+        "height": "6240",
+        "srcset": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0964f30c-57ad-4384-83c6-93c953e4a633/Navy.jpg?format=100w 100w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0964f30c-57ad-4384-83c6-93c953e4a633/Navy.jpg?format=300w 300w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0964f30c-57ad-4384-83c6-93c953e4a633/Navy.jpg?format=500w 500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0964f30c-57ad-4384-83c6-93c953e4a633/Navy.jpg?format=750w 750w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0964f30c-57ad-4384-83c6-93c953e4a633/Navy.jpg?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0964f30c-57ad-4384-83c6-93c953e4a633/Navy.jpg?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0964f30c-57ad-4384-83c6-93c953e4a633/Navy.jpg?format=2500w 2500w"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "alt": "",
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2606bc51-f93a-4771-b2f5-689cfb9647ea/IMG_6778.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2606bc51-f93a-4771-b2f5-689cfb9647ea/IMG_6778.jpg",
+        "data-image-dimensions": "5877x7837",
+        "data-image-focal-point": "0.0945472736368184,0.5200650081260157",
+        "src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2606bc51-f93a-4771-b2f5-689cfb9647ea/IMG_6778.jpg",
+        "width": "5877",
+        "height": "7837",
+        "srcset": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2606bc51-f93a-4771-b2f5-689cfb9647ea/IMG_6778.jpg?format=100w 100w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2606bc51-f93a-4771-b2f5-689cfb9647ea/IMG_6778.jpg?format=300w 300w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2606bc51-f93a-4771-b2f5-689cfb9647ea/IMG_6778.jpg?format=500w 500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2606bc51-f93a-4771-b2f5-689cfb9647ea/IMG_6778.jpg?format=750w 750w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2606bc51-f93a-4771-b2f5-689cfb9647ea/IMG_6778.jpg?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2606bc51-f93a-4771-b2f5-689cfb9647ea/IMG_6778.jpg?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/2606bc51-f93a-4771-b2f5-689cfb9647ea/IMG_6778.jpg?format=2500w 2500w"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "alt": "",
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg",
+        "data-image-dimensions": "4160x6240",
+        "data-image-focal-point": "0.5,0.5",
+        "src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg",
+        "width": "4160",
+        "height": "6240",
+        "srcset": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg?format=100w 100w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg?format=300w 300w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg?format=500w 500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg?format=750w 750w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg?format=2500w 2500w"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 3,
+      "attributes": {
+        "alt": "",
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718226826141-ZH6U1AICPS2Z32K53835/IMG_6914.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718226826141-ZH6U1AICPS2Z32K53835/IMG_6914.jpg",
+        "data-image-dimensions": "1956x2935",
+        "data-image-focal-point": "0.6081487044686444,0.28003500437554696",
+        "src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718226826141-ZH6U1AICPS2Z32K53835/IMG_6914.jpg",
+        "width": "1956",
+        "height": "2935",
+        "srcset": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718226826141-ZH6U1AICPS2Z32K53835/IMG_6914.jpg?format=100w 100w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718226826141-ZH6U1AICPS2Z32K53835/IMG_6914.jpg?format=300w 300w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718226826141-ZH6U1AICPS2Z32K53835/IMG_6914.jpg?format=500w 500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718226826141-ZH6U1AICPS2Z32K53835/IMG_6914.jpg?format=750w 750w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718226826141-ZH6U1AICPS2Z32K53835/IMG_6914.jpg?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718226826141-ZH6U1AICPS2Z32K53835/IMG_6914.jpg?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718226826141-ZH6U1AICPS2Z32K53835/IMG_6914.jpg?format=2500w 2500w"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 4,
+      "attributes": {
+        "alt": "",
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg",
+        "data-image-dimensions": "4160x6240",
+        "data-image-focal-point": "0.5000937558597413,0.752094011751469",
+        "src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg",
+        "width": "4160",
+        "height": "6240",
+        "srcset": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg?format=100w 100w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg?format=300w 300w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg?format=500w 500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg?format=750w 750w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg?format=2500w 2500w"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 5,
+      "attributes": {
+        "alt": "",
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/301d636f-ac9d-43f1-9d24-d8f2262f374e/IMG_8834.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/301d636f-ac9d-43f1-9d24-d8f2262f374e/IMG_8834.jpeg",
+        "data-image-dimensions": "4058x5411",
+        "data-image-focal-point": "0.8736034684008671,0.39204900612576576",
+        "src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/301d636f-ac9d-43f1-9d24-d8f2262f374e/IMG_8834.jpeg",
+        "width": "4058",
+        "height": "5411",
+        "srcset": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/301d636f-ac9d-43f1-9d24-d8f2262f374e/IMG_8834.jpeg?format=100w 100w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/301d636f-ac9d-43f1-9d24-d8f2262f374e/IMG_8834.jpeg?format=300w 300w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/301d636f-ac9d-43f1-9d24-d8f2262f374e/IMG_8834.jpeg?format=500w 500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/301d636f-ac9d-43f1-9d24-d8f2262f374e/IMG_8834.jpeg?format=750w 750w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/301d636f-ac9d-43f1-9d24-d8f2262f374e/IMG_8834.jpeg?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/301d636f-ac9d-43f1-9d24-d8f2262f374e/IMG_8834.jpeg?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/301d636f-ac9d-43f1-9d24-d8f2262f374e/IMG_8834.jpeg?format=2500w 2500w"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 6,
+      "attributes": {
+        "alt": "",
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg",
+        "data-image-dimensions": "4160x6240",
+        "data-image-focal-point": "0.5,0.5",
+        "src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg",
+        "width": "4160",
+        "height": "6240",
+        "srcset": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg?format=100w 100w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg?format=300w 300w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg?format=500w 500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg?format=750w 750w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118037872-RL1EGGXK6DHQ6544FAME/Verdan.jpg?format=2500w 2500w"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 7,
+      "attributes": {
+        "alt": "",
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/08c5d72f-4d41-4881-b93c-68c2ebe0dad2/IMG_6641.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/08c5d72f-4d41-4881-b93c-68c2ebe0dad2/IMG_6641.jpeg",
+        "data-image-dimensions": "3024x4032",
+        "data-image-focal-point": "0.10521927630481907,0.27203400425053137",
+        "src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/08c5d72f-4d41-4881-b93c-68c2ebe0dad2/IMG_6641.jpeg",
+        "width": "3024",
+        "height": "4032",
+        "srcset": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/08c5d72f-4d41-4881-b93c-68c2ebe0dad2/IMG_6641.jpeg?format=100w 100w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/08c5d72f-4d41-4881-b93c-68c2ebe0dad2/IMG_6641.jpeg?format=300w 300w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/08c5d72f-4d41-4881-b93c-68c2ebe0dad2/IMG_6641.jpeg?format=500w 500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/08c5d72f-4d41-4881-b93c-68c2ebe0dad2/IMG_6641.jpeg?format=750w 750w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/08c5d72f-4d41-4881-b93c-68c2ebe0dad2/IMG_6641.jpeg?format=1000w 1000w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/08c5d72f-4d41-4881-b93c-68c2ebe0dad2/IMG_6641.jpeg?format=1500w 1500w, https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/08c5d72f-4d41-4881-b93c-68c2ebe0dad2/IMG_6641.jpeg?format=2500w 2500w"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": []
+}
