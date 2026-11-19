@@ -92,4 +92,4 @@ No Available Art source or CSS change is included in this implementation. If the
 - Structured catalog comparison: exactly one changed field, Dragon Lily's `dimensions`; all images, descriptions, prices, copy statuses, availability statuses, and notes are identical to the base revision.
 - Generated HTML checked for Dragon Lily's dimensions on the collection, detail, and Available Art views; all five product pages retain the $45/$95 size options.
 
-Review only. No merge or deployment is authorized or performed.
+Review only; no merge or production deployment was performed. Opening draft PR #91 unexpectedly triggered Netlify's automatic Deploy Preview despite the commit's `[skip netlify]` and `[skip ci]` markers. The PR was closed without merging to avoid further PR preview builds. A Netlify management connection is not available in this session to delete that preview. Review the branch diff without reopening the PR until preview deployment is explicitly authorized or the automation is configured by its owner.
