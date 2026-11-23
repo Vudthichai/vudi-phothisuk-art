@@ -1,0 +1,38 @@
+{
+  "sourcePdfSha256": "f15467f4099f1f53dd2213657d1e5b055c618c6fb862afff393d74546f26ae10",
+  "page": 1,
+  "embeddedImageXref": 15,
+  "imageBoundsPt": [
+    71.12000274658203,
+    104.0,
+    288.8800048828125,
+    432.0
+  ],
+  "embeddedDimensions": [
+    1361,
+    2050
+  ],
+  "targetDimensions": [
+    680,
+    1024
+  ],
+  "targetImageSha256": "5d45a943b2e1abcfe215be13a7f6e89226b07a3aed2b43a54bb596e609fbe6eb",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 4139
+  },
+  "compiledTargetSha256": "6a2ba3d76677e861a88300a02579a2a66fa997204e3ee21a94ab14d36f500cc2",
+  "compiledBytes": 881782,
+  "embeddedImagePixelsSha256": "80cac39e6b54ee2023f46b5a6ec2d32cf7a05fb8ed914c4e2d89abe8a91dce70",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/mother-nature/original/",
+      "pdfSha256": "f15467f4099f1f53dd2213657d1e5b055c618c6fb862afff393d74546f26ae10",
+      "imagePixelsSha256": "80cac39e6b54ee2023f46b5a6ec2d32cf7a05fb8ed914c4e2d89abe8a91dce70"
+    }
+  ]
+}

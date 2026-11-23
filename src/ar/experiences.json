@@ -1,0 +1,14 @@
+[
+  {
+    "id": "mother-nature-original",
+    "artworkId": "mother-nature",
+    "title": "Mother Nature",
+    "certificatePaths": [
+      "/coa/forest-and-flowers/mother-nature/original/"
+    ],
+    "targetImage": "/ar/targets/mother-nature-original.jpg",
+    "targetFile": "/ar/targets/mother-nature-original.mind",
+    "targetIndex": 0,
+    "certificateLabel": "Mother Nature original certificate"
+  }
+]
