@@ -1,0 +1,27 @@
+.coa-page{color:#12351d;background:#f7f5ef}
+.coa-heading{max-width:760px;margin:0 auto 36px;text-align:center}
+.coa-heading>img{display:block;width:48px;height:auto;margin:0 auto 20px}
+.coa-heading h1{font:400 clamp(38px,6vw,64px)/1.12 'Bodoni Moda',Didot,Georgia,serif;margin:22px 0}
+.coa-collection,.coa-designation{font-size:.95rem;line-height:1.6}
+.coa-edition-label{font-size:.85rem;margin-top:6px}
+.coa-update-note{font-size:.85rem;line-height:1.8;margin:18px 0}
+.coa-layout{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(28px,6vw,90px);align-items:start}
+.coa-artwork{margin:0;min-width:0}
+.coa-artwork img{display:block;width:100%;height:auto;max-height:850px;object-fit:contain}
+.coa-artwork figcaption{font-size:.8rem;line-height:1.7;margin-top:14px}
+.coa-copy{min-width:0}
+.coa-copy h2{font:400 clamp(24px,3vw,30px)/1.25 'Bodoni Moda',Didot,Georgia,serif;margin:28px 0 16px}
+.coa-copy p,.coa-facts{font-size:.95rem;line-height:1.85}
+.coa-facts{margin:0}
+.coa-facts>div{margin:0 0 20px}
+.coa-facts dt{font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.coa-facts dd{margin:0;overflow-wrap:anywhere}
+.coa-reference-note{font-size:.8rem!important}
+.coa-digital-record{border-block:1px solid #cbd2c5;margin:28px 0;padding:8px 0}
+.coa-digital-record summary{padding:14px 4px;min-height:48px;cursor:pointer;font-size:.9rem}
+.coa-digital-record>div{padding:0 4px 20px}
+.coa-permanent-url{overflow-wrap:anywhere;font-size:.8rem!important}
+.coa-return,.coa-ar-link{display:inline-flex;align-items:center;min-height:48px;padding:12px 0;text-decoration:underline;text-underline-offset:4px}
+.coa-ar-link{margin-top:12px}
+.coa-page :focus-visible{outline:2px solid #12351d;outline-offset:4px}
+@media(max-width:700px){.coa-layout{grid-template-columns:minmax(0,1fr);gap:28px}.coa-heading{margin-bottom:28px}.coa-artwork img{max-height:none}}

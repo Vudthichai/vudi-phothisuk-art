@@ -8,7 +8,7 @@ const dom = html => new JSDOM(html).window.document;
 const documentFor = async page => dom(await readFile(`dist${page.path === '/' ? '' : page.path.slice(0, -1)}/index.html`, 'utf8'));
 
 test('every catalog route ships meaningful HTML, unique standard metadata, social tags and valid linked schema', async () => {
-  assert.equal(pages.filter(page => !page.path.startsWith('/studio-editions/')).length, 34);
+  assert.equal(pages.filter(page => !page.path.startsWith('/studio-editions/') && !page.path.startsWith('/coa/')).length, 34);
   assert.equal(pages.filter(page => page.path.startsWith('/studio-editions/')).length, 6);
   assert(!pages.some(page => page.path.startsWith('/dev/')));
   assert(!pages.some(page => page.path === '/contact/'));
@@ -24,9 +24,11 @@ test('every catalog route ships meaningful HTML, unique standard metadata, socia
     assert(!descriptions.has(page.description), `duplicate description: ${page.path}`); descriptions.add(page.description);
     assert.equal(doc.querySelectorAll('link[rel="canonical"]').length, 1);
     assert.equal(doc.querySelector('link[rel="canonical"]').href, site + page.path);
-    assert.equal(doc.querySelector('meta[property="og:url"]').content, site + page.path);
-    assert.equal(doc.querySelector('meta[property="og:image"]').content, meta.social.image);
-    assert.equal(doc.querySelector('meta[name="twitter:card"]').content, 'summary_large_image');
+    if (meta.social) {
+      assert.equal(doc.querySelector('meta[property="og:url"]').content, site + page.path);
+      assert.equal(doc.querySelector('meta[property="og:image"]').content, meta.social.image);
+      assert.equal(doc.querySelector('meta[name="twitter:card"]').content, 'summary_large_image');
+    } else assert(page.path.startsWith('/coa/'), `missing sharing metadata: ${page.path}`);
     assert(doc.querySelector('#root main h1'), `missing heading: ${page.path}`);
     assert(doc.querySelector('#root main').textContent.length > 80, `empty page: ${page.path}`);
     const graph = JSON.parse(doc.querySelector('#page-schema').textContent)['@graph'];
@@ -39,7 +41,7 @@ test('every catalog route ships meaningful HTML, unique standard metadata, socia
       assert(!('offers' in artwork));
     }
     for (const image of doc.querySelectorAll('img[src]')) if (image.getAttribute('src').startsWith('/')) await access('dist' + image.getAttribute('src'));
-    await access('dist' + new URL(meta.social.image).pathname);
+    if (meta.social) await access('dist' + new URL(meta.social.image).pathname);
   }
 });
 

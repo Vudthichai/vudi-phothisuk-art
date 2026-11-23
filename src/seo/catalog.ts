@@ -4,6 +4,7 @@ import { forestCollection } from '../forest/collection';
 import { primaryForestImage } from '../forest/types';
 import { studioEditions, studioArtwork, studioProductPath, studioBase, studioEditionTerms, studioPrice } from '../studio/editions';
 import previews from '../../scripts/sharing-previews.json';
+import { certificateRecords } from '../coa/records';
 
 export const site = 'https://vudiphothisukart.com';
 export const canonicalPath = (path: string) => path === '/' ? '/' : path.replace(/\/+$/, '') + '/';
@@ -76,6 +77,16 @@ pages.push(page(studioBase, 'Forest & Flowers — Studio Editions', `Explore fiv
   images: studioEditions.map(e=>{const p=studioPrimaryImage(e);return {src:p.variants.at(-1)!.src,alt:p.alt};}),
   graph:[{'@type':'CollectionPage','@id':absolute(studioBase+'/')+'#webpage',url:absolute(studioBase+'/'),name:'Studio Editions',mainEntity:{'@type':'ItemList',itemListElement:printItems}}],
 }));
+for (const record of certificateRecords) {
+  const art = forestCollection.artworks.find(art => art.id === record.artworkId)!;
+  const image = primaryForestImage(art);
+  const designation = record.designation === 'original' ? 'Original · 1 of 1' : 'Collector’s Edition · Limited Edition of 20';
+  pages.push(page(record.path, `${art.title} — ${designation} — Digital Certificate`,
+    `Digital reference record for ${art.title} by Vudi Phothisuk, Forest & Flowers — 2026. ${designation}. Certificate reference: ${record.reference}.`, {
+      images: [{ src: image.variants.at(-1)!.src, alt: image.alt }],
+      graph: [{ '@type': 'CreativeWork', '@id': absolute(record.path) + '#certificate', url: absolute(record.path), name: `${art.title} — digital certificate reference`, creator: artistRef, identifier: record.reference, isBasedOn: { '@id': absolute(`/collections/forest-and-flowers/${art.slug}/`) + '#artwork' } }],
+    }));
+}
 const collectionPages = pages.filter(p => /^\/collections\/[^/]+\/$/.test(p.path));
 pages.find(p => p.path === '/collections/')!.graph.push({ '@type': 'CollectionPage', '@id': `${site}/collections/#webpage`, url: `${site}/collections/`, name: 'Collections', mainEntity: { '@type': 'ItemList', itemListElement: collectionPages.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: p.title.split(' | ')[0], url: absolute(p.path) })) } });
 export const findPage = (path: string) => pages.find(p => p.path === canonicalPath(path));
