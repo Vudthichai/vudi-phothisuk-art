@@ -10,7 +10,7 @@ Use the HTTPS Netlify **draft preview**, not the live QR destination:
 
 The certificate now places its enabled AR entry in the certificate heading, before the photograph/facts. Tap **Experience in AR**, then **Start camera** and the browser permission prompt. No camera opens on page load. The concise initial screen shows the exact target preview. Camera mode fills the modal; a discreet Exit control and Record are the only primary controls. Guidance disappears after acquisition and returns on loss. Record is available when the image is found; an active recording can still be stopped if tracking is lost.
 
-The image target, source provenance, original photographs, permanent QR paths, other 14 certificate states, prices, and production PDFs are unchanged. See [Phase A target setup](certificate-ar-prototype.md) for enabling another verified certificate. This branch does not enable additional certificates.
+The image target, source provenance, original photographs, permanent QR paths, other 13 certificate states, prices, and production PDFs are unchanged. The Mother Nature original and Collector’s Edition pages now share the same AR entry and original-image target. The printed Collector’s Edition card is not separately compiled or verified as an image target; visitors should use a matching image of the artwork (as shown in the AR preview). The QR still opens the digital certificate, where visitors explicitly select Experience in AR and grant camera permission. See [Phase A target setup](certificate-ar-prototype.md) for enabling another verified certificate. This branch does not enable additional certificates.
 
 ## Sculpture and tracking
 
