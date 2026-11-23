@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 import argparse
 parser=argparse.ArgumentParser();parser.add_argument('--base',default='http://localhost:5178');parser.add_argument('--camera-feed',required=True);parser.add_argument('--output',required=True);args=parser.parse_args()
 OUT=Path(args.output);OUT.mkdir(parents=True,exist_ok=True);BASE=args.base.rstrip('/');PATH='/coa/forest-and-flowers/mother-nature/original/?ar=1'
-FLAGS=['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader','--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream',f'--use-file-for-fake-video-capture={args.camera_feed}']
+FLAGS=['--no-sandbox','--disable-dev-shm-usage','--use-angle=swiftshader','--enable-unsafe-swiftshader','--use-fake-device-for-media-stream','--use-fake-ui-for-media-stream',f'--use-file-for-fake-video-capture={Path(args.camera_feed).resolve()}']
 INIT="""localStorage.setItem('vpa.analytics-consent.v1',JSON.stringify({choice:'denied',time:Date.now()}));window.__calls=0;window.__stops=0;if(navigator.mediaDevices){const original=navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);navigator.mediaDevices.getUserMedia=async(...args)=>{window.__calls++;const s=await original(...args);for(const t of s.getTracks()){const stop=t.stop.bind(t);t.stop=()=>{window.parent.postMessage({type:'test-stopped'},location.origin);return stop();};}return s;};}window.addEventListener('message',e=>{if(e.data?.type==='test-stopped')window.__stops++;});"""
 report={'errors':[]}
 with sync_playwright() as p:

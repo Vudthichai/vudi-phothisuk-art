@@ -62,3 +62,11 @@ The script verifies real MindAR acquisition, no pre-gesture camera, the rendered
 5. Rotate device: if camera calibration changes, the existing restart guidance intentionally replaces the session. Check readable controls and safe areas on a physical notch/Dynamic Island device.
 
 Do not edit/reprint physical certificates here. Suggested future QR caption: “Scan to explore your artwork”; only on an AR-enabled certificate, optional “Digital certificate · Augmented reality”. Existing QR symbols and destinations remain unchanged. A small insert/sticker can be considered with separate artist approval.
+
+## Recorded review results — November 23, 2026
+
+- 150 tests across 27 files passed; production/TypeScript, SEO, all 15 COA records and target/vendor integrity checks passed.
+- Production-output Chromium with the authentic front-image camera feed detected the target and rendered the botanical scene. A downloaded H.264/MP4 decoded at 332 × 720, 10.648 seconds, 82,038 bytes. This software-rendered test is evidence that both layers can be captured; it is not an iPhone frame-rate benchmark or a promise of an exact encoded duration.
+- File-sharing plumbing received the recorded file from an active user gesture (the share API was simulated). API-absent and encoder-constructor-failure cases displayed native guidance. Exit stopped camera tracks; no camera was requested before Start.
+- A longer real image/blank-image feed verified loss and reacquisition. Backgrounding during recording discarded the unfinished clip and shut down the session. Unsupported-camera mobile layout, desktop instructions, and real browser-level permission denial/exit passed.
+- Private evidence is in `/workspace/previews/certificate-ar-phase-b/`, with the final recording run under `final/`. No physical certificate, camera-feed file or test recording was added to public assets.
