@@ -23,7 +23,7 @@ for (const record of manifest.certificates) {
   assert(main.querySelector('.coa-digital-record summary').textContent.includes('View Digital Certificate'));
   assert(main.textContent.includes('unsigned digital reference record'));
   assert.equal(main.querySelectorAll('a[href$=".pdf"], iframe, input').length, 0);
-  const enabledAR = arExperiences.some(experience => experience.certificatePaths.includes(record.path));
+  const enabledAR = arExperiences.some(experience => (experience.entryPaths ?? experience.certificatePaths).includes(record.path));
   if (!record.arUrl && !enabledAR) assert.equal(main.querySelector('.coa-ar-link'), null);
   if (enabledAR && !record.arUrl) assert.equal(main.querySelector('.coa-ar-link').getAttribute('href'), record.path + '?ar=1');
   if (record.reviewStatus === 'replacement-pending') assert(main.textContent.includes('Physical certificate update pending'));
