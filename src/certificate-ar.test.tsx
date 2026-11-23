@@ -21,6 +21,8 @@ it('enables Mother Nature AR from original and Collector’s Edition pages witho
  expect(arExperiences).toHaveLength(1);
  expect(certificateRecords.filter(record=>arForCertificate(record.path)).map(record=>record.path)).toEqual([collectorPath,path]);
  expect(arForCertificate(collectorPath)?.id).toBe('mother-nature-original');
+ expect(arExperiences[0].certificatePaths).toEqual([path]);
+ expect(arExperiences[0].entryPaths).toEqual([path,collectorPath]);
  expect(certificateRecords).toHaveLength(15);
 });
 it('opens the existing AR experience from the Collector’s Edition certificate and returns to that certificate',async()=>{
