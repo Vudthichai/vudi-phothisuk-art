@@ -1,0 +1,17 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Local MindAR target compiler</title><meta name="robots" content="noindex"></head><body><h1>Local image-target compiler</h1><p>This development tool is not included in the production build.</p><p id="status">Compiling…</p><script type="module">
+
+const target = new URLSearchParams(location.search).get('target');
+try {
+ await new Promise((resolve,reject)=>{const script=document.createElement('script');script.type='module';script.src='/ar/vendor/mindar/mindar-image.prod.js';script.onload=resolve;script.onerror=()=>reject(Error('Could not load the local MindAR compiler.'));document.head.append(script);});
+ const { Compiler } = window.MINDAR.IMAGE;
+ if (!target?.startsWith('/ar/targets/') || target.includes('..')) throw Error('Supply a local /ar/targets/ image in ?target=.');
+ const image = new Image();image.src = target;await image.decode();
+ const compiler = new Compiler();
+ const result = await compiler.compileImageTargets([image], progress => document.querySelector('#status').textContent = `Compiling: ${progress.toFixed(0)}%`);
+ const stats = result.map(r => ({ width:r.targetImage.width, height:r.targetImage.height, keyframes:r.matchingData.length, matchingFeatures:r.matchingData.reduce((n,k)=>n+k.maximaPoints.length+k.minimaPoints.length,0) }));
+ const bytes = compiler.exportData();
+ window.targetCompilation = { url:URL.createObjectURL(new Blob([bytes],{type:'application/octet-stream'})), stats, bytes:bytes.length };
+ document.querySelector('#status').textContent = JSON.stringify({stats,bytes:bytes.length});
+ const a=document.createElement('a');a.href=window.targetCompilation.url;a.download='mother-nature-original.mind';a.textContent='Download compiled target';document.body.append(a);
+} catch(error) { window.targetCompilationError=String(error);document.querySelector('#status').textContent=String(error); }
+</script></body></html>
