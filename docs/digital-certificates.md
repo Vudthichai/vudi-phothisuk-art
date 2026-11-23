@@ -29,7 +29,7 @@ Review that private evidence and each physical PDF before copying only the verif
 
 The digital record is HTML, not a downloadable signature-ready PDF. It explicitly does not replace a signed physical certificate or verify ownership. Collector’s Edition URLs describe the edition of 20, not an individual copy number. The original painting photograph is identified as an artwork reference on edition pages; it does not impersonate print-product photography.
 
-The Mother Nature original certificate now has a self-hosted golden-petal AR prototype configured in `src/ar/experiences.json`; the other 14 certificates remain disabled. See `docs/certificate-ar-prototype.md` for target compilation, camera flow, validation limits, and enabling more records. The optional `arUrl` field remains available for separately approved external HTTPS experiences. Future descriptions, video, or AR can change behind the permanent certificate URL without replacing any printed QR.
+The Mother Nature original and Collector’s Edition certificate pages link to the same self-hosted botanical AR experience configured in `src/ar/experiences.json`; the other 13 certificates remain disabled. The Collector’s Edition physical card is not a separately compiled image target; visitors should point at the matching Mother Nature artwork image shown in the AR preview. See `docs/certificate-ar-prototype.md` for target compilation, camera flow, validation limits, and enabling more records. The optional `arUrl` field remains available for separately approved external HTTPS experiences. Future descriptions, video, or AR can change behind the permanent certificate URL without replacing any printed QR.
 
 ## Preview and validation
 
