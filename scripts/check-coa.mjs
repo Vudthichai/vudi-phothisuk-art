@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import { readFile, access } from 'node:fs/promises';
 import { JSDOM } from 'jsdom';
+const arExperiences = JSON.parse(await readFile('src/ar/experiences.json', 'utf8'));
 const manifest = JSON.parse(await readFile('src/coa/routes.json', 'utf8'));
 assert.equal(manifest.status, 'verified');
 assert.equal(manifest.certificates.length, 15);
@@ -22,7 +23,9 @@ for (const record of manifest.certificates) {
   assert(main.querySelector('.coa-digital-record summary').textContent.includes('View Digital Certificate'));
   assert(main.textContent.includes('unsigned digital reference record'));
   assert.equal(main.querySelectorAll('a[href$=".pdf"], iframe, input').length, 0);
-  if (!record.arUrl) assert.equal(main.querySelector('.coa-ar-link'), null);
+  const enabledAR = arExperiences.some(experience => experience.certificatePaths.includes(record.path));
+  if (!record.arUrl && !enabledAR) assert.equal(main.querySelector('.coa-ar-link'), null);
+  if (enabledAR && !record.arUrl) assert.equal(main.querySelector('.coa-ar-link').getAttribute('href'), record.path + '?ar=1');
   if (record.reviewStatus === 'replacement-pending') assert(main.textContent.includes('Physical certificate update pending'));
   await access('dist' + main.querySelector('.coa-artwork img').getAttribute('src'));
 }
