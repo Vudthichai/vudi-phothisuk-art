@@ -64,12 +64,20 @@ it('distinguishes a shared edition-level record from an individual signed copy o
   expect(screen.getByText(/Original painting shown as an artwork reference/)).toBeTruthy();
 });
 
-it('does not infer Dragon Lily medium or publish its provisional description', () => {
-  view({ ...fixture('dragon-lily'), reviewStatus:'replacement-pending' });
+it('publishes the finalized Dragon Lily facts and artwork description at its permanent URL', () => {
+  const record = certificateRecords.find(record => record.artworkId === 'dragon-lily')!;
+  const artwork = forestCollection.artworks.find(artwork => artwork.id === 'dragon-lily')!;
+  const medium = 'Mixed-media acrylic with organic plaster on canvas';
+  view(record);
+  expect(record.source.qrUrl).toBe('https://vudiphothisukart.com/coa/forest-and-flowers/dragon-lily/original/');
+  expect(record.medium).toBe(medium);
+  expect(artwork.medium).toBe(medium);
+  expect(screen.getByText(medium)).toBeTruthy();
   expect(screen.getByText('18 × 24 in.')).toBeTruthy();
-  expect(screen.getByText('Awaiting artist confirmation')).toBeTruthy();
-  expect(screen.getByText('The artwork description is awaiting artist confirmation.')).toBeTruthy();
-  expect(screen.getByText(/Physical certificate update pending/)).toBeTruthy();
+  for (const paragraph of artwork.description.slice(0, 2)) {
+    expect(screen.getByText(paragraph)).toBeTruthy();
+  }
+  expect(screen.queryByText(/awaiting artist confirmation|physical certificate update pending/i)).toBeNull();
 });
 
 it('only renders AR when an HTTPS experience has been explicitly configured', () => {

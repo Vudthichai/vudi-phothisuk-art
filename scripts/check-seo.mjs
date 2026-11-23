@@ -84,8 +84,9 @@ test('exhibition dates/venue are accurate and incomplete catalog fields are omit
   assert.equal(event.location.address.streetAddress, '3706 Butler Street');
   const dragon = metadata('/collections/forest-and-flowers/dragon-lily/').graph[0];
   assert.equal(dragon.size, '18 × 24 in.');
-  assert(!('artMedium' in dragon)); assert(!('description' in dragon));
-  assert(incompleteArtwork.some(w => w.includes('Dragon Lily')));
+  assert.equal(dragon.artMedium, 'Mixed-media acrylic with organic plaster on canvas');
+  assert.match(dragon.description, /^Two sculpted pink lilies emerge/);
+  assert(incompleteArtwork.includes('Dragon Lily: availability unconfirmed'));
 });
 
 test('public build identity contains only safe release facts and matches compiled eligibility', async () => {

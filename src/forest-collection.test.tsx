@@ -29,9 +29,9 @@ it('opens an artwork directly without a stored session', () => {
   page(`${base}/dragon-lily`);
   expect(screen.getByRole('heading', { level: 1, name: 'Dragon Lily' })).toBeDefined();
   expect(screen.getByText('18 × 24 in.')).toBeDefined();
-  expect(screen.getAllByText('Medium to be confirmed').length).toBeGreaterThan(0);
+  expect(screen.getAllByText('Mixed-media acrylic with organic plaster on canvas').length).toBeGreaterThan(0);
   expect(screen.getByRole('link', { name: 'Inquire About This Artwork' }).getAttribute('href')).toContain('Dragon%20Lily');
-  expect(screen.getByText(/Provisional description/)).toBeDefined();
+  expect(screen.queryByText(/Provisional description/)).toBeNull();
 });
 
 it('offers a return link when the artwork slug is unknown', () => {
@@ -48,7 +48,7 @@ it('preserves ten originals, two not-for-sale exceptions and the approved photog
  expect(collection.artworks.filter(a=>a.availability==='not-for-sale').map(a=>a.title)).toEqual(['Tiger Lily','75 Leaves']);
  expect(collection.artworks.filter(a=>a.availability==='provisional')).toHaveLength(8);
  expect(collection.artworks.find(a=>a.slug==='dragon-lily')).toMatchObject({
-  dimensions: '18 × 24 in.', medium: null, copyStatus: 'provisional',
+  dimensions: '18 × 24 in.', medium: 'Mixed-media acrylic with organic plaster on canvas', copyStatus: 'artist-source',
   availability: 'provisional', availabilityNote: 'Availability to be confirmed',
  });
 });
