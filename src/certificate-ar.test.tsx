@@ -16,11 +16,22 @@ beforeAll(()=>{
 afterEach(cleanup);
 const path='/coa/forest-and-flowers/mother-nature/original/';
 function page(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/coa/forest-and-flowers/:artworkSlug/:designation" element={<CertificatePage/>}/></Routes></MemoryRouter>);}
-it('only enables the exact original-certificate front, leaving all other QR paths unchanged and disabled',()=>{
+it('enables Mother Nature AR from original and Collector’s Edition pages without changing QR paths',()=>{
+ const collectorPath='/coa/forest-and-flowers/mother-nature/collectors-edition/';
  expect(arExperiences).toHaveLength(1);
- expect(certificateRecords.filter(record=>arForCertificate(record.path)).map(record=>record.path)).toEqual([path]);
- expect(arForCertificate('/coa/forest-and-flowers/mother-nature/collectors-edition/')).toBeUndefined();
+ expect(certificateRecords.filter(record=>arForCertificate(record.path)).map(record=>record.path)).toEqual([collectorPath,path]);
+ expect(arForCertificate(collectorPath)?.id).toBe('mother-nature-original');
  expect(certificateRecords).toHaveLength(15);
+});
+it('opens the existing AR experience from the Collector’s Edition certificate and returns to that certificate',async()=>{
+ const collectorPath='/coa/forest-and-flowers/mother-nature/collectors-edition/';
+ page(collectorPath);
+ fireEvent.click(screen.getByRole('link',{name:'Experience in AR'}));
+ const iframe=screen.getByTitle('Mother Nature augmented reality camera');
+ expect(iframe.getAttribute('src')).toBe('/ar-camera.html?experience=mother-nature-original');
+ fireEvent(window,new MessageEvent('message',{origin:location.origin,source:(iframe as HTMLIFrameElement).contentWindow,data:{type:'vpa-ar-exit'}}));
+ await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
+ expect(screen.getByText('Collector’s Edition')).toBeTruthy();
 });
 it('opens an isolated, camera-capable AR frame only on request and exits back to the same certificate',async()=>{
  page();expect(document.querySelector('iframe')).toBeNull();
