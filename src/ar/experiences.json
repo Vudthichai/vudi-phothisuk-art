@@ -4,7 +4,8 @@
     "artworkId": "mother-nature",
     "title": "Mother Nature",
     "certificatePaths": [
-      "/coa/forest-and-flowers/mother-nature/original/"
+      "/coa/forest-and-flowers/mother-nature/original/",
+      "/coa/forest-and-flowers/mother-nature/collectors-edition/"
     ],
     "targetImage": "/ar/targets/mother-nature-original.jpg",
     "targetFile": "/ar/targets/mother-nature-original.mind",
