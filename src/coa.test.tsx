@@ -98,7 +98,7 @@ it('never treats guessed certificate paths as verified records', () => {
 
 it('corrects the two original dimensions without changing Studio Print sizes or prices', () => {
   for (const id of ['tiger-lily','75-leaves']) expect(forestCollection.artworks.find(art => art.id === id)?.dimensions).toBe('18 × 24 in.');
-  expect(studioSizes.map(size => [size.width,size.height,size.priceCents])).toEqual([[9,12,4500],[12,16,9500]]);
+  expect(studioSizes.map(size => [size.width,size.height,size.priceCents])).toEqual([[9,12,4500],[12,16,7500]]);
 });
 
 it('renders all 15 verified records with the correct artwork, designation, dimensions and canonical URL', () => {

@@ -16,11 +16,11 @@ it('serves all five distinct product pages with confirmed size pricing and no ch
     expect(details.getAllByRole('radio')).toHaveLength(2);
     expect(gallery.getAllByRole('radio')).toHaveLength(2);
     expect(document.querySelector('.studio-framing-note')?.textContent).toBe('Prints are sold unframed. Room view and framing are illustrative.');
-    expect(studioSizes.map(s=>s.priceCents)).toEqual([4500,9500]);
-    const larger=details.getByRole('radio',{name:'12 × 16 inches — $95'});
+    expect(studioSizes.map(s=>s.priceCents)).toEqual([4500,7500]);
+    const larger=details.getByRole('radio',{name:'12 × 16 inches — $75'});
     fireEvent.click(larger);expect((larger as HTMLInputElement).checked).toBe(true);
-    expect(screen.getByText('12 × 16 inches — $95 · Coming Soon')).toBeTruthy();
-    expect(document.querySelector('.studio-product-price strong')?.textContent).toBe('$95');
+    expect(screen.getByText('12 × 16 inches — $75 · Coming Soon')).toBeTruthy();
+    expect(document.querySelector('.studio-product-price strong')?.textContent).toBe('$75');
     fireEvent.click(details.getByRole('radio',{name:'9 × 12 inches — $45'}));
     expect(document.querySelector('.studio-product-price strong')?.textContent).toBe('$45');
     expect(screen.getByRole('link',{name:'View the original artwork'}).getAttribute('href')).toBe(`/collections/forest-and-flowers/${edition.artworkId}/`);

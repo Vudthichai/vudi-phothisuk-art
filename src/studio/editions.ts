@@ -1,12 +1,13 @@
 import { forestCollection } from '../forest/collection';
 import type { ForestImage } from '../forest/types';
 import { studioContributions, type ContributionIntention } from './contributions';
+import catalog from './print-catalog.json';
 import printPhotographs from './print-photographs.json';
 
 export type StudioSize = { id: string; width: number; height: number; label: string; priceCents: number };
 export const studioSizes: readonly StudioSize[] = [
-  { id: '9x12', width: 9, height: 12, label: '9 × 12 inches', priceCents: 4500 },
-  { id: '12x16', width: 12, height: 16, label: '12 × 16 inches', priceCents: 9500 },
+  { id: '9x12', width: 9, height: 12, label: '9 × 12 inches', priceCents: catalog.prices['9x12'] },
+  { id: '12x16', width: 12, height: 16, label: '12 × 16 inches', priceCents: catalog.prices['12x16'] },
 ];
 
 /** Presentation only. No provider products, checkout URLs, stock promises or payment hooks. */
@@ -40,7 +41,7 @@ export const studioCollectionBundle = {
     const retailValueCents = size.priceCents * studioEditions.length;
     return {
       id: `forest-collection-${size.id}`, sizeId: size.id, sizeLabel: size.label,
-      priceCents, retailValueCents, savingsCents: retailValueCents - priceCents,
+      priceCents, retailValueCents, savingsCents: Math.max(0, retailValueCents - priceCents),
       status: 'Coming Soon',
       revenueAllocation: {
         basis: 'relative-standalone-retail' as const,

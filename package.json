@@ -12,9 +12,11 @@
     "test:seo": "node --test scripts/check-seo.mjs",
     "test:coa": "node scripts/check-coa.mjs",
     "test:http": "node scripts/check-http.mjs",
-    "test:browser": "node scripts/check-browser.mjs"
+    "test:browser": "node scripts/check-browser.mjs",
+    "test:studio-sandbox": "node --test scripts/check-studio-sandbox.mjs"
   },
   "dependencies": {
+    "@netlify/blobs": "^11.1.10",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.0"

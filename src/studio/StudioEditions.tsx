@@ -31,7 +31,7 @@ export function StudioEditions({ title = 'Studio Editions', listingLink = true }
         <p>All five Forest &amp; Flowers Studio Prints in {option.sizeLabel}.</p>
         <p className="studio-bundle-retail">Individual retail value: {studioPrice(option.retailValueCents)}</p>
         <p className="studio-price-status"><span className="studio-price">{studioPrice(option.priceCents)}</span><span aria-hidden="true">—</span><span className="studio-status">{option.status}</span></p>
-        <p className="studio-bundle-savings">Save {studioPrice(option.savingsCents)}</p>
+        {option.savingsCents > 0 && <p className="studio-bundle-savings">Save {studioPrice(option.savingsCents)}</p>}
       </section>)}</div>
     </aside>
   </section>;

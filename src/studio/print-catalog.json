@@ -1,0 +1,10 @@
+{
+  "prices": { "9x12": 4500, "12x16": 7500 },
+  "artworks": {
+    "mother-nature": "Mother Nature",
+    "ethereal-bloom": "Ethereal Bloom",
+    "tiger-lily": "Tiger Lily",
+    "75-leaves": "75 Leaves",
+    "a-forest-forgotten": "A Forest Forgotten"
+  }
+}
