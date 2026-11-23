@@ -1,5 +1,7 @@
 # Certificate AR — Phase A golden petal
 
+> Phase A baseline notes. The Phase B draft replaces the actor and camera UI; see [current botanical scene and recording review](certificate-ar-phase-b.md). Target extraction and provenance below remain applicable.
+
 ## Implemented flow
 
 The Mother Nature **original** certificate has a working `Experience in AR` entry point. Its permanent QR URL remains `/coa/forest-and-flowers/mother-nature/original/`. The link adds `?ar=1` as a temporary UI state; it does not replace the printed QR destination or its canonical URL.

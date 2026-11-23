@@ -1,10 +1,12 @@
-import { Scene, Group, Matrix4, Vector3, Quaternion, PerspectiveCamera, WebGLRenderer, HemisphereLight, DirectionalLight, SRGBColorSpace } from 'three';
-import { createGoldenPetal } from './petal';
+import { Scene, Group, Matrix4, Vector3, Quaternion, PerspectiveCamera, WebGLRenderer, HemisphereLight, DirectionalLight, SRGBColorSpace, PMREMGenerator } from 'three';
+import { createBotanicalSculpture } from './botanical';
+import { ImagePoseFilter } from './pose';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { ARExperience } from './config';
 type TrackerUpdate={type:string;targetIndex:number;worldMatrix:number[]|null};
 type Controller={inputWidth:number;inputHeight:number;worker:Worker;addImageTargetsFromBuffer:(buffer:ArrayBuffer)=>{dimensions:number[][]};getProjectionMatrix:()=>number[];dummyRun:(video:HTMLVideoElement)=>void;processVideo:(video:HTMLVideoElement)=>void;stopProcessVideo:()=>void};
 type ControllerConstructor=new(options:{inputWidth:number;inputHeight:number;maxTrack:number;warmupTolerance:number;missTolerance:number;filterMinCF:number;filterBeta:number;onUpdate:(data:TrackerUpdate)=>void})=>Controller;
-export type ARSession={dispose:()=>void};
+export type ARSession={dispose:()=>void; onFrame:(callback:((canvas:HTMLCanvasElement)=>void)|undefined)=>void};
 export async function startTracking({surface,video,experience,signal,onTracking,onError}:{surface:HTMLElement;video:HTMLVideoElement;experience:ARExperience;signal:AbortSignal;onTracking:(found:boolean)=>void;onError:(error:Error)=>void}):Promise<ARSession> {
   const loadVendor=new Promise<{Controller:ControllerConstructor}>((resolve,reject)=>{
     const script=document.createElement('script');script.type='module';script.src='/ar/vendor/mindar/mindar-image.prod.js';
@@ -20,7 +22,10 @@ export async function startTracking({surface,video,experience,signal,onTracking,
   const renderer=new WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'});
   renderer.outputColorSpace=SRGBColorSpace;renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));renderer.setClearColor(0x000000,0);
   renderer.domElement.className='ar-overlay';surface.appendChild(renderer.domElement);
-  const petal=createGoldenPetal();anchor.add(petal.mesh);
+  const sculpture=createBotanicalSculpture();anchor.add(sculpture.root);
+  const pmrem=new PMREMGenerator(renderer),room=new RoomEnvironment(),environment=pmrem.fromScene(room,.04,.1,10,{size:128});
+  scene.environment=environment.texture;room.dispose();pmrem.dispose();
+  const pose=new ImagePoseFilter(),targetPose=new Matrix4();let lastPoseTime=0,frameCallback:((canvas:HTMLCanvasElement)=>void)|undefined;
   scene.add(new HemisphereLight(0xfff8e8,0x3d301d,2));
   const light=new DirectionalLight(0xffe2aa,3);light.position.set(-1,2,3);scene.add(light);
   let controller:Controller|undefined,disposed=false,frame=0,found=false;
@@ -31,7 +36,7 @@ export async function startTracking({surface,video,experience,signal,onTracking,
     if(disposed)return;disposed=true;
     cancelAnimationFrame(frame);window.removeEventListener('resize',resize);renderer.domElement.removeEventListener('webglcontextlost',contextLost);signal.removeEventListener('abort',dispose);
     controller?.stopProcessVideo();controller?.worker.terminate();
-    petal.dispose();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();
+    frameCallback=undefined;sculpture.dispose();environment.dispose();renderer.dispose();renderer.forceContextLoss();renderer.domElement.remove();
   }
   function resize() {
     if(disposed||!controller)return;
@@ -50,7 +55,7 @@ export async function startTracking({surface,video,experience,signal,onTracking,
     controller=new Controller({inputWidth:video.videoWidth,inputHeight:video.videoHeight,maxTrack:1,warmupTolerance:5,missTolerance:8,filterMinCF:.001,filterBeta:1000,onUpdate:data=>{
       if(disposed||data.type!=='updateMatrix'||data.targetIndex!==experience.targetIndex)return;
       const visible=data.worldMatrix!==null;anchor.visible=visible;
-      if(data.worldMatrix)anchor.matrix.fromArray(data.worldMatrix).multiply(postMatrix);
+      if(data.worldMatrix){const now=performance.now()/1000;targetPose.fromArray(data.worldMatrix).multiply(postMatrix);anchor.matrix.copy(pose.update(targetPose,now-lastPoseTime));lastPoseTime=now;}else{pose.reset();}
       if(found!==visible) {found=visible;onTracking(visible);}
     }});
     const {dimensions}=controller.addImageTargetsFromBuffer(buffer);
@@ -62,11 +67,10 @@ export async function startTracking({surface,video,experience,signal,onTracking,
     const animate=(time:number)=>{
       if(disposed)return;
       const t=time/1000;
-      petal.mesh.position.z=.13+(reducedMotion.matches?0:Math.sin(t*.9)*.018);
-      petal.mesh.rotation.set(.15,reducedMotion.matches?-.2:-.2+Math.sin(t*.55)*.22,reducedMotion.matches?-.15:-.15+Math.sin(t*.7)*.10);
-      renderer.render(scene,camera);frame=requestAnimationFrame(animate);
+      sculpture.update(t,reducedMotion.matches,found);
+      renderer.render(scene,camera);frameCallback?.(renderer.domElement);frame=requestAnimationFrame(animate);
     };
     frame=requestAnimationFrame(animate);
-    return {dispose};
+    return {dispose,onFrame:callback=>{frameCallback=callback;}};
   }catch(error){dispose();throw error;}
 }
