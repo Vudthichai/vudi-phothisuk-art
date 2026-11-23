@@ -47,6 +47,7 @@ function Product({ edition }: { edition: NonNullable<ReturnType<typeof studioEdi
         <details className="studio-returns-policy" id="studio-returns-policy" open={maxQuantity !== null || undefined}>
           <summary>Returns policy</summary>
           <p>All Studio Prints are made to order. All sales are final. Returns or exchanges for change of mind are not accepted. If your print arrives damaged, defective, or incorrect, please contact us within 14 days of delivery so we can arrange an appropriate resolution. This policy does not limit your applicable consumer rights.</p>
+          <p>To request a cancellation, contact us promptly. Availability depends on the stage of production and your applicable rights.</p>
         </details>
         {maxQuantity !== null && <StudioCheckout artwork={edition.artworkId} size={selected} maxQuantity={maxQuantity}/>}
         <section className="studio-product-description" aria-labelledby="studio-description-title"><h2 id="studio-description-title">About the original painting</h2>{artwork.description.slice(0,2).map(paragraph => <p key={paragraph}><JunglekeepersText text={paragraph}/></p>)}<p>A fine-art reproduction of the original mixed-media painting.</p></section>

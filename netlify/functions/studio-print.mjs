@@ -49,14 +49,14 @@ export function createHandler({ env = process.env, openStore = config => getStor
         const service = studioService(config, openStore(config), providers(config, fetcher));
         return reply({ sandbox: await service.enabled(), maxQuantity: config.maxQuantity });
       }
-      if (request.method !== 'POST' || !['checkout', 'webhook', 'admin'].includes(action)) {
+      if (request.method !== 'POST' || !['quote', 'checkout', 'webhook', 'admin'].includes(action)) {
         return reply({ error: 'Not found.' }, 404);
       }
       if (action === 'admin' && request.headers.has('origin')) return reply({ error: 'Unauthorized.' }, 401);
       if (action === 'admin' && !equal(`Bearer ${config.adminToken}`, request.headers.get('authorization') ?? '')) {
         return reply({ error: 'Unauthorized.' }, 401);
       }
-      if (action === 'checkout' && request.headers.get('origin') !== url.origin) {
+      if ((action === 'checkout' || action === 'quote') && request.headers.get('origin') !== url.origin) {
         return reply({ error: 'Open checkout from the Studio Print page.' }, 403);
       }
       const service = studioService(config, openStore(config), providers(config, fetcher));
@@ -69,7 +69,7 @@ export function createHandler({ env = process.env, openStore = config => getStor
       // Avoid logging raw exceptions, authenticated URLs, or webhook bodies.
       const safeError = /^(?:Square|Prodigi) (?:transport failure|API returned HTTP \d{3}(?: \(request [\w-]+\))?)$/.test(error?.message)
         ? error.message : 'Order data, response, or storage verification failed';
-      console.error('[studio-print sandbox]', ['checkout', 'webhook', 'admin'].includes(action) ? action : 'request', safeError);
+      console.error('[studio-print sandbox]', ['quote', 'checkout', 'webhook', 'admin'].includes(action) ? action : 'request', safeError);
       return reply({ error: 'The sandbox order could not be processed. Please retry or check the function logs.' }, 502);
     }
   };
@@ -78,5 +78,5 @@ export default createHandler();
 
 export const config = {
   rateLimit: { windowLimit: 40, windowSize: 60, aggregateBy: ['ip', 'domain'] },
-  path: ['/api/studio-print/status', '/api/studio-print/checkout', '/api/studio-print/webhook', '/api/studio-print/admin'],
+  path: ['/api/studio-print/status', '/api/studio-print/quote', '/api/studio-print/checkout', '/api/studio-print/webhook', '/api/studio-print/admin'],
 };

@@ -1,5 +1,7 @@
-import { createHash, createHmac } from 'node:crypto';
+import { createHash, createHmac, randomUUID } from 'node:crypto';
 import { encryptRecipient, equal, fileIdentity, fulfillmentDetails, selection, StudioError, validId } from './studio-config.mjs';
+
+import { orderFinancials, reserveDailySpend, shippingQuote, supplierCents } from './studio-finance.mjs';
 
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const money = amount => ({ amount, currency: 'USD' });
@@ -39,6 +41,9 @@ export function providers(config, fetcher = fetch) {
     square: (path, body) => call('Square', 'https://connect.squareupsandbox.com/v2', {
       Authorization: `Bearer ${config.squareToken}`, 'Square-Version': '2026-11-18',
     }, path, body),
+    quote: (body) => call('Prodigi', 'https://api.sandbox.prodigi.com/v4.0', {
+      'X-API-Key': config.prodigiKey.slice('sandbox_'.length),
+    }, '/quotes', body),
     prodigi: async (path, body, extra) => (await call('Prodigi', 'https://api.prodigi.com/v5', {
       'X-API-Key': config.prodigiKey,
     }, path, body, extra)).data,
@@ -50,7 +55,7 @@ export function checkVariant(variant, selected) {
   const sides = [variant?.dimensions?.width?.in, variant?.dimensions?.height?.in].sort((a, b) => a - b);
   const printArea = variant?.printAreas?.find(area => area.required && area.name === 'default');
   const requiredAreas = variant?.printAreas?.filter(area => area.required);
-  if (variant?.sku !== selected.sku || !/(?:\blustre\b|\blpp\b)/i.test(variant?.name ?? '') ||
+  if (variant?.sku?.toUpperCase() !== selected.sku || !/(?:\blustre\b|\blpp\b)/i.test(variant?.name ?? '') ||
       !/\b240\s*gsm\b/i.test(variant.name) ||
       Math.abs(sides[0] - width) > 0.02 || Math.abs(sides[1] - height) > 0.02 ||
       sides.some(side => !Number.isFinite(side)) || requiredAreas?.length !== 1 || !printArea ||
@@ -99,7 +104,12 @@ const submissionStates = new Set([
   'pending_submission', 'submitted', 'in_production', 'partially_shipped', 'shipped', 'completed', 'paused', 'on_hold',
 ]);
 const settled = record => Date.now() - Date.parse(record.approvalAttemptAt) >= 120000;
-const adminActions = new Set(['retry-draft', 'refresh', 'approve', 'reset-approval', 'pause', 'resume']);
+const adminActions = new Set([
+  'retry-draft', 'refresh', 'approve', 'reset-approval', 'pause', 'resume', 'pause-checkout', 'resume-checkout', 'view', 'catalogue',
+]);
+const quoteValidMs = 10 * 60 * 1000;
+const quoteKey = id => 'quote-' + id;
+const quoteIdValid = value => typeof value === 'string' && /^[a-f\d]{8}-(?:[a-f\d]{4}-){3}[a-f\d]{12}$/.test(value);
 
 function matchDraft(order, record, details) {
   const actual = order.items?.[0];
@@ -108,7 +118,7 @@ function matchDraft(order, record, details) {
   const recipient = order.recipient;
   if (order.status !== 'draft' || !order.allowedActions?.includes('submit') ||
       order.shippingMethod !== 'standard' || order.items?.length !== 1 ||
-      (actual.sku ?? actual.catalogueVariantId) !== record.sku ||
+      (actual.sku ?? actual.catalogueVariantId)?.toUpperCase() !== record.sku ||
       actual.quantity !== record.quantity || actual.sizing !== 'fitPrintArea' ||
       actual.assets?.length !== 1 || asset.printArea !== 'default' ||
       typeof asset.url !== 'string' || fileIdentity(asset.url) !== record.fileIdentity ||
@@ -119,15 +129,14 @@ function matchDraft(order, record, details) {
 }
 
 function checkBudget(order, config) {
-  const total = order.costs?.total;
-  const amount = total?.amount;
-  if (total?.currency !== 'USD' || typeof amount !== 'string' || !/^\d{1,6}(?:\.\d{1,2})?$/.test(amount) ||
-      Number(amount) <= 0 || Math.round(Number(amount) * 100) > config.maxCostCents) {
+  const amount = supplierCents(order.costs?.total);
+  if (amount === null || amount <= 0 || amount > config.maxCostCents) {
     throw new StudioError(409, 'A verified USD supplier total within the configured spending limit is required.');
   }
+  return amount;
 }
 
-export function studioService(config, store, { square, prodigi }) {
+export function studioService(config, store, { square, prodigi, quote: requestQuote }) {
   async function enabled() {
     if (!config.fulfillmentEnabled) return false;
     const gate = await store.getWithMetadata(pauseKey, { type: 'json', consistency: 'strong' });
@@ -137,13 +146,69 @@ export function studioService(config, store, { square, prodigi }) {
   async function requireEnabled() {
     if (!await enabled()) throw new StudioError(503, 'Studio Print fulfillment is paused.');
   }
-  async function checkout(input) {
-    const selected = selection(input, config);
+  async function checkoutEnabled() {
+    if (!config.checkoutEnabled || !await enabled()) return false;
+    const gate = await store.getWithMetadata('control-checkout', { type: 'json', consistency: 'strong' });
+    return !gate || gate.data?.paused === false;
+  }
+
+  async function requireCheckout() {
     await requireEnabled();
-    const { artwork, size, quantity, unitCents, shippingCents, taxBps, taxShipping, recipient, attemptId, sku, file } = selected;
-    const variant = await prodigi('/catalogue/variants/' + encodeURIComponent(sku));
+    if (!await checkoutEnabled()) throw new StudioError(503, 'Studio Print checkout is paused.');
+  }
+
+  async function variantFor(selected) {
+    const variant = await prodigi('/catalogue/variants/' + encodeURIComponent(selected.sku));
     checkVariant(variant, selected);
+    return variant;
+  }
+
+  async function quote(input) {
+    await requireCheckout();
+    const id = randomUUID();
+    const selected = selection({ ...input, attemptId: id }, config);
+    await variantFor(selected);
+    const offer = await shippingQuote(requestQuote, selected);
+    if (offer.productionCents + offer.shippingCents > config.maxCostCents) {
+      throw new StudioError(503, 'This print and shipping option exceeds the current order limit.');
+    }
+    const printCents = selected.unitCents * selected.quantity;
+    const taxCents = Math.round((printCents + (selected.taxShipping ? offer.shippingCents : 0)) * selected.taxBps / 10000);
+    const totalCents = printCents + offer.shippingCents + taxCents;
+    const expires = Date.now() + quoteValidMs;
+    const saved = await store.setJSON(quoteKey(id), {
+      version: 2, orderId: id, artwork: selected.artwork, size: selected.size, quantity: selected.quantity,
+      attemptId: id, sku: selected.sku, fileIdentity: fileIdentity(selected.file), unitCents: selected.unitCents,
+      taxBps: selected.taxBps, taxShipping: selected.taxShipping, quote: offer, taxCents, totalCents, expires,
+      recipientBox: encryptRecipient(selected.recipient, id, config.dataKey),
+    }, { onlyIfNew: true });
+    if (!saved.modified) throw new Error('Quote could not be saved');
+    return { quoteId: id, printCents, shippingCents: offer.shippingCents, taxCents, totalCents, expires };
+  }
+
+  async function checkout(input) {
+    await requireCheckout();
+    if (!quoteIdValid(input.quoteId)) throw new StudioError(400, 'Request a shipping quote before checkout.');
+    const entry = await store.getWithMetadata(quoteKey(input.quoteId), { type: 'json', consistency: 'strong' });
+    const savedQuote = entry?.data;
+    if (!savedQuote || !Number.isSafeInteger(savedQuote.expires) || savedQuote.expires <= Date.now()) {
+      throw new StudioError(409, 'The shipping quote has expired. Request a new quote.');
+    }
+    const selected = fulfillmentDetails(savedQuote, config);
+    const { artwork, size, quantity, unitCents, taxBps, taxShipping, recipient, attemptId, sku, file } = selected;
+    const { shippingCents } = savedQuote.quote;
+    if (!Number.isSafeInteger(shippingCents) || shippingCents < 0 || savedQuote.quote.currency !== 'USD' ||
+        savedQuote.quote.method !== 'standard') throw new Error('Invalid stored quote');
+    if (savedQuote.quote.productionCents + shippingCents > config.maxCostCents) {
+      throw new StudioError(409, 'The order limit changed. Request a new shipping quote.');
+    }
+    if (savedQuote.orderId !== input.quoteId || savedQuote.attemptId !== input.quoteId ||
+        unitCents !== savedQuote.unitCents || taxBps !== savedQuote.taxBps || taxShipping !== savedQuote.taxShipping) {
+      throw new StudioError(409, 'Pricing or tax rules changed. Request a new shipping quote.');
+    }
     const lineName = `${selected.title} · Studio Print · ${size.replace('x', ' × ')} in`;
+    await requireCheckout();
+    if (savedQuote.expires <= Date.now()) throw new StudioError(409, 'The shipping quote has expired. Request a new quote.');
     const { payment_link: link } = await square('/online-checkout/payment-links', {
       idempotency_key: attemptId,
       order: {
@@ -164,13 +229,12 @@ export function studioService(config, store, { square, prodigi }) {
     const url = checkoutURL(link.url);
     const { order } = await square('/orders/' + link.order_id);
     const tax = order?.total_tax_money;
-    const taxableBase = unitCents * quantity + (taxShipping ? shippingCents : 0);
-    if (!usdAmount(tax) || Math.abs(tax.amount - Math.round(taxableBase * taxBps / 10000)) > (taxBps ? 1 : 0)) {
+    if (!usdAmount(tax) || tax.amount !== savedQuote.taxCents) {
       throw new Error('Unexpected Square tax calculation');
     }
     const record = {
       orderId: link.order_id, attemptId, artwork, size, quantity, unitCents, shippingCents,
-      taxCents: tax.amount, totalCents: unitCents * quantity + shippingCents + tax.amount,
+      taxCents: tax.amount, totalCents: savedQuote.totalCents, quote: savedQuote.quote,
       lineName, version: 2, recipientBox: encryptRecipient(recipient, link.order_id, config.dataKey),
       sku, fileIdentity: fileIdentity(file), state: 'awaiting_payment', createdAt: now(),
     };
@@ -181,7 +245,7 @@ export function studioService(config, store, { square, prodigi }) {
       const previous = fulfillmentDetails(data, config);
       if (data.attemptId !== attemptId || hash(previous.recipient) !== hash(recipient) ||
           data.artwork !== artwork || data.size !== size || data.quantity !== quantity ||
-          data.totalCents !== record.totalCents || data.state !== 'awaiting_payment') {
+          data.totalCents !== record.totalCents || data.paymentId || data.state !== 'awaiting_payment') {
         throw new StudioError(409, 'This checkout attempt is no longer available.');
       }
     }
@@ -272,17 +336,50 @@ export function studioService(config, store, { square, prodigi }) {
 
   async function admin(input) {
     if (!adminActions.has(input.action)) throw new StudioError(400, 'Unknown admin action.');
-    if (input.action === 'pause' || input.action === 'resume') {
-      const paused = input.action === 'pause';
-      if (!paused && (!config.fulfillmentEnabled || input.confirm !== 'resume-sandbox-fulfillment')) {
+    if (['pause', 'resume', 'pause-checkout', 'resume-checkout'].includes(input.action)) {
+      const paused = input.action.startsWith('pause');
+      const checkoutOnly = input.action.endsWith('-checkout');
+      if (!paused && (!config.fulfillmentEnabled || (checkoutOnly && !config.checkoutEnabled) ||
+          input.confirm !== (checkoutOnly ? 'resume-sandbox-checkout' : 'resume-sandbox-fulfillment'))) {
         throw new StudioError(409, 'Sandbox fulfillment requires explicit resume confirmation.');
       }
-      await store.setJSON(pauseKey, { paused, updatedAt: now() });
+      await store.setJSON(checkoutOnly ? 'control-checkout' : pauseKey, { paused, updatedAt: now() });
       return { paused };
+    }
+    if (input.action === 'catalogue') {
+      const results = await Promise.all(Object.entries(config.variants).map(async ([size, sku]) => {
+        const selected = { size, sku, quantity: 1 };
+        const variant = await variantFor(selected);
+        return { size, sku, name: variant.name, dimensions: variant.dimensions, printAreas: variant.printAreas,
+          shipsTo: variant.shipsTo, quote: await shippingQuote(requestQuote, selected) };
+      }));
+      return { results };
     }
     if (input.action === 'retry-draft') return draft(input.paymentId);
     if (!validId(input.orderId)) throw new StudioError(400, 'Invalid Square order ID.');
     const { data: record, etag } = await load(input.orderId);
+    if (input.action === 'view') {
+      const [squareOrder, paid, supplier] = await Promise.all([
+        square('/orders/' + record.orderId),
+        validId(record.paymentId) ? square('/payments/' + record.paymentId) : {},
+        validId(record.prodigiId) ? prodigi('/orders/' + record.prodigiId) : null,
+      ]);
+      checkOrder(squareOrder.order, record, config.locationId);
+      if (supplier && (supplier.id !== record.prodigiId || supplier.merchantReference !== record.orderId)) {
+        throw new Error('Prodigi order mismatch');
+      }
+      const payment = paid.payment;
+      if (payment && (payment.id !== record.paymentId || payment.order_id !== record.orderId ||
+          payment.location_id !== config.locationId || !isMoney(payment.total_money, record.totalCents))) {
+        throw new Error('Square payment mismatch');
+      }
+      return {
+        orderId: record.orderId, artwork: record.artwork, size: record.size, quantity: record.quantity,
+        paymentStatus: payment?.status ?? 'awaiting_payment', refundedCents: payment?.refunded_money?.amount ?? 0,
+        approval: record.approval ?? null, fulfillment: supplier ? fulfillmentSnapshot(supplier) : null,
+        financials: orderFinancials(record, payment, supplier),
+      };
+    }
     if (!record.prodigiId) throw new StudioError(409, 'No Prodigi draft. Retry using the Square payment ID.');
     if (record.orderId !== input.orderId || !validId(record.prodigiId)) throw new Error('Invalid order record');
     const apiPath = '/orders/' + record.prodigiId;
@@ -321,7 +418,7 @@ export function studioService(config, store, { square, prodigi }) {
       throw new StudioError(409, 'Approval already started. Refresh and reconcile the supplier state.');
     }
     matchDraft(order, record, details);
-    checkBudget(order, config);
+    const costCents = checkBudget(order, config);
     if (!validId(record.paymentId) || !await verifiedPayment(record.paymentId, record)) {
       throw new StudioError(409, 'Square payment is no longer eligible.');
     }
@@ -334,6 +431,7 @@ export function studioService(config, store, { square, prodigi }) {
     if (!lock.modified) throw new StudioError(409, 'Order changed. Refresh and try again.');
     let result;
     try {
+      await reserveDailySpend(store, record.orderId, costCents, config.dailyCents);
       await requireEnabled();
       result = await prodigi(apiPath + ':submit', {});
     } catch (error) {
@@ -354,5 +452,5 @@ export function studioService(config, store, { square, prodigi }) {
     return { orderId: record.orderId, prodigiId: record.prodigiId, state };
   }
 
-  return { checkout, webhook, admin, enabled };
+  return { quote, checkout, webhook, admin, enabled: checkoutEnabled };
 }

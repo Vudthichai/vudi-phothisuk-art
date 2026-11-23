@@ -1,7 +1,7 @@
 import { forestCollection } from '../forest/collection';
 import type { ForestImage } from '../forest/types';
 import { studioContributions, type ContributionIntention } from './contributions';
-import catalog from './print-catalog.json';
+import catalog from '../../server/commerce/studio-catalog.json';
 import printPhotographs from './print-photographs.json';
 
 export type StudioSize = { id: string; width: number; height: number; label: string; priceCents: number };

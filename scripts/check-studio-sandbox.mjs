@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHmac, randomUUID } from 'node:crypto';
 import test from 'node:test';
-import catalog from '../src/studio/print-catalog.json' with { type: 'json' };
+import catalog from '../server/commerce/studio-catalog.json' with { type: 'json' };
 import { createHandler } from '../netlify/functions/studio-print.mjs';
 
 const base = 'https://deploy-preview.example.test';
@@ -11,8 +11,8 @@ const env = {
   SQUARE_SANDBOX_TOKEN: 'fixture', SQUARE_SANDBOX_LOCATION: 'location', SQUARE_SANDBOX_MERCHANT: 'merchant',
   SQUARE_WEBHOOK_KEY: 'webhook-fixture', STUDIO_WEBHOOK_URL: endpoint + 'webhook',
   STUDIO_ADMIN_TOKEN: '1'.repeat(64), STUDIO_DATA_KEY: '2'.repeat(64),
-  STUDIO_FULFILLMENT_ENABLED: 'true', STUDIO_MAX_FULFILLMENT_CENTS: '2000', STUDIO_PRINT_HOST: 'files.example.com', PRODIGI_SANDBOX_KEY: 'sandbox_fixture',
-  STUDIO_VARIANTS: JSON.stringify({ '9x12': 'fixture-small', '12x16': 'fixture-large' }),
+  STUDIO_FULFILLMENT_ENABLED: 'true', STUDIO_MAX_FULFILLMENT_CENTS: '3000', STUDIO_PRINT_HOST: 'files.example.com', PRODIGI_SANDBOX_KEY: 'sandbox_fixture',
+  STUDIO_CHECKOUT_ENABLED: 'true', STUDIO_DAILY_FULFILLMENT_CENTS: '20000',
   STUDIO_PRINT_FILES: JSON.stringify(Object.fromEntries(Object.keys(catalog.artworks).map(id => [
     id, Object.fromEntries(Object.keys(catalog.prices).map(size => [size, `https://files.example.com/${id}-${size}.jpg?fixture=download`])),
   ]))),
@@ -34,6 +34,8 @@ function fixture(overrides = {}) {
   let submitFailure;
   let submitHold;
   let invalidVariant = false;
+  let quoteCurrency = 'USD';
+  let quoteFailure = false;
   const store = {
     async getWithMetadata(id) { return structuredClone(records.get(id) ?? null); },
     async setJSON(id, data, { onlyIfNew, onlyIfMatch } = {}) {
@@ -68,11 +70,29 @@ function fixture(overrides = {}) {
       if (url.pathname.startsWith('/v2/orders/')) return Response.json({ order: orders.get(url.pathname.split('/').at(-1)) });
       if (url.pathname.startsWith('/v2/payments/')) return Response.json({ payment: payments.get(url.pathname.split('/').at(-1)) });
     }
+    if (url.href === 'https://api.sandbox.prodigi.com/v4.0/quotes') {
+      assert.equal(init.headers['X-API-Key'], 'fixture');
+      assert.equal(body.destinationCountryCode, 'US');
+      assert.equal(body.currencyCode, 'USD');
+      assert.equal(body.shippingMethod, 'Standard');
+      if (quoteFailure) return new Response(null, { status: 503 });
+      const [{ sku, copies, assets }] = body.items;
+      assert.deepEqual(assets, [{ printArea: 'default' }]);
+      assert(Object.values(catalog.variants).includes(sku));
+      const price = sku.endsWith('9X12') ? 450 : 650;
+      return Response.json({ outcome: 'Created', quotes: [{
+        shipmentMethod: 'Standard',
+        costSummary: { items: { amount: (price * copies / 100).toFixed(2), currency: quoteCurrency },
+          shipping: { amount: ((799 + (copies - 1) * 100) / 100).toFixed(2), currency: quoteCurrency } },
+        items: [{ id: 'qit_fixture', sku, copies }],
+        shipments: [{ items: ['qit_fixture'], fulfillmentLocation: { countryCode: 'US' } }],
+      }] });
+    }
     if (url.hostname === 'api.prodigi.com') {
       assert.equal(init.headers['X-API-Key'], 'sandbox_fixture');
       if (url.pathname.startsWith('/v5/catalogue/variants/')) {
         const sku = url.pathname.split('/').at(-1);
-        const [width, height] = sku.endsWith('small') ? [9, 12] : [12, 16];
+        const [width, height] = sku.endsWith('9X12') ? [9, 12] : [12, 16];
         return Response.json({ data: {
           sku, name: invalidVariant ? 'Wrong paper 200gsm' : 'Lustre Photo Paper, 240gsm',
           dimensions: { width: { in: width }, height: { in: height } },
@@ -107,9 +127,15 @@ function fixture(overrides = {}) {
   };
   const handler = createHandler({ env: { ...env, ...overrides }, openStore: () => store, fetcher });
   const request = (action, body, headers = {}, origin = base) => handler(new Request(origin + '/api/studio-print/' + action, {
-    method: 'POST', body, headers: { 'Content-Type': 'application/json', ...(action === 'checkout' && { Origin: base }), ...headers },
+    method: 'POST', body, headers: { 'Content-Type': 'application/json', ...(['checkout', 'quote'].includes(action) && { Origin: base }), ...headers },
   }));
   const post = (action, body, headers) => request(action, JSON.stringify(body), headers);
+  async function purchase(input, headers) {
+    const response = await post('quote', input, headers);
+    if (!response.ok) return response;
+    const { quoteId } = await response.json();
+    return post('checkout', { quoteId, shippingCents: 1, totalCents: 1, quantity: 1000 }, headers);
+  }
   function pay(orderId, options = {}) {
     const id = 'payment-' + orderId;
     const money = orders.get(orderId).total_money;
@@ -123,7 +149,8 @@ function fixture(overrides = {}) {
   };
   const admin = input => post('admin', input, { Authorization: 'Bearer ' + env.STUDIO_ADMIN_TOKEN });
   return {
-    records, orders, drafts, draftCalls, pay, notify, post, request, admin, submits: () => submits,
+    records, orders, drafts, draftCalls, pay, notify, post, purchase, request, admin, submits: () => submits,
+    setQuoteCurrency: value => { quoteCurrency = value; }, setQuoteFailure: value => { quoteFailure = value; },
     setSubmitFailure: value => { submitFailure = value; }, setSubmitHold: value => { submitHold = value; },
     setFailDraft: value => { failDraft = value; }, setInvalidVariant: value => { invalidVariant = value; },
   };
@@ -141,7 +168,7 @@ test('both sizes and all five artwork mappings use authoritative pricing and ori
   const f = fixture();
   for (const artwork of Object.keys(catalog.artworks)) {
     for (const [size, price] of Object.entries(catalog.prices)) {
-      const response = await f.post('checkout', customer({ artwork, size, priceCents: 1 }));
+      const response = await f.purchase(customer({ artwork, size, priceCents: 1 }));
       assert.equal(response.status, 200, await response.clone().text());
       const { orderId } = await response.json();
       const p = f.pay(orderId);
@@ -158,7 +185,7 @@ test('both sizes and all five artwork mappings use authoritative pricing and ori
       assert.equal(draft.submit, false);
       assert.equal(draft.recipient.address.countryCode, 'US');
       assert.deepEqual(draft.items, [{
-        sku: size === '9x12' ? 'fixture-small' : 'fixture-large', quantity: 2, sizing: 'fitPrintArea',
+        sku: catalog.variants[size], quantity: 2, sizing: 'fitPrintArea',
         assets: [{ printArea: 'default', url: `https://files.example.com/${artwork}-${size}.jpg?fixture=download` }],
       }]);
     }
@@ -172,16 +199,16 @@ test('invalid U.S. addresses and unconfigured variants fail before Square checko
   for (const input of [
     { country: 'CA' }, { line1: '' }, { email: 'wrong' }, { zip: '123' },
     { zip: '00000' }, { state: 'CA' }, { artwork: 'collectors-edition' }, { quantity: 0 },
-  ]) assert.equal((await f.post('checkout', customer(input))).status, 400);
+  ]) assert.equal((await f.purchase(customer(input))).status, 400);
   f.setInvalidVariant(true);
-  assert.equal((await f.post('checkout', customer())).status, 503);
+  assert.equal((await f.purchase(customer())).status, 503);
   assert.equal(f.orders.size, 0);
-  assert.equal((await f.post('checkout', customer(), { Origin: 'https://other.example.test' })).status, 403);
+  assert.equal((await f.purchase(customer(), { Origin: 'https://other.example.test' })).status, 403);
 });
 
 test('unsigned events, unsuccessful payments and amount changes cannot create drafts', async () => {
   const f = fixture();
-  const { orderId } = await (await f.post('checkout', customer())).json();
+  const { orderId } = await (await f.purchase(customer())).json();
   assert.equal((await f.notify(f.pay(orderId), 'forged')).status, 401);
   assert.deepEqual(await (await f.notify(f.pay(orderId, { status: 'FAILED' }))).json(), { ignored: true });
   assert.deepEqual(await (await f.notify(f.pay(orderId), undefined, 'PENDING')).json(), { ignored: true });
@@ -191,9 +218,10 @@ test('unsigned events, unsuccessful payments and amount changes cannot create dr
 
 test('duplicate webhooks, temporary provider failures, and concurrent admin approvals are safe', async () => {
   const f = fixture();
-  const input = customer();
-  const { orderId } = await (await f.post('checkout', input)).json();
-  assert.equal((await (await f.post('checkout', input)).json()).orderId, orderId);
+  const { quoteId } = await (await f.post('quote', customer())).json();
+  const checkout = { quoteId };
+  const { orderId } = await (await f.post('checkout', checkout)).json();
+  assert.equal((await (await f.post('checkout', checkout)).json()).orderId, orderId);
   const paymentId = f.pay(orderId);
   f.setFailDraft(true);
   assert.equal((await f.notify(paymentId)).status, 502);
@@ -225,11 +253,11 @@ test('missing credentials, a live Prodigi key, and production all fail closed', 
     [{ PRODIGI_SANDBOX_KEY: 'live_never' }, 503],
     [{ CONTEXT: 'production' }, 404],
     [{ STUDIO_SANDBOX_ENABLED: 'false' }, 404],
-  ]) assert.equal((await fixture(overrides).post('checkout', customer())).status, status);
+  ]) assert.equal((await fixture(overrides).purchase(customer())).status, status);
 });
 
 async function draftOrder(f) {
-  const response = await f.post('checkout', customer());
+  const response = await f.purchase(customer());
   assert.equal(response.status, 200);
   const { orderId } = await response.json();
   const paymentId = f.pay(orderId);
@@ -239,7 +267,7 @@ async function draftOrder(f) {
 
 test('rejects stale authenticated events, wrong currency, order mutations and unauthorized admin requests', async () => {
   const f = fixture();
-  const { orderId } = await (await f.post('checkout', customer())).json();
+  const { orderId } = await (await f.purchase(customer())).json();
   const paymentId = f.pay(orderId);
   const stale = new Date(Date.now() - 73 * 3600000).toISOString();
   assert.deepEqual(await (await f.notify(paymentId, undefined, 'COMPLETED', stale)).json(), { ignored: true });
@@ -259,8 +287,8 @@ test('rejects stale authenticated events, wrong currency, order mutations and un
 });
 
 test('quantity, missing or excessive supplier cost, modified draft and emergency pause block fulfillment', async () => {
-  const f = fixture({ STUDIO_MAX_QUANTITY: '2' });
-  assert.equal((await f.post('checkout', customer({ quantity: 3 }))).status, 400);
+  const f = fixture({ STUDIO_MAX_QUANTITY: '2', STUDIO_MAX_FULFILLMENT_CENTS: '2000' });
+  assert.equal((await f.purchase(customer({ quantity: 3 }))).status, 400);
   const { orderId, supplier } = await draftOrder(f);
   const approve = () => f.admin({ action: 'approve', orderId });
   supplier.costs.total.amount = '20.01';
@@ -275,11 +303,11 @@ test('quantity, missing or excessive supplier cost, modified draft and emergency
   supplier.items[0].assets[0].url = 'https://files.example.com/other-print.jpg';
   assert.equal((await approve()).status, 409);
   supplier.items[0].assets[0].url = file;
-  const unpaid = await (await f.post('checkout', customer())).json();
+  const unpaid = await (await f.purchase(customer())).json();
   assert.deepEqual(await (await f.admin({ action: 'pause' })).json(), { paused: true });
   assert.equal((await approve()).status, 503);
   assert.equal((await f.notify(f.pay(unpaid.orderId))).status, 503);
-  assert.equal((await f.post('checkout', customer())).status, 503);
+  assert.equal((await f.purchase(customer())).status, 503);
   assert.equal((await f.admin({ action: 'resume' })).status, 409);
   assert.equal(f.submits(), 0);
   assert.equal((await f.admin({ action: 'resume', confirm: 'resume-sandbox-fulfillment' })).status, 200);
@@ -336,9 +364,9 @@ test('private URL configuration rejects credentials, alternate hosts and interna
     const files = JSON.parse(env.STUDIO_PRINT_FILES);
     files['mother-nature']['9x12'] = value;
     const f = fixture({ STUDIO_PRINT_FILES: JSON.stringify(files) });
-    assert.equal((await f.post('checkout', customer())).status, 503);
+    assert.equal((await f.purchase(customer())).status, 503);
   }
-  assert.equal((await fixture({ STUDIO_FULFILLMENT_ENABLED: 'false' }).post('checkout', customer())).status, 503);
+  assert.equal((await fixture({ STUDIO_FULFILLMENT_ENABLED: 'false' }).purchase(customer())).status, 503);
 });
 
 test('a timeout with a later positive supplier state is reconciled without another submission', async () => {
@@ -352,4 +380,68 @@ test('a timeout with a later positive supplier state is reconciled without anoth
   assert.equal(refreshed.approval, 'accepted');
   assert.equal((await f.admin({ action: 'approve', orderId })).status, 409);
   assert.equal(f.submits(), 1);
+});
+
+test('quote review precedes Square, expires, and fails closed on missing USD or provider errors', async () => {
+  const f = fixture();
+  const response = await f.post('quote', customer({ artwork: 'ethereal-bloom', size: '12x16' }));
+  assert.equal(response.status, 200);
+  const offer = await response.json();
+  assert.equal(offer.printCents, 19000);
+  assert.equal(offer.shippingCents, 899);
+  assert.equal(offer.taxCents, 1393);
+  assert.equal(offer.totalCents, 21292);
+  assert.equal(f.orders.size, 0);
+  f.records.get('quote-' + offer.quoteId).data.expires = Date.now() - 1;
+  assert.equal((await f.post('checkout', { quoteId: offer.quoteId })).status, 409);
+  assert.equal((await f.post('checkout', { quoteId: randomUUID() })).status, 409);
+  assert.equal((await f.post('checkout', customer())).status, 400);
+  const capped = fixture({ STUDIO_MAX_FULFILLMENT_CENTS: '1700' });
+  assert.equal((await capped.post('quote', customer())).status, 503);
+  assert.equal(capped.orders.size, 0);
+  f.setQuoteCurrency('GBP');
+  assert.equal((await f.post('quote', customer())).status, 503);
+  f.setQuoteFailure(true);
+  assert.equal((await f.post('quote', customer())).status, 502);
+  assert.equal(f.orders.size, 0);
+});
+
+test('catalogue and order reports distinguish quotes from provider-reported costs and use verified fees', async () => {
+  const f = fixture();
+  const response = await f.admin({ action: 'catalogue' });
+  assert.equal(response.status, 200);
+  const report = await response.json();
+  assert.deepEqual(report.results.map(x => x.sku), Object.values(catalog.variants));
+  assert.deepEqual(report.results[0].quote.fulfillmentCountries, ['US']);
+  const { orderId, supplier } = await draftOrder(f);
+  f.pay(orderId, { processing_fee: [{ amount_money: { amount: 220, currency: 'USD' } }] });
+  supplier.costs.shipping = { amount: '7.00', currency: 'USD' };
+  const view = await (await f.admin({ action: 'view', orderId })).json();
+  assert.equal(view.paymentStatus, 'COMPLETED');
+  assert.equal(view.financials.squareFeeCents, 220);
+  assert.equal(view.financials.estimatedProductionCents, 900);
+  assert.equal(view.financials.supplierReportedShippingCents, 700);
+  assert.equal(view.financials.estimatedContributionAfterFeesCents, 8445);
+  assert.equal(view.fulfillment.state, 'draft');
+  assert(!JSON.stringify(view).includes('sandbox-buyer@example.com'));
+});
+
+test('atomic daily spending cap blocks concurrent approvals across different orders', async () => {
+  const f = fixture({ STUDIO_MAX_FULFILLMENT_CENTS: '2000', STUDIO_DAILY_FULFILLMENT_CENTS: '2000' });
+  const first = await draftOrder(f);
+  const second = await draftOrder(f);
+  const responses = await Promise.all([first, second].map(({ orderId }) => f.admin({ action: 'approve', orderId })));
+  assert.deepEqual(responses.map(response => response.status).sort(), [200, 409]);
+  assert.equal(f.submits(), 1);
+});
+
+test('checkout-only pause preserves verification and manual fulfillment', async () => {
+  const f = fixture();
+  const { orderId } = await (await f.purchase(customer())).json();
+  assert.equal((await f.admin({ action: 'pause-checkout' })).status, 200);
+  assert.equal((await f.post('quote', customer())).status, 503);
+  assert.equal((await f.notify(f.pay(orderId))).status, 200);
+  assert.equal((await f.admin({ action: 'approve', orderId })).status, 200);
+  assert.equal((await f.admin({ action: 'resume-checkout', confirm: 'resume-sandbox-checkout' })).status, 200);
+  assert.equal((await f.post('quote', customer())).status, 200);
 });

@@ -33,7 +33,7 @@ it('supports approved extra gallery views with explicit touch/keyboard controls'
  const control=screen.getByRole('button',{name:'Framed print'});fireEvent.click(control);
  expect(control.getAttribute('aria-pressed')).toBe('true');expect(screen.getByRole('img',{name:'Approved test fixture'})).toBeTruthy();
  const details=within(container.querySelector<HTMLFieldSetElement>('.studio-size-options-details')!);
- fireEvent.click(details.getByRole('radio',{name:'12 × 16 inches — $75'}));
+ fireEvent.click(details.getByRole('radio',{name:'12 × 16 inches — $95'}));
  expect(screen.queryByRole('button',{name:'Framed print'})).toBeNull();
  expect(screen.queryByRole('img',{name:'Approved test fixture'})).toBeNull();
  expect(screen.queryByRole('button',{name:/checkout|buy|cart/i})).toBeNull();

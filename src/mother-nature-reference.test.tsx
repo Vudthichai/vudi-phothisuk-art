@@ -26,14 +26,14 @@ it('synchronizes both size selectors and each product room image while retaining
   assertSelection('9x12');
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(smallPath);
   expect(view.container.querySelector('.studio-gallery-views button img')?.getAttribute('src')).toBe(smallPath);
-  fireEvent.click(gallery.getByRole('radio',{name:'12 × 16 inches — $75'}));
+  fireEvent.click(gallery.getByRole('radio',{name:'12 × 16 inches — $95'}));
   assertSelection('12x16');
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(path);
   expect(view.container.querySelector('.studio-gallery-views button img')?.getAttribute('src')).toBe(path);
   expect(studioGallery(edition,'12x16')[0].image).toBe(studioPrimaryImage(edition));
   expect(view.container.querySelector('.studio-gallery-caption')?.textContent).toBe('In a Space · 12 × 16 inches');
   expect([...view.container.querySelectorAll('img')].some(i=>i.getAttribute('src')?.includes('/mockups/'))).toBe(false);
-  expect(view.container.querySelector('.studio-product-price')?.textContent).toContain('$75Selected size · Coming Soon');
+  expect(view.container.querySelector('.studio-product-price')?.textContent).toContain('$95Selected size · Coming Soon');
   fireEvent.click(screen.getByRole('button',{name:'Artwork Detail'}));
   const detailPath=view.container.querySelector('.studio-product-image img')?.getAttribute('src');
   expect(detailPath).toContain(`/studio-editions/${edition.artworkId}-print-`);
@@ -44,7 +44,7 @@ it('synchronizes both size selectors and each product room image while retaining
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(detailPath);
   expect(view.container.querySelector('.studio-gallery-views button img')?.getAttribute('src')).toBe(smallPath);
   expect(view.container.querySelector('.studio-product-price strong')?.textContent).toBe('$45');
-  fireEvent.click(gallery.getByRole('radio',{name:'12 × 16 inches — $75'}));
+  fireEvent.click(gallery.getByRole('radio',{name:'12 × 16 inches — $95'}));
   assertSelection('12x16');
   expect(view.container.querySelector('.studio-gallery-caption')?.textContent).toBe('Artwork Detail');
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(detailPath);
@@ -52,7 +52,7 @@ it('synchronizes both size selectors and each product room image while retaining
   fireEvent.click(screen.getByRole('button',{name:'In a Space'}));
   expect(view.container.querySelector('.studio-product-image img')?.getAttribute('src')).toBe(path);
   expect(view.container.querySelector('.studio-gallery-caption')?.textContent).toBe('In a Space · 12 × 16 inches');
-  expect(view.container.querySelector('.studio-product-price strong')?.textContent).toBe('$75');
+  expect(view.container.querySelector('.studio-product-price strong')?.textContent).toBe('$95');
   assertSelection('12x16');
   fireEvent.click(details.getByRole('radio',{name:'9 × 12 inches — $45'}));
   assertSelection('9x12');

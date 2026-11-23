@@ -1,5 +1,5 @@
 import { createCipheriv, createDecipheriv, createHash, randomBytes, timingSafeEqual } from 'node:crypto';
-import catalog from '../../src/studio/print-catalog.json' with { type: 'json' };
+import catalog from './studio-catalog.json' with { type: 'json' };
 
 export class StudioError extends Error {
   constructor(status, message) {
@@ -33,11 +33,12 @@ export function studioConfig(env) {
       SQUARE_SANDBOX_TOKEN: squareToken, SQUARE_SANDBOX_LOCATION: locationId,
       SQUARE_SANDBOX_MERCHANT: merchantId, SQUARE_WEBHOOK_KEY: webhookKey,
       STUDIO_WEBHOOK_URL: webhookUrl, STUDIO_ADMIN_TOKEN: adminToken,
-      PRODIGI_SANDBOX_KEY: prodigiKey, STUDIO_VARIANTS: variantsJSON,
+      PRODIGI_SANDBOX_KEY: prodigiKey,
       STUDIO_PRINT_FILES: filesJSON, STUDIO_DESTINATIONS: destinationsJSON,
       STUDIO_PRINT_HOST: fileHost, STUDIO_DATA_KEY: dataKey,
       STUDIO_MAX_QUANTITY: maxQuantityValue = '10', STUDIO_MAX_FULFILLMENT_CENTS: maxCostValue,
-      STUDIO_FULFILLMENT_ENABLED: fulfillmentEnabled,
+      STUDIO_FULFILLMENT_ENABLED: fulfillmentEnabled, STUDIO_CHECKOUT_ENABLED: checkoutEnabled,
+      STUDIO_DAILY_FULFILLMENT_CENTS: dailyValue,
     } = env;
     const url = https(webhookUrl);
     if (url.origin === 'https://vudiphothisukart.com' || url.hostname.endsWith('.vudiphothisukart.com') ||
@@ -48,37 +49,35 @@ export function studioConfig(env) {
     }
     const maxQuantity = Number(maxQuantityValue);
     const maxCostCents = Number(maxCostValue);
-    if (!integer(maxQuantity, 1, 10) || !integer(maxCostCents, 1, 100000) ||
+    const dailyCents = Number(dailyValue);
+    if (!integer(maxQuantity, 1, 10) || !integer(maxCostCents, 1, 100000) || !integer(dailyCents, maxCostCents, 1000000) ||
         !/^(?:[a-z][a-z0-9-]*\.)+[a-z][a-z0-9-]*$/i.test(fileHost ?? '') ||
         /(?:^|\.)(?:localhost|local|internal|test)$/.test(fileHost.toLowerCase()) ||
         /(?:^|\.)vudiphothisukart\.com$/.test(fileHost.toLowerCase())) {
       throw new Error('Invalid print host or limits');
     }
-    const variants = JSON.parse(variantsJSON);
+    const variants = catalog.variants;
     const files = JSON.parse(filesJSON);
     const destinations = JSON.parse(destinationsJSON);
-    for (const size of Object.keys(catalog.prices)) {
-      if (!validId(variants[size])) throw new Error('Missing catalogue variant');
-    }
     for (const id of Object.keys(catalog.artworks)) {
       for (const size of Object.keys(catalog.prices)) {
         const file = https(files[id][size]);
-        if (file.hostname !== fileHost.toLowerCase() || !file.search || !/\.(?:jpe?g|pdf)$/i.test(file.pathname)) {
+        if (file.hostname !== fileHost.toLowerCase() || !file.search || !/\.jpe?g$/i.test(file.pathname)) {
           throw new Error('Invalid private print file');
         }
       }
     }
     if (!Object.keys(destinations).length) throw new Error('Missing destination policies');
     for (const [key, rate] of Object.entries(destinations)) {
-      if (!/^[A-Z]{2}-\d{5}$/.test(key) || !states.has(key.slice(0, 2)) || !integer(rate.shippingCents, 0, 10000) ||
-          !integer(rate.additionalCents, 0, 10000) || !integer(rate.taxBps, 0, 2000) ||
+      if (!/^[A-Z]{2}-\d{5}$/.test(key) || !states.has(key.slice(0, 2)) || ['AK', 'HI'].includes(key.slice(0, 2)) ||
+          !integer(rate.taxBps, 0, 2000) ||
           typeof rate.taxShipping !== 'boolean') throw new Error('Invalid destination policy');
     }
     return {
       squareToken, locationId, merchantId, webhookKey, webhookUrl: url.href, adminToken,
       prodigiKey, variants, files, destinations, origin: url.origin,
       dataKey: Buffer.from(dataKey, 'hex'), maxQuantity, maxCostCents,
-      fulfillmentEnabled: fulfillmentEnabled === 'true',
+      fulfillmentEnabled: fulfillmentEnabled === 'true', checkoutEnabled: checkoutEnabled === 'true', dailyCents,
     };
   } catch {
     throw new StudioError(503, 'Sandbox checkout configuration is incomplete.');
@@ -116,7 +115,6 @@ export function selection(input, config) {
   return {
     artwork, size, quantity, attemptId, title: catalog.artworks[artwork], unitCents: catalog.prices[size],
     sku: config.variants[size], file: config.files[artwork][size],
-    shippingCents: rate.shippingCents + (quantity - 1) * rate.additionalCents,
     taxBps: rate.taxBps, taxShipping: rate.taxShipping,
     recipient: { name, email, address: { line1, line2, townOrCity, stateOrCounty, postalOrZipCode, countryCode: 'US' } },
   };
@@ -131,7 +129,7 @@ export function encryptRecipient(recipient, orderId, key) {
   return Buffer.concat([nonce, cipher.getAuthTag(), ciphertext]).toString('base64url');
 }
 
-export function fulfillmentDetails(record, config) {
+export function decryptRecipient(record, config) {
   if (record.version !== 2 || typeof record.recipientBox !== 'string') {
     throw new StudioError(409, 'Legacy sandbox order requires manual reconciliation.');
   }
@@ -139,15 +137,18 @@ export function fulfillmentDetails(record, config) {
   const decipher = createDecipheriv('aes-256-gcm', config.dataKey, bytes.subarray(0, 12));
   decipher.setAAD(Buffer.from(record.orderId));
   decipher.setAuthTag(bytes.subarray(12, 28));
-  const recipient = JSON.parse(Buffer.concat([decipher.update(bytes.subarray(28)), decipher.final()]).toString('utf8'));
+  return JSON.parse(Buffer.concat([decipher.update(bytes.subarray(28)), decipher.final()]).toString('utf8'));
+}
+
+export function fulfillmentDetails(record, config) {
+  const recipient = decryptRecipient(record, config);
   const addr = recipient.address;
   const resolved = selection({
     artwork: record.artwork, size: record.size, quantity: record.quantity, attemptId: record.attemptId,
     name: recipient.name, email: recipient.email, country: addr.countryCode, line1: addr.line1,
     line2: addr.line2, city: addr.townOrCity, state: addr.stateOrCounty, zip: addr.postalOrZipCode,
   }, config);
-  if (resolved.sku !== record.sku || fileIdentity(resolved.file) !== record.fileIdentity ||
-      resolved.unitCents !== record.unitCents) {
+  if (resolved.sku !== record.sku || fileIdentity(resolved.file) !== record.fileIdentity) {
     throw new StudioError(409, 'The order print binding requires manual reconciliation.');
   }
   return resolved;

@@ -69,3 +69,8 @@
 
 .studio-returns-policy { margin-block: 1rem; font-size: 0.9rem; }
 .studio-returns-policy summary { cursor: pointer; text-decoration: underline; }
+
+.studio-quote { margin: 0; }
+.studio-quote div { display: flex; justify-content: space-between; gap: 0.75rem; }
+.studio-quote dd { margin: 0; }
+.studio-quote div:last-child { font-weight: 600; }

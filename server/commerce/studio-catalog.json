@@ -1,10 +1,17 @@
 {
-  "prices": { "9x12": 4500, "12x16": 7500 },
+  "prices": {
+    "9x12": 4500,
+    "12x16": 9500
+  },
   "artworks": {
     "mother-nature": "Mother Nature",
     "ethereal-bloom": "Ethereal Bloom",
     "tiger-lily": "Tiger Lily",
     "75-leaves": "75 Leaves",
     "a-forest-forgotten": "A Forest Forgotten"
+  },
+  "variants": {
+    "9x12": "GLOBAL-PAP-9X12",
+    "12x16": "GLOBAL-PAP-12X16"
   }
 }
