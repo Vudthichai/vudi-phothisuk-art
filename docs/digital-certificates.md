@@ -6,7 +6,7 @@ The printed QR codes are permanent. Do not generate replacement codes or derive 
 
 `src/coa/routes.json` is the only certificate route/record manifest. An awaiting-source manifest is deliberately empty: no guessed certificate is advertised as verified. Once all sources are decoded, set status to `verified` and populate exactly 10 original and 5 Collector’s Edition records. `src/coa/records.ts` rejects missing evidence, duplicate routes/references, inconsistent QR URLs, missing physical dimensions, and original dimensions that disagree with the artwork catalog.
 
-All 15 supplied physical PDFs have been decoded and verified. The individual ZIP transfers succeeded after the combined archive exceeded the transfer limit. The checked-in manifest contains exactly the 15 decoded destinations, with their original trailing slashes and source PDF SHA-256 hashes. Dragon Lily is explicitly marked `replacement-pending`; its confirmed 18 × 24 in. dimensions are retained and medium/provisional description are not inferred from the superseded PDF.
+All 15 supplied physical PDFs have been decoded and verified. The individual ZIP transfers succeeded after the combined archive exceeded the transfer limit. The checked-in manifest contains exactly the 15 decoded destinations, with their original trailing slashes and source PDF SHA-256 hashes. Dragon Lily’s manifest evidence uses the finalized print-ready PDF. Its confirmed medium and matching description are recorded in the website catalog, and its permanent QR URL is preserved.
 
 ## Private ingestion
 
@@ -55,7 +55,7 @@ No production deployment or merge is authorized by this implementation task.
 | `/coa/forest-and-flowers/a-forest-forgotten/collectors-edition/` | 9 × 12 in. | Limited-edition print | PDF checked |
 | `/coa/forest-and-flowers/a-forest-forgotten/original/` | 24 × 36 in. | Mixed-media acrylic with organic plaster on canvas | PDF checked |
 | `/coa/forest-and-flowers/blooming-desire/original/` | 24 × 36 in. | Mixed-media acrylic with organic plaster on canvas | PDF checked |
-| `/coa/forest-and-flowers/dragon-lily/original/` | 18 × 24 in. | Awaiting confirmation | Replacement pending |
+| `/coa/forest-and-flowers/dragon-lily/original/` | 18 × 24 in. | Mixed-media acrylic with organic plaster on canvas | Final PDF checked |
 | `/coa/forest-and-flowers/ethereal-bloom/collectors-edition/` | 9 × 12 in. | Limited-edition print | PDF checked |
 | `/coa/forest-and-flowers/ethereal-bloom/original/` | 30 × 40 in. | Mixed-media acrylic with organic plaster on canvas | PDF checked |
 | `/coa/forest-and-flowers/gilded-bloom/original/` | 24 × 36 in. | Mixed-media acrylic with organic plaster on canvas | PDF checked |
@@ -76,6 +76,6 @@ The physical Moss and Mushrooms certificate spells out “and”; the page retai
 - Keyboard activation of the digital-record disclosure passed. No inactive AR links or master-PDF download links were present.
 - All five existing Studio Print products retained the $45/$95 size-selection behavior. Both corrected original detail pages retained Not for Sale status.
 - All 139 tests, TypeScript, the production build, SEO validation, and `npm run test:coa` passed.
-- Browser validation used Chromium with mobile emulation; physical Safari hardware was not tested. Production QR URLs will receive these pages only after an approved merge/release. Local directory routing does not certify Netlify edge behavior; check the review deployment before release.
+- Browser validation used Chromium with mobile emulation; physical Safari hardware was not tested. The certificate routes are deployed. Changes to their content reach production after an approved merge and release. Local directory routing does not certify Netlify edge behavior; check the review deployment before release.
 
 For a local preview, run `npm run dev -- --host 0.0.0.0` and open `http://localhost:5173/coa/forest-and-flowers/mother-nature/original/`. Replace the path with any exact entry from the table above. Development previews and website deployment do not expose or require the private physical PDFs.

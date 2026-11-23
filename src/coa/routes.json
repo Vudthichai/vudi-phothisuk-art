@@ -66,13 +66,12 @@
       "artworkId": "dragon-lily",
       "designation": "original",
       "reference": "https://vudiphothisukart.com/coa/forest-and-flowers/dragon-lily/original/",
-      "medium": null,
+      "medium": "Mixed-media acrylic with organic plaster on canvas",
       "dimensions": "18 × 24 in.",
       "source": {
-        "pdfSha256": "5b7b70996816f5a08e01e0b04301558f79b825569fc0b171926130ec94c968ef",
+        "pdfSha256": "fe746775138944cabbb5120515f5a75bb17a1c458f00cfd2c30253cc978e3734",
         "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/dragon-lily/original/"
-      },
-      "reviewStatus": "replacement-pending"
+      }
     },
     {
       "path": "/coa/forest-and-flowers/ethereal-bloom/collectors-edition/",
