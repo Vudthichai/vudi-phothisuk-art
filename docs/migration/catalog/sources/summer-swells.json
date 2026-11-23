@@ -1,0 +1,63 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/summer-swells",
+  "path": "/summer-swells",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Summer Swells — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><strong>Summer Swells</strong></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\">When summer is in full swing, nothing cools you off like a beach day by the ocean. Our oceans bring us joy in many forms. Whether it's a romantic date spot that eventually leads to that destination wedding, a peaceful getaway from the daily desk job or surfing the sets that no one believes happened these summer swells are magical moments that give nostalgia to all.</p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 30” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">Sold.</span></p></div>",
+      "text": "Summer SwellsWhen summer is in full swing, nothing cools you off like a beach day by the ocean. Our oceans bring us joy in many forms. Whether it's a romantic date spot that eventually leads to that destination wedding, a peaceful getaway from the daily desk job or surfing the sets that no one believes happened these summer swells are magical moments that give nostalgia to all.24” X 30” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.Sold."
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/4225f5f3-47ae-4e61-8c4c-d8ccb9b71f1c/IMG_8834.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/4225f5f3-47ae-4e61-8c4c-d8ccb9b71f1c/IMG_8834.jpeg",
+        "data-image-dimensions": "3209x4009",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_8834.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/4bf1321d-f8f7-4867-b13e-f51b1ae867fc/IMG_8843.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/4bf1321d-f8f7-4867-b13e-f51b1ae867fc/IMG_8843.jpeg",
+        "data-image-dimensions": "3024x4032",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_8843.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750215361032-7I5EL2AZDG1OPEMS6LH3/IMG_8834.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750215361032-7I5EL2AZDG1OPEMS6LH3/IMG_8834.jpg",
+        "data-image-dimensions": "1639x2186",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_8834.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-oceans#summer-swells\n",
+      "text": "\n    Back to The Oceans\n  "
+    },
+    {
+      "href": "/manta",
+      "text": "\n    Next\n  "
+    }
+  ]
+}

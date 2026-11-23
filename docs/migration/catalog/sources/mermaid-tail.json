@@ -1,0 +1,91 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/mermaid-tail",
+  "path": "/mermaid-tail",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Mermaid Tail — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Mermaid Tail</strong>: I don't know if mermaids are real but if they are, I'd like to think they have iridescent scales with a personality that matches. The shimmer from their scales and the glistening aura of their nature has captivated story-tellers since the beginning of storytelling. This work is dedicated to all the beautiful mermaids hidden in life.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">For serious inquiries please email vudiphothisukart@gmail.com</span></p></div>",
+      "text": "Mermaid Tail: I don't know if mermaids are real but if they are, I'd like to think they have iridescent scales with a personality that matches. The shimmer from their scales and the glistening aura of their nature has captivated story-tellers since the beginning of storytelling. This work is dedicated to all the beautiful mermaids hidden in life.24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.For serious inquiries please email vudiphothisukart@gmail.com"
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/abcfa296-75c6-4d3e-a43f-69939b16beb5/IMG_8890.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/abcfa296-75c6-4d3e-a43f-69939b16beb5/IMG_8890.jpeg",
+        "data-image-dimensions": "3052x4565",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_8890.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0b06b073-50b3-490a-827a-def9d71f9ce6/IMG_6055.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/0b06b073-50b3-490a-827a-def9d71f9ce6/IMG_6055.jpeg",
+        "data-image-dimensions": "2494x1496",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6055.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/3b514f4e-45f4-47ca-9f2d-d3f91e879c94/IMG_6887.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/3b514f4e-45f4-47ca-9f2d-d3f91e879c94/IMG_6887.jpeg",
+        "data-image-dimensions": "3024x4032",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6887.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 3,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718220694712-HJI1LK8A2KV8ADI4K2J5/IMG_6887.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1718220694712-HJI1LK8A2KV8ADI4K2J5/IMG_6887.jpg",
+        "data-image-dimensions": "1950x2926",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6887.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 4,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/f2dcd4cd-fe5e-4e91-8bba-bfb1ed794bca/Untitled+design.jpg.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/f2dcd4cd-fe5e-4e91-8bba-bfb1ed794bca/Untitled+design.jpg.jpg",
+        "data-image-dimensions": "2816x4224",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "Untitled design.jpg.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-oceans#mermaid-tail",
+      "text": "\n    Back to The Oceans\n  "
+    },
+    {
+      "href": "/dark-scales",
+      "text": "\n    Previous\n  "
+    },
+    {
+      "href": "/beach-day",
+      "text": "\n    Next\n  "
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/manta",
+  "path": "/manta",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Manta — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Manta</strong>: There's something so majestic about batoids and how they effortlessly glide through water. From spotted eagle rays to manta and sting rays, all have that smooth movement that gives a seascape an even more pronounced picture. </span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 30” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">Sold.</span></p></div>",
+      "text": "Manta: There's something so majestic about batoids and how they effortlessly glide through water. From spotted eagle rays to manta and sting rays, all have that smooth movement that gives a seascape an even more pronounced picture. 24” X 30” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.Sold."
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/4d765f4b-f78c-41d0-8c3b-802dbbf7e37d/IMG_7785.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/4d765f4b-f78c-41d0-8c3b-802dbbf7e37d/IMG_7785.jpeg",
+        "data-image-dimensions": "3610x4539",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7785.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/5e5515fb-f0c1-4b82-96f8-f141146230b6/IMG_7785.JPG",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/5e5515fb-f0c1-4b82-96f8-f141146230b6/IMG_7785.JPG",
+        "data-image-dimensions": "2851x3569",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7785.JPG"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/a23df7ed-ce07-42c5-ba1c-acc649edc5ad/IMG_7785+2.JPG",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/a23df7ed-ce07-42c5-ba1c-acc649edc5ad/IMG_7785+2.JPG",
+        "data-image-dimensions": "2900x3630",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7785 2.JPG"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-oceans#manta",
+      "text": "\n    Back to The Oceans\n  "
+    },
+    {
+      "href": "/summer-swells",
+      "text": "\n    Previous\n  "
+    },
+    {
+      "href": "/dark-scales",
+      "text": "\n    Next\n  "
+    }
+  ]
+}

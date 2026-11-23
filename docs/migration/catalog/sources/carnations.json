@@ -1,0 +1,75 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/carnations",
+  "path": "/carnations",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Carnations — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Carnations</strong>: If there is one emotion that can transcend the boundaries of time, it’s Love. Carnations are the symbol of deep affection and commitment. They are also recognized as God’s Flower. Most people strive to reach a point in their lives where they find happiness in a loving partner. It’s rare to see people find love in themselves and in the work they do. If carnations are a symbol of love, this piece is a reminder to find joy in your actions and everyone you meet. Only then can you find the love within yourself.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Sold</strong></span></p></div>",
+      "text": "Carnations: If there is one emotion that can transcend the boundaries of time, it’s Love. Carnations are the symbol of deep affection and commitment. They are also recognized as God’s Flower. Most people strive to reach a point in their lives where they find happiness in a loving partner. It’s rare to see people find love in themselves and in the work they do. If carnations are a symbol of love, this piece is a reminder to find joy in your actions and everyone you meet. Only then can you find the love within yourself.24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.Sold"
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118025824-OLQ5Y3OH6STQ8UJ80HM7/Carnations.jpg",
+        "data-image-dimensions": "4160x6240",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "Carnations.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/dbef87e3-56bd-4a7c-a027-8d98c79bd4b3/IMG_7210.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/dbef87e3-56bd-4a7c-a027-8d98c79bd4b3/IMG_7210.jpeg",
+        "data-image-dimensions": "1154x1916",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7210.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/b77133c4-c5de-4099-93cd-c373507c67a4/IMG_7211.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/b77133c4-c5de-4099-93cd-c373507c67a4/IMG_7211.jpeg",
+        "data-image-dimensions": "1179x1918",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7211.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 3,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/b054e767-8f39-40ec-a119-a6c36abf9c7b/Carnations+%28Close+Up%29.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/b054e767-8f39-40ec-a119-a6c36abf9c7b/Carnations+%28Close+Up%29.jpg",
+        "data-image-dimensions": "2244x3366",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "Carnations (Close Up).jpg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-regal-collection#carnations",
+      "text": "\n    Back to The Regal Collection\n  "
+    },
+    {
+      "href": "/navy",
+      "text": "\n    Next\n  "
+    }
+  ]
+}

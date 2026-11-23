@@ -1,0 +1,67 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/arctic-ocean",
+  "path": "/arctic-ocean",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Arctic Ocean — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Arctic Ocean:</strong> Inspired by the cold Arctic swells in the northern region of our globe this piece is a tribute to the importance of our polar regions. The icy blue hues are not just home to fleeting wildlife and Indigenous cultures but also play a role in regulating our global climate. The ice and snow create an albedo effect reflecting massive amounts of radiation energy back into space keeping our planet at livable temperatures. What happens here can have profound effects anywhere across the globe as the Arctic is an integral part of global ocean circulation patterns. Thermohaline circulation distributes heat around the planet by circulating water currents through the region and back out throughout the Earth. Today, The Arctic faces many threats that counteract all the above and more. While sea levels keep rising and permafrost keeps melting more CO2 gets released into the ocean which creates a more acidic habitat for the ecosystem. This causes a chain reaction of loss of sea life. The Arctic might not be a place to live but it is a place worth protecting.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">For serious inquiries please email vudiphothisukart@gmail.com</span></p></div>",
+      "text": "Arctic Ocean: Inspired by the cold Arctic swells in the northern region of our globe this piece is a tribute to the importance of our polar regions. The icy blue hues are not just home to fleeting wildlife and Indigenous cultures but also play a role in regulating our global climate. The ice and snow create an albedo effect reflecting massive amounts of radiation energy back into space keeping our planet at livable temperatures. What happens here can have profound effects anywhere across the globe as the Arctic is an integral part of global ocean circulation patterns. Thermohaline circulation distributes heat around the planet by circulating water currents through the region and back out throughout the Earth. Today, The Arctic faces many threats that counteract all the above and more. While sea levels keep rising and permafrost keeps melting more CO2 gets released into the ocean which creates a more acidic habitat for the ecosystem. This causes a chain reaction of loss of sea life. The Arctic might not be a place to live but it is a place worth protecting.24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.For serious inquiries please email vudiphothisukart@gmail.com"
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/86adf632-eb4f-4586-b256-de8ae1cb3761/IMG_7488.JPG",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/86adf632-eb4f-4586-b256-de8ae1cb3761/IMG_7488.JPG",
+        "data-image-dimensions": "2239x3381",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7488.JPG"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750263291332-VQ66HF2OGPK4LJIWCO0Z/IMG_6760.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750263291332-VQ66HF2OGPK4LJIWCO0Z/IMG_6760.jpg",
+        "data-image-dimensions": "2500x3750",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6760.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750250492828-D5EQN1JSC8GU28MA16LE/IMG_6665.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750250492828-D5EQN1JSC8GU28MA16LE/IMG_6665.jpg",
+        "data-image-dimensions": "1439x1919",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6665.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-oceans#arctic-ocean",
+      "text": "\n    Back to The Oceans\n  "
+    },
+    {
+      "href": "/sunset-waves",
+      "text": "\n    Previous\n  "
+    },
+    {
+      "href": "/the-oceans-painting",
+      "text": "\n    Next\n  "
+    }
+  ]
+}

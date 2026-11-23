@@ -1,0 +1,79 @@
+{
+  "sourceUrl": "https://www.vudiphothisukart.com/sahara",
+  "path": "/sahara",
+  "observedAt": "2026-10-29T03:09:49.241186+00:00",
+  "status": 200,
+  "pageTitle": "Sahara — Vudi Phothisuk",
+  "headings": [],
+  "blocks": [
+    {
+      "selector": ".sqs-html-content (index 0)",
+      "html": "<div class=\"sqs-html-content\" data-sqsp-text-block-content=\"\"><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Sahara</strong>: What was once covered by water is now a dry and arid desert. The mysteries of the Sahara are endless. Rumors of a lost city are deep within the adventure community but the ancient ruins of Ubar has still yet to be found. The great desert is a reminder that even oceans have a death. But there is a story in every skeleton.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\">24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.</span></p><p class=\"sqsrte-small\" style=\"white-space:pre-wrap;\"><span class=\"sqsrte-text-color--black\"><strong>Please email me at vudiphothisukart@gmail.com for serious inquiries.</strong></span></p></div>",
+      "text": "Sahara: What was once covered by water is now a dry and arid desert. The mysteries of the Sahara are endless. Rumors of a lost city are deep within the adventure community but the ancient ruins of Ubar has still yet to be found. The great desert is a reminder that even oceans have a death. But there is a story in every skeleton.24” X 36” Mixed media acrylic painting with organic plaster base layer on gallery wrapped canvas. Ready to hand.Please email me at vudiphothisukart@gmail.com for serious inquiries."
+    }
+  ],
+  "images": [
+    {
+      "position": 0,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1712118038134-J8K3ZV714SWH1EGSB4VE/Sahara.jpg",
+        "data-image-dimensions": "4160x6240",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "Sahara.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 1,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750275879135-KB1DQV7MMBW43U1EQPHB/IMG_6761.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750275879135-KB1DQV7MMBW43U1EQPHB/IMG_6761.jpg",
+        "data-image-dimensions": "2500x3536",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_6761.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 2,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750275851239-LR0OIDBOPVRRK61DCJV0/Sahara%2BClose%2B%2528Up%2529.jpg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/1750275851239-LR0OIDBOPVRRK61DCJV0/Sahara%2BClose%2B%2528Up%2529.jpg",
+        "data-image-dimensions": "2212x2956",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "Sahara+Close+%28Up%29.jpg"
+      },
+      "link": null,
+      "downloaded": false
+    },
+    {
+      "position": 3,
+      "attributes": {
+        "data-src": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/939ca7a7-d1d1-417b-a15f-946ee46ce118/IMG_7451.jpeg",
+        "data-image": "https://images.squarespace-cdn.com/content/v1/660b13205f4e6c47d37c2528/939ca7a7-d1d1-417b-a15f-946ee46ce118/IMG_7451.jpeg",
+        "data-image-dimensions": "2304x3456",
+        "data-image-focal-point": "0.5,0.5",
+        "alt": "IMG_7451.jpeg"
+      },
+      "link": null,
+      "downloaded": false
+    }
+  ],
+  "links": [
+    {
+      "href": "/the-regal-collection#sahara",
+      "text": "\n    Back to The Regal Collection\n  "
+    },
+    {
+      "href": "/navy",
+      "text": "\n    Previous\n  "
+    },
+    {
+      "href": "/verdant",
+      "text": "\n    Next\n  "
+    }
+  ]
+}
