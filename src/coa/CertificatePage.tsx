@@ -25,7 +25,7 @@ export function CertificateView({ record }: { record: CertificateRecord }) {
       <p className="coa-collection">Forest &amp; Flowers — 2026</p>
       <h1>{artwork.title}</h1>
       <p className="coa-designation">{designation}</p>
-      {!original && <p className="coa-edition-label">Collector’s Edition</p>}
+      {!original && <p className="coa-edition-label">Collector’s Edition · Sold exclusively in person</p>}
       {record.reviewStatus === 'replacement-pending' && <p className="coa-update-note">Physical certificate update pending. This permanent artwork URL is unchanged.</p>}
     </header>
     <div className="coa-layout">

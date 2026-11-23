@@ -55,7 +55,7 @@ it('displays original details, an unsigned digital reference, and no inactive AR
 
 it('distinguishes a shared edition-level record from an individual signed copy or owner', () => {
   view(fixture('mother-nature','collectors-edition'));
-  expect(screen.getByText('Collector’s Edition')).toBeTruthy();
+  expect(screen.getByText('Collector’s Edition · Sold exclusively in person')).toBeTruthy();
   expect(screen.getAllByText('Limited Edition of 20')).toHaveLength(2);
   expect(screen.queryByText('Original · 1 of 1')).toBeNull();
   expect(screen.getByText(/does not identify or verify an individual copy number or owner/)).toBeTruthy();

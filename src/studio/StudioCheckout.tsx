@@ -5,19 +5,25 @@ import type { StudioSize } from './editions';
 const endpoint = '/api/studio-print';
 
 export function useStudioSandbox() {
-  const [available, setAvailable] = useState(false);
+  const [maxQuantity, setMaxQuantity] = useState<number | null>(null);
   useEffect(() => {
     if (import.meta.env.VITE_STUDIO_SANDBOX !== 'true') return;
     const request = new AbortController();
     void fetch(endpoint + '/status', { signal: request.signal })
-      .then(async response => { if (response.ok) setAvailable((await response.json()).sandbox === true); })
+      .then(async response => {
+        if (!response.ok) return;
+        const result = await response.json();
+        if (result.sandbox === true && Number.isInteger(result.maxQuantity) && result.maxQuantity >= 1 && result.maxQuantity <= 10) {
+          setMaxQuantity(result.maxQuantity);
+        }
+      })
       .catch(() => {});
     return () => request.abort();
   }, []);
-  return available;
+  return maxQuantity;
 }
 
-export function StudioCheckout({ artwork, size }: { artwork: string; size: StudioSize }) {
+export function StudioCheckout({ artwork, size, maxQuantity }: { artwork: string; size: StudioSize; maxQuantity: number }) {
   const [pending, setPending] = useState(false);
   const [error, setError] = useState('');
   const attempt = useRef<{ payload: string; id: string } | null>(null);
@@ -39,12 +45,19 @@ export function StudioCheckout({ artwork, size }: { artwork: string; size: Studi
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...details, attemptId: attempt.current.id }),
       });
+      if (response.status === 429) {
+        setError('Too many requests. Wait a minute and try again.');
+        return;
+      }
       const result = await response.json();
       if (!response.ok) {
         setError(result.error || 'Checkout is unavailable. Please try again.');
         return;
       }
-      window.location.assign(result.url);
+      const checkout = new URL(result.url);
+      if (checkout.origin !== 'https://sandbox.square.link' || checkout.username || checkout.password ||
+          !/^\/u\/[a-z\d_-]+$/i.test(checkout.pathname)) throw new Error('Unexpected checkout destination');
+      window.location.assign(checkout.href);
     } catch {
       setError('Checkout is unavailable. Please try again.');
     } finally {
@@ -53,11 +66,11 @@ export function StudioCheckout({ artwork, size }: { artwork: string; size: Studi
     }
   }
 
-  return <form className="studio-checkout" onSubmit={submit}>
+  return <form className="studio-checkout" aria-describedby="studio-returns-policy" onSubmit={submit}>
     <fieldset disabled={pending}>
       <legend>Sandbox checkout</legend>
       <p>Use test details and a Square test card. Shipping and tax appear on Square before payment.</p>
-      <label>Quantity <input name="quantity" type="number" min="1" max="10" defaultValue="1" required/></label>
+      <label>Quantity <input name="quantity" type="number" min="1" max={maxQuantity} defaultValue="1" required/></label>
       <label>Full name <input name="name" autoComplete="name" maxLength={100} required/></label>
       <label>Email <input name="email" type="email" autoComplete="email" maxLength={254} required/></label>
       <label>U.S. street address <input name="line1" autoComplete="address-line1" maxLength={100} required/></label>

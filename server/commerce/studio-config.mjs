@@ -1,4 +1,4 @@
-import { createHash, timingSafeEqual } from 'node:crypto';
+import { createCipheriv, createDecipheriv, createHash, randomBytes, timingSafeEqual } from 'node:crypto';
 import catalog from '../../src/studio/print-catalog.json' with { type: 'json' };
 
 export class StudioError extends Error {
@@ -15,11 +15,13 @@ export function equal(a, b) {
 
 function https(value) {
   const url = new URL(value);
-  if (url.protocol !== 'https:' || url.username || url.password || url.hash) throw new Error('Invalid HTTPS URL');
+  if (url.protocol !== 'https:' || url.port || url.username || url.password || url.hash) throw new Error('Invalid HTTPS URL');
   return url;
 }
 
 const integer = (value, min, max) => Number.isInteger(value) && value >= min && value <= max;
+const states = new Set('AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY'.split(' '));
+const hexKey = value => typeof value === 'string' && /^[a-f\d]{64}$/i.test(value);
 export const validId = value => typeof value === 'string' && /^[a-z\d_-]{1,100}$/i.test(value);
 
 export function studioConfig(env) {
@@ -33,13 +35,24 @@ export function studioConfig(env) {
       STUDIO_WEBHOOK_URL: webhookUrl, STUDIO_ADMIN_TOKEN: adminToken,
       PRODIGI_SANDBOX_KEY: prodigiKey, STUDIO_VARIANTS: variantsJSON,
       STUDIO_PRINT_FILES: filesJSON, STUDIO_DESTINATIONS: destinationsJSON,
+      STUDIO_PRINT_HOST: fileHost, STUDIO_DATA_KEY: dataKey,
+      STUDIO_MAX_QUANTITY: maxQuantityValue = '10', STUDIO_MAX_FULFILLMENT_CENTS: maxCostValue,
+      STUDIO_FULFILLMENT_ENABLED: fulfillmentEnabled,
     } = env;
     const url = https(webhookUrl);
     if (url.origin === 'https://vudiphothisukart.com' || url.hostname.endsWith('.vudiphothisukart.com') ||
         url.pathname !== '/api/studio-print/webhook' || url.search ||
         !squareToken || !validId(locationId) || !validId(merchantId) || !webhookKey ||
-        !adminToken || adminToken.length < 32 || !/^sandbox_.+/.test(prodigiKey ?? '')) {
+        !hexKey(adminToken) || !hexKey(dataKey) || equal(dataKey.toLowerCase(), adminToken.toLowerCase()) || !/^sandbox_.+/.test(prodigiKey ?? '')) {
       throw new Error('Missing or unsafe credential configuration');
+    }
+    const maxQuantity = Number(maxQuantityValue);
+    const maxCostCents = Number(maxCostValue);
+    if (!integer(maxQuantity, 1, 10) || !integer(maxCostCents, 1, 100000) ||
+        !/^(?:[a-z][a-z0-9-]*\.)+[a-z][a-z0-9-]*$/i.test(fileHost ?? '') ||
+        /(?:^|\.)(?:localhost|local|internal|test)$/.test(fileHost.toLowerCase()) ||
+        /(?:^|\.)vudiphothisukart\.com$/.test(fileHost.toLowerCase())) {
+      throw new Error('Invalid print host or limits');
     }
     const variants = JSON.parse(variantsJSON);
     const files = JSON.parse(filesJSON);
@@ -48,17 +61,24 @@ export function studioConfig(env) {
       if (!validId(variants[size])) throw new Error('Missing catalogue variant');
     }
     for (const id of Object.keys(catalog.artworks)) {
-      for (const size of Object.keys(catalog.prices)) https(files[id][size]);
+      for (const size of Object.keys(catalog.prices)) {
+        const file = https(files[id][size]);
+        if (file.hostname !== fileHost.toLowerCase() || !file.search || !/\.(?:jpe?g|pdf)$/i.test(file.pathname)) {
+          throw new Error('Invalid private print file');
+        }
+      }
     }
     if (!Object.keys(destinations).length) throw new Error('Missing destination policies');
     for (const [key, rate] of Object.entries(destinations)) {
-      if (!/^[A-Z]{2}-\d{5}$/.test(key) || !integer(rate.shippingCents, 0, 10000) ||
+      if (!/^[A-Z]{2}-\d{5}$/.test(key) || !states.has(key.slice(0, 2)) || !integer(rate.shippingCents, 0, 10000) ||
           !integer(rate.additionalCents, 0, 10000) || !integer(rate.taxBps, 0, 2000) ||
           typeof rate.taxShipping !== 'boolean') throw new Error('Invalid destination policy');
     }
     return {
       squareToken, locationId, merchantId, webhookKey, webhookUrl: url.href, adminToken,
-      prodigiKey, variants, files, destinations,
+      prodigiKey, variants, files, destinations, origin: url.origin,
+      dataKey: Buffer.from(dataKey, 'hex'), maxQuantity, maxCostCents,
+      fulfillmentEnabled: fulfillmentEnabled === 'true',
     };
   } catch {
     throw new StudioError(503, 'Sandbox checkout configuration is incomplete.');
@@ -66,15 +86,17 @@ export function studioConfig(env) {
 }
 
 function field(value, length, optional = false) {
-  const text = typeof value === 'string' ? value.trim() : '';
-  if ((text || optional) && text.length <= length && !/[\u0000-\u001f\u007f]/.test(text)) return text;
+  if (optional && value === undefined) return '';
+  const text = typeof value === 'string' ? value.trim() : null;
+  if (text !== null && (text || optional) && text.length <= length && !/[\u0000-\u001f\u007f]/.test(text)) return text;
   throw new StudioError(400, 'Check the required shipping and contact fields.');
 }
 
 export function selection(input, config) {
   const { artwork, size, quantity, country, attemptId } = input;
-  if (!Object.hasOwn(catalog.artworks, artwork) || !Object.hasOwn(catalog.prices, size) ||
-      !integer(quantity, 1, 10) || typeof attemptId !== 'string' ||
+  if (typeof artwork !== 'string' || typeof size !== 'string' ||
+      !Object.hasOwn(catalog.artworks, artwork) || !Object.hasOwn(catalog.prices, size) ||
+      !integer(quantity, 1, config.maxQuantity) || typeof attemptId !== 'string' ||
       !/^[a-f\d]{8}-(?:[a-f\d]{4}-){3}[a-f\d]{12}$/i.test(attemptId)) {
     throw new StudioError(400, 'Choose an available Studio Print, size, and quantity.');
   }
@@ -85,7 +107,7 @@ export function selection(input, config) {
   const townOrCity = field(input.city, 80);
   const stateOrCounty = field(input.state, 2).toUpperCase();
   const postalOrZipCode = field(input.zip, 10);
-  if (country !== 'US' || !/^[A-Z]{2}$/.test(stateOrCounty) || !/^\d{5}(-\d{4})?$/.test(postalOrZipCode) ||
+  if (country !== 'US' || !states.has(stateOrCounty) || !/^\d{5}(-\d{4})?$/.test(postalOrZipCode) ||
       !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     throw new StudioError(400, 'Enter a valid email and U.S. shipping address.');
   }
@@ -98,4 +120,40 @@ export function selection(input, config) {
     taxBps: rate.taxBps, taxShipping: rate.taxShipping,
     recipient: { name, email, address: { line1, line2, townOrCity, stateOrCounty, postalOrZipCode, countryCode: 'US' } },
   };
+}
+
+// The order ID authenticates the association between ciphertext and its order record.
+export function encryptRecipient(recipient, orderId, key) {
+  const nonce = randomBytes(12);
+  const cipher = createCipheriv('aes-256-gcm', key, nonce);
+  cipher.setAAD(Buffer.from(orderId));
+  const ciphertext = Buffer.concat([cipher.update(JSON.stringify(recipient), 'utf8'), cipher.final()]);
+  return Buffer.concat([nonce, cipher.getAuthTag(), ciphertext]).toString('base64url');
+}
+
+export function fulfillmentDetails(record, config) {
+  if (record.version !== 2 || typeof record.recipientBox !== 'string') {
+    throw new StudioError(409, 'Legacy sandbox order requires manual reconciliation.');
+  }
+  const bytes = Buffer.from(record.recipientBox, 'base64url');
+  const decipher = createDecipheriv('aes-256-gcm', config.dataKey, bytes.subarray(0, 12));
+  decipher.setAAD(Buffer.from(record.orderId));
+  decipher.setAuthTag(bytes.subarray(12, 28));
+  const recipient = JSON.parse(Buffer.concat([decipher.update(bytes.subarray(28)), decipher.final()]).toString('utf8'));
+  const addr = recipient.address;
+  const resolved = selection({
+    artwork: record.artwork, size: record.size, quantity: record.quantity, attemptId: record.attemptId,
+    name: recipient.name, email: recipient.email, country: addr.countryCode, line1: addr.line1,
+    line2: addr.line2, city: addr.townOrCity, state: addr.stateOrCounty, zip: addr.postalOrZipCode,
+  }, config);
+  if (resolved.sku !== record.sku || fileIdentity(resolved.file) !== record.fileIdentity ||
+      resolved.unitCents !== record.unitCents) {
+    throw new StudioError(409, 'The order print binding requires manual reconciliation.');
+  }
+  return resolved;
+}
+
+export function fileIdentity(value) {
+  const url = https(value);
+  return createHash('sha256').update(url.origin + url.pathname).digest('hex');
 }

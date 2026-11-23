@@ -66,3 +66,6 @@
 .studio-checkout input, .studio-checkout button { min-height: 44px; padding: 0.45rem 0.65rem; font: inherit; }
 .studio-checkout input { width: 100%; box-sizing: border-box; }
 .studio-checkout button { cursor: pointer; }
+
+.studio-returns-policy { margin-block: 1rem; font-size: 0.9rem; }
+.studio-returns-policy summary { cursor: pointer; text-decoration: underline; }
