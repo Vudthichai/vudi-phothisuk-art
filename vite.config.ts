@@ -6,6 +6,8 @@ export default defineConfig(({ command, mode }) => {
   const analyticsEnabled = command === 'build' && env.CONTEXT === 'production' && env.BRANCH === 'main';
   return {
     plugins: [react()],
+    optimizeDeps: { include:['three'] },
+    build: { rollupOptions: { input: { main:'index.html', arCamera:'ar-camera.html' } } },
     define: {
       __VPA_BUILD_INFO__: JSON.stringify({
         commit: /^[a-f0-9]{40}$/.test(env.COMMIT_REF ?? '') ? env.COMMIT_REF : null,

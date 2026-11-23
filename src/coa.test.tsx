@@ -43,7 +43,7 @@ it('displays original details, an unsigned digital reference, and no inactive AR
   expect(screen.getByText('Forest & Flowers — 2026')).toBeTruthy();
   expect(screen.getByText('24 × 36 in.')).toBeTruthy();
   expect(screen.getByRole('img',{name:/Mother Nature/})).toBeTruthy();
-  expect(screen.queryByRole('link',{name:'Experience in AR'})).toBeNull();
+  expect(screen.getByRole('link',{name:'Experience in AR'}).getAttribute('href')).toBe('/coa/forest-and-flowers/mother-nature/original/?ar=1');
   expect(screen.queryByRole('button',{name:'Experience in AR'})).toBeNull();
   const disclosure = screen.getByText('View Digital Certificate');
   fireEvent.click(disclosure);
