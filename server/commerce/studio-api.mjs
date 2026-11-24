@@ -67,12 +67,16 @@ export function providers(config, fetcher = fetch, reportProvider = message => c
 export function checkVariant(variant, selected) {
   const [width, height] = selected.size.split('x').map(Number);
   const sides = [variant?.dimensions?.width?.in, variant?.dimensions?.height?.in].sort((a, b) => a - b);
-  const printArea = variant?.printAreas?.find(area => area.required && area.name === 'default');
-  const requiredAreas = variant?.printAreas?.filter(area => area.required);
-  if (variant?.sku?.toUpperCase() !== selected.sku || !/(?:\blustre\b|\blpp\b)/i.test(variant?.name ?? '') ||
-      !/\b240\s*gsm\b/i.test(variant.name) ||
-      Math.abs(sides[0] - width) > 0.02 || Math.abs(sides[1] - height) > 0.02 ||
-      sides.some(side => !Number.isFinite(side)) || requiredAreas?.length !== 1 || !printArea ||
+  const requiredAreas = Array.isArray(variant?.printAreas)
+    ? variant.printAreas.filter(area => area?.required === true) : [];
+  const dimensionTolerance = 0.02;
+  // Compare against inclusive bounds so subtraction doesn't inflate a boundary difference.
+  const matchesDimension = (actual, expected) => Number.isFinite(actual) &&
+    actual >= expected - dimensionTolerance && actual <= expected + dimensionTolerance;
+  if (typeof variant?.sku !== 'string' || variant.sku.toUpperCase() !== selected.sku ||
+      variant.attributes?.paperType !== 'lpp' || variant.attributes?.substrateWeight !== '240gsm' ||
+      !matchesDimension(sides[0], width) || !matchesDimension(sides[1], height) ||
+      requiredAreas.length !== 1 || requiredAreas[0].name !== 'default' ||
       !Array.isArray(variant.shipsTo) || !variant.shipsTo.some(country => ['US', 'Worldwide'].includes(country))) {
     throw new StudioError(503, 'The requested Lustre print variant is unavailable.');
   }

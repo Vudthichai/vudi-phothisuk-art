@@ -7,6 +7,7 @@ import { createHandler } from '../netlify/functions/studio-print.mjs';
 
 import { createArtworkUploader } from './upload-studio-masters.mjs';
 
+import { checkVariant } from '../server/commerce/studio-api.mjs';
 import { studioConfig } from '../server/commerce/studio-config.mjs';
 const base = 'https://vudiphothisukart.com';
 const preview = 'https://deploy-preview-199--vudi-phothisuk-art.netlify.app';
@@ -21,6 +22,23 @@ const policy = {
   square: { locationId: 'location', merchantId: 'merchant' },
   origins: { 'live-test': preview, live: base }, testRun: 'fixture-first',
   limits: { customerCents: 15000, supplierCents: 3500 }, destinations: { 'PA-15201': rate },
+};
+
+const prodigiVariants = {
+  'GLOBAL-PAP-9X12': {
+    sku: 'GLOBAL-PAP-9X12', name: 'Photographic Art Print 23x31cm / 9x12"',
+    attributes: { paperType: 'lpp', substrateWeight: '240gsm' },
+    dimensions: { width: { in: 9.02 }, height: { in: 12.01 } },
+    printAreas: [{ name: 'default', required: true, widthMm: 229, heightMm: 305, recommendedDpi: 300 }],
+    shipsTo: ['Worldwide'],
+  },
+  'GLOBAL-PAP-12X16': {
+    sku: 'GLOBAL-PAP-12X16', name: 'Photographic Art Print, 240gsm, 30x40cm / 12x16"',
+    attributes: { paperType: 'lpp', substrateWeight: '240gsm' },
+    dimensions: { width: { in: 12 }, height: { in: 16 } },
+    printAreas: [{ name: 'default', required: true, widthMm: 304.8, heightMm: 406.4, recommendedDpi: 300 }],
+    shipsTo: ['Worldwide'],
+  },
 };
 
 function fixture(overrides = {}, context = 'production', launchPolicy = policy) {
@@ -125,12 +143,9 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
       if (url.pathname.startsWith('/v5/catalogue/variants/')) {
         if (catalogueUnauthorized) return new Response('sensitive upstream body fixture', { status: 401 });
         const sku = url.pathname.split('/').at(-1);
-        const [width, height] = sku.endsWith('9X12') ? [9, 12] : [12, 16];
-        return Response.json({ data: {
-          sku, name: invalidVariant ? 'Wrong paper 200gsm' : 'Lustre Photo Paper, 240gsm',
-          dimensions: { width: { in: width }, height: { in: height } },
-          shipsTo: ['Worldwide'], printAreas: [{ name: 'default', required: true }],
-        } });
+        const data = structuredClone(prodigiVariants[sku]);
+        if (invalidVariant) data.attributes.paperType = 'matte';
+        return Response.json({ data });
       }
       if (url.pathname === '/v5/orders') {
         draftCalls.push(body);
@@ -497,6 +512,34 @@ test('review expires and live supplier checks block payment without a usable quo
   f.setQuoteFailure(true);
   assert.equal((await f.purchase(customer())).status, 502);
   assert.equal(f.orders.size, 0);
+});
+
+test('Prodigi catalogue variants use structured paper stock and inclusive dimension bounds', () => {
+  for (const [size, sku] of Object.entries(catalog.variants)) {
+    const variant = prodigiVariants[sku];
+    assert.doesNotThrow(() => checkVariant(variant, { size, sku }));
+  }
+
+  const selected = { size: '9x12', sku: 'GLOBAL-PAP-9X12' };
+  const baseVariant = prodigiVariants[selected.sku];
+  const failures = [
+    variant => { variant.sku = 'GLOBAL-PAP-12X16'; },
+    variant => { variant.attributes.paperType = 'matte'; },
+    variant => { variant.attributes.substrateWeight = '200gsm'; },
+    variant => { delete variant.attributes; },
+    variant => { variant.dimensions.width.in = 9.0201; },
+    variant => { variant.dimensions.width.in = '9.02'; },
+    variant => { variant.printAreas[0].name = 'back'; },
+    variant => { variant.printAreas[0].required = false; },
+    variant => { variant.printAreas.push({ name: 'back', required: true }); },
+    variant => { variant.shipsTo = ['GB']; },
+  ];
+  for (const change of failures) {
+    const variant = structuredClone(baseVariant);
+    variant.name = 'Lustre Photo Paper, 240gsm';
+    change(variant);
+    assert.throws(() => checkVariant(variant, selected), /Lustre print variant is unavailable/);
+  }
 });
 
 test('preflight validates both SKUs and private artwork; reviewed orders show tracking and contact', async () => {
