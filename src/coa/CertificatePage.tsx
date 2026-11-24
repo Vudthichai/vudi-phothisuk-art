@@ -25,6 +25,7 @@ export function CertificateView({ record }: { record: CertificateRecord }) {
   const artwork = forestCollection.artworks.find(art => art.id === record.artworkId);
   if (!artwork) return <NotFound/>;
   const original = record.designation === 'original';
+  const experience = arForCertificate(record.path);
   const designation = original ? 'Original · 1 of 1' : 'Limited Edition of 20';
   return <article className="section page coa-page">
     <header className="coa-heading">
@@ -35,7 +36,15 @@ export function CertificateView({ record }: { record: CertificateRecord }) {
       <p className="coa-designation">{designation}</p>
       {!original && <p className="coa-edition-label">Collector’s Edition</p>}
       {record.reviewStatus === 'replacement-pending' && <p className="coa-update-note">Physical certificate update pending. This permanent artwork URL is unchanged.</p>}
-      {record.arUrl ? <a className="coa-ar-link" href={record.arUrl}>Experience in AR</a> : arForCertificate(record.path) && <><Link className="coa-ar-link" to={`${record.path}?ar=1`}>Experience in AR</Link><noscript>AR requires JavaScript. The digital certificate remains available without AR.</noscript></>}
+      {(record.arUrl || experience) && <div className="coa-ar-action">
+        {record.arUrl
+          ? <a className="coa-ar-link" href={record.arUrl}>Experience in AR</a>
+          : <Link className="coa-ar-link" to={`${record.path}?ar=1`}>Experience in AR</Link>}
+        <p>{experience && !experience.certificatePaths.includes(record.path)
+          ? 'Use the Mother Nature original certificate or the matching image shown in the AR viewer.'
+          : 'Turn your certificate artwork-side up, allow camera access, and point your phone at the artwork.'}</p>
+        <noscript>AR requires JavaScript. The digital certificate remains available without AR.</noscript>
+      </div>}
     </header>
     <div className="coa-layout">
       <figure className="coa-artwork"><ForestPhotograph image={primaryForestImage(artwork)} eager sizes="(max-width:700px) 90vw, 48vw"/>{!original && <figcaption>Original painting shown as an artwork reference. This record concerns the Collector’s Edition.</figcaption>}</figure>
