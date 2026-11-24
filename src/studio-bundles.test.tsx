@@ -13,6 +13,7 @@ it('presents both size bundles with confirmed retail values, prices and savings,
   amounts.forEach(amount=>expect(options[i].textContent).toContain(amount));
   expect(within(options[i] as HTMLElement).getByText('Coming Soon')).toBeTruthy();
  }
+ expect(options[1].querySelector('.studio-bundle-savings')).toBeTruthy();
  expect(studioCollectionBundle.galleryWallImage).toBeNull();
  expect(container.querySelector('.studio-bundle-gallery')).toBeNull();
  expect(container.querySelector('form,a[href*="checkout"]')).toBeNull();

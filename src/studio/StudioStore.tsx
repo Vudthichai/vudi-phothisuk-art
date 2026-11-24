@@ -9,6 +9,7 @@ import { studioGallery } from './gallery';
 import { ExploreStudioCollection } from './ExploreStudioCollection';
 import { StudioEditions } from './StudioEditions';
 import { studioArtwork, studioBase, studioEditionFor, studioPrice, studioSizes } from './editions';
+import { StudioCheckout, useStudioSandbox } from './StudioCheckout';
 import './StudioStore.css';
 export function StudioListing() {
   return <section className="section page studio-store"><nav className="studio-breadcrumbs" aria-label="Studio navigation"><Link to="/available-art">Available Art</Link><Link to="/collections/forest-and-flowers">Forest &amp; Flowers</Link></nav><p className="eyebrow">Forest &amp; Flowers</p><h1>Studio Editions</h1><StudioEditions title="The collection" listingLink={false}/></section>;
@@ -24,6 +25,7 @@ function SizeOptions({ size, placement, onSizeChange }: { size: string; placemen
 }
 function Product({ edition }: { edition: NonNullable<ReturnType<typeof studioEditionFor>> }) {
   const artwork = studioArtwork(edition);
+  const maxQuantity = useStudioSandbox();
   const [size, setSize] = useState(studioSizes[0].id);
   const views = studioGallery(edition, size);
   const [viewIndex, setViewIndex] = useState(0);
@@ -39,9 +41,15 @@ function Product({ edition }: { edition: NonNullable<ReturnType<typeof studioEdi
   return <section className="section page studio-store">
     <nav className="studio-breadcrumbs" aria-label="Studio navigation"><Link to={studioBase}>Studio Editions</Link><Link to="/available-art">Available Art</Link><Link to="/collections/forest-and-flowers">Forest &amp; Flowers</Link></nav>
     <div className="studio-product-layout"><div className="studio-product-gallery"><button type="button" className={`studio-product-image${views[viewIndex].kind === 'clean' ? ' studio-paper-view' : ''}`} aria-label={`Enlarge ${artwork.title} ${views[viewIndex].label.toLowerCase()}`} onClick={() => setOpen(true)}><ForestPhotograph image={image} eager sizes="(max-width:700px) 86vw, 52vw"/></button><p className="studio-gallery-caption">{views[viewIndex].label}{views[viewIndex].kind !== 'clean' && ` · ${selected.label}`}</p><SizeOptions size={size} placement="gallery" onSizeChange={selectSize}/><p className="studio-framing-note">Prints are sold unframed.{views[viewIndex].kind === 'reference' && ' Room view and framing are illustrative.'}</p><button type="button" className="text-link studio-inspect" onClick={() => setOpen(true)}>Inspect print detail</button>{views.length > 1 && <div className="studio-gallery-views" role="group" aria-label="Print views">{views.map((view,index) => <button key={view.id} type="button" aria-pressed={index === viewIndex} onClick={() => setViewIndex(index)}><ForestPhotograph image={{...view.image,alt:''}} sizes="100px"/><span>{view.label}</span></button>)}</div>}</div>
-      <div className="studio-product-copy"><h1>{artwork.title}</h1><p className="studio-product-designation">Studio Print · Forest &amp; Flowers</p><p className="studio-product-price"><strong>{studioPrice(selected.priceCents)}</strong><span>Selected size · Coming Soon</span></p><StudioGivingSummary edition={edition}/>
+      <div className="studio-product-copy"><h1>{artwork.title}</h1><p className="studio-product-designation">Studio Print · Forest &amp; Flowers</p><p className="studio-product-price"><strong>{studioPrice(selected.priceCents)}</strong><span>Selected size · {maxQuantity ? 'Sandbox' : 'Coming Soon'}</span></p><StudioGivingSummary edition={edition}/>
         <SizeOptions size={size} placement="details" onSizeChange={selectSize}/>
-        <p className="studio-size-note" aria-live="polite">{selected.label} — {studioPrice(selected.priceCents)} · Coming Soon</p>
+        <p className="studio-size-note" aria-live="polite">{selected.label} — {studioPrice(selected.priceCents)} · {maxQuantity ? 'Sandbox' : 'Coming Soon'}</p>
+        <details className="studio-returns-policy" id="studio-returns-policy" open={maxQuantity !== null || undefined}>
+          <summary>Returns policy</summary>
+          <p>All Studio Prints are made to order. All sales are final. Returns or exchanges for change of mind are not accepted. If your print arrives damaged, defective, or incorrect, please contact us within 14 days of delivery so we can arrange an appropriate resolution. This policy does not limit your applicable consumer rights.</p>
+          <p>To request a cancellation, contact us promptly. Availability depends on the stage of production and your applicable rights.</p>
+        </details>
+        {maxQuantity !== null && <StudioCheckout artwork={edition.artworkId} size={selected} maxQuantity={maxQuantity}/>}
         <section className="studio-product-description" aria-labelledby="studio-description-title"><h2 id="studio-description-title">About the original painting</h2>{artwork.description.slice(0,2).map(paragraph => <p key={paragraph}><JunglekeepersText text={paragraph}/></p>)}<p>A fine-art reproduction of the original mixed-media painting.</p></section>
         <StudioGiving edition={edition}/>
         <Link className="text-link" to={`/collections/forest-and-flowers/${artwork.slug}/`}>View the original artwork</Link>
