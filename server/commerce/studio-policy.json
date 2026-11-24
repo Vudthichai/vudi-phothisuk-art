@@ -1,0 +1,7 @@
+{
+  "square": { "locationId": null, "merchantId": null },
+  "origins": { "live-test": null, "live": "https://vudiphothisukart.com" },
+  "testRun": "first-print-2026",
+  "limits": { "customerCents": 15000, "supplierCents": 3500 },
+  "destinations": {}
+}
