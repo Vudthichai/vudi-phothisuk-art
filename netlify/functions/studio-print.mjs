@@ -3,7 +3,7 @@ import policy from '../../server/commerce/studio-policy.json' with { type: 'json
 import { getStore } from '@netlify/blobs';
 import { equal, studioConfig, StudioConfigError, StudioError } from '../../server/commerce/studio-config.mjs';
 import { artworkStoreName, downloadArtwork } from '../../server/commerce/studio-artwork.mjs';
-import { providers, studioService } from '../../server/commerce/studio-api.mjs';
+import { providers, studioPreflight, studioService } from '../../server/commerce/studio-api.mjs';
 
 function reply(body, status = 200) {
   return Response.json(body, { status, headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } });
@@ -41,14 +41,29 @@ function json(raw) {
   }
 }
 
+function authorizedAdmin(request, token) {
+  return typeof token === 'string' && /^[a-f0-9]{64}$/i.test(token) &&
+    !request.headers.has('origin') && equal(`Bearer ${token}`, request.headers.get('authorization') ?? '');
+}
+
 export function createHandler({ env = process.env, launchPolicy = policy, openStore = config => getStore('studio-orders-v1-' + createHash('sha256').update(JSON.stringify([config.merchantId, config.locationId, config.mode])).digest('hex').slice(0, 24)), openArtworkStore = () => getStore(artworkStoreName), fetcher = fetch, reportConfig = issues => console.warn('[studio-print configuration]', issues.join('; ')) } = {}) {
   return async (request, context) => {
     const url = new URL(request.url);
     const action = url.pathname.split('/').at(-1);
     const statusCheck = request.method === 'GET' && url.pathname === '/api/studio-print/status';
+    let preflightCheck = false;
     try {
-      if (statusCheck && (env.STUDIO_MODE === undefined || env.STUDIO_MODE === 'off')) {
-        return reply({ mode: 'off', checkout: false });
+      const off = env.STUDIO_MODE === undefined || env.STUDIO_MODE === 'off';
+      if (statusCheck && off) return reply({ mode: 'off', checkout: false });
+      if (off && request.method === 'POST' && url.pathname === '/api/studio-print/admin' &&
+          context?.deploy?.context === 'deploy-preview' && url.origin === launchPolicy.origins['live-test']) {
+        if (!authorizedAdmin(request, env.STUDIO_ADMIN_TOKEN)) return reply({ error: 'Unauthorized.' }, 401);
+        if (json(await readBody(request, 8192)).action !== 'preflight') {
+          return reply({ error: 'Studio Print checkout is unavailable.' }, 404);
+        }
+        preflightCheck = true;
+        const config = studioConfig(env, context.deploy.context, launchPolicy, { preflight: true });
+        return reply(await studioPreflight(config, providers(config, fetcher), openArtworkStore()));
       }
       const config = studioConfig(env, context?.deploy?.context, launchPolicy);
       if (url.origin !== config.origin) {
@@ -66,8 +81,7 @@ export function createHandler({ env = process.env, launchPolicy = policy, openSt
       if (request.method !== 'POST' || !['review', 'checkout', 'webhook', 'admin'].includes(action)) {
         return reply({ error: 'Not found.' }, 404);
       }
-      if (action === 'admin' && request.headers.has('origin')) return reply({ error: 'Unauthorized.' }, 401);
-      if (action === 'admin' && !equal(`Bearer ${config.adminToken}`, request.headers.get('authorization') ?? '')) {
+      if (action === 'admin' && !authorizedAdmin(request, config.adminToken)) {
         return reply({ error: 'Unauthorized.' }, 401);
       }
       if ((action === 'checkout' || action === 'review') && request.headers.get('origin') !== url.origin) {
@@ -78,7 +92,7 @@ export function createHandler({ env = process.env, launchPolicy = policy, openSt
       if (action === 'webhook') return reply(await service.webhook(raw, request.headers.get('x-square-hmacsha256-signature')));
       return reply(await service[action](json(raw)));
     } catch (error) {
-      if (statusCheck && error instanceof StudioConfigError) reportConfig(error.issues);
+      if ((statusCheck || preflightCheck) && error instanceof StudioConfigError) reportConfig(error.issues);
       if (error instanceof StudioError) return reply({ error: error.message }, error.status);
       // The providers adapter only reports HTTP status and safe request IDs.
       // Avoid logging raw exceptions, authenticated URLs, or webhook bodies.

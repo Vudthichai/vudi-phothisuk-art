@@ -25,7 +25,7 @@ const policy = {
 
 function fixture(overrides = {}, context = 'production', launchPolicy = policy) {
   const deployContext = context ? { deploy: { context } } : {};
-  const origin = overrides.STUDIO_MODE === 'live-test' ? preview : base;
+  const origin = context === 'deploy-preview' ? preview : base;
   const endpoint = origin + '/api/studio-print/';
   const diagnostics = [];
   const records = new Map();
@@ -96,7 +96,7 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
       if (url.pathname === '/v2/locations/location') {
         return Response.json({ location: { id: 'location', country: 'US', currency: 'USD', status: 'ACTIVE', merchant_id: 'merchant' } });
       }
-      if (url.pathname === '/v2/merchants/merchant') return Response.json({ merchant: { id: 'merchant' } });
+      if (url.pathname === '/v2/merchants/merchant') return Response.json({ merchant: { id: 'merchant', status: 'ACTIVE', country: 'US', currency: 'USD', main_location_id: 'location' } });
       if (url.pathname.startsWith('/v2/orders/')) return Response.json({ order: orders.get(url.pathname.split('/').at(-1)) });
       if (url.pathname.startsWith('/v2/payments/')) return Response.json({ payment: payments.get(url.pathname.split('/').at(-1)) });
     }
@@ -619,4 +619,26 @@ test('private diagnostics contain variable names and never raw credential values
   assert.equal(response.status, 503);
   assert.deepEqual(await response.json(), { error: 'Studio Print configuration is incomplete.' });
   assert.deepEqual(f.diagnostics, ['SQUARE_ACCESS_TOKEN: missing', 'PRODIGI_API_KEY: invalid']);
+});
+
+
+test('off-mode preview exposes only authenticated read-only preflight at the pinned host', async () => {
+  const f = fixture({ STUDIO_MODE: 'off' }, 'deploy-preview', { ...policy, destinations: {} });
+  assert.deepEqual(await (await f.status()).json(), { mode: 'off', checkout: false });
+  assert.equal((await f.post('admin', { action: 'preflight' })).status, 401);
+  for (const action of ['test-invite', 'approve', 'retry-draft', 'resume']) {
+    assert.equal((await f.admin({ action })).status, 404);
+  }
+  assert.equal((await f.purchase(customer())).status, 404);
+  assert.equal((await f.notify('payment-unknown')).status, 404);
+  const response = await f.admin({ action: 'preflight' });
+  assert.equal(response.status, 200);
+  const data = await response.json();
+  assert.equal(data.results.length, 2);
+  assert.equal(data.artwork.filter(item => item.ready).length, 5);
+  assert.equal(f.orders.size + f.drafts.size + f.records.size + f.submits(), 0);
+  const auth = { Authorization: 'Bearer ' + env.STUDIO_ADMIN_TOKEN };
+  assert.equal((await f.request('admin', '{"action":"preflight"}', auth, base)).status, 404);
+  assert.equal((await f.post('admin', { action: 'preflight' }, { ...auth, Origin: preview })).status, 401);
+  assert.equal((await fixture({ STUDIO_MODE: 'off' }).admin({ action: 'preflight' })).status, 404);
 });

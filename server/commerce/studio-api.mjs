@@ -138,6 +138,29 @@ function checkBudget(order, config) {
   return amount;
 }
 
+// Keep the off-mode route independent of the order store and all write paths.
+export async function studioPreflight(config, { square, prodigi, quote: requestQuote }, artworkStore) {
+  const [location, merchant, results, artwork] = await Promise.all([
+    square('/locations/' + config.locationId), square('/merchants/' + config.merchantId),
+    Promise.all(Object.entries(config.variants).map(async ([size, sku]) => {
+      const selected = { size, sku, quantity: 1 };
+      const variant = await prodigi('/catalogue/variants/' + encodeURIComponent(sku));
+      checkVariant(variant, selected);
+      return { size, sku, name: variant.name, dimensions: variant.dimensions, printAreas: variant.printAreas,
+        shipsTo: variant.shipsTo, standardQuote: await shippingQuote(requestQuote, selected) };
+    })),
+    Promise.all(Object.keys(artworkMasters).map(async id => ({ artwork: id, ready: await artworkReady(artworkStore, id) }))),
+  ]);
+  if (location.location?.id !== config.locationId || location.location.country !== 'US' ||
+      location.location.currency !== 'USD' || location.location.status !== 'ACTIVE' ||
+      location.location.merchant_id !== config.merchantId || merchant.merchant?.id !== config.merchantId ||
+      merchant.merchant.status !== 'ACTIVE' || merchant.merchant.country !== 'US' ||
+      merchant.merchant.currency !== 'USD' || merchant.merchant.main_location_id !== config.locationId) {
+    throw new StudioError(409, 'Square merchant or location failed validation.');
+  }
+  return { results, artwork };
+}
+
 export function studioService(config, store, { square, prodigi, quote: requestQuote }, artworkStore) {
   async function enabled() {
     if (!Object.keys(config.destinations).length) return false;
@@ -420,22 +443,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
       return { orders: entries.filter(Boolean).sort((a, b) => b.createdAt.localeCompare(a.createdAt)) };
     }
     if (input.action === 'preflight') {
-      const [location, merchant, results, artwork] = await Promise.all([
-        square('/locations/' + config.locationId), square('/merchants/' + config.merchantId),
-        Promise.all(Object.entries(config.variants).map(async ([size, sku]) => {
-          const selected = { size, sku, quantity: 1 };
-          const variant = await variantFor(selected);
-          return { size, sku, name: variant.name, dimensions: variant.dimensions, printAreas: variant.printAreas,
-            shipsTo: variant.shipsTo, standardQuote: await shippingQuote(requestQuote, selected) };
-        })),
-        Promise.all(Object.keys(artworkMasters).map(async id => ({ artwork: id, ready: await artworkReady(artworkStore, id) }))),
-      ]);
-      if (location.location?.id !== config.locationId || location.location.country !== 'US' ||
-          location.location.currency !== 'USD' || location.location.status !== 'ACTIVE' ||
-          location.location.merchant_id !== config.merchantId || merchant.merchant?.id !== config.merchantId) {
-        throw new StudioError(409, 'Square merchant or location failed validation.');
-      }
-      return { results, artwork };
+      return studioPreflight(config, { square, prodigi, quote: requestQuote }, artworkStore);
     }
     if (input.action === 'retry-draft') return draft(input.paymentId);
     if (!validId(input.orderId)) throw new StudioError(400, 'Invalid Square order ID.');

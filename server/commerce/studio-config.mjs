@@ -32,9 +32,12 @@ export class StudioConfigError extends StudioError {
   }
 }
 
-export function studioConfig(env, deployContext, policy) {
+export function studioConfig(env, deployContext, policy, { preflight = false } = {}) {
   const mode = env.STUDIO_MODE ?? 'off';
-  if (!((mode === 'live-test' && deployContext === 'deploy-preview') || (mode === 'live' && deployContext === 'production'))) {
+  const allowed = preflight
+    ? mode === 'off' && deployContext === 'deploy-preview'
+    : (mode === 'live-test' && deployContext === 'deploy-preview') || (mode === 'live' && deployContext === 'production');
+  if (!allowed) {
     throw new StudioError(404, 'Studio Print checkout is unavailable.');
   }
 
@@ -58,8 +61,9 @@ export function studioConfig(env, deployContext, policy) {
   if (!validId(merchantId)) issues.push('studio-policy.json: Square merchantId missing or invalid');
   let origin;
   try {
-    const url = https(policy.origins[mode]);
-    if (url.href === url.origin + '/' && (mode === 'live-test'
+    const originMode = preflight ? 'live-test' : mode;
+    const url = https(policy.origins[originMode]);
+    if (url.href === url.origin + '/' && (originMode === 'live-test'
       ? /^deploy-preview-\d+--vudi-phothisuk-art\.netlify\.app$/.test(url.hostname)
       : url.origin === 'https://vudiphothisukart.com')) origin = url.origin;
   } catch {}

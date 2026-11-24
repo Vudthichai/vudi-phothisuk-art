@@ -21,18 +21,18 @@ submission.
 ## Setup, in order
 
 1. Leave all deploys **off** while reviewing the code. The checked-in launch
-   policy has no Square merchant/location IDs and no approved destinations.
-   Nothing can be purchased with the checked-in defaults.
+   policy has the confirmed Square seller and location IDs and no approved
+   destinations. Nothing can be purchased with the checked-in defaults.
 2. Obtain the Production access token and active U.S. Square location ID from
    the existing Square Developer Console app. Obtain the corresponding seller’s
    merchant ID from Square. Confirm real payment processing is enabled at that
    location. Get the v5 live key from Prodigi’s live dashboard, prefix it with
    `live_` once, and confirm the billing method in Prodigi. The same provider key
    is used with the documented v4 Standard quote endpoint and the v5 order API.
-3. Set the non-secret Square IDs in [studio-policy.json](../server/commerce/studio-policy.json).
+3. The confirmed Square merchant ID and location ID are set in [studio-policy.json](../server/commerce/studio-policy.json).
    The configured private-test origin is [Deploy Preview #103](https://deploy-preview-103--vudi-phothisuk-art.netlify.app).
-   Keep production bound to the existing website origin. Create one **Production
-   environment** Square webhook for `payment.created` and `payment.updated`
+   Keep production bound to the existing website origin. Verify the existing **Production
+   environment** Square webhook is set for `payment.created` and `payment.updated`
    at that approved origin plus `/api/studio-print/webhook`. Copy the signature
    key directly to Netlify. A live test uses Square’s production provider
    environment even though the website stays on a Deploy Preview. When
@@ -51,13 +51,13 @@ submission.
    | `STUDIO_MASTER_KEY` | Generate with `openssl rand -hex 32`. Separate keys are derived for recipient encryption, artwork signing, and test invites. Keep this key stable for existing records, and separate between contexts. |
    | `STUDIO_ADMIN_TOKEN` | Generate independently with `openssl rand -hex 32`. Use from a trusted operator terminal. |
 
-5. During an authorized preview validation window, invoke the read-only
-   `preflight` admin action below. It can be run while the destination list is
-   empty, so checkout remains inactive. It checks the Square seller and active
+5. With `STUDIO_MODE=off`, invoke the authenticated, read-only `preflight` admin
+   action below on Deploy Preview #103. No mode change or destination
+   configuration is needed. It checks the Square seller and active
    USD location, both Prodigi SKU dimensions and paper, available U.S. Standard
    quote/currency and fulfillment countries, and the existence of all five
-   verified private masters. The credentials also let Netlify verify the
-   webhook. Do not paste keys or share invite links in chat or Git.
+   verified private masters. This checks that webhook configuration is present. Authenticating an actual
+   Square delivery remains a separate test. Do not paste keys or share invite links in chat or Git.
 6. Review and record the actual approved shipping rates and landed supplier
    allowances for **each size** in each permitted ZIP. Have the applicable sales
    tax policy approved first, including whether shipping is taxable. The
