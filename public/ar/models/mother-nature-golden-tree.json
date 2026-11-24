@@ -1,0 +1,44 @@
+{
+  "asset": "/ar/models/mother-nature-golden-tree.glb",
+  "sha256": "fab0413108763a9a1320f0da69d78622a3dd4fbb50b5922bc0741aa62887a6ef",
+  "bytes": 9734696,
+  "triangles": 144964,
+  "source": {
+    "filename": "Meshy_AI_Golden_Tree_Sculpture_1123230038_image-to-3d-texture.glb",
+    "bytes": 221681036,
+    "triangles": 6476570,
+    "sha256": "3a1513ecb663bbc829877bee099cf1fa91609b7bd1a9677552cf9ca08b52b8b7"
+  },
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "width": 2048,
+      "height": 2048,
+      "bytes": 1868866
+    },
+    {
+      "mimeType": "image/jpeg",
+      "width": 1024,
+      "height": 1024,
+      "bytes": 366946
+    },
+    {
+      "mimeType": "image/jpeg",
+      "width": 2048,
+      "height": 2048,
+      "bytes": 1428708
+    }
+  ],
+  "optimization": {
+    "ratio": 0.022388393856624726,
+    "error": 0.008,
+    "method": "glTF Transform weld, attribute-aware meshoptimizer simplification and prune; JPEG resize preserving all three PBR maps",
+    "textureQuality": [
+      90,
+      94,
+      94
+    ],
+    "chromaSubsampling": "4:4:4"
+  },
+  "extensionsRequired": []
+}

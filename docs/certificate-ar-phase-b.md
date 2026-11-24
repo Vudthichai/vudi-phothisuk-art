@@ -1,5 +1,7 @@
 # Forest & Flowers AR — Phase B review
 
+> AR V3 replaces the procedural actor with the supplied optimized model while retaining this camera/recording pipeline. See [V3 model and runtime notes](ar-v3/README.md).
+
 Implements Issue #97 on top of the isolated Phase A draft PR #96. The artist confirmed that Phase A recognized Mother Nature on an actual iPhone 15, both on a screen and an exhibition flyer. This is not yet final 5 × 7 certificate or Phase B hardware acceptance.
 
 ## Review flow

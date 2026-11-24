@@ -27,3 +27,4 @@ for(const experience of experiences) {
 const upstream=await load('public/ar/vendor/mindar/UPSTREAM.json');
 for(const [file,digest] of Object.entries(upstream.files))assert.equal(hash(await readFile('public/ar/vendor/mindar/'+file)),digest);
 console.log(`AR assets verified: ${experiences.length} compiled target, ${paths.size} enabled certificate, exact front-image provenance and upstream hashes. No replacement QR codes.`);
+await import('./check-ar-model.mjs');

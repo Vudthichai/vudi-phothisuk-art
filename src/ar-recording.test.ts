@@ -10,7 +10,7 @@ class Recorder {
 const stop=vi.fn(),drawImage=vi.fn();
 beforeEach(()=>{
  vi.useFakeTimers();vi.stubGlobal('MediaRecorder',Recorder);
- vi.spyOn(HTMLCanvasElement.prototype,'getContext').mockReturnValue({drawImage} as unknown as CanvasRenderingContext2D);
+ vi.spyOn(HTMLCanvasElement.prototype,'getContext').mockReturnValue({drawImage} as unknown as ReturnType<HTMLCanvasElement['getContext']>);
  Object.defineProperty(HTMLCanvasElement.prototype,'captureStream',{configurable:true,value:()=>({getVideoTracks:()=>[{}],getTracks:()=>[{stop}]})});
  vi.spyOn(performance,'now').mockReturnValue(100);
 });

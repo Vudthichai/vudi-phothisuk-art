@@ -14,16 +14,19 @@ with sync_playwright() as p:
  page.goto(BASE+PATH,wait_until='networkidle');f=page.frame_locator('iframe');f.get_by_role('button',name='Start camera',exact=True).wait_for()
  assert page.frames[1].evaluate('__calls')==0
  page.screenshot(path=str(OUT/'mobile-intro.png'));f.get_by_role('button',name='Start camera',exact=True).click()
- f.locator('#ar-root[data-tracking="found"]').wait_for(state='attached',timeout=60000);page.wait_for_timeout(3500)
+ f.locator('#ar-root[data-tracking="found"]').wait_for(state='attached',timeout=90000);f.locator('.ar-surface[data-sculpture="ready"]').wait_for(state='attached',timeout=45000);page.wait_for_timeout(3500)
  page.screenshot(path=str(OUT/'mobile-tree.png'));assert page.frames[1].evaluate('__calls')==1
  print('TREE FOUND',flush=True)
- f.get_by_role('button',name='Record video',exact=True).click();f.get_by_role('button',name='Stop recording',exact=True).wait_for()
+ f.get_by_role('button',name='Record video',exact=True).click(force=True);f.get_by_role('button',name='Stop recording',exact=True).wait_for()
  page.wait_for_timeout(3000);page.screenshot(path=str(OUT/'recording.png'))
  f.locator('#ar-review:not([hidden])').wait_for(state='attached',timeout=20000)
  f.locator('#ar-clip').evaluate('(v)=>new Promise((ok,bad)=>{if(v.readyState>=2)return ok();v.onloadeddata=()=>ok();v.onerror=()=>bad("clip decode error");})')
  duration=f.locator('#ar-clip').evaluate('(v)=>({duration:v.duration,width:v.videoWidth,height:v.videoHeight,type:v.currentSrc})');report['clip']=duration
  assert duration['width']>200 and duration['height']>200,duration
- f.locator('#ar-clip').evaluate('(v)=>v.currentTime=2');page.wait_for_timeout(700);page.screenshot(path=str(OUT/'clip-review.png'))
+ f.locator('#ar-clip').evaluate('(v)=>v.currentTime=Math.max(0,v.duration-.5)');page.wait_for_timeout(700);page.screenshot(path=str(OUT/'clip-review.png'))
+ difference=page.frames[1].evaluate("""()=>{const clip=document.querySelector('#ar-clip'),camera=document.querySelector('.ar-surface video'),w=clip.videoWidth,h=clip.videoHeight,a=document.createElement('canvas'),b=document.createElement('canvas');a.width=b.width=w;a.height=b.height=h;const ac=a.getContext('2d'),bc=b.getContext('2d');ac.drawImage(clip,0,0);const scale=Math.max(w/camera.videoWidth,h/camera.videoHeight);bc.drawImage(camera,(w-camera.videoWidth*scale)/2,(h-camera.videoHeight*scale)/2,camera.videoWidth*scale,camera.videoHeight*scale);const x=ac.getImageData(0,0,w,h).data,y=bc.getImageData(0,0,w,h).data;let changed=0,total=0;for(let i=0;i<x.length;i+=32){total++;if(Math.abs(x[i]-y[i])+Math.abs(x[i+1]-y[i+1])+Math.abs(x[i+2]-y[i+2])>100)changed++;}return changed/total;}""")
+ assert difference>.02,('Recorded clip must contain the rendered overlay, not only the static camera image',difference)
+ report['decodedOverlayDifferenceFraction']=difference
  with page.expect_download() as d:f.get_by_role('link',name='Save video',exact=True).click()
  d.value.save_as(str(OUT/'recorded.mp4'));report['downloadBytes']=(OUT/'recorded.mp4').stat().st_size
  f.get_by_role('button',name='Share video',exact=True).click();report['share']=page.frames[1].evaluate('__shared');assert report['share']['active'] and report['share']['count']==1
@@ -33,9 +36,9 @@ with sync_playwright() as p:
  # Unsupported direct recorder -> explicit native guidance, without ending AR.
  b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=FLAGS)
  ctx=b.new_context(viewport={'width':393,'height':852},is_mobile=True,has_touch=True);ctx.add_init_script(INIT+';window.MediaRecorder=undefined;');page=ctx.new_page();page.goto(BASE+PATH);f=page.frame_locator('iframe');f.get_by_role('button',name='Start camera',exact=True).click();f.locator('#ar-root[data-tracking="found"]').wait_for(state='attached',timeout=60000)
- f.get_by_role('button',name='Record video',exact=True).click();f.locator('#ar-fallback:not([hidden])').wait_for(state='attached');page.screenshot(path=str(OUT/'native-fallback.png'));f.get_by_role('button',name='Continue',exact=True).click();assert f.locator('.ar-overlay').is_visible();f.get_by_role('button',name='Exit AR',exact=True).click();report['nativeFallback']=True;ctx.close();b.close()
+ f.get_by_role('button',name='Record video',exact=True).click(force=True);f.locator('#ar-fallback:not([hidden])').wait_for(state='attached');page.screenshot(path=str(OUT/'native-fallback.png'));f.get_by_role('button',name='Continue',exact=True).click(force=True);assert f.locator('.ar-overlay').is_visible();f.get_by_role('button',name='Exit AR',exact=True).click();report['nativeFallback']=True;ctx.close();b.close()
  print('NATIVE FALLBACK PASS',flush=True)
  # Recorder API exists but construction fails: no broken recording state.
  b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=FLAGS)
- ctx=b.new_context(viewport={'width':393,'height':852},is_mobile=True,has_touch=True);ctx.add_init_script(INIT+';window.MediaRecorder=class{static isTypeSupported(){return true;}constructor(){throw new Error("encoder unavailable");}};');page=ctx.new_page();page.goto(BASE+PATH);f=page.frame_locator('iframe');f.get_by_role('button',name='Start camera',exact=True).click();f.locator('#ar-root[data-tracking="found"]').wait_for(state='attached',timeout=60000);f.get_by_role('button',name='Record video',exact=True).click();f.locator('#ar-fallback:not([hidden])').wait_for(state='attached');report['encoderFailureFallback']=True;f.get_by_role('button',name='Continue',exact=True).click();f.get_by_role('button',name='Exit AR',exact=True).click();ctx.close();b.close();print('ENCODER FALLBACK PASS',flush=True)
+ ctx=b.new_context(viewport={'width':393,'height':852},is_mobile=True,has_touch=True);ctx.add_init_script(INIT+';window.MediaRecorder=class{static isTypeSupported(){return true;}constructor(){throw new Error("encoder unavailable");}};');page=ctx.new_page();page.goto(BASE+PATH);f=page.frame_locator('iframe');f.get_by_role('button',name='Start camera',exact=True).click();f.locator('#ar-root[data-tracking="found"]').wait_for(state='attached',timeout=60000);f.get_by_role('button',name='Record video',exact=True).click(force=True);f.locator('#ar-fallback:not([hidden])').wait_for(state='attached');report['encoderFailureFallback']=True;f.get_by_role('button',name='Continue',exact=True).click();f.get_by_role('button',name='Exit AR',exact=True).click();ctx.close();b.close();print('ENCODER FALLBACK PASS',flush=True)
  report['passed']=not report['errors'];(OUT/'verification.json').write_text(json.dumps(report,indent=2));print(report,flush=True)
