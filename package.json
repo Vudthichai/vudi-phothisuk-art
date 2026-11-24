@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/check-ar-assets.mjs && tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir .prerender && node scripts/write-sharing-pages.mjs",
+    "build": "node scripts/check-rainforest.mjs && node scripts/check-ar-assets.mjs && tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir .prerender && node scripts/write-sharing-pages.mjs",
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "test": "vitest run",
@@ -13,7 +13,8 @@
     "test:coa": "node scripts/check-coa.mjs",
     "test:http": "node scripts/check-http.mjs",
     "test:browser": "node scripts/check-browser.mjs",
-    "test:ar": "node scripts/check-ar-assets.mjs"
+    "test:ar": "node scripts/check-ar-assets.mjs",
+    "test:ar:rainforest": "node scripts/check-rainforest.mjs"
   },
   "dependencies": {
     "react": "^19.2.0",
