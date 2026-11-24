@@ -10,6 +10,7 @@ export class StableImagePose {
   private nextScale = new Vector3();
   private candidate?: Matrix4;
   private initialized = false;
+  constructor(private readonly handheld = false) {}
 
   reset() { this.initialized = false; this.candidate = undefined; }
 
@@ -40,9 +41,9 @@ export class StableImagePose {
       }
       this.candidate = undefined;
       const seconds = Math.min(.1, Math.max(.001, dt));
-      const moving = distance > .025 || angle > .035;
-      this.position.lerp(this.nextPosition, 1 - Math.exp(-seconds * (moving ? 22 : 4)));
-      this.rotation.slerp(this.nextRotation, 1 - Math.exp(-seconds * (moving ? 20 : 3.5)));
+      const moving = distance > (this.handheld ? .012 : .025) || angle > (this.handheld ? .020 : .035);
+      this.position.lerp(this.nextPosition, 1 - Math.exp(-seconds * (moving ? 22 : this.handheld ? 6 : 4)));
+      this.rotation.slerp(this.nextRotation, 1 - Math.exp(-seconds * (moving ? 20 : this.handheld ? 5 : 3.5)));
       this.scale.lerp(this.nextScale, 1 - Math.exp(-seconds * (moving ? 16 : 4)));
     }
     return matrix.compose(this.position, this.rotation, this.scale);

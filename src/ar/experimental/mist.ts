@@ -4,7 +4,7 @@ export const MIST_TEXTURE_SIZE = 128;
 export const MIST_LAYER_COUNT = 4;
 
 /** Four low-opacity depth-tested wisps. Generated once; no downloaded textures or volume marching. */
-export function createCinematicMist() {
+export function createCinematicMist(living = false) {
   const size = MIST_TEXTURE_SIZE, data = new Uint8Array(size * size * 4);
   for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
     const u = x / (size - 1) * 2 - 1, v = y / (size - 1) * 2 - 1;
@@ -20,7 +20,12 @@ export function createCinematicMist() {
   texture.generateMipmaps = false; texture.needsUpdate = true;
   const root = new Group(); root.name = 'Cinematic rainforest mist';
   // Coordinates are fractions of tree height in the upright sculpture frame.
-  const layers = [
+  const layers = living ? [
+    { p: [-.12, .065, .32], s: [.82, .16], opacity: .27 },
+    { p: [.12, .22, -.15], s: [.66, .17], opacity: .23 },
+    { p: [-.10, .51, .22], s: [.65, .12], opacity: .17 },
+    { p: [.12, .71, -.13], s: [.52, .11], opacity: .14 },
+  ] : [
     { p: [-.06, .065, .20], s: [.64, .13], opacity: .22 },
     { p: [.09, .18, .16], s: [.52, .12], opacity: .18 },
     { p: [-.1, .55, -.12], s: [.58, .10], opacity: .14 },
@@ -32,14 +37,14 @@ export function createCinematicMist() {
     root.add(sprite); return sprite;
   });
   let enabled = true, disposed = false;
-  function update(time: number, reducedMotion: boolean) {
+  function update(time: number, reducedMotion: boolean, intensity = 1) {
     root.visible = enabled; if (!enabled || disposed) return;
     const t = reducedMotion ? 0 : time;
     layers.forEach((layer, i) => {
       const phase = i * 1.7, sprite = sprites[i];
       sprite.position.set(layer.p[0] + .035 * Math.sin(t * .05 + phase), layer.p[1] + .008 * Math.sin(t * .06 + phase), layer.p[2] + .02 * Math.cos(t * .037 + phase));
       sprite.scale.set(layer.s[0] * (1 + .04 * Math.sin(t * .04 + phase)), layer.s[1], 1);
-      sprite.material.opacity = layer.opacity * (.9 + .1 * Math.sin(t * .06 + phase));
+      sprite.material.opacity = Math.min(1, Math.max(0, intensity)) * layer.opacity * (.9 + .1 * Math.sin(t * .06 + phase));
     });
   }
   update(0, false);

@@ -1,0 +1,56 @@
+{
+  "environment": "Chromium SwiftShader + synthetic moving/tilting certificate and occlusion; not physical handheld/iPhone",
+  "errors": [],
+  "settled": {
+    "state": "tracking",
+    "rainforestV2": "true",
+    "tracking": "found",
+    "reveal": "settled",
+    "revealHeight": "1.56",
+    "revealTurn": "6.283185307179586"
+  },
+  "noReplayAfterOcclusion": true,
+  "clip": {
+    "duration": 2.887433,
+    "width": 332,
+    "height": 720
+  },
+  "cameraStopped": true,
+  "stationaryReveal": true,
+  "v2FallbackPreserved": true,
+  "passed": true,
+  "observedHeightRange": [
+    1.3,
+    1.56
+  ],
+  "modelLoad": {
+    "state": "ready",
+    "bytes": 12058396,
+    "fetchMs": 3530.6000000089407,
+    "decodeAndParseMs": 882.2999999970198,
+    "totalMs": 4412.9000000059605
+  },
+  "softwareRenderSample": {
+    "fps": 1.589319771130425,
+    "frameP50Ms": 127.09999999403954,
+    "frameP95Ms": 1493.3999999910593,
+    "renderCpuP95Ms": 1193.300000011921,
+    "drawCalls": 9,
+    "triangles": 240674,
+    "geometries": 6,
+    "textures": 5,
+    "trackingFound": true,
+    "lossEvents": 0,
+    "poseUpdates": 6,
+    "poseStepMeanTargetWidths": 0.0010746687129509001,
+    "poseAgeMs": 0.800000011920929,
+    "jsHeapBytes": 60337607,
+    "recording": false,
+    "elapsedMs": 12263.39999999106
+  },
+  "limitations": [
+    "Synthetic moving certificate with occlusion, not a real hand or phone.",
+    "30 FPS on iPhone, perceived root contact/stability, sustained recording and native sharing remain unverified.",
+    "The short decoded clip validates composition plumbing, not 10-12 second sustained device capture."
+  ]
+}

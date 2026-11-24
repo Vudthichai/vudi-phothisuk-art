@@ -10,7 +10,7 @@ type ControllerConstructor=new(options:{inputWidth:number;inputHeight:number;max
 export type ARMetrics={fps:number;frameP50Ms:number;frameP95Ms:number;renderCpuP95Ms:number;drawCalls:number;triangles:number;geometries:number;textures:number;trackingFound:boolean;lossEvents:number;poseUpdates:number;poseStepMeanTargetWidths:number;poseAgeMs:number|null};
 export type SculptureFactory=(options:{signal:AbortSignal;onState:(state:SculptureState)=>void;onError:(error:Error)=>void})=>{root:Group;update:(time:number,reduced:boolean,tracked:boolean)=>void;dispose:()=>void};
 export type ARSession={dispose:()=>void; onFrame:(callback:((canvas:HTMLCanvasElement)=>void)|undefined)=>void;setPresentationPaused:(paused:boolean)=>void;setRenderPixelRatio:(ratio:number)=>void};
-export async function startTracking({surface,video,experience,signal,onTracking,onError,onSculptureState,sceneFactory,onMetrics,poseFilter}:{surface:HTMLElement;video:HTMLVideoElement;experience:ARExperience;signal:AbortSignal;onTracking:(found:boolean)=>void;onError:(error:Error)=>void;onSculptureState?:(state:SculptureState)=>void;sceneFactory?:SculptureFactory;onMetrics?:(metrics:ARMetrics)=>void;poseFilter?:Pick<ImagePoseFilter,'update'|'reset'>}):Promise<ARSession> {
+export async function startTracking({surface,video,experience,signal,onTracking,onError,onSculptureState,sceneFactory,onMetrics,poseFilter,trackingTolerance}:{surface:HTMLElement;video:HTMLVideoElement;experience:ARExperience;signal:AbortSignal;onTracking:(found:boolean)=>void;onError:(error:Error)=>void;onSculptureState?:(state:SculptureState)=>void;sceneFactory?:SculptureFactory;onMetrics?:(metrics:ARMetrics)=>void;poseFilter?:Pick<ImagePoseFilter,'update'|'reset'>;trackingTolerance?:{warmup:number;miss:number}}):Promise<ARSession> {
   const loadVendor=new Promise<{Controller:ControllerConstructor}>((resolve,reject)=>{
     const script=document.createElement('script');script.type='module';script.src='/ar/vendor/mindar/mindar-image.prod.js';
     script.onload=()=>{const mindar=(window as unknown as {MINDAR?:{IMAGE?:{Controller:ControllerConstructor}}}).MINDAR?.IMAGE;if(mindar)resolve(mindar);else reject(new Error('The local image tracker did not initialize.'));};
@@ -57,7 +57,7 @@ export async function startTracking({surface,video,experience,signal,onTracking,
   signal.addEventListener('abort',dispose,{once:true});
   renderer.domElement.addEventListener('webglcontextlost',contextLost);
   try {
-    controller=new Controller({inputWidth:video.videoWidth,inputHeight:video.videoHeight,maxTrack:1,warmupTolerance:5,missTolerance:8,filterMinCF:.001,filterBeta:1000,onUpdate:data=>{
+    controller=new Controller({inputWidth:video.videoWidth,inputHeight:video.videoHeight,maxTrack:1,warmupTolerance:trackingTolerance?.warmup??5,missTolerance:trackingTolerance?.miss??8,filterMinCF:.001,filterBeta:1000,onUpdate:data=>{
       if(disposed||data.type!=='updateMatrix'||data.targetIndex!==experience.targetIndex)return;
       const visible=data.worldMatrix!==null;anchor.visible=visible;
       if(data.worldMatrix){const now=performance.now()/1000;targetPose.fromArray(data.worldMatrix).multiply(postMatrix);anchor.matrix.copy(pose.update(targetPose,now-lastPoseTime));lastPoseTime=now;}else{pose.reset();}
