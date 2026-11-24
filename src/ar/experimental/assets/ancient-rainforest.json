@@ -1,0 +1,54 @@
+{
+  "bytes": 12058396,
+  "sha256": "41196179bd93eedcbd124e27d00a76b6860c93caaaf737d9662cf09336e0c99b",
+  "triangles": 229534,
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "width": 2048,
+      "height": 2048,
+      "encodedBytes": 1991133
+    },
+    {
+      "mimeType": "image/png",
+      "width": 1024,
+      "height": 1024,
+      "encodedBytes": 983382
+    },
+    {
+      "mimeType": "image/png",
+      "width": 2048,
+      "height": 2048,
+      "encodedBytes": 6042905
+    }
+  ],
+  "textureMemoryEstimateWithMipmapsBytes": 50331648.0,
+  "source": {
+    "bytes": 291408684,
+    "triangles": 7641664,
+    "vertices": 4996098,
+    "boundsMin": [
+      -0.9507759809494019,
+      -0.9680160284042358,
+      -0.7542669773101807
+    ],
+    "boundsMax": [
+      0.9277300238609314,
+      0.952672004699707,
+      0.764519989490509
+    ],
+    "sha256": "c26d612c67b7291bf37ee175045997f27a475bb6f2ac930a1c119d38c97aa357"
+  },
+  "method": {
+    "targetTriangles": 200000,
+    "maxSimplificationError": 0.004,
+    "quantizePositionBits": 14,
+    "quantizeNormalBits": 12,
+    "quantizeTexcoordBits": 14,
+    "meshoptLevel": "high"
+  },
+  "extensionsRequired": [
+    "EXT_meshopt_compression",
+    "KHR_mesh_quantization"
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "environment": "software Chromium, synthetic authentic certificate feed; not iPhone Safari",
+  "errors": [],
+  "clip": {
+    "duration": 12.0573,
+    "width": 332,
+    "height": 720
+  },
+  "cameraStopped": true,
+  "pinch": {
+    "height": 3.9000000000000004,
+    "x": 0,
+    "y": -0.55,
+    "yaw": -12
+  },
+  "v1FallbackPreserved": true,
+  "passed": true,
+  "mistOn": {
+    "enabled": true,
+    "placement": {
+      "height": 2.6,
+      "x": 0,
+      "y": -0.55,
+      "yaw": -12
+    },
+    "load": {
+      "state": "ready",
+      "bytes": 12058396,
+      "fetchMs": 2136.2000000029802,
+      "decodeAndParseMs": 658.6999999880791,
+      "totalMs": 2794.8999999910593
+    },
+    "latestSoftwareSample": {
+      "fps": 0.7468259895444361,
+      "frameP50Ms": 1270.8999999910593,
+      "frameP95Ms": 3115,
+      "renderCpuP95Ms": 1.800000011920929,
+      "drawCalls": 5,
+      "triangles": 229542,
+      "geometries": 2,
+      "textures": 5,
+      "trackingFound": true,
+      "lossEvents": 0,
+      "poseUpdates": 36,
+      "poseStepMeanTargetWidths": 0.022749869820579638,
+      "poseAgeMs": 0.5999999940395355,
+      "jsHeapBytes": 22046478,
+      "recording": false,
+      "elapsedMs": 59344.79999999702
+    }
+  },
+  "mistOff": {
+    "enabled": false,
+    "placement": {
+      "height": 2.6,
+      "x": 0,
+      "y": -0.55,
+      "yaw": -12
+    },
+    "load": {
+      "state": "ready",
+      "bytes": 12058396,
+      "fetchMs": 2136.2000000029802,
+      "decodeAndParseMs": 658.6999999880791,
+      "totalMs": 2794.8999999910593
+    },
+    "latestSoftwareSample": {
+      "fps": 0.666000666000666,
+      "frameP50Ms": 1330.4000000059605,
+      "frameP95Ms": 3115,
+      "renderCpuP95Ms": 1.3999999910593033,
+      "drawCalls": 1,
+      "triangles": 229534,
+      "geometries": 2,
+      "textures": 5,
+      "trackingFound": true,
+      "lossEvents": 0,
+      "poseUpdates": 53,
+      "poseStepMeanTargetWidths": 0.022639851756696142,
+      "poseAgeMs": 5.700000002980232,
+      "jsHeapBytes": 21734642,
+      "recording": false,
+      "elapsedMs": 85027
+    }
+  },
+  "limitations": [
+    "Synthetic DOM touches, not Safari hardware gestures.",
+    "Software renderer below 1 FPS; not a mobile GPU benchmark or evidence of 30 FPS.",
+    "Physical iPhone 15 mist visibility, sustained recording, memory/thermal stability and native share/save require review.",
+    "Netlify reported deploy-preview success; environment HTTP proxy blocked direct external preview fetching (403). Local rendered integration verified."
+  ]
+}
