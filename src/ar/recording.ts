@@ -10,19 +10,19 @@ export function coverRect(sourceWidth:number,sourceHeight:number,width:number,he
   return {x:(width-sourceWidth*scale)/2,y:(height-sourceHeight*scale)/2,width:sourceWidth*scale,height:sourceHeight*scale};
 }
 export type LocalRecording={draw:(overlay:HTMLCanvasElement)=>void;stop:()=>void;cancel:()=>void};
-export function beginRecording({video,width,height,onComplete,onError,onStarted}:{video:HTMLVideoElement;width:number;height:number;onComplete:(blob:Blob)=>void;onError:()=>void;onStarted?:()=>void}):LocalRecording {
+export function beginRecording({video,width,height,onComplete,onError,onStarted,fps=24}:{video:HTMLVideoElement;width:number;height:number;onComplete:(blob:Blob)=>void;onError:()=>void;onStarted?:()=>void;fps?:24|30}):LocalRecording {
   const mimeType=recordingMimeType();if(!mimeType)throw new Error('Composite recording unavailable');
   const canvas=document.createElement('canvas'),ratio=Math.min(1,720/Math.max(width,height));
   canvas.width=Math.max(2,Math.round(width*ratio/2)*2);canvas.height=Math.max(2,Math.round(height*ratio/2)*2);
   const context=canvas.getContext('2d',{alpha:false});if(!context)throw new Error('Canvas unavailable');
   let stream:MediaStream|undefined,recorder:MediaRecorder|undefined,done=false,cancelled=false,lastFrame=0,frames=0,timer=0,stopTimer=0;
-  const chunks:Blob[]=[];
+  const chunks:Blob[]=[];let captureTrack:(MediaStreamTrack&{requestFrame?:()=>void})|undefined;
   function release(){clearTimeout(timer);clearTimeout(stopTimer);stream?.getTracks().forEach(track=>track.stop());canvas.width=canvas.height=2;}
   function error(){if(done)return;done=true;cancelled=true;if(recorder?.state!=='inactive')try{recorder?.stop();}catch{/* already failed */}release();onError();}
   try {
     // Start with the video filled in; subsequent frames always include the rendered overlay.
     const rect=coverRect(video.videoWidth,video.videoHeight,canvas.width,canvas.height);context.drawImage(video,rect.x,rect.y,rect.width,rect.height);
-    stream=canvas.captureStream(24);if(stream.getVideoTracks().length!==1)throw new Error('No canvas capture track');
+    stream=canvas.captureStream(fps);captureTrack=stream.getVideoTracks()[0];if(stream.getVideoTracks().length!==1)throw new Error('No canvas capture track');
     recorder=new MediaRecorder(stream,{mimeType,videoBitsPerSecond:2_500_000});
     recorder.ondataavailable=event=>{if(!cancelled&&event.data.size)chunks.push(event.data);};
     recorder.onerror=error;
@@ -38,11 +38,11 @@ export function beginRecording({video,width,height,onComplete,onError,onStarted}
   return {
     draw(overlay){
       if(done||cancelled||recorder?.state!=='recording')return;
-      const now=performance.now();if(now-lastFrame<1000/24)return;lastFrame=now;
+      const now=performance.now();if(now-lastFrame<1000/fps)return;lastFrame=now;
       try{
         const rect=coverRect(video.videoWidth,video.videoHeight,canvas.width,canvas.height);
         context.drawImage(video,rect.x,rect.y,rect.width,rect.height);context.drawImage(overlay,0,0,canvas.width,canvas.height);
-        if(frames===0){clearTimeout(timer);timer=window.setTimeout(()=>stop(),CLIP_SECONDS*1000);onStarted?.();}frames++;
+        if(frames===0){clearTimeout(timer);timer=window.setTimeout(()=>stop(),CLIP_SECONDS*1000);onStarted?.();}frames++;if(fps===30)captureTrack?.requestFrame?.();
       }catch{error();}
     },stop,
     cancel(){if(done)return;cancelled=true;done=true;if(recorder?.state!=='inactive')try{recorder?.stop();}catch{/* best effort */}chunks.length=0;release();}
