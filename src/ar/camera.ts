@@ -7,6 +7,7 @@ const root=document.getElementById('ar-root')!;
 const experience=arById(new URLSearchParams(location.search).get('experience'));
 root.innerHTML=`<button id="ar-exit" class="ar-exit" type="button" aria-label="Exit AR">Exit <span aria-hidden="true">×</span></button>
 <section class="ar-intro"><p class="ar-eyebrow">Forest &amp; Flowers</p><h1>Nature, in another dimension.</h1><p>Point your camera at the Mother Nature artwork shown below—on a painting, print, flyer or screen. A golden sculpture will emerge.</p><img id="ar-target-preview" width="680" height="1024" alt="Mother Nature tracking image"><button id="ar-start" type="button">Start camera</button><p class="ar-privacy">Camera stays on your device. Recording is optional, silent and saved only by you.</p><p id="ar-support" role="status"></p></section>
+<p id="ar-model-note" class="ar-model-note" role="status" hidden></p>
 <div class="ar-surface" hidden><video muted autoplay playsinline aria-label="Live rear camera"></video></div>
 <div class="ar-guidance" hidden><p id="ar-status" role="status" aria-live="polite"></p><button id="ar-retry" type="button" hidden>Try again</button></div>
 <div class="ar-controls" hidden><span id="ar-timer" role="status"></span><button id="ar-record" type="button" aria-label="Record video"><span class="ar-record-dot" aria-hidden="true"></span><span id="ar-record-label">Record</span></button><button id="ar-capture-help" type="button">Recording help</button></div>
@@ -16,11 +17,11 @@ const el=<T extends HTMLElement>(id:string)=>root.querySelector<T>(`#${id}`)!;
 const intro=root.querySelector<HTMLElement>('.ar-intro')!,surface=root.querySelector<HTMLElement>('.ar-surface')!,guidance=root.querySelector<HTMLElement>('.ar-guidance')!,controls=root.querySelector<HTMLElement>('.ar-controls')!;
 const start=el<HTMLButtonElement>('ar-start'),retry=el<HTMLButtonElement>('ar-retry'),status=el('ar-status'),video=surface.querySelector('video')!;
 const record=el<HTMLButtonElement>('ar-record'),review=el('ar-review'),fallback=el('ar-fallback'),clip=el<HTMLVideoElement>('ar-clip');
-let generation=0,stream:MediaStream|undefined,session:ARSession|undefined,abort:AbortController|undefined,searchTimer=0,prepareTimer=0,statusTimer=0;
+let generation=0,stream:MediaStream|undefined,session:ARSession|undefined,abort:AbortController|undefined,searchTimer=0,prepareTimer=0,statusTimer=0,modelNoteTimer=0;
 let recording:LocalRecording|undefined,clipUrl:string|undefined,clipFile:File|undefined,tick=0,recordStart=0,lastFocus:HTMLElement|undefined;
 function clearClip(){clip.pause();clip.removeAttribute('src');clip.load();if(clipUrl)URL.revokeObjectURL(clipUrl);clipUrl=undefined;clipFile=undefined;}
 function resetRecording(){recording?.cancel();recording=undefined;session?.onFrame(undefined);clearInterval(tick);el('ar-timer').textContent='';record.classList.remove('is-recording');record.setAttribute('aria-label','Record video');el('ar-record-label').textContent='Record';}
-function stop(){generation++;clearTimeout(searchTimer);clearTimeout(prepareTimer);clearTimeout(statusTimer);resetRecording();clearClip();abort?.abort();session?.dispose();session=undefined;stream?.getTracks().forEach(t=>t.stop());stream=undefined;video.pause();video.srcObject=null;controls.hidden=true;}
+function stop(){generation++;clearTimeout(modelNoteTimer);el('ar-model-note').hidden=true;clearTimeout(searchTimer);clearTimeout(prepareTimer);clearTimeout(statusTimer);resetRecording();clearClip();abort?.abort();session?.dispose();session=undefined;stream?.getTracks().forEach(t=>t.stop());stream=undefined;video.pause();video.srcObject=null;controls.hidden=true;}
 function notice(message:string,transient=false){clearTimeout(statusTimer);status.textContent=message;guidance.hidden=false;if(transient)statusTimer=window.setTimeout(()=>{guidance.hidden=true;},3000);}
 function fail(message:string){stop();el('ar-exit').hidden=false;surface.hidden=true;intro.hidden=true;review.hidden=true;fallback.hidden=true;root.dataset.state='error';root.dataset.tracking='none';notice(message);retry.hidden=false;retry.textContent='Restart camera';}
 function exit(){stop();if(window.parent!==window)window.parent.postMessage({type:'vpa-ar-exit'},location.origin);else location.href=experience?.certificatePaths[0]??'/collections/forest-and-flowers/';}
@@ -43,7 +44,7 @@ async function launch(){
   await video.play();if(request!==generation)return;video.width=video.videoWidth;video.height=video.videoHeight;
   root.dataset.state='preparing';notice('Preparing your sculpture…');prepareTimer=window.setTimeout(()=>fail('AR took too long to start. Please try again.'),30000);
   const {startTracking}=await import('./engine');if(request!==generation)return;
-  session=await startTracking({surface,video,experience,signal:abort.signal,onTracking:found=>{
+  session=await startTracking({surface,video,experience,signal:abort.signal,onSculptureState:state=>{if(request!==generation)return;const note=el('ar-model-note');clearTimeout(modelNoteTimer);note.hidden=false;note.textContent=state==='loading'?'Loading detailed sculpture…':state==='ready'?'Tree ready. Step back to see the full canopy.':'Using the lightweight sculpture. Detailed model unavailable.';if(state!=='loading')modelNoteTimer=window.setTimeout(()=>{note.hidden=true;},6000);},onTracking:found=>{
    if(request!==generation)return;
    if(found){clearTimeout(searchTimer);retry.hidden=true;root.dataset.tracking='found';record.disabled=false;notice('Move gently around the sculpture.',true);}else searching();
   },onError:error=>{if(request===generation)fail(error.message);}});

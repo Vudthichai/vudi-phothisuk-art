@@ -1,5 +1,6 @@
 import { Scene, Group, Matrix4, Vector3, Quaternion, PerspectiveCamera, WebGLRenderer, HemisphereLight, DirectionalLight, SRGBColorSpace, PMREMGenerator } from 'three';
-import { createBotanicalSculpture } from './botanical';
+import type { SculptureState } from './customTree';
+import { createCustomTree } from './customTree';
 import { ImagePoseFilter } from './pose';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { ARExperience } from './config';
@@ -7,7 +8,7 @@ type TrackerUpdate={type:string;targetIndex:number;worldMatrix:number[]|null};
 type Controller={inputWidth:number;inputHeight:number;worker:Worker;addImageTargetsFromBuffer:(buffer:ArrayBuffer)=>{dimensions:number[][]};getProjectionMatrix:()=>number[];dummyRun:(video:HTMLVideoElement)=>void;processVideo:(video:HTMLVideoElement)=>void;stopProcessVideo:()=>void};
 type ControllerConstructor=new(options:{inputWidth:number;inputHeight:number;maxTrack:number;warmupTolerance:number;missTolerance:number;filterMinCF:number;filterBeta:number;onUpdate:(data:TrackerUpdate)=>void})=>Controller;
 export type ARSession={dispose:()=>void; onFrame:(callback:((canvas:HTMLCanvasElement)=>void)|undefined)=>void};
-export async function startTracking({surface,video,experience,signal,onTracking,onError}:{surface:HTMLElement;video:HTMLVideoElement;experience:ARExperience;signal:AbortSignal;onTracking:(found:boolean)=>void;onError:(error:Error)=>void}):Promise<ARSession> {
+export async function startTracking({surface,video,experience,signal,onTracking,onError,onSculptureState}:{surface:HTMLElement;video:HTMLVideoElement;experience:ARExperience;signal:AbortSignal;onTracking:(found:boolean)=>void;onError:(error:Error)=>void;onSculptureState?:(state:SculptureState)=>void}):Promise<ARSession> {
   const loadVendor=new Promise<{Controller:ControllerConstructor}>((resolve,reject)=>{
     const script=document.createElement('script');script.type='module';script.src='/ar/vendor/mindar/mindar-image.prod.js';
     script.onload=()=>{const mindar=(window as unknown as {MINDAR?:{IMAGE?:{Controller:ControllerConstructor}}}).MINDAR?.IMAGE;if(mindar)resolve(mindar);else reject(new Error('The local image tracker did not initialize.'));};
@@ -19,16 +20,16 @@ export async function startTracking({surface,video,experience,signal,onTracking,
   const Controller=module.Controller as ControllerConstructor;
   const scene=new Scene(),anchor=new Group(),camera=new PerspectiveCamera();
   anchor.matrixAutoUpdate=false;anchor.visible=false;scene.add(anchor);
-  const renderer=new WebGLRenderer({alpha:true,antialias:true,powerPreference:'low-power'});
-  renderer.outputColorSpace=SRGBColorSpace;renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.5));renderer.setClearColor(0x000000,0);
+  const renderer=new WebGLRenderer({alpha:true,antialias:false,powerPreference:'low-power'});
+  renderer.outputColorSpace=SRGBColorSpace;renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.25));renderer.setClearColor(0x000000,0);
   renderer.domElement.className='ar-overlay';surface.appendChild(renderer.domElement);
-  const sculpture=createBotanicalSculpture();anchor.add(sculpture.root);
+  const sculpture=createCustomTree({signal,onState:state=>{surface.dataset.sculpture=state;onSculptureState?.(state);}});anchor.add(sculpture.root);
   const pmrem=new PMREMGenerator(renderer),room=new RoomEnvironment(),environment=pmrem.fromScene(room,.04,.1,10,{size:128});
   scene.environment=environment.texture;room.dispose();pmrem.dispose();
   const pose=new ImagePoseFilter(),targetPose=new Matrix4();let lastPoseTime=0,frameCallback:((canvas:HTMLCanvasElement)=>void)|undefined;
   scene.add(new HemisphereLight(0xfff8e8,0x3d301d,2));
   const light=new DirectionalLight(0xffe2aa,3);light.position.set(-1,2,3);scene.add(light);
-  let controller:Controller|undefined,disposed=false,frame=0,found=false;
+  let controller:Controller|undefined,disposed=false,frame=0,found=false,lastRender=0;
   let postMatrix=new Matrix4();
   const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   const contextLost=(event:Event)=>{event.preventDefault();onError(new Error('The graphics session was interrupted.'));};
@@ -66,6 +67,7 @@ export async function startTracking({surface,video,experience,signal,onTracking,
     window.addEventListener('resize',resize);
     const animate=(time:number)=>{
       if(disposed)return;
+      if(time-lastRender<1000/30){frame=requestAnimationFrame(animate);return;}lastRender=time;
       const t=time/1000;
       sculpture.update(t,reducedMotion.matches,found);
       renderer.render(scene,camera);frameCallback?.(renderer.domElement);frame=requestAnimationFrame(animate);
