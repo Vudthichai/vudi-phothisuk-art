@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
-import { createHmac, randomUUID } from 'node:crypto';
+import { createHash, createHmac, randomUUID } from 'node:crypto';
 import test from 'node:test';
 import catalog from '../server/commerce/studio-catalog.json' with { type: 'json' };
 import { artworkMasters, artworkReference, maxArtworkBytes, signArtwork } from '../server/commerce/studio-artwork.mjs';
 import { createHandler } from '../netlify/functions/studio-print.mjs';
+
+import { createArtworkUploader } from './upload-studio-masters.mjs';
 
 const base = 'https://deploy-preview.example.test';
 const endpoint = base + '/api/studio-print/';
@@ -519,4 +521,68 @@ test('checkout-only pause preserves verification and manual fulfillment', async 
   assert.equal((await f.admin({ action: 'approve', orderId })).status, 200);
   assert.equal((await f.admin({ action: 'resume-checkout', confirm: 'resume-sandbox-checkout' })).status, 200);
   assert.equal((await f.post('quote', customer())).status, 200);
+});
+
+
+const uploadBytes = Buffer.from('private JPEG fixture');
+const uploadMaster = {
+  filename: 'test master.jpeg', key: 'test-master.jpeg',
+  sha256: createHash('sha256').update(uploadBytes).digest('hex'),
+};
+
+function uploadFixture({ head = 404, writeAuthorization = 200, write = 201, read = 200, body = uploadBytes } = {}) {
+  const operations = [];
+  const localToken = 'local-test-token';
+  const signedURL = 'https://storage.example.test/?signature=private-test-signature';
+  const metadata = Buffer.from(JSON.stringify({ bytes: uploadBytes.length, sha256: uploadMaster.sha256 })).toString('base64');
+  const run = createArtworkUploader({ siteID: randomUUID(), token: localToken, async fetcher(address, options) {
+    const isApi = new URL(address).hostname === 'api.netlify.com';
+    const method = options.method.toUpperCase();
+    const headers = new Headers(options.headers);
+    operations.push([isApi, method]);
+    if (isApi) {
+      assert.equal(headers.get('authorization'), 'Bearer ' + localToken);
+      if (method === 'HEAD') return new Response(null, { status: head });
+      if (method === 'PUT' && writeAuthorization !== 200) {
+        return new Response('sensitive-provider-response ' + signedURL, { status: writeAuthorization });
+      }
+      return Response.json({ url: signedURL });
+    }
+    assert.equal(headers.has('authorization'), false);
+    if (method === 'PUT') {
+      assert.equal(headers.get('if-none-match'), '*');
+      assert.deepEqual(Buffer.from(await options.body.arrayBuffer()), uploadBytes);
+      return new Response(null, { status: write });
+    }
+    return new Response(body, { status: read, headers: { 'x-amz-meta-user': 'b64;' + metadata } });
+  } });
+  return { run: () => run(uploadMaster, uploadBytes), operations };
+}
+
+test('uploader reports the failing SDK operation and HTTP status without exposing provider or auth data', async () => {
+  const deniedRead = uploadFixture({ head: 401 });
+  await assert.rejects(deniedRead.run, /Check existing Blob metadata failed: .*Netlify API, HEAD, HTTP 401/);
+
+  const deniedWrite = uploadFixture({ writeAuthorization: 403 });
+  await assert.rejects(deniedWrite.run, error => {
+    assert.match(error.message, /Conditional Blob upload failed: .*Netlify API transfer authorization, PUT, HTTP 403/);
+    assert.doesNotMatch(error.message, /local-test-token|signature=|sensitive-provider-response|storage\.example/);
+    return true;
+  });
+
+  const missing = uploadFixture({ read: 404 });
+  await assert.rejects(missing.run, /Verify private Blob failed: .*Blob transfer, GET, HTTP 404/);
+
+  const corrupted = uploadFixture({ body: Buffer.alloc(uploadBytes.length) });
+  await assert.rejects(corrupted.run, /Verify private Blob bytes failed: .*Blob transfer, GET, HTTP 200/);
+});
+
+test('uploader verifies a conditional-write conflict before accepting it and never overwrites a Blob', async () => {
+  const raced = uploadFixture({ write: 412 });
+  assert.equal(await raced.run(), 'already present after conditional write, HTTP 412');
+  assert.deepEqual(raced.operations, [[true, 'HEAD'], [true, 'PUT'], [false, 'PUT'], [true, 'GET'], [false, 'GET']]);
+
+  const existing = uploadFixture({ head: 200 });
+  assert.equal(await existing.run(), 'already present');
+  assert.deepEqual(existing.operations, [[true, 'HEAD'], [true, 'GET'], [false, 'GET']]);
 });

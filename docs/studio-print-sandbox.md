@@ -46,10 +46,11 @@ Prodigi v5 documents that order writes use catalogue SKUs and downloadable artwo
 The uploader writes the JPGs directly to the Netlify Blobs SDK over HTTPS. It validates all five local files against the approved SHA-256 hashes before writing anything. It caps each file at 15 MB for headroom under the 20 MB streamed-response limit, creates immutable keys using a conditional write, and verifies the bytes read back. It preserves the original pixels, metadata, and JPEG encoding. Both supported sizes use the same approved 3:4 master for each artwork.
 
 1. On your own computer, save the originals in a folder **outside the repository**, keeping the exact filenames in the [source manifest](studio-print-photographs.json). The Mother Nature filename contains two spaces after `STUDIO`. From your local checkout of PR #95, install the pinned dependencies with `npm ci`.
-2. In the existing Netlify project, copy its **Project ID** (formerly Site ID) from **Project configuration → General → Project details**. Create a short-lived Netlify personal access token under **User settings → Applications → Personal access tokens** using an account authorized on that project. This upload token is only used in your local shell. The deployed function uses Netlify’s own Blob access.
+2. In the existing Netlify project, copy its **Project ID** (formerly Site ID) from **Project configuration → General → Project information**. Create a short-lived Netlify personal access token under **User settings → Applications → Personal access tokens** using an account authorized on that project. If your team enforces SAML SSO, grant the token access to that team when creating it. This upload token is only used in your local shell. The deployed function uses Netlify’s own Blob access.
 3. From the repository root, run these commands in Bash, substituting your local folder. The token prompt hides typed input.
 
 ```bash
+unset NETLIFY_BLOBS_CONTEXT
 read -r -p 'Netlify Project ID: ' NETLIFY_SITE_ID
 read -r -s -p 'Netlify personal access token: ' NETLIFY_AUTH_TOKEN
 printf '\n'
@@ -60,6 +61,8 @@ unset NETLIFY_SITE_ID NETLIFY_AUTH_TOKEN
 
 4. Check for five verified messages. Re-running the uploader is safe if interrupted. Revoke the upload token after verifying the storage. Never put the JPGs, token, or signed URLs in Git, the public build, snippets, or shared logs.
 5. Set `STUDIO_ARTWORK_SIGNING_KEY`, then redeploy only the draft PR preview. `STUDIO_PRINT_HOST` and `STUDIO_PRINT_FILES` are no longer used and can be removed from that context. Call the authenticated admin endpoint with `{"action":"artwork-status"}` and confirm all five entries report `ready: true`. Quotes and payment links for a master fail closed until that master is uploaded. Any older sandbox quote or order tied to an external artwork path needs manual reconciliation under the prior binding.
+
+If the upload fails, use the operation and HTTP status printed by the uploader. A 401 or 403 from the Netlify API points to authentication or project permissions. A 403 during Blob transfer means the API issued a signed transfer but the storage endpoint rejected it. A 404 on the initial metadata check is expected when the object is absent. A 409 or 412 on conditional creation means the uploader must verify the competing write before accepting it. A verification error with HTTP 200 means the response arrived but its stored metadata or bytes did not match the approved original. The uploader never overwrites a mismatched Blob, and it omits credentials, URLs, and provider response bodies from diagnostics.
 
 The HTTPS download only accepts a signed GET or HEAD from the configured sandbox preview origin. Links are scoped to a single immutable JPG, expire after 48 hours, and allow whoever holds the link to fetch that JPG during the window. Links are sent only to Prodigi and the function disables caching. The admin approval action refreshes the draft item’s URL, verifies the updated draft and spending cap, then submits. A failed URL renewal is retryable and never starts submission. Ambiguous submission still requires reconciliation.
 
