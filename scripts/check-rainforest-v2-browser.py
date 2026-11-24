@@ -17,21 +17,23 @@ with sync_playwright() as w:
  page.get_by_role('button',name='Record video',exact=True).click(force=True);page.get_by_role('button',name='Stop recording',exact=True).wait_for();page.wait_for_timeout(3500);page.get_by_role('button',name='Stop recording',exact=True).click(force=True)
  page.wait_for_function('!document.querySelector("#ar-review").hidden||!document.querySelector("#ar-fallback").hidden',timeout=45000)
  if page.locator('#ar-review').is_visible():
-  page.wait_for_function('document.querySelector("#ar-clip").readyState>=2');result['clip']=page.locator('#ar-clip').evaluate('v=>({duration:v.duration,width:v.videoWidth,height:v.videoHeight})');assert result['clip']['width']>0;page.screenshot(path=str(out/'v2-recording-review.png'));page.get_by_role('button',name='Return to AR',exact=True).click(force=True)
+  page.wait_for_function('document.querySelector("#ar-clip").readyState>=2');result['clip']=page.locator('#ar-clip').evaluate('v=>({duration:v.duration,width:v.videoWidth,height:v.videoHeight})');assert result['clip']['width']>0;page.locator('#ar-clip').evaluate('v=>v.currentTime=Math.max(0,v.duration-.5)');page.wait_for_timeout(1000);page.screenshot(path=str(out/'v2-recording-review.png'));
+  with page.expect_download() as download:page.get_by_role('link',name='Save video',exact=True).click(force=True)
+  download.value.save_as(str(out/'v2-recorded.mp4'));print('V2 RECORDING DECODED AND SAVED',flush=True);page.get_by_role('button',name='Return to AR',exact=True).click(force=True)
  else:
   result['nativeFallback']=True;page.get_by_role('button',name='Continue',exact=True).click(force=True)
  page.get_by_role('button',name='Exit AR',exact=True).click(force=True);page.wait_for_url('**/coa/forest-and-flowers/mother-nature/original/');assert page.evaluate('__cameraStops')>=1;result['cameraStopped']=True
  # Opt-in diagnostics exposes the comparison toggle and measurable pinch state.
  page.goto(base+'/rainforest-v2.html?debug=1',wait_until='networkidle');page.get_by_role('button',name='Start camera',exact=True).click();page.locator('.ar-surface[data-sculpture="ready"]').wait_for(state='attached');page.locator('#ar-root[data-tracking="found"]').wait_for(state='attached',timeout=120000);page.wait_for_timeout(2000)
- assert page.locator('.rainforest-lab').count()==1
+ assert page.locator('.rainforest-lab').count()==1;print('V2 DIAGNOSTICS TRACKED',flush=True)
  def report():
-  page.get_by_role('button',name='Copy diagnostics',exact=True).evaluate('b=>b.click()');return page.evaluate('__report')
+  page.locator('[data-copy]').evaluate('b=>b.click()');return page.evaluate('__report')
  def touch(kind,coords):
   page.locator('.ar-surface').evaluate("""(s,a)=>{const touches=a.coords.map((p,i)=>new Touch({identifier:i,target:s,clientX:p[0],clientY:p[1]}));s.dispatchEvent(new TouchEvent(a.kind,{touches,bubbles:true,cancelable:true}));}""",{'kind':kind,'coords':coords})
  touch('touchstart',[[150,400],[250,400]]);touch('touchmove',[[125,400],[275,400]]);touch('touchend',[]);r=report();assert r['collectorScale']==1.5;assert abs(r['placement']['height']-3.9)<.001;assert r['placement']['x']==0 and r['placement']['y']==-.55;result['pinch']=r['placement'].copy()
  page.get_by_role('button',name='Reset view').click(force=True);r=report();assert r['collectorScale']==1 and r['placement']['height']==2.6
  page.locator('.rainforest-lab').evaluate('d=>d.open=false');page.wait_for_timeout(1800);page.screenshot(path=str(out/'v2-mist-on.png'));on=report()
- page.locator('[data-mist]').evaluate("i=>{i.checked=false;i.dispatchEvent(new Event('input',{bubbles:true}));}");page.wait_for_timeout(1800);page.screenshot(path=str(out/'v2-mist-off.png'));off=report();assert on['mistEnabled'] and not off['mistEnabled'];result['mistOn']=on;result['mistOff']=off
+ page.locator('[data-mist]').evaluate("i=>{i.checked=false;i.dispatchEvent(new Event('input',{bubbles:true}));}");page.wait_for_timeout(1800);page.screenshot(path=str(out/'v2-mist-off.png'));off=report();assert on['mistEnabled'] and not off['mistEnabled'];result['mistOn']=on;result['mistOff']=off;(out/'integration-results.json').write_text(json.dumps(result,indent=2));print('V2 PINCH, RESET AND MIST A/B VERIFIED',flush=True)
  page.get_by_role('button',name='Exit AR',exact=True).click(force=True);page.wait_for_url('**/coa/forest-and-flowers/mother-nature/original/')
- page.goto(base+'/rainforest-ar.html');assert 'Rainforest lab' in page.locator('h1').inner_text();assert page.get_by_role('button',name='Reset view').count()==0;result['v1FallbackPreserved']=True
+ page.goto(base+'/rainforest-ar.html');assert page.locator('h1').inner_text()=='Ancient Rainforest · AR lab';assert page.get_by_role('button',name='Reset view').count()==0;result['v1FallbackPreserved']=True
  assert not result['errors'];result['passed']=True;(out/'verification.json').write_text(json.dumps(result,indent=2));print({k:v for k,v in result.items() if k not in ['mistOn','mistOff']},flush=True);ctx.close();b.close()

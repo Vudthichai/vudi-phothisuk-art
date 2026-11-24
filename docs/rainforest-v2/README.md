@@ -38,3 +38,26 @@ V2 keeps the existing capped renderer and camera/record/save/share pipeline. Mis
 ## Validation boundaries
 
 Automated tests cover shared texture/disposal, depth/opacity settings, reduced motion, pinch limits, anchor invariance, control isolation, diagnostic opt-in and reset cleanup, plus the existing AR suites. Browser checks use Chromium software rendering with a synthetic feed of the authentic certificate target. These prove integration behavior, not iPhone Safari GPU performance or a 30 FPS result. V1 was reported working by the owner on iPhone 15; V2 frame rate, mist readability at real camera exposure, sustained recording performance, Safari pinch behavior and thermal/memory stability still require that device.
+
+### Repeatable browser check
+
+With a preview build served locally and Python Playwright plus Chromium installed:
+
+```sh
+python scripts/check-rainforest-v2-browser.py \
+  --base http://localhost:5184 \
+  --camera-feed /absolute/path/to/authentic-certificate-camera-feed.y4m \
+  --output /tmp/rainforest-v2-review
+```
+
+The feed must show the authentic Mother Nature target (a perspective tabletop view is useful). The script captures the normal UI, decoded saved recording, mist on/off screenshots, diagnostic samples, synthetic pinch/reset state, camera-stop counters and V1 fallback access. Touch events are simulated DOM events; this does not validate real Safari gesture dispatch. Clips and camera screenshots are written only to the chosen local output folder, not uploaded or committed.
+
+### Observed review results
+
+- All 166 tests across 30 files passed; the final scoped suite also passed after the error-link cleanup. Production/preview builds, SEO, all 15 COA pages, target/model integrity and production experiment exclusion passed.
+- Synthetic-camera Chromium integration passed with no page errors: no automatic camera request, authentic target detection, normal controls without sliders, synthetic 1.5× pinch (height 3.9, unchanged x/y/yaw), Reset, mist on/off, decoded/saved 332 × 720 recording, camera shutdown and V1 entry access. The saved test clip was 12.0573 seconds; this is not evidence of smooth sustained capture on iPhone.
+- Mist on: five draws / 229,542 triangles; off: one draw / 229,534 triangles. Texture counts remain five after a live toggle because the tiny shared texture is retained for reuse. Starting with `?mist=0` avoids that allocation.
+- The software renderer submitted approximately 0.75 FPS with mist and 0.67 FPS without in the sampled windows. These noisy software results are unsuitable for judging iPhone performance; no 30 FPS claim is made. Actual mist/recording cost requires physical-device A/B testing.
+- Model SHA-256 remains `41196179bd93eedcbd124e27d00a76b6860c93caaaf737d9662cf09336e0c99b`. No artwork imagery or production experience records changed.
+
+A concise machine-readable record is in `verification.json`. Private screenshots, full diagnostic samples and the saved clip remain in `/workspace/previews/rainforest-v2/`. Netlify reported a successful deploy preview; direct external HTTP inspection was blocked by this environment's proxy (403), so preview-page rendering was verified locally instead.
