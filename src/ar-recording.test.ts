@@ -7,15 +7,15 @@ class Recorder {
  constructor(){Recorder.instance=this;}
  start(){this.state='recording';}stop(){this.state='inactive';this.ondataavailable?.({data:new Blob(['video'])});this.onstop?.();}
 }
-const stop=vi.fn(),drawImage=vi.fn();
+const stop=vi.fn(),drawImage=vi.fn(),captureStream=vi.fn(()=>({getVideoTracks:()=>[{}],getTracks:()=>[{stop}]}));
 beforeEach(()=>{
  vi.useFakeTimers();vi.stubGlobal('MediaRecorder',Recorder);
  vi.spyOn(HTMLCanvasElement.prototype,'getContext').mockReturnValue({drawImage} as unknown as ReturnType<HTMLCanvasElement['getContext']>);
- Object.defineProperty(HTMLCanvasElement.prototype,'captureStream',{configurable:true,value:()=>({getVideoTracks:()=>[{}],getTracks:()=>[{stop}]})});
+ Object.defineProperty(HTMLCanvasElement.prototype,'captureStream',{configurable:true,value:captureStream});
  vi.spyOn(performance,'now').mockReturnValue(100);
 });
-afterEach(()=>{vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();stop.mockClear();drawImage.mockClear();delete (HTMLCanvasElement.prototype as Partial<HTMLCanvasElement>).captureStream;});
-function setup(){const complete=vi.fn(),error=vi.fn(),video=document.createElement('video');Object.defineProperties(video,{videoWidth:{value:1280},videoHeight:{value:720}});const session=beginRecording({video,width:393,height:852,onComplete:complete,onError:error});return {session,complete,error,video};}
+afterEach(()=>{vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();stop.mockClear();drawImage.mockClear();captureStream.mockClear();delete (HTMLCanvasElement.prototype as Partial<HTMLCanvasElement>).captureStream;});
+function setup(fps?:24|30){const complete=vi.fn(),error=vi.fn(),video=document.createElement('video');Object.defineProperties(video,{videoWidth:{value:1280},videoHeight:{value:720}});const session=beginRecording({video,fps,width:393,height:852,onComplete:complete,onError:error});return {session,complete,error,video};}
 it('requires both canvas capture and a supported recorder; prefers supported MP4',()=>{
  expect(recordingMimeType()).toBe('video/mp4');vi.stubGlobal('MediaRecorder',undefined);expect(recordingMimeType()).toBeUndefined();
 });
@@ -35,3 +35,5 @@ it('falls back if the API returns data without rendered composition frames',()=>
 it('cleans up a recorder runtime error without publishing partial output',()=>{
  const {session,complete,error}=setup();Recorder.instance.onerror?.();session.cancel();expect(error).toHaveBeenCalledOnce();expect(complete).not.toHaveBeenCalled();expect(stop).toHaveBeenCalledOnce();
 });
+
+it('requests 30fps only when opted in and preserves the default 24fps capture',()=>{const baseline=setup();expect(captureStream).toHaveBeenLastCalledWith(24);baseline.session.cancel();const lab=setup(30);expect(captureStream).toHaveBeenLastCalledWith(30);lab.session.cancel();});
