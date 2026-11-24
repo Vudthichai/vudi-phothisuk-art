@@ -14,7 +14,7 @@ export function createPetalRain() {
     mesh.visible=!reduced;if(reduced)return;
     for(const [i,p] of petals.entries()) {
       const cycle=fract(p.phase+time*p.speed);
-      dummy.position.set(p.x+Math.sin(time*.65+p.angle)*.055,1.8-cycle*2,p.z+Math.cos(time*.5+p.angle)*.04);
+      dummy.position.set(p.x+Math.sin(time*.65+p.angle)*.055,1.8*(1-cycle),p.z+Math.cos(time*.5+p.angle)*.04);
       dummy.rotation.set(time*(.4+p.speed)+p.angle,Math.sin(time*.9+p.angle)*.9,p.angle+time*.5);
       dummy.scale.setScalar(p.size);dummy.updateMatrix();mesh.setMatrixAt(i,dummy.matrix);
     }
