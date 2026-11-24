@@ -28,6 +28,7 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
   const origin = context === 'deploy-preview' ? preview : base;
   const endpoint = origin + '/api/studio-print/';
   const diagnostics = [];
+  const providerDiagnostics = [];
   const records = new Map();
   const orders = new Map();
   const attempts = new Map();
@@ -56,6 +57,7 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
   let invalidVariant = false;
   let quoteCurrency = 'USD';
   let quoteFailure = false;
+  let catalogueUnauthorized = false;
   const store = {
     async list({ prefix }) {
       return { blobs: [...records.keys()].filter(key => key.startsWith(prefix)).map(key => ({ key })) };
@@ -105,7 +107,7 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
       assert.equal(body.destinationCountryCode, 'US');
       assert.equal(body.currencyCode, 'USD');
       assert.equal(body.shippingMethod, 'Standard');
-      if (quoteFailure) return new Response(null, { status: 503 });
+      if (quoteFailure) return new Response('sensitive upstream body fixture', { status: quoteFailure === true ? 503 : quoteFailure });
       const [{ sku, copies, assets }] = body.items;
       assert.deepEqual(assets, [{ printArea: 'default' }]);
       assert(Object.values(catalog.variants).includes(sku));
@@ -121,6 +123,7 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
     if (url.hostname === 'api.prodigi.com') {
       assert.equal(init.headers['X-API-Key'], 'live_fixture');
       if (url.pathname.startsWith('/v5/catalogue/variants/')) {
+        if (catalogueUnauthorized) return new Response('sensitive upstream body fixture', { status: 401 });
         const sku = url.pathname.split('/').at(-1);
         const [width, height] = sku.endsWith('9X12') ? [9, 12] : [12, 16];
         return Response.json({ data: {
@@ -163,7 +166,7 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
     }
     assert.fail('Unexpected provider address ' + url.origin + url.pathname);
   };
-  const handler = createHandler({ env: { ...env, ...overrides }, launchPolicy, openStore: () => store, openArtworkStore: () => artworkStore, fetcher, reportConfig: issues => diagnostics.push(...issues) });
+  const handler = createHandler({ env: { ...env, ...overrides }, launchPolicy, openStore: () => store, openArtworkStore: () => artworkStore, fetcher, reportProvider: message => providerDiagnostics.push(message), reportConfig: issues => diagnostics.push(...issues) });
   const request = (action, body, headers = {}, targetOrigin = origin) => handler(new Request(targetOrigin + '/api/studio-print/' + action, {
     method: 'POST', body, headers: { 'Content-Type': 'application/json', ...(['checkout', 'review'].includes(action) && { Origin: origin }), ...headers },
   }), deployContext);
@@ -189,7 +192,8 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
   return {
     records, orders, drafts, draftCalls, pay, notify, post, purchase, request, admin, submits: () => submits,
     masters, image, served: () => served, download: (url, method = 'GET') => handler(new Request(url, { method }), deployContext),
-    status: () => handler(new Request(endpoint + 'status'), deployContext), diagnostics,
+    status: () => handler(new Request(endpoint + 'status'), deployContext), diagnostics, providerDiagnostics,
+    denyCatalogue: () => { catalogueUnauthorized = true; },
     setFailPatch: value => { failPatch = value; },
     setQuoteCurrency: value => { quoteCurrency = value; }, setQuoteFailure: value => { quoteFailure = value; },
     setSubmitFailure: value => { submitFailure = value; }, setSubmitHold: value => { submitHold = value; },
@@ -641,4 +645,20 @@ test('off-mode preview exposes only authenticated read-only preflight at the pin
   assert.equal((await f.request('admin', '{"action":"preflight"}', auth, base)).status, 404);
   assert.equal((await f.post('admin', { action: 'preflight' }, { ...auth, Origin: preview })).status, 401);
   assert.equal((await fixture({ STUDIO_MODE: 'off' }).admin({ action: 'preflight' })).status, 404);
+});
+
+
+test('private preflight logs distinguish Prodigi v5 catalogue 401 from v4 quote 401', async () => {
+  for (const version of [4, 5]) {
+    const f = fixture({ STUDIO_MODE: 'off' }, 'deploy-preview');
+    if (version === 4) f.setQuoteFailure(401);
+    else f.denyCatalogue();
+    const response = await f.admin({ action: 'preflight' });
+    assert.equal(response.status, 502);
+    assert.doesNotMatch(await response.text(), /401|catalogue|sensitive|quote/);
+    const expected = version === 4 ? ['Prodigi v4 POST /v4.0/quotes: HTTP 401']
+      : Object.values(catalog.variants).map(sku => `Prodigi v5 GET /v5/catalogue/variants/${sku}: HTTP 401`);
+    assert.deepEqual([...new Set(f.providerDiagnostics)].sort(), expected.sort());
+    assert.equal(f.orders.size + f.drafts.size + f.submits(), 0);
+  }
 });

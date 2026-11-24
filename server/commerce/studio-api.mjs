@@ -17,7 +17,18 @@ class ProviderError extends Error {
   }
 }
 
-export function providers(config, fetcher = fetch) {
+export function providers(config, fetcher = fetch, reportProvider = message => console.warn('[studio-print provider]', message)) {
+  function reportProdigiFailure(base, path, method, outcome) {
+    if (base.endsWith('/v4.0') && path === '/quotes') {
+      reportProvider(`Prodigi v4 POST /v4.0/quotes: ${outcome}`);
+    } else if (base.endsWith('/v5')) {
+      const sku = Object.values(config.variants).find(value => path === '/catalogue/variants/' + encodeURIComponent(value));
+      if (method === 'GET' && sku) {
+        reportProvider(`Prodigi v5 GET /v5/catalogue/variants/${sku}: ${outcome}`);
+      }
+    }
+  }
+
   async function call(provider, base, headers, path, body, extra, method = body === undefined ? 'GET' : 'POST') {
     let result;
     try {
@@ -29,9 +40,11 @@ export function providers(config, fetcher = fetch) {
         redirect: 'error',
       });
     } catch {
+      if (provider === 'Prodigi') reportProdigiFailure(base, path, method, 'transport failure');
       throw new Error(`${provider} transport failure`);
     }
     if (!result.ok) {
+      if (provider === 'Prodigi') reportProdigiFailure(base, path, method, `HTTP ${result.status}`);
       const correlation = result.headers.get('x-correlation-id') ?? result.headers.get('x-request-id');
       const reference = validId(correlation) ? ` (request ${correlation})` : '';
       throw new ProviderError(provider, result.status, reference);

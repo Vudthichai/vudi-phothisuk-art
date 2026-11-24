@@ -46,7 +46,7 @@ function authorizedAdmin(request, token) {
     !request.headers.has('origin') && equal(`Bearer ${token}`, request.headers.get('authorization') ?? '');
 }
 
-export function createHandler({ env = process.env, launchPolicy = policy, openStore = config => getStore('studio-orders-v1-' + createHash('sha256').update(JSON.stringify([config.merchantId, config.locationId, config.mode])).digest('hex').slice(0, 24)), openArtworkStore = () => getStore(artworkStoreName), fetcher = fetch, reportConfig = issues => console.warn('[studio-print configuration]', issues.join('; ')) } = {}) {
+export function createHandler({ env = process.env, launchPolicy = policy, openStore = config => getStore('studio-orders-v1-' + createHash('sha256').update(JSON.stringify([config.merchantId, config.locationId, config.mode])).digest('hex').slice(0, 24)), openArtworkStore = () => getStore(artworkStoreName), fetcher = fetch, reportProvider, reportConfig = issues => console.warn('[studio-print configuration]', issues.join('; ')) } = {}) {
   return async (request, context) => {
     const url = new URL(request.url);
     const action = url.pathname.split('/').at(-1);
@@ -63,7 +63,7 @@ export function createHandler({ env = process.env, launchPolicy = policy, openSt
         }
         preflightCheck = true;
         const config = studioConfig(env, context.deploy.context, launchPolicy, { preflight: true });
-        return reply(await studioPreflight(config, providers(config, fetcher), openArtworkStore()));
+        return reply(await studioPreflight(config, providers(config, fetcher, reportProvider), openArtworkStore()));
       }
       const config = studioConfig(env, context?.deploy?.context, launchPolicy);
       if (url.origin !== config.origin) {
@@ -75,7 +75,7 @@ export function createHandler({ env = process.env, launchPolicy = policy, openSt
         return await downloadArtwork(request, config, artworkStore);
       }
       if (action === 'status' && request.method === 'GET') {
-        const service = studioService(config, openStore(config), providers(config, fetcher), artworkStore);
+        const service = studioService(config, openStore(config), providers(config, fetcher, reportProvider), artworkStore);
         return reply({ mode: config.mode, checkout: await service.enabled(), maxQuantity: config.maxQuantity });
       }
       if (request.method !== 'POST' || !['review', 'checkout', 'webhook', 'admin'].includes(action)) {
@@ -87,7 +87,7 @@ export function createHandler({ env = process.env, launchPolicy = policy, openSt
       if ((action === 'checkout' || action === 'review') && request.headers.get('origin') !== url.origin) {
         return reply({ error: 'Open checkout from the Studio Print page.' }, 403);
       }
-      const service = studioService(config, openStore(config), providers(config, fetcher), artworkStore);
+      const service = studioService(config, openStore(config), providers(config, fetcher, reportProvider), artworkStore);
       const raw = await readBody(request, action === 'webhook' ? 65536 : 8192);
       if (action === 'webhook') return reply(await service.webhook(raw, request.headers.get('x-square-hmacsha256-signature')));
       return reply(await service[action](json(raw)));

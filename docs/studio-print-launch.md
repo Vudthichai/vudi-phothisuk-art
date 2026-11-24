@@ -68,6 +68,22 @@ submission.
    for U.S. shipping is country-level; verify supported destinations and all-in
    supplier charges before approving their rules.
 
+## Diagnose Prodigi authentication
+
+Preflight uses two Prodigi versions. v5 calls `GET /v5/catalogue/variants/{sku}`
+on `api.prodigi.com` with the complete live-prefixed key in `X-API-Key`. v4
+calls `POST /v4.0/quotes` on that same live host with the prefix stripped from
+the configured key. The v4 docs select live vs. sandbox by host. v5 selects it
+by key prefix. Both calls are read-only for fulfillment purposes.
+
+If you see a generic 502, select Deploy Preview #103 and the `studio-print`
+function under Netlify **Cloud compute → Functions**. Filter for
+`[studio-print provider]`. A catalogue rejection is logged as a v5 GET with
+its catalog SKU. A quote rejection is logged as a v4 POST. The log contains
+only the fixed endpoint, public SKU where applicable, and HTTP status. If v5
+passes and v4 rejects, the key used by v4 needs separate verification with
+Prodigi support. Keep credentials out of log excerpts and tickets.
+
 ## Operator commands and controlled test
 
 Run in Bash. Enter the approved preview URL without its trailing slash, then
