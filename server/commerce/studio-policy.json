@@ -1,0 +1,7 @@
+{
+  "square": { "locationId": "LVMSNAYWPTM3E", "merchantId": "ML226Z6NATWR8" },
+  "origins": { "live-test": "https://deploy-preview-103--vudi-phothisuk-art.netlify.app", "live": "https://vudiphothisukart.com" },
+  "testRun": "first-print-2026",
+  "limits": { "customerCents": 15000, "supplierCents": 3500 },
+  "destinations": {}
+}
