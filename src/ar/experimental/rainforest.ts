@@ -7,6 +7,7 @@ import modelUrl from './assets/ancient-rainforest.glb?url';
 import './rainforest.css';
 import { createCinematicMist } from './mist';
 import { installAnchoredPinch } from './pinch';
+import { StableImagePose } from './stablePose';
 export type Placement={height:number;x:number;y:number;yaw:number};
 export const DEFAULT_PLACEMENT:Placement={height:3,x:0,y:-.55,yaw:0};
 export function placeRainforest(asset:Group,placement:Placement){
@@ -17,7 +18,7 @@ export function placeRainforest(asset:Group,placement:Placement){
  setPlacement(placement);return {root,setPlacement};
 }
 export const CINEMATIC_PLACEMENT:Placement={height:2.6,x:0,y:-.55,yaw:-12};
-export type RainforestOptions={cinematic?:boolean;diagnostics?:boolean;mistEnabled?:boolean};
+export type RainforestOptions={cinematic?:boolean;diagnostics?:boolean;mistEnabled?:boolean;stabilize?:boolean};
 export function setupRainforestLab(host:HTMLElement,options:RainforestOptions={}){
  const cinematic=options.cinematic===true,diagnostics=options.diagnostics??!cinematic,defaults=cinematic?CINEMATIC_PLACEMENT:DEFAULT_PLACEMENT;
  const panel=document.createElement('details');panel.className='rainforest-lab';panel.innerHTML=`<summary>Rainforest lab · controls &amp; metrics</summary><p>Experimental · Mother Nature image target. No growth animation or automatic spin. Move back to frame the canopy.</p><label>Tree height (target widths)<input data-setting="height" type="range" min=".75" max="6" step=".05" value="3"><output data-value="height">3</output></label><label>Across artwork<input data-setting="x" type="range" min="-1" max="1" step=".01" value="0"><output data-value="x">0</output></label><label>Along artwork<input data-setting="y" type="range" min="-.7" max=".7" step=".01" value="-.55"><output data-value="y">-.55</output></label><label>Manual trunk angle<input data-setting="yaw" type="range" min="-180" max="180" step="1" value="0"><output data-value="yaw">0</output></label><label>Render pixel ratio (quality / performance)<input data-quality type="range" min=".5" max="1.25" step=".25" value="1"><output data-quality-value>1</output></label><button data-reset type="button">Reset placement</button><pre data-metrics aria-live="off">Waiting for model and tracking…</pre><button data-copy type="button">Copy diagnostics</button><p data-copy-status role="status"></p><p><a href="${modelUrl}" download="Ancient-Rainforest-Mobile.glb">Download optimized GLB</a></p><p>FPS is submitted browser render frames, not a GPU or physical iPhone benchmark. Pose steps include phone motion. JS heap is unavailable in Safari; GPU counts are not bytes.</p>`;if(diagnostics)host.append(panel);
@@ -57,5 +58,5 @@ export function setupRainforestLab(host:HTMLElement,options:RainforestOptions={}
   finally{clearTimeout(timeout);}})();
   return {root,update(_time,_reduced,tracked){if(model&&tracked&&report.firstTrackedRenderSubmittedMs===undefined){report.firstTrackedRenderSubmittedMs=performance.now()-started;print();}mist?.update(_time,_reduced);/* Tree remains static; only the optional mist drifts. */},dispose(){if(disposed)return;disposed=true;download.abort();clearTimeout(timeout);signal.removeEventListener('abort',abort);mist?.dispose();if(model)disposeModel(model);activePlacement=undefined;activeMist=undefined;root.clear();}};
  };
- return {factory,onMetrics:diagnostics?collectMetrics:undefined,attachSession:(value:ARSession)=>{session=value;session.setRenderPixelRatio(Number(report.renderPixelRatio));},dispose(){disposed=true;pinch?.dispose();resetButton?.removeEventListener('click',resetView);resetButton?.remove();reviewHelp?.remove();host.removeEventListener('rainforest-recording-result',recordingResult);host.removeEventListener('webglcontextlost',contextLost,true);for(const input of panel.querySelectorAll<HTMLInputElement>('input,button[data-reset]'))input.disabled=true;report.endedAt=new Date().toISOString();print();}};
+ return {factory,poseFilter:cinematic&&options.stabilize!==false?new StableImagePose():undefined,onMetrics:diagnostics?collectMetrics:undefined,attachSession:(value:ARSession)=>{session=value;session.setRenderPixelRatio(Number(report.renderPixelRatio));},dispose(){disposed=true;pinch?.dispose();resetButton?.removeEventListener('click',resetView);resetButton?.remove();reviewHelp?.remove();host.removeEventListener('rainforest-recording-result',recordingResult);host.removeEventListener('webglcontextlost',contextLost,true);for(const input of panel.querySelectorAll<HTMLInputElement>('input,button[data-reset]'))input.disabled=true;report.endedAt=new Date().toISOString();print();}};
 }

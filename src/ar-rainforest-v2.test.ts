@@ -13,7 +13,7 @@ it('uses only four soft depth-tested mist sprites and one 64KiB texture, with no
  const mist = createCinematicMist();expect(mist.root.children).toHaveLength(MIST_LAYER_COUNT);
  expect(mist.texture.image.data.byteLength).toBe(128 * 128 * 4);expect(MIST_TEXTURE_SIZE).toBe(128);
  const textureVersion = mist.texture.version, initial = mist.root.children.map(s => s.position.toArray());
- for (const child of mist.root.children) { expect(child).toBeInstanceOf(Sprite); const s = child as Sprite; expect(s.material.map).toBe(mist.texture);expect(s.material.depthTest).toBe(true);expect(s.material.depthWrite).toBe(false);expect(s.material.opacity).toBeLessThanOrEqual(.12); }
+ for (const child of mist.root.children) { expect(child).toBeInstanceOf(Sprite); const s = child as Sprite; expect(s.material.map).toBe(mist.texture);expect(s.material.depthTest).toBe(true);expect(s.material.depthWrite).toBe(false);expect(s.material.opacity).toBeLessThanOrEqual(.22); }
  mist.update(12, false);expect(mist.root.children.map(s => s.position.toArray())).not.toEqual(initial);expect(mist.texture.version).toBe(textureVersion);
  mist.update(0, true);const still = mist.root.children.map(s => s.position.toArray());mist.update(100, true);expect(mist.root.children.map(s => s.position.toArray())).toEqual(still);
  mist.setEnabled(false);mist.update(200, false);expect(mist.root.visible).toBe(false);
@@ -41,6 +41,6 @@ it('keeps the root point and upright orientation fixed across the allowed collec
 });
 it('hides the lab entirely in normal V2, keeps diagnostics opt-in, and adds only a discreet Reset', () => {
  const host=document.createElement('main');host.innerHTML='<div class="ar-surface"></div><div class="ar-controls"></div><div class="ar-actions"></div><div class="ar-guidance"></div>';document.body.append(host);
- const view=setupRainforestLab(host,{cinematic:true});expect(host.querySelector('.rainforest-lab')).toBeNull();expect(host.querySelector('input')).toBeNull();expect(view.onMetrics).toBeUndefined();expect(host.querySelector('[aria-label="Reset view"]')).toBeTruthy();view.dispose();expect(host.querySelector('[aria-label="Reset view"]')).toBeNull();
- const debug=setupRainforestLab(host,{cinematic:true,diagnostics:true,mistEnabled:false});expect(host.querySelector('.rainforest-lab')).toBeTruthy();expect(host.querySelector<HTMLInputElement>('[data-mist]')!.checked).toBe(false);expect(debug.onMetrics).toBeTypeOf('function');debug.dispose();
+ const view=setupRainforestLab(host,{cinematic:true});expect(host.querySelector('.rainforest-lab')).toBeNull();expect(host.querySelector('input')).toBeNull();expect(view.onMetrics).toBeUndefined();expect(view.poseFilter).toBeDefined();expect(host.querySelector('[aria-label="Reset view"]')).toBeTruthy();view.dispose();expect(host.querySelector('[aria-label="Reset view"]')).toBeNull();
+ const debug=setupRainforestLab(host,{cinematic:true,diagnostics:true,mistEnabled:false,stabilize:false});expect(host.querySelector('.rainforest-lab')).toBeTruthy();expect(host.querySelector<HTMLInputElement>('[data-mist]')!.checked).toBe(false);expect(debug.onMetrics).toBeTypeOf('function');expect(debug.poseFilter).toBeUndefined();debug.dispose();
 });

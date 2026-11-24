@@ -21,10 +21,10 @@ export function createCinematicMist() {
   const root = new Group(); root.name = 'Cinematic rainforest mist';
   // Coordinates are fractions of tree height in the upright sculpture frame.
   const layers = [
-    { p: [-.06, .055, .07], s: [.64, .13], opacity: .12 },
-    { p: [.09, .16, -.08], s: [.52, .12], opacity: .10 },
-    { p: [-.1, .55, -.12], s: [.58, .10], opacity: .09 },
-    { p: [.10, .73, .03], s: [.44, .09], opacity: .08 },
+    { p: [-.06, .065, .20], s: [.64, .13], opacity: .22 },
+    { p: [.09, .18, .16], s: [.52, .12], opacity: .18 },
+    { p: [-.1, .55, -.12], s: [.58, .10], opacity: .14 },
+    { p: [.10, .73, .14], s: [.44, .09], opacity: .12 },
   ];
   const sprites = layers.map((layer, i) => {
     const material = new SpriteMaterial({ map: texture, color: 0xe1e8e2, opacity: layer.opacity, transparent: true, depthTest: true, depthWrite: false, toneMapped: false });
