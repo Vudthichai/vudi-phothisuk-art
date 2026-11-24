@@ -25,7 +25,10 @@ export async function loadTreeModel(signal:AbortSignal):Promise<Group> {
   if(signal.aborted){disposeModel(gltf.scene);signal.throwIfAborted();}return gltf.scene;
 }
 export function createCustomTree({signal,onState,loadModel=loadTreeModel}:{signal:AbortSignal;onState:(state:SculptureState)=>void;loadModel?:(signal:AbortSignal)=>Promise<Group>}) {
-  const root=new Group();root.name='Mother Nature custom sculpture';root.position.set(0,-.55,.34);
+  const root=new Group();root.name='Mother Nature custom sculpture';root.position.set(0,-.55,0);
+  // MindAR's image lies in local XY. Map sculpture +Y (trunk) to image +Z (outward normal).
+  // Keep the root pivot on the paper; the child Y spin remains around the upright trunk.
+  root.rotation.x=Math.PI/2;
   const reveal=new Group(),turning=new Group();root.add(reveal);reveal.add(turning);
   const fallback=createBotanicalSculpture();fallback.root.position.set(0,0,0);turning.add(fallback.root);
   const rain=createPetalRain();root.add(rain.mesh);
@@ -41,8 +44,8 @@ export function createCustomTree({signal,onState,loadModel=loadTreeModel}:{signa
     if(tracked&&firstTracked===undefined)firstTracked=time;
     if(model&&tracked&&modelReveal===undefined)modelReveal=time;
     const start=model?modelReveal:firstTracked,progress=reduced?1:Math.min(1,Math.max(0,(time-(start??time))/1.8)),ease=1-(1-progress)**3;
-    reveal.scale.setScalar(Math.max(.001,ease));reveal.position.y=-.12*(1-ease);turning.rotation.y=reduced?.3:.3+time*.12;
-    if(!model){fallback.update(time,reduced,tracked);fallback.root.rotation.y=-turning.rotation.y;fallback.root.getObjectByName('Falling gold petals')!.visible=false;}
+    reveal.scale.setScalar(Math.max(.001,ease));turning.rotation.y=reduced?.3:.3+time*.12;
+    if(!model){fallback.update(time,true,tracked);fallback.root.rotation.y=0;fallback.root.getObjectByName('Falling gold petals')!.visible=false;}
     rain.update(time,reduced);rain.mesh.visible=tracked&&!reduced;
   }
   function dispose(){if(disposed)return;disposed=true;download.abort();clearTimeout(timer);signal.removeEventListener('abort',abort);if(model)disposeModel(model);else fallback.dispose();rain.dispose();root.clear();}
