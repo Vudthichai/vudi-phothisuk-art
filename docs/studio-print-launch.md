@@ -30,7 +30,7 @@ submission.
    `live_` once, and confirm the billing method in Prodigi. The same provider key
    is used with the documented v4 Standard quote endpoint and the v5 order API.
 3. Set the non-secret Square IDs in [studio-policy.json](../server/commerce/studio-policy.json).
-   Use the exact numbered Netlify preview origin for `origins.live-test`.
+   The configured private-test origin is [Deploy Preview #103](https://deploy-preview-103--vudi-phothisuk-art.netlify.app).
    Keep production bound to the existing website origin. Create one **Production
    environment** Square webhook for `payment.created` and `payment.updated`
    at that approved origin plus `/api/studio-print/webhook`. Copy the signature
