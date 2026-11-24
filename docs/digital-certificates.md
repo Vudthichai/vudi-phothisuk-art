@@ -79,3 +79,11 @@ The physical Moss and Mushrooms certificate spells out “and”; the page retai
 - Browser validation used Chromium with mobile emulation; physical Safari hardware was not tested. The certificate routes are deployed. Changes to their content reach production after an approved merge and release. Local directory routing does not certify Netlify edge behavior; check the review deployment before release.
 
 For a local preview, run `npm run dev -- --host 0.0.0.0` and open `http://localhost:5173/coa/forest-and-flowers/mother-nature/original/`. Replace the path with any exact entry from the table above. Development previews and website deployment do not expose or require the private physical PDFs.
+
+## Print refinement proofs
+
+Use `python scripts/refine-coa-print.py --output-dir /private/proofs /private/masters/card-bleed.pdf` with pypdf installed. Pass only the private bleed masters selected for review. The proof tool keeps the front and artwork data intact, scales the existing vector QR and its white four-module quiet zone to 81 pt (1.125 in.), and replaces the caption. It does not encode new QR symbols or modify the masters.
+
+Both faces use the same upright 360 × 504 pt TrimBox with 9 pt of bleed per edge. The resulting 378 × 522 pt MediaBox is 5.25 × 7.25 in. The exact-size export has no bleed. Select the format required by the printer and use a physical duplex proof on the chosen paper to confirm long-edge orientation, registration, QR readability, and Mother Nature image tracking before approving the run.
+
+The Mother Nature original is the verified physical AR target. Its Collector’s Edition page still opens the existing shared experience and explains which image to use. The Collector’s Edition certificate artwork was not substituted or added as a tracking target.
