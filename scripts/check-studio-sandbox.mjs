@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { createHmac, randomUUID } from 'node:crypto';
 import test from 'node:test';
 import catalog from '../server/commerce/studio-catalog.json' with { type: 'json' };
+import { artworkMasters, artworkReference, maxArtworkBytes, signArtwork } from '../server/commerce/studio-artwork.mjs';
 import { createHandler } from '../netlify/functions/studio-print.mjs';
 
 const base = 'https://deploy-preview.example.test';
@@ -11,11 +12,8 @@ const env = {
   SQUARE_SANDBOX_TOKEN: 'fixture', SQUARE_SANDBOX_LOCATION: 'location', SQUARE_SANDBOX_MERCHANT: 'merchant',
   SQUARE_WEBHOOK_KEY: 'webhook-fixture', STUDIO_WEBHOOK_URL: endpoint + 'webhook',
   STUDIO_ADMIN_TOKEN: '1'.repeat(64), STUDIO_DATA_KEY: '2'.repeat(64),
-  STUDIO_FULFILLMENT_ENABLED: 'true', STUDIO_MAX_FULFILLMENT_CENTS: '3000', STUDIO_PRINT_HOST: 'files.example.com', PRODIGI_SANDBOX_KEY: 'sandbox_fixture',
+  STUDIO_FULFILLMENT_ENABLED: 'true', STUDIO_MAX_FULFILLMENT_CENTS: '3000', STUDIO_ARTWORK_SIGNING_KEY: '3'.repeat(64), PRODIGI_SANDBOX_KEY: 'sandbox_fixture',
   STUDIO_CHECKOUT_ENABLED: 'true', STUDIO_DAILY_FULFILLMENT_CENTS: '20000',
-  STUDIO_PRINT_FILES: JSON.stringify(Object.fromEntries(Object.keys(catalog.artworks).map(id => [
-    id, Object.fromEntries(Object.keys(catalog.prices).map(size => [size, `https://files.example.com/${id}-${size}.jpg?fixture=download`])),
-  ]))),
   STUDIO_DESTINATIONS: JSON.stringify({
     'OR-97201': { shippingCents: 799, additionalCents: 100, taxBps: 0, taxShipping: false },
     'PA-15201': { shippingCents: 799, additionalCents: 100, taxBps: 700, taxShipping: true },
@@ -31,6 +29,21 @@ function fixture(overrides = {}) {
   const draftCalls = [];
   let submits = 0;
   let failDraft = false;
+  let failPatch = false;
+  let served = 0;
+  const image = new Uint8Array([255, 216, 255, 217]);
+  const masters = new Map(Object.values(artworkMasters).map(master => [master.key, {
+    metadata: { sha256: master.sha256, bytes: image.length },
+  }]));
+  const artworkStore = {
+    async getMetadata(key) { return masters.get(key) ?? null; },
+    async getWithMetadata(key, { type }) {
+      assert.equal(type, 'stream');
+      served++;
+      const entry = masters.get(key);
+      return entry && { ...entry, data: new Blob([image]).stream() };
+    },
+  };
   let submitFailure;
   let submitHold;
   let invalidVariant = false;
@@ -105,14 +118,22 @@ function fixture(overrides = {}) {
         const key = init.headers['Idempotency-Key'];
         assert.equal(key.length, 64);
         if (!drafts.has(key)) drafts.set(key, {
-          ...body, id: `prodigi-${drafts.size + 1}`, status: 'draft', allowedActions: ['submit'],
+          ...body, items: body.items.map(item => ({ ...item, id: 'item-1' })),
+          id: `prodigi-${drafts.size + 1}`, status: 'draft', allowedActions: ['submit'],
           costs: { total: { amount: '12.34', currency: 'USD' } },
           shipments: [],
         });
         return Response.json({ data: drafts.get(key) }, { status: 202 });
       }
-      const draft = [...drafts.values()].find(value => value.id === url.pathname.split('/').at(-1).split(':')[0]);
+      const draft = [...drafts.values()].find(value => value.id === url.pathname.split('/')[3]?.split(':')[0]);
       assert(draft, url.pathname);
+      if (init.method === 'PATCH') {
+        assert.equal(url.pathname, `/v5/orders/${draft.id}/items/item-1`);
+        assert.equal(draft.status, 'draft');
+        if (failPatch) throw new Error('request interrupted');
+        draft.items[0].assets = body.assets;
+        return Response.json({ data: draft.items[0] });
+      }
       if (url.pathname.endsWith(':submit')) {
         submits++;
         if (submitHold) await submitHold;
@@ -125,7 +146,7 @@ function fixture(overrides = {}) {
     }
     assert.fail('Unexpected provider address ' + url.origin + url.pathname);
   };
-  const handler = createHandler({ env: { ...env, ...overrides }, openStore: () => store, fetcher });
+  const handler = createHandler({ env: { ...env, ...overrides }, openStore: () => store, openArtworkStore: () => artworkStore, fetcher });
   const request = (action, body, headers = {}, origin = base) => handler(new Request(origin + '/api/studio-print/' + action, {
     method: 'POST', body, headers: { 'Content-Type': 'application/json', ...(['checkout', 'quote'].includes(action) && { Origin: base }), ...headers },
   }));
@@ -150,6 +171,8 @@ function fixture(overrides = {}) {
   const admin = input => post('admin', input, { Authorization: 'Bearer ' + env.STUDIO_ADMIN_TOKEN });
   return {
     records, orders, drafts, draftCalls, pay, notify, post, purchase, request, admin, submits: () => submits,
+    masters, image, served: () => served, download: (url, method = 'GET') => handler(new Request(url, { method })),
+    setFailPatch: value => { failPatch = value; },
     setQuoteCurrency: value => { quoteCurrency = value; }, setQuoteFailure: value => { quoteFailure = value; },
     setSubmitFailure: value => { submitFailure = value; }, setSubmitHold: value => { submitHold = value; },
     setFailDraft: value => { failDraft = value; }, setInvalidVariant: value => { invalidVariant = value; },
@@ -179,15 +202,20 @@ test('both sizes and all five artwork mappings use authoritative pricing and ori
       assert.equal(data.taxCents, Math.round((price * 2 + 899) * 0.07));
       assert.equal(data.state, 'draft');
       assert(!JSON.stringify(data).includes('sandbox-buyer@example.com'));
-      assert(!JSON.stringify(data).includes('files.example.com'));
+      assert(!JSON.stringify(data).includes('sig='));
       assert.equal(typeof data.recipientBox, 'string');
       const draft = f.draftCalls.at(-1);
       assert.equal(draft.submit, false);
       assert.equal(draft.recipient.address.countryCode, 'US');
-      assert.deepEqual(draft.items, [{
-        sku: catalog.variants[size], quantity: 2, sizing: 'fitPrintArea',
-        assets: [{ printArea: 'default', url: `https://files.example.com/${artwork}-${size}.jpg?fixture=download` }],
-      }]);
+      const [item] = draft.items;
+      assert.equal(item.sku, catalog.variants[size]);
+      assert.equal(item.quantity, 2);
+      assert.equal(item.sizing, 'fitPrintArea');
+      const asset = item.assets[0];
+      assert.equal(asset.printArea, 'default');
+      const artworkURL = new URL(asset.url);
+      assert.equal(artworkURL.origin + artworkURL.pathname, artworkReference(base, artwork));
+      assert(artworkURL.searchParams.has('sig'));
     }
   }
   assert.equal(f.drafts.size, 10);
@@ -249,7 +277,7 @@ test('duplicate webhooks, temporary provider failures, and concurrent admin appr
 test('missing credentials, a live Prodigi key, and production all fail closed', async () => {
   for (const [overrides, status] of [
     [{ SQUARE_SANDBOX_TOKEN: '' }, 503],
-    [{ STUDIO_PRINT_FILES: '{}' }, 503],
+    [{ STUDIO_ARTWORK_SIGNING_KEY: '' }, 503],
     [{ PRODIGI_SANDBOX_KEY: 'live_never' }, 503],
     [{ CONTEXT: 'production' }, 404],
     [{ STUDIO_SANDBOX_ENABLED: 'false' }, 404],
@@ -353,20 +381,67 @@ test('status refresh during a provider call preserves the approval write and nev
   assert.equal(f.submits(), 1);
 });
 
-test('private URL configuration rejects credentials, alternate hosts and internal hosts', async () => {
-  for (const value of [
-    'https://files.example.com@bad.example.com/master.jpg',
-    'https://files.example.com:8080/master.jpg',
-    'https://172.16.0.1/master.jpg',
-    'https://files.example.com/master.svg?fixture=download',
-    'https://files.example.com/master.jpg',
-  ]) {
-    const files = JSON.parse(env.STUDIO_PRINT_FILES);
-    files['mother-nature']['9x12'] = value;
-    const f = fixture({ STUDIO_PRINT_FILES: JSON.stringify(files) });
-    assert.equal((await f.purchase(customer())).status, 503);
-  }
+test('private artwork is gated by the allowlist, signature, expiry, origin, and sandbox environment', async () => {
+  const f = fixture();
+  const config = { artworkKey: Buffer.from(env.STUDIO_ARTWORK_SIGNING_KEY, 'hex') };
+  const reference = artworkReference(base, 'mother-nature');
+  const signed = signArtwork(config, reference);
+  for (const invalid of [
+    reference,
+    signed.replace('mother-nature', 'tiger-lily'),
+    signed.replace(/.$/, tail => tail === 'a' ? 'b' : 'a'),
+    signed + '&expires=100',
+    signed.replace(base, 'https://other.example.test'),
+    signArtwork(config, reference, Date.now() - 49 * 3600000),
+  ]) assert.equal((await f.download(invalid)).status, 404);
+  assert.equal((await f.download(signed, 'POST')).status, 404);
+  assert.equal((await fixture({ CONTEXT: 'production' }).download(signed)).status, 404);
+  const head = await f.download(signed, 'HEAD');
+  assert.equal(head.status, 200);
+  assert.equal(head.headers.get('content-length'), String(f.image.length));
+  assert.equal((await head.arrayBuffer()).byteLength, 0);
+  assert.equal(f.served(), 0);
+  const response = await f.download(signed);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('content-type'), 'image/jpeg');
+  assert.match(response.headers.get('cache-control'), /no-store/);
+  assert.deepEqual(new Uint8Array(await response.arrayBuffer()), f.image);
+  assert.equal(f.served(), 1);
+});
+
+test('unverified or missing artwork fails before checkout', async () => {
+  const f = fixture();
+  const key = artworkMasters['mother-nature'].key;
+  f.masters.get(key).metadata.bytes = maxArtworkBytes + 1;
+  assert.equal((await f.purchase(customer())).status, 503);
+  f.masters.delete(key);
+  assert.equal((await f.purchase(customer())).status, 503);
+  assert.equal(f.orders.size, 0);
+  const readiness = await (await f.admin({ action: 'artwork-status' })).json();
+  assert.equal(readiness.results.find(result => result.artwork === 'mother-nature').ready, false);
+  assert.equal(readiness.results.filter(result => result.ready).length, 4);
   assert.equal((await fixture({ STUDIO_FULFILLMENT_ENABLED: 'false' }).purchase(customer())).status, 503);
+});
+
+test('manual approval renews expired artwork links and retries failed renewal without submitting', async () => {
+  const f = fixture();
+  const { orderId, supplier } = await draftOrder(f);
+  const reference = artworkReference(base, 'mother-nature');
+  const config = { artworkKey: Buffer.from(env.STUDIO_ARTWORK_SIGNING_KEY, 'hex') };
+  const expired = signArtwork(config, reference, Date.now() - 49 * 3600000);
+  const asset = supplier.items[0].assets[0];
+  asset.url = expired;
+  assert.equal((await f.download(expired)).status, 404);
+  f.setFailPatch(true);
+  assert.equal((await f.admin({ action: 'approve', orderId })).status, 502);
+  assert.equal(f.submits(), 0);
+  assert.equal(f.records.get(orderId).data.approval, 'rejected');
+  f.setFailPatch(false);
+  assert.equal((await f.admin({ action: 'approve', orderId })).status, 200);
+  assert.equal(f.submits(), 1);
+  const renewed = supplier.items[0].assets[0].url;
+  assert.notEqual(renewed, expired);
+  assert.equal((await f.download(renewed)).status, 200);
 });
 
 test('a timeout with a later positive supplier state is reconciled without another submission', async () => {

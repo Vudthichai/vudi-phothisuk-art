@@ -1,6 +1,7 @@
 import { createHash, createHmac, randomUUID } from 'node:crypto';
 import { encryptRecipient, equal, fileIdentity, fulfillmentDetails, selection, StudioError, validId } from './studio-config.mjs';
 
+import { artworkMasters, artworkReady, signArtwork } from './studio-artwork.mjs';
 import { orderFinancials, reserveDailySpend, shippingQuote, supplierCents } from './studio-finance.mjs';
 
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -17,11 +18,11 @@ class ProviderError extends Error {
 }
 
 export function providers(config, fetcher = fetch) {
-  async function call(provider, base, headers, path, body, extra) {
+  async function call(provider, base, headers, path, body, extra, method = body === undefined ? 'GET' : 'POST') {
     let result;
     try {
       result = await fetcher(base + path, {
-        method: body === undefined ? 'GET' : 'POST',
+        method,
         headers: { 'Content-Type': 'application/json', ...headers, ...extra },
         body: body === undefined ? undefined : JSON.stringify(body),
         signal: AbortSignal.timeout(7000),
@@ -44,9 +45,9 @@ export function providers(config, fetcher = fetch) {
     quote: (body) => call('Prodigi', 'https://api.sandbox.prodigi.com/v4.0', {
       'X-API-Key': config.prodigiKey.slice('sandbox_'.length),
     }, '/quotes', body),
-    prodigi: async (path, body, extra) => (await call('Prodigi', 'https://api.prodigi.com/v5', {
+    prodigi: async (path, body, extra, method) => (await call('Prodigi', 'https://api.prodigi.com/v5', {
       'X-API-Key': config.prodigiKey,
-    }, path, body, extra)).data,
+    }, path, body, extra, method)).data,
   };
 }
 
@@ -105,7 +106,7 @@ const submissionStates = new Set([
 ]);
 const settled = record => Date.now() - Date.parse(record.approvalAttemptAt) >= 120000;
 const adminActions = new Set([
-  'retry-draft', 'refresh', 'approve', 'reset-approval', 'pause', 'resume', 'pause-checkout', 'resume-checkout', 'view', 'catalogue',
+  'retry-draft', 'refresh', 'approve', 'reset-approval', 'pause', 'resume', 'pause-checkout', 'resume-checkout', 'view', 'catalogue', 'artwork-status',
 ]);
 const quoteValidMs = 10 * 60 * 1000;
 const quoteKey = id => 'quote-' + id;
@@ -136,7 +137,7 @@ function checkBudget(order, config) {
   return amount;
 }
 
-export function studioService(config, store, { square, prodigi, quote: requestQuote }) {
+export function studioService(config, store, { square, prodigi, quote: requestQuote }, artworkStore) {
   async function enabled() {
     if (!config.fulfillmentEnabled) return false;
     const gate = await store.getWithMetadata(pauseKey, { type: 'json', consistency: 'strong' });
@@ -157,6 +158,12 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     if (!await checkoutEnabled()) throw new StudioError(503, 'Studio Print checkout is paused.');
   }
 
+  async function requireArtwork(artwork) {
+    if (!await artworkReady(artworkStore, artwork)) {
+      throw new StudioError(503, 'The verified Studio Print master is unavailable.');
+    }
+  }
+
   async function variantFor(selected) {
     const variant = await prodigi('/catalogue/variants/' + encodeURIComponent(selected.sku));
     checkVariant(variant, selected);
@@ -167,6 +174,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     await requireCheckout();
     const id = randomUUID();
     const selected = selection({ ...input, attemptId: id }, config);
+    await requireArtwork(selected.artwork);
     await variantFor(selected);
     const offer = await shippingQuote(requestQuote, selected);
     if (offer.productionCents + offer.shippingCents > config.maxCostCents) {
@@ -195,6 +203,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
       throw new StudioError(409, 'The shipping quote has expired. Request a new quote.');
     }
     const selected = fulfillmentDetails(savedQuote, config);
+    await requireArtwork(selected.artwork);
     const { artwork, size, quantity, unitCents, taxBps, taxShipping, recipient, attemptId, sku, file } = selected;
     const { shippingCents } = savedQuote.quote;
     if (!Number.isSafeInteger(shippingCents) || shippingCents < 0 || savedQuote.quote.currency !== 'USD' ||
@@ -283,6 +292,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     }
     if (record.prodigiId) return { state: record.state };
     const details = fulfillmentDetails(record, config);
+    await requireArtwork(details.artwork);
     const { order } = await square('/orders/' + record.orderId);
     checkOrder(order, record, config.locationId);
     await requireEnabled();
@@ -305,7 +315,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
       recipient: details.recipient,
       items: [{
         sku: record.sku, quantity: record.quantity, sizing: 'fitPrintArea',
-        assets: [{ printArea: 'default', url: details.file }],
+        assets: [{ printArea: 'default', url: signArtwork(config, details.file) }],
       }],
     }, { 'Idempotency-Key': hash(['studio-print-sandbox', record.orderId]) });
     if (!validId(result?.id) || result.status !== 'draft') throw new Error('Prodigi did not return a draft');
@@ -345,6 +355,12 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
       }
       await store.setJSON(checkoutOnly ? 'control-checkout' : pauseKey, { paused, updatedAt: now() });
       return { paused };
+    }
+    if (input.action === 'artwork-status') {
+      const results = await Promise.all(Object.keys(artworkMasters).map(async artwork => ({
+        artwork, ready: await artworkReady(artworkStore, artwork),
+      })));
+      return { results };
     }
     if (input.action === 'catalogue') {
       const results = await Promise.all(Object.entries(config.variants).map(async ([size, sku]) => {
@@ -418,7 +434,10 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
       throw new StudioError(409, 'Approval already started. Refresh and reconcile the supplier state.');
     }
     matchDraft(order, record, details);
-    const costCents = checkBudget(order, config);
+    checkBudget(order, config);
+    await requireArtwork(details.artwork);
+    const itemId = order.items[0].id;
+    if (!validId(itemId)) throw new Error('Missing Prodigi draft item ID');
     if (!validId(record.paymentId) || !await verifiedPayment(record.paymentId, record)) {
       throw new StudioError(409, 'Square payment is no longer eligible.');
     }
@@ -430,13 +449,25 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     const lock = await store.setJSON(record.orderId, claim, { onlyIfMatch: etag });
     if (!lock.modified) throw new StudioError(409, 'Order changed. Refresh and try again.');
     let result;
+    let submissionStarted = false;
     try {
-      await reserveDailySpend(store, record.orderId, costCents, config.dailyCents);
       await requireEnabled();
+      // Renew the same artwork binding after any delay, expiry, retry, or signing-key rotation.
+      const url = signArtwork(config, details.file);
+      await prodigi(apiPath + '/items/' + itemId, { assets: [{ printArea: 'default', url }] }, undefined, 'PATCH');
+      const refreshed = await prodigi(apiPath);
+      if (refreshed?.id !== record.prodigiId || refreshed.merchantReference !== record.orderId ||
+          refreshed.items?.[0]?.id !== itemId || refreshed.items[0].assets?.[0]?.url !== url) {
+        throw new Error('Prodigi draft did not retain the renewed artwork link');
+      }
+      matchDraft(refreshed, record, details);
+      await reserveDailySpend(store, record.orderId, checkBudget(refreshed, config), config.dailyCents);
+      await requireEnabled();
+      submissionStarted = true;
       result = await prodigi(apiPath + ':submit', {});
     } catch (error) {
-      // A transport failure or 5xx may have reached Prodigi. Keep the lock in that case.
-      if (error instanceof StudioError || (error instanceof ProviderError && [400, 422].includes(error.status))) {
+      // Only an ambiguous submission can leave an order pending reconciliation.
+      if (!submissionStarted || (error instanceof ProviderError && [400, 422].includes(error.status))) {
         await store.setJSON(record.orderId, { ...claim, approval: 'rejected' }, { onlyIfMatch: lock.etag });
       }
       throw error;

@@ -23,7 +23,7 @@ Prodigi v5 documents that order writes use catalogue SKUs and downloadable artwo
 
 1. In the [Square Developer Console](https://developer.squareup.com/apps), select the app’s **Sandbox** tab and a U.S. test seller. Get the Sandbox access token from **Credentials** and the associated location ID from **Locations**. Get the matching seller’s merchant ID from the sandbox account or the Square Merchants API. Under Sandbox webhook subscriptions, add `payment.created` and `payment.updated` at `https://<preview-host>/api/studio-print/webhook` and copy its signature key.
 2. In [Prodigi’s sandbox dashboard](https://sandbox-beta-dashboard.pwinty.com/), retrieve the sandbox key under **Settings → Integrations → API**. Use the sandbox-issued key with the v5 `sandbox_` prefix in Netlify. The server uses the same underlying key without the prefix on the dedicated v4 sandbox quote host. Verify both endpoints with the admin `catalogue` action below.
-3. Retrieve the approved high-resolution Studio Print JPGs from private storage. Verify against the original source and [asset audit](studio-size-gallery-audit.json). For 300 DPI, aim for at least 2700 × 3600 pixels for 9 × 12 and 3600 × 4800 for 12 × 16, preserving the approved 3:4 design. Use the provider-returned print-area specifications if they differ. The same approved master can serve both sizes if it meets both specifications. Verify the full artwork, orientation, safe area, and color proof. Keep each object at an immutable versioned path and verify anonymous downloads fail. Create expiring, read-only HTTPS URLs for individual objects on one private storage host. Confirm signed downloads return the exact JPG bytes without redirects. Keep URLs valid through test checkout and fulfillment. Renew signatures against the same object path. Do not use thumbnails, watermarked versions or Collector’s Edition files.
+3. Retrieve the approved high-resolution Studio Print JPGs from private storage. Verify against the original source and [asset audit](studio-size-gallery-audit.json). For 300 DPI, aim for at least 2700 × 3600 pixels for 9 × 12 and 3600 × 4800 for 12 × 16, preserving the approved 3:4 design. Use the provider-returned print-area specifications if they differ. The same approved master can serve both sizes if it meets both specifications. Verify the full artwork, orientation, safe area, and color proof. Upload the originals directly into the private Netlify Blob store using the procedure below. The script uses immutable keys derived from the approved file checksums. Do not use thumbnails, watermarked versions or Collector’s Edition files.
 4. In Netlify **Project configuration → Environment variables**, restrict the variables to Deploy Previews and use the Functions scope for secrets and server configuration. Set only `VITE_STUDIO_SANDBOX` in the Builds scope. Enter secrets directly in Netlify or the approved secret manager. Redeploy the preview, leaving production variables unset.
 
 | Variable | Value |
@@ -35,12 +35,33 @@ Prodigi v5 documents that order writes use catalogue SKUs and downloadable artwo
 | `SQUARE_WEBHOOK_KEY`, `STUDIO_WEBHOOK_URL` | Signature key and exact HTTPS subscription URL with path `/api/studio-print/webhook`, without query or trailing slash. |
 | `PRODIGI_SANDBOX_KEY` | Sandbox-issued key formatted as `sandbox_<sandbox-key>`. |
 | `STUDIO_ADMIN_TOKEN`, `STUDIO_DATA_KEY` | Generate two separate 256-bit hex secrets with `openssl rand -hex 32`. Use the admin token only from a trusted terminal. Plan migrations before rotating the data key, as existing records require it. |
-| `STUDIO_PRINT_HOST` | Exact hostname for the signed private JPGs. |
-| `STUDIO_PRINT_FILES` | JSON object keyed by `mother-nature`, `ethereal-bloom`, `tiger-lily`, `75-leaves`, and `a-forest-forgotten`. Each contains `9x12` and `12x16` signed HTTPS object URLs. |
+| `STUDIO_ARTWORK_SIGNING_KEY` | Generate a third, distinct 256-bit hex secret with `openssl rand -hex 32`. Set it in Functions → Deploy Previews only and mark it as secret. It signs the temporary JPG links. |
 | `STUDIO_DESTINATIONS` | JSON keyed by state and 5-digit ZIP. Set verified sandbox tax scenarios explicitly. Example test rule `{"PA-15201":{"taxBps":750,"taxShipping":true}}` uses a fictional tax rate. Set `taxBps:0` only where the test policy explicitly calls for no tax. |
 | `STUDIO_MAX_QUANTITY` | Integer from 1 to 10. Defaults to 10. |
 | `STUDIO_MAX_FULFILLMENT_CENTS` | Required per-order wholesale spend cap in USD cents. |
 | `STUDIO_DAILY_FULFILLMENT_CENTS` | Required cumulative cap in USD cents, at least the per-order cap. The reservation day is UTC. |
+
+## Upload the five originals privately
+
+The uploader writes the JPGs directly to the Netlify Blobs SDK over HTTPS. It validates all five local files against the approved SHA-256 hashes before writing anything. It caps each file at 15 MB for headroom under the 20 MB streamed-response limit, creates immutable keys using a conditional write, and verifies the bytes read back. It preserves the original pixels, metadata, and JPEG encoding. Both supported sizes use the same approved 3:4 master for each artwork.
+
+1. On your own computer, save the originals in a folder **outside the repository**, keeping the exact filenames in the [source manifest](studio-print-photographs.json). The Mother Nature filename contains two spaces after `STUDIO`. From your local checkout of PR #95, install the pinned dependencies with `npm ci`.
+2. In the existing Netlify project, copy its **Project ID** (formerly Site ID) from **Project configuration → General → Project details**. Create a short-lived Netlify personal access token under **User settings → Applications → Personal access tokens** using an account authorized on that project. This upload token is only used in your local shell. The deployed function uses Netlify’s own Blob access.
+3. From the repository root, run these commands in Bash, substituting your local folder. The token prompt hides typed input.
+
+```bash
+read -r -p 'Netlify Project ID: ' NETLIFY_SITE_ID
+read -r -s -p 'Netlify personal access token: ' NETLIFY_AUTH_TOKEN
+printf '\n'
+NETLIFY_SITE_ID="$NETLIFY_SITE_ID" NETLIFY_AUTH_TOKEN="$NETLIFY_AUTH_TOKEN" \
+  node scripts/upload-studio-masters.mjs "/path/to/private/originals"
+unset NETLIFY_SITE_ID NETLIFY_AUTH_TOKEN
+```
+
+4. Check for five verified messages. Re-running the uploader is safe if interrupted. Revoke the upload token after verifying the storage. Never put the JPGs, token, or signed URLs in Git, the public build, snippets, or shared logs.
+5. Set `STUDIO_ARTWORK_SIGNING_KEY`, then redeploy only the draft PR preview. `STUDIO_PRINT_HOST` and `STUDIO_PRINT_FILES` are no longer used and can be removed from that context. Call the authenticated admin endpoint with `{"action":"artwork-status"}` and confirm all five entries report `ready: true`. Quotes and payment links for a master fail closed until that master is uploaded. Any older sandbox quote or order tied to an external artwork path needs manual reconciliation under the prior binding.
+
+The HTTPS download only accepts a signed GET or HEAD from the configured sandbox preview origin. Links are scoped to a single immutable JPG, expire after 48 hours, and allow whoever holds the link to fetch that JPG during the window. Links are sent only to Prodigi and the function disables caching. The admin approval action refreshes the draft item’s URL, verifies the updated draft and spending cap, then submits. A failed URL renewal is retryable and never starts submission. Ambiguous submission still requires reconciliation.
 
 ## First provider-backed sandbox purchase
 
@@ -78,7 +99,7 @@ The authenticated order view reports Square fees where available, retail, collec
 
 ## Production readiness checklist
 
-- Verify the two SKUs and both size checkouts with sandbox credentials, provider quote fields, USD draft cost and actual supplier billing fields. Validate print quality and U.S. routing with representative addresses. Verify Netlify rate limits and the two pause controls.
+- Verify the two SKUs and both size checkouts with sandbox credentials, provider quote fields, USD draft cost and actual supplier billing fields. Check the largest master with a provider-backed sandbox draft and delayed approval, including that Prodigi can stream the JPG and retains the renewed URL. Validate print quality and U.S. routing with representative addresses. Verify Netlify rate limits and the two pause controls.
 - Verify Square’s receipt settings. The operator can retrieve tracking in the admin order view and send it to the buyer using an approved support channel. Automatic shipment emails still require a configured notification workflow. Do not advertise them before that workflow is tested.
 - Establish legally reviewed tax, cancellation and shipping policies, address deliverability, refund handling, operator identity/MFA, payment reconciliation and PII retention. Keep automated fulfillment disabled.
 - Confirm that Prodigi accepts the Square Debit Card and that sufficient cleared funds are available. Keep a funding buffer for settlement delays, refunds and exchange-rate or production cost changes. No billing method is configured here.

@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs';
 import { equal, studioConfig, StudioError } from '../../server/commerce/studio-config.mjs';
+import { artworkStoreName, downloadArtwork } from '../../server/commerce/studio-artwork.mjs';
 import { providers, studioService } from '../../server/commerce/studio-api.mjs';
 
 function reply(body, status = 200) {
@@ -38,15 +39,19 @@ function json(raw) {
   }
 }
 
-export function createHandler({ env = process.env, openStore = config => getStore(`studio-print-sandbox-${config.merchantId.toLowerCase()}-${config.locationId.toLowerCase()}`), fetcher = fetch } = {}) {
+export function createHandler({ env = process.env, openStore = config => getStore(`studio-print-sandbox-${config.merchantId.toLowerCase()}-${config.locationId.toLowerCase()}`), openArtworkStore = () => getStore(artworkStoreName), fetcher = fetch } = {}) {
   return async request => {
     const url = new URL(request.url);
     const action = url.pathname.split('/').at(-1);
     try {
       const config = studioConfig(env);
       if (url.origin !== config.origin) return reply({ error: 'Not found.' }, 404);
+      const artworkStore = openArtworkStore();
+      if (url.pathname.startsWith('/api/studio-print/artwork/')) {
+        return await downloadArtwork(request, config, artworkStore);
+      }
       if (action === 'status' && request.method === 'GET') {
-        const service = studioService(config, openStore(config), providers(config, fetcher));
+        const service = studioService(config, openStore(config), providers(config, fetcher), artworkStore);
         return reply({ sandbox: await service.enabled(), maxQuantity: config.maxQuantity });
       }
       if (request.method !== 'POST' || !['quote', 'checkout', 'webhook', 'admin'].includes(action)) {
@@ -59,7 +64,7 @@ export function createHandler({ env = process.env, openStore = config => getStor
       if ((action === 'checkout' || action === 'quote') && request.headers.get('origin') !== url.origin) {
         return reply({ error: 'Open checkout from the Studio Print page.' }, 403);
       }
-      const service = studioService(config, openStore(config), providers(config, fetcher));
+      const service = studioService(config, openStore(config), providers(config, fetcher), artworkStore);
       const raw = await readBody(request, action === 'webhook' ? 65536 : 8192);
       if (action === 'webhook') return reply(await service.webhook(raw, request.headers.get('x-square-hmacsha256-signature')));
       return reply(await service[action](json(raw)));
@@ -78,5 +83,5 @@ export default createHandler();
 
 export const config = {
   rateLimit: { windowLimit: 40, windowSize: 60, aggregateBy: ['ip', 'domain'] },
-  path: ['/api/studio-print/status', '/api/studio-print/quote', '/api/studio-print/checkout', '/api/studio-print/webhook', '/api/studio-print/admin'],
+  path: ['/api/studio-print/status', '/api/studio-print/quote', '/api/studio-print/checkout', '/api/studio-print/webhook', '/api/studio-print/admin', '/api/studio-print/artwork/:file'],
 };

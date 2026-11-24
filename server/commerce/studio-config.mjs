@@ -1,4 +1,5 @@
 import { createCipheriv, createDecipheriv, createHash, randomBytes, timingSafeEqual } from 'node:crypto';
+import { artworkReference } from './studio-artwork.mjs';
 import catalog from './studio-catalog.json' with { type: 'json' };
 
 export class StudioError extends Error {
@@ -34,8 +35,8 @@ export function studioConfig(env) {
       SQUARE_SANDBOX_MERCHANT: merchantId, SQUARE_WEBHOOK_KEY: webhookKey,
       STUDIO_WEBHOOK_URL: webhookUrl, STUDIO_ADMIN_TOKEN: adminToken,
       PRODIGI_SANDBOX_KEY: prodigiKey,
-      STUDIO_PRINT_FILES: filesJSON, STUDIO_DESTINATIONS: destinationsJSON,
-      STUDIO_PRINT_HOST: fileHost, STUDIO_DATA_KEY: dataKey,
+      STUDIO_DESTINATIONS: destinationsJSON,
+      STUDIO_ARTWORK_SIGNING_KEY: artworkKey, STUDIO_DATA_KEY: dataKey,
       STUDIO_MAX_QUANTITY: maxQuantityValue = '10', STUDIO_MAX_FULFILLMENT_CENTS: maxCostValue,
       STUDIO_FULFILLMENT_ENABLED: fulfillmentEnabled, STUDIO_CHECKOUT_ENABLED: checkoutEnabled,
       STUDIO_DAILY_FULFILLMENT_CENTS: dailyValue,
@@ -44,29 +45,18 @@ export function studioConfig(env) {
     if (url.origin === 'https://vudiphothisukart.com' || url.hostname.endsWith('.vudiphothisukart.com') ||
         url.pathname !== '/api/studio-print/webhook' || url.search ||
         !squareToken || !validId(locationId) || !validId(merchantId) || !webhookKey ||
-        !hexKey(adminToken) || !hexKey(dataKey) || equal(dataKey.toLowerCase(), adminToken.toLowerCase()) || !/^sandbox_.+/.test(prodigiKey ?? '')) {
+        !hexKey(adminToken) || !hexKey(dataKey) || !hexKey(artworkKey) ||
+        new Set([adminToken, dataKey, artworkKey].map(key => key.toLowerCase())).size !== 3 || !/^sandbox_.+/.test(prodigiKey ?? '')) {
       throw new Error('Missing or unsafe credential configuration');
     }
     const maxQuantity = Number(maxQuantityValue);
     const maxCostCents = Number(maxCostValue);
     const dailyCents = Number(dailyValue);
-    if (!integer(maxQuantity, 1, 10) || !integer(maxCostCents, 1, 100000) || !integer(dailyCents, maxCostCents, 1000000) ||
-        !/^(?:[a-z][a-z0-9-]*\.)+[a-z][a-z0-9-]*$/i.test(fileHost ?? '') ||
-        /(?:^|\.)(?:localhost|local|internal|test)$/.test(fileHost.toLowerCase()) ||
-        /(?:^|\.)vudiphothisukart\.com$/.test(fileHost.toLowerCase())) {
-      throw new Error('Invalid print host or limits');
+    if (!integer(maxQuantity, 1, 10) || !integer(maxCostCents, 1, 100000) || !integer(dailyCents, maxCostCents, 1000000)) {
+      throw new Error('Invalid order limits');
     }
     const variants = catalog.variants;
-    const files = JSON.parse(filesJSON);
     const destinations = JSON.parse(destinationsJSON);
-    for (const id of Object.keys(catalog.artworks)) {
-      for (const size of Object.keys(catalog.prices)) {
-        const file = https(files[id][size]);
-        if (file.hostname !== fileHost.toLowerCase() || !file.search || !/\.jpe?g$/i.test(file.pathname)) {
-          throw new Error('Invalid private print file');
-        }
-      }
-    }
     if (!Object.keys(destinations).length) throw new Error('Missing destination policies');
     for (const [key, rate] of Object.entries(destinations)) {
       if (!/^[A-Z]{2}-\d{5}$/.test(key) || !states.has(key.slice(0, 2)) || ['AK', 'HI'].includes(key.slice(0, 2)) ||
@@ -75,7 +65,7 @@ export function studioConfig(env) {
     }
     return {
       squareToken, locationId, merchantId, webhookKey, webhookUrl: url.href, adminToken,
-      prodigiKey, variants, files, destinations, origin: url.origin,
+      prodigiKey, variants, destinations, origin: url.origin, artworkKey: Buffer.from(artworkKey, 'hex'),
       dataKey: Buffer.from(dataKey, 'hex'), maxQuantity, maxCostCents,
       fulfillmentEnabled: fulfillmentEnabled === 'true', checkoutEnabled: checkoutEnabled === 'true', dailyCents,
     };
@@ -114,7 +104,7 @@ export function selection(input, config) {
   if (!rate) throw new StudioError(400, 'This ZIP code is outside the sandbox shipping area.');
   return {
     artwork, size, quantity, attemptId, title: catalog.artworks[artwork], unitCents: catalog.prices[size],
-    sku: config.variants[size], file: config.files[artwork][size],
+    sku: config.variants[size], file: artworkReference(config.origin, artwork),
     taxBps: rate.taxBps, taxShipping: rate.taxShipping,
     recipient: { name, email, address: { line1, line2, townOrCity, stateOrCounty, postalOrZipCode, countryCode: 'US' } },
   };
