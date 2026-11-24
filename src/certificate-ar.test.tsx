@@ -28,6 +28,7 @@ it('enables Mother Nature AR from original and Collector’s Edition pages witho
 it('opens the existing AR experience from the Collector’s Edition certificate and returns to that certificate',async()=>{
  const collectorPath='/coa/forest-and-flowers/mother-nature/collectors-edition/';
  page(collectorPath);
+ expect(screen.getByText(/Use the Mother Nature original certificate/)).toBeTruthy();
  fireEvent.click(screen.getByRole('link',{name:'Experience in AR'}));
  const iframe=screen.getByTitle('Mother Nature augmented reality camera');
  expect(iframe.getAttribute('src')).toBe('/ar-camera.html?experience=mother-nature-original');
@@ -37,6 +38,7 @@ it('opens the existing AR experience from the Collector’s Edition certificate 
 });
 it('opens an isolated, camera-capable AR frame only on request and exits back to the same certificate',async()=>{
  page();expect(document.querySelector('iframe')).toBeNull();
+ expect(screen.getByText('Turn your certificate artwork-side up, allow camera access, and point your phone at the artwork.')).toBeTruthy();
  fireEvent.click(screen.getByRole('link',{name:'Experience in AR'}));
  expect(screen.getByRole('dialog')).toBeTruthy();
  const iframe=screen.getByTitle('Mother Nature augmented reality camera');

@@ -6,7 +6,7 @@ import './camera.css';
 const root=document.getElementById('ar-root')!;
 const experience=arById(new URLSearchParams(location.search).get('experience'));
 root.innerHTML=`<button id="ar-exit" class="ar-exit" type="button" aria-label="Exit AR">Exit <span aria-hidden="true">×</span></button>
-<section class="ar-intro"><p class="ar-eyebrow">Forest &amp; Flowers</p><h1>Nature, in another dimension.</h1><p>Point your camera at the Mother Nature artwork shown below—on a painting, print, flyer or screen. A golden sculpture will emerge.</p><img id="ar-target-preview" width="680" height="1024" alt="Mother Nature tracking image"><button id="ar-start" type="button">Start camera</button><p class="ar-privacy">Camera stays on your device. Recording is optional, silent and saved only by you.</p><p id="ar-support" role="status"></p></section>
+<section class="ar-intro"><p class="ar-eyebrow">Forest &amp; Flowers</p><h1>Nature, in another dimension.</h1><p>Turn your certificate artwork-side up, allow camera access, and point your phone at the artwork.</p><p>Use the Mother Nature original certificate or match the artwork image shown below.</p><img id="ar-target-preview" width="680" height="1024" alt="Mother Nature tracking image"><button id="ar-start" type="button">Start camera</button><p class="ar-privacy">Camera stays on your device. Recording is optional, silent and saved only by you.</p><p id="ar-support" role="status"></p></section>
 <p id="ar-model-note" class="ar-model-note" role="status" hidden></p>
 <div class="ar-surface" hidden><video muted autoplay playsinline aria-label="Live rear camera"></video></div>
 <div class="ar-guidance" hidden><p id="ar-status" role="status" aria-live="polite"></p><button id="ar-retry" type="button" hidden>Try again</button></div>
