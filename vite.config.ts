@@ -9,7 +9,7 @@ export default defineConfig(({ command, mode }) => {
     plugins: [react()],
     resolve:{alias: arExperimentsEnabled?[]:[{find:/^\.\/experimental\/rainforest$/,replacement:decodeURIComponent(new URL('./src/ar/experimental/disabled.ts',import.meta.url).pathname)}]},
     optimizeDeps: { include:['three'] },
-    build: { rollupOptions: { input: { main:'index.html', arCamera:'ar-camera.html', ...(arExperimentsEnabled?{rainforest:'rainforest-ar.html',rainforestV2:'rainforest-v2.html',rainforestV3:'rainforest-v3.html'}:{}) } } },
+    build: { rollupOptions: { input: { main:'index.html', arCamera:'ar-camera.html', ...(arExperimentsEnabled?{rainforest:'rainforest-ar.html',rainforestV2:'rainforest-v2.html',rainforestV3:'rainforest-v3.html',rainforestV4:'rainforest-v4.html'}:{}) } } },
     define: {
       __VPA_AR_EXPERIMENTS__: JSON.stringify(arExperimentsEnabled),
       __VPA_BUILD_INFO__: JSON.stringify({

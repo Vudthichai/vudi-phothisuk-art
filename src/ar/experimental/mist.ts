@@ -4,7 +4,7 @@ export const MIST_TEXTURE_SIZE = 128;
 export const MIST_LAYER_COUNT = 4;
 
 /** Four low-opacity depth-tested wisps. Generated once; no downloaded textures or volume marching. */
-export function createCinematicMist(living = false) {
+export function createCinematicMist(living = false, sculpture = false) {
   const size = MIST_TEXTURE_SIZE, data = new Uint8Array(size * size * 4);
   for (let y = 0; y < size; y++) for (let x = 0; x < size; x++) {
     const u = x / (size - 1) * 2 - 1, v = y / (size - 1) * 2 - 1;
@@ -20,7 +20,12 @@ export function createCinematicMist(living = false) {
   texture.generateMipmaps = false; texture.needsUpdate = true;
   const root = new Group(); root.name = 'Cinematic rainforest mist';
   // Coordinates are fractions of tree height in the upright sculpture frame.
-  const layers = living ? [
+  const layers = sculpture ? [
+    { p: [-.13, .065, .46], s: [.9, .20], opacity: .40 },
+    { p: [.13, .21, .37], s: [.74, .19], opacity: .32 },
+    { p: [-.10, .48, -.16], s: [.66, .14], opacity: .23 },
+    { p: [.10, .67, .20], s: [.53, .12], opacity: .18 },
+  ] : living ? [
     { p: [-.12, .065, .32], s: [.82, .16], opacity: .27 },
     { p: [.12, .22, -.15], s: [.66, .17], opacity: .23 },
     { p: [-.10, .51, .22], s: [.65, .12], opacity: .17 },
