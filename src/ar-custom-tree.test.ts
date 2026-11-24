@@ -11,12 +11,13 @@ it('normalizes the complete model from root to canopy at 1.8 times the previous 
 });
 it('shows the procedural fallback while loading, replaces it, respects reduced motion and frees textures and geometry',async()=>{
  let resolve!:(asset:Group)=>void;const asset=model(),mesh=asset.children[0] as Mesh,texture=new Texture();(mesh.material as MeshStandardMaterial).map=texture;
+ const close=vi.fn();texture.source.data={close};
  const dispose=vi.spyOn(texture,'dispose'),geometryDispose=vi.spyOn(mesh.geometry,'dispose'),states:string[]=[];
  const sculpture=createCustomTree({signal:new AbortController().signal,onState:s=>states.push(s),loadModel:()=>new Promise(r=>resolve=r)});
  expect(sculpture.root.getObjectByName('Golden botanical sculpture')).toBeTruthy();resolve(asset);await sculpture.ready;
  expect(states).toEqual(['loading','ready']);expect(sculpture.root.getObjectByName('Meshy golden tree')).toBeTruthy();expect(sculpture.root.getObjectByName('Golden botanical sculpture')).toBeUndefined();
  sculpture.update(0,true,true);expect(sculpture.root.getObjectByName('Continuous golden petal rain')!.visible).toBe(false);
- sculpture.dispose();sculpture.dispose();expect(dispose).toHaveBeenCalledOnce();expect(geometryDispose).toHaveBeenCalledOnce();
+ sculpture.dispose();sculpture.dispose();expect(dispose).toHaveBeenCalledOnce();expect(geometryDispose).toHaveBeenCalledOnce();expect(close).toHaveBeenCalledOnce();
 });
 it('keeps a functional fallback on load/decode failure',async()=>{
  const states:string[]=[];const sculpture=createCustomTree({signal:new AbortController().signal,onState:s=>states.push(s),loadModel:async()=>{throw new Error('bad GLB');}});

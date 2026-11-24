@@ -7,7 +7,7 @@ import type { ARExperience } from './config';
 type TrackerUpdate={type:string;targetIndex:number;worldMatrix:number[]|null};
 type Controller={inputWidth:number;inputHeight:number;worker:Worker;addImageTargetsFromBuffer:(buffer:ArrayBuffer)=>{dimensions:number[][]};getProjectionMatrix:()=>number[];dummyRun:(video:HTMLVideoElement)=>void;processVideo:(video:HTMLVideoElement)=>void;stopProcessVideo:()=>void};
 type ControllerConstructor=new(options:{inputWidth:number;inputHeight:number;maxTrack:number;warmupTolerance:number;missTolerance:number;filterMinCF:number;filterBeta:number;onUpdate:(data:TrackerUpdate)=>void})=>Controller;
-export type ARSession={dispose:()=>void; onFrame:(callback:((canvas:HTMLCanvasElement)=>void)|undefined)=>void};
+export type ARSession={dispose:()=>void; onFrame:(callback:((canvas:HTMLCanvasElement)=>void)|undefined)=>void;setPresentationPaused:(paused:boolean)=>void};
 export async function startTracking({surface,video,experience,signal,onTracking,onError,onSculptureState}:{surface:HTMLElement;video:HTMLVideoElement;experience:ARExperience;signal:AbortSignal;onTracking:(found:boolean)=>void;onError:(error:Error)=>void;onSculptureState?:(state:SculptureState)=>void}):Promise<ARSession> {
   const loadVendor=new Promise<{Controller:ControllerConstructor}>((resolve,reject)=>{
     const script=document.createElement('script');script.type='module';script.src='/ar/vendor/mindar/mindar-image.prod.js';
@@ -29,7 +29,7 @@ export async function startTracking({surface,video,experience,signal,onTracking,
   const pose=new ImagePoseFilter(),targetPose=new Matrix4();let lastPoseTime=0,frameCallback:((canvas:HTMLCanvasElement)=>void)|undefined;
   scene.add(new HemisphereLight(0xfff8e8,0x3d301d,2));
   const light=new DirectionalLight(0xffe2aa,3);light.position.set(-1,2,3);scene.add(light);
-  let controller:Controller|undefined,disposed=false,frame=0,found=false,lastRender=0;
+  let controller:Controller|undefined,disposed=false,frame=0,found=false,lastRender=0,presentationPaused=false;
   let postMatrix=new Matrix4();
   const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
   const contextLost=(event:Event)=>{event.preventDefault();onError(new Error('The graphics session was interrupted.'));};
@@ -67,12 +67,12 @@ export async function startTracking({surface,video,experience,signal,onTracking,
     window.addEventListener('resize',resize);
     const animate=(time:number)=>{
       if(disposed)return;
-      if(time-lastRender<1000/30){frame=requestAnimationFrame(animate);return;}lastRender=time;
+      if(presentationPaused||time-lastRender<1000/30){frame=requestAnimationFrame(animate);return;}lastRender=time;
       const t=time/1000;
       sculpture.update(t,reducedMotion.matches,found);
       renderer.render(scene,camera);frameCallback?.(renderer.domElement);frame=requestAnimationFrame(animate);
     };
     frame=requestAnimationFrame(animate);
-    return {dispose,onFrame:callback=>{frameCallback=callback;}};
+    return {dispose,onFrame:callback=>{frameCallback=callback;},setPresentationPaused:paused=>{presentationPaused=paused;}};
   }catch(error){dispose();throw error;}
 }

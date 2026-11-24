@@ -26,8 +26,8 @@ function notice(message:string,transient=false){clearTimeout(statusTimer);status
 function fail(message:string){stop();el('ar-exit').hidden=false;surface.hidden=true;intro.hidden=true;review.hidden=true;fallback.hidden=true;root.dataset.state='error';root.dataset.tracking='none';notice(message);retry.hidden=false;retry.textContent='Restart camera';}
 function exit(){stop();if(window.parent!==window)window.parent.postMessage({type:'vpa-ar-exit'},location.origin);else location.href=experience?.certificatePaths[0]??'/collections/forest-and-flowers/';}
 function searching(){root.dataset.tracking='searching';record.disabled=!recording;notice('Keep the complete Mother Nature image in view. Move slowly.');clearTimeout(searchTimer);searchTimer=window.setTimeout(()=>{notice('Try even lighting, less glare, and move closer to the artwork image.');retry.hidden=false;},15000);}
-function openPanel(panel:HTMLElement){lastFocus=document.activeElement as HTMLElement;panel.hidden=false;controls.hidden=true;el('ar-exit').hidden=true;panel.querySelector<HTMLElement>('button,a')?.focus();}
-function closePanel(panel:HTMLElement){panel.hidden=true;el('ar-exit').hidden=false;controls.hidden=root.dataset.state!=='tracking';lastFocus?.focus();}
+function openPanel(panel:HTMLElement){session?.setPresentationPaused(true);lastFocus=document.activeElement as HTMLElement;panel.hidden=false;controls.hidden=true;el('ar-exit').hidden=true;panel.querySelector<HTMLElement>('button,a')?.focus();}
+function closePanel(panel:HTMLElement){session?.setPresentationPaused(false);panel.hidden=true;el('ar-exit').hidden=false;controls.hidden=root.dataset.state!=='tracking';lastFocus?.focus();}
 function nativeFallback(reason?:string){resetRecording();if(reason)el('ar-fallback-reason').textContent=reason;openPanel(fallback);}
 if(!experience){start.disabled=true;el('ar-support').textContent='This AR experience is unavailable. Return to your certificate.';}
 else{
