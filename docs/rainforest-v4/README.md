@@ -33,3 +33,11 @@ python scripts/check-rainforest-v4-browser.py \
 ```
 
 Physical iPhone 15 review remains required: hold the 5×7 certificate in one hand, scan with the other, inspect the .7-second materialization and root contact, watch multiple 11-second revolutions, briefly occlude/reveal the artwork, pinch/Reset, and record/save/share a 10–12-second clip. Compare mist on/off for visibility, sustained frame rate and thermal behavior. A 30 FPS render cap or software-renderer sample is not proof of 30 FPS on iPhone. No live deployment or merge is authorized.
+
+## Observed review results
+
+- All 182 tests across 33 files passed. The final focused 12-test run and preview build passed after the mist placement refinement.
+- Synthetic-camera browser integration passed with no page errors: authentic moving target, fixed 1.56 height throughout, continued unwrapped rotation past five revolutions, target loss/reacquisition without replay, Reset without replay, decoded 332×720 recorded composition (3.931467 seconds), camera shutdown and V3 fallback access. The automated recording stop was made atomic to avoid racing the existing 12-second auto-stop.
+- Settled scene: **5 draws / 229,542 triangles / 2 geometries / 5 textures**, versus V3's 9 draws / 240,674 triangles / 6 geometries / 5 textures. The GLB remains 12,058,396 bytes with its existing integrity hash. No downloaded models/textures added.
+- A local software-rendered sample reported approximately 6.94 FPS and model download/parse of 2.71 seconds. Those values are not a controlled iPhone comparison or proof of 30 FPS. Real-device mist visibility, loop smoothness, handheld root contact, sustained recording and native sharing still require review.
+- Private screenshots/full traces remain at `/workspace/previews/rainforest-v4/`; a compact result is in `verification.json`. Earlier browser attempts exposed test-fixture EOF/timing races, rather than changes to tracking or recording code. The final browser run passed with the longer repeated fixture and atomic recording stop.

@@ -10,18 +10,18 @@ with sync_playwright() as w:
  b=w.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=flags);ctx=b.new_context(viewport={'width':393,'height':852},is_mobile=True,has_touch=True);ctx.add_init_script(init);page=ctx.new_page();page.set_default_timeout(90000);page.on('pageerror',lambda e:result['errors'].append(str(e)))
  page.goto(base+'/rainforest-v4.html',wait_until='networkidle');assert page.evaluate('__calls')==0;assert page.locator('.rainforest-lab').count()==0;page.screenshot(path=str(out/'v4-intro.png'))
  page.evaluate("""()=>{window.__frames=[];const r=document.querySelector('#ar-root');new MutationObserver(()=>{if(__frames.length<1000)__frames.push({at:performance.now(),phase:r.dataset.reveal,height:r.dataset.revealHeight?Number(r.dataset.revealHeight):null,turn:r.dataset.revealTurn?Number(r.dataset.revealTurn):null,tracking:r.dataset.tracking});}).observe(r,{attributes:true,attributeFilter:['data-reveal-height','data-reveal','data-tracking']});}""")
- page.get_by_role('button',name='Start camera',exact=True).click();page.locator('.ar-surface[data-sculpture="ready"]').wait_for(state='attached');page.locator('#ar-root[data-tracking="found"]').wait_for(state='attached',timeout=120000);page.screenshot(path=str(out/'v4-entrance.png'))
- page.wait_for_function('document.querySelector("#ar-root").dataset.reveal==="settled"',timeout=90000);page.screenshot(path=str(out/'v4-settled.png'));assert page.locator('.rainforest-lab').count()==0;assert page.get_by_role('button',name='Reset view').is_visible()
+ page.get_by_role('button',name='Start camera',exact=True).click();page.locator('.ar-surface[data-sculpture="ready"]').wait_for(state='attached');page.locator('#ar-root[data-tracking="found"]').wait_for(state='attached',timeout=120000);print('V4 TARGET ACQUIRED',flush=True)
+ page.wait_for_function('document.querySelector("#ar-root").dataset.reveal==="settled"',timeout=90000);assert page.locator('.rainforest-lab').count()==0;assert page.get_by_role('button',name='Reset view').is_visible()
  state=page.locator('#ar-root').evaluate('r=>({...r.dataset})');assert abs(float(state['revealHeight'])-1.56)<.001;result['fixedSize']=state;page.wait_for_function('Number(document.querySelector("#ar-root").dataset.presentationSeconds)>=12',timeout=90000);assert float(page.locator('#ar-root').get_attribute('data-reveal-turn'))>6.283;print('V4 FIXED SIZE, CONTINUOUS ROTATION',flush=True)
  # A 3-second blank interval in the synthetic feed must not replay the entrance.
- page.wait_for_function('document.querySelector("#ar-root").dataset.tracking==="searching"',timeout=45000);page.wait_for_function('document.querySelector("#ar-root").dataset.tracking==="found"',timeout=60000)
+ page.wait_for_function('window.__frames.some((f,i)=>f.phase==="settled"&&f.tracking==="searching"&&window.__frames.slice(i+1).some(g=>g.phase==="settled"&&g.tracking==="found"))',timeout=45000);page.locator('#ar-root[data-tracking=found]').wait_for(state='attached',timeout=60000);page.screenshot(path=str(out/'v4-settled.png'))
  assert page.locator('#ar-root').get_attribute('data-reveal')=='settled';result['noReplayAfterOcclusion']=True
  page.get_by_role('button',name='Reset view').click(force=True);assert page.locator('#ar-root').get_attribute('data-reveal')=='settled'
  page.get_by_role('button',name='Record video',exact=True).click(force=True);page.wait_for_function('document.querySelector("#ar-record").classList.contains("is-recording")||!document.querySelector("#ar-fallback").hidden');
  if not page.locator('#ar-fallback').is_visible():
   page.wait_for_timeout(2500)
-  if page.get_by_role('button',name='Stop recording',exact=True).count():page.get_by_role('button',name='Stop recording',exact=True).click(force=True)
-  page.wait_for_function('!document.querySelector("#ar-review").hidden||!document.querySelector("#ar-fallback").hidden',timeout=45000)
+  page.locator('#ar-record').evaluate('b=>{if(b.classList.contains("is-recording"))b.click();}')
+  page.wait_for_function('(!document.querySelector("#ar-review").hidden&&document.querySelector("#ar-clip").readyState>=2)||!document.querySelector("#ar-fallback").hidden',timeout=45000)
  if page.locator('#ar-review').is_visible():
   page.wait_for_function('document.querySelector("#ar-clip").readyState>=2');result['clip']=page.locator('#ar-clip').evaluate('v=>({duration:v.duration,width:v.videoWidth,height:v.videoHeight})');page.locator('#ar-clip').evaluate('v=>v.currentTime=Math.max(0,v.duration-.5)');page.wait_for_timeout(800);page.screenshot(path=str(out/'v4-recording.png'));page.get_by_role('button',name='Return to AR',exact=True).click(force=True)
  else:result['nativeRecordingFallback']=True;page.get_by_role('button',name='Continue',exact=True).click(force=True)
