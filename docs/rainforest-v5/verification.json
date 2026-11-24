@@ -1,0 +1,78 @@
+{
+  "environment": "Chromium SwiftShader + synthetic moving/tilting certificate and occlusion; not physical handheld/iPhone",
+  "errors": [],
+  "foregroundLeafLaunched": true,
+  "flowerCount": 10,
+  "noReplayAfterOcclusion": true,
+  "clip": {
+    "duration": 9.7381,
+    "width": 332,
+    "height": 720
+  },
+  "noGrowth": true,
+  "cameraStopped": true,
+  "allEffectsOff": true,
+  "v4FallbackPreserved": true,
+  "passed": true,
+  "allEffectsOffRenderSample": {
+    "fps": 1.403311815887446,
+    "frameP50Ms": 192.20000000298023,
+    "frameP95Ms": 1389.8999999910593,
+    "renderCpuP95Ms": 494.5,
+    "drawCalls": 1,
+    "triangles": 229534,
+    "geometries": 1,
+    "textures": 4,
+    "trackingFound": true,
+    "lossEvents": 0,
+    "poseUpdates": 11,
+    "poseStepMeanTargetWidths": 0.04475022399832145,
+    "poseAgeMs": 0.5,
+    "jsHeapBytes": 22394386,
+    "recording": false,
+    "elapsedMs": 31176.60000000894
+  },
+  "authoringVisualRenders": {
+    "ivory-True": {
+      "frame": 33,
+      "calls": 11,
+      "triangles": 237730,
+      "points": 0,
+      "lines": 0
+    },
+    "ivory-False": {
+      "frame": 34,
+      "calls": 5,
+      "triangles": 237718,
+      "points": 0,
+      "lines": 0
+    },
+    "dark-True": {
+      "frame": 35,
+      "calls": 11,
+      "triangles": 237730,
+      "points": 0,
+      "lines": 0
+    },
+    "dark-False": {
+      "frame": 36,
+      "calls": 5,
+      "triangles": 237718,
+      "points": 0,
+      "lines": 0
+    }
+  },
+  "authoringSetup": {
+    "flowers": "10",
+    "leafActive": "true",
+    "states": [
+      "loading",
+      "ready"
+    ]
+  },
+  "limitations": [
+    "Synthetic moving certificate and authoring backgrounds, not physical iPhone camera testing.",
+    "Only the tree-only software scene was sampled for runtime FPS; no claim of 30 FPS with effects or recording.",
+    "Recorded clip is 9.7381 seconds; native save/share and sustained device performance still require iPhone 15 review."
+  ]
+}

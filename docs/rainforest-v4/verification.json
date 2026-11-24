@@ -1,0 +1,49 @@
+{
+  "environment": "Chromium SwiftShader + synthetic moving/tilting certificate and occlusion; not physical handheld/iPhone",
+  "errors": [],
+  "noReplayAfterOcclusion": true,
+  "clip": {
+    "duration": 3.931467,
+    "width": 332,
+    "height": 720
+  },
+  "noGrowth": true,
+  "cameraStopped": true,
+  "v3FallbackPreserved": true,
+  "passed": true,
+  "observedHeightRange": [
+    1.56,
+    1.56
+  ],
+  "maxObservedTurnRadians": 34.832208627144325,
+  "load": {
+    "state": "ready",
+    "bytes": 12058396,
+    "fetchMs": 2241.4000000059605,
+    "decodeAndParseMs": 468.09999999403954,
+    "totalMs": 2709.5
+  },
+  "softwareRenderSample": {
+    "fps": 6.937561942517344,
+    "frameP50Ms": 90.5,
+    "frameP95Ms": 1160.9000000059605,
+    "renderCpuP95Ms": 23.200000002980232,
+    "drawCalls": 5,
+    "triangles": 229542,
+    "geometries": 2,
+    "textures": 5,
+    "trackingFound": true,
+    "lossEvents": 1,
+    "poseUpdates": 11,
+    "poseStepMeanTargetWidths": 0.03367846383563101,
+    "poseAgeMs": 630,
+    "jsHeapBytes": 25290182,
+    "recording": false,
+    "elapsedMs": 10906.90000000596
+  },
+  "limitations": [
+    "Synthetic moving certificate, not physical iPhone handheld verification.",
+    "Software FPS is not evidence of 30 FPS on iPhone.",
+    "Short manually stopped recording is not sustained 10-12-second recording or native share verification."
+  ]
+}
