@@ -1,5 +1,5 @@
 import { getStore } from '@netlify/blobs';
-import { equal, studioConfig, StudioError } from '../../server/commerce/studio-config.mjs';
+import { equal, studioConfig, StudioConfigError, StudioError } from '../../server/commerce/studio-config.mjs';
 import { artworkStoreName, downloadArtwork } from '../../server/commerce/studio-artwork.mjs';
 import { providers, studioService } from '../../server/commerce/studio-api.mjs';
 
@@ -39,20 +39,31 @@ function json(raw) {
   }
 }
 
-export function createHandler({ env = process.env, openStore = config => getStore(`studio-print-sandbox-${config.merchantId.toLowerCase()}-${config.locationId.toLowerCase()}`), openArtworkStore = () => getStore(artworkStoreName), fetcher = fetch } = {}) {
-  return async request => {
+export function createHandler({ env = process.env, openStore = config => getStore(`studio-print-sandbox-${config.merchantId.toLowerCase()}-${config.locationId.toLowerCase()}`), openArtworkStore = () => getStore(artworkStoreName), fetcher = fetch, reportConfig = issues => console.warn('[studio-print configuration]', issues.join('; ')) } = {}) {
+  return async (request, context) => {
     const url = new URL(request.url);
     const action = url.pathname.split('/').at(-1);
+    const statusCheck = request.method === 'GET' && url.pathname === '/api/studio-print/status';
     try {
-      const config = studioConfig(env);
-      if (url.origin !== config.origin) return reply({ error: 'Not found.' }, 404);
+      const config = studioConfig(env, context?.deploy?.context);
+      if (url.origin !== config.origin) {
+        if (statusCheck) reportConfig(['STUDIO_WEBHOOK_URL: origin differs from request']);
+        return reply({ error: 'Not found.' }, 404);
+      }
       const artworkStore = openArtworkStore();
       if (url.pathname.startsWith('/api/studio-print/artwork/')) {
         return await downloadArtwork(request, config, artworkStore);
       }
       if (action === 'status' && request.method === 'GET') {
         const service = studioService(config, openStore(config), providers(config, fetcher), artworkStore);
-        return reply({ sandbox: await service.enabled(), maxQuantity: config.maxQuantity });
+        const sandbox = await service.enabled();
+        if (!sandbox) {
+          const inactive = ['STUDIO_CHECKOUT_ENABLED', 'STUDIO_FULFILLMENT_ENABLED']
+            .filter(name => env[name] !== 'true')
+            .map(name => `${name}: ${env[name] ? 'not enabled' : 'missing'}`);
+          reportConfig(inactive.length ? inactive : ['Sandbox checkout or fulfillment is paused in Netlify Blobs']);
+        }
+        return reply({ sandbox, maxQuantity: config.maxQuantity });
       }
       if (request.method !== 'POST' || !['quote', 'checkout', 'webhook', 'admin'].includes(action)) {
         return reply({ error: 'Not found.' }, 404);
@@ -69,6 +80,7 @@ export function createHandler({ env = process.env, openStore = config => getStor
       if (action === 'webhook') return reply(await service.webhook(raw, request.headers.get('x-square-hmacsha256-signature')));
       return reply(await service[action](json(raw)));
     } catch (error) {
+      if (statusCheck && error instanceof StudioConfigError) reportConfig(error.issues);
       if (error instanceof StudioError) return reply({ error: error.message }, error.status);
       // The providers adapter only reports HTTP status and safe request IDs.
       // Avoid logging raw exceptions, authenticated URLs, or webhook bodies.

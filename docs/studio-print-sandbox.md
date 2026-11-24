@@ -66,6 +66,16 @@ If the upload fails, use the operation and HTTP status printed by the uploader. 
 
 The HTTPS download only accepts a signed GET or HEAD from the configured sandbox preview origin. Links are scoped to a single immutable JPG, expire after 48 hours, and allow whoever holds the link to fetch that JPG during the window. Links are sent only to Prodigi and the function disables caching. The admin approval action refreshes the draft item’s URL, verifies the updated draft and spending cap, then submits. A failed URL renewal is retryable and never starts submission. Ambiguous submission still requires reconciliation.
 
+## Diagnose preview status
+
+Confirm Netlify marks the latest PR #95 commit as a Deploy Preview. Visit the public `/api/studio-print/status` once, then open **Logs & Metrics → Functions → studio-print** in Netlify for that preview. Filter for `[studio-print configuration]`. The function logs allowlisted variable names and missing or invalid classifications. It never logs the values, parser errors, or credentials. The public response stays generic.
+
+- **404 Studio Print checkout is unavailable** means `STUDIO_SANDBOX_ENABLED` is missing or differs from the exact string `true`, or trusted Netlify `context.deploy.context` is missing or outside the sandbox allowlist. Check **Functions** scope and **Deploy Previews** context for the activation setting. The function reads Netlify's invocation metadata, so do not create a custom `CONTEXT` environment variable.
+- **503 Sandbox checkout configuration is incomplete** means one or more required settings failed validation. Use the named logs and the environment variable table above. A webhook URL origin mismatch returns **404 Not found** and is logged separately.
+- **200 sandbox: false** means an activation switch or the private Blob pause is off. Check the named activation settings or the existing sandbox pause controls. A **200 sandbox: true** confirms configuration and checkout activation. Use authenticated `artwork-status` to verify master readiness independently.
+
+After correcting a setting, redeploy PR #95 only and repeat the GET. Do not dump the function environment into a response or share screenshots showing secret values.
+
 ## First provider-backed sandbox purchase
 
 1. Run `npm ci`, `npm run test:studio-sandbox`, `npm test`, `npm run build`, `npm run test:coa`, and `npm run test:ar`. On the configured preview, `GET /api/studio-print/status` must return `sandbox: true` and the quantity limit.

@@ -22,7 +22,8 @@ const env = {
   }),
 };
 
-function fixture(overrides = {}) {
+function fixture(overrides = {}, deployContext = { deploy: { context: overrides.CONTEXT ?? env.CONTEXT } }) {
+  const diagnostics = [];
   const records = new Map();
   const orders = new Map();
   const attempts = new Map();
@@ -148,10 +149,10 @@ function fixture(overrides = {}) {
     }
     assert.fail('Unexpected provider address ' + url.origin + url.pathname);
   };
-  const handler = createHandler({ env: { ...env, ...overrides }, openStore: () => store, openArtworkStore: () => artworkStore, fetcher });
+  const handler = createHandler({ env: { ...env, ...overrides }, openStore: () => store, openArtworkStore: () => artworkStore, fetcher, reportConfig: issues => diagnostics.push(...issues) });
   const request = (action, body, headers = {}, origin = base) => handler(new Request(origin + '/api/studio-print/' + action, {
     method: 'POST', body, headers: { 'Content-Type': 'application/json', ...(['checkout', 'quote'].includes(action) && { Origin: base }), ...headers },
-  }));
+  }), deployContext);
   const post = (action, body, headers) => request(action, JSON.stringify(body), headers);
   async function purchase(input, headers) {
     const response = await post('quote', input, headers);
@@ -173,7 +174,8 @@ function fixture(overrides = {}) {
   const admin = input => post('admin', input, { Authorization: 'Bearer ' + env.STUDIO_ADMIN_TOKEN });
   return {
     records, orders, drafts, draftCalls, pay, notify, post, purchase, request, admin, submits: () => submits,
-    masters, image, served: () => served, download: (url, method = 'GET') => handler(new Request(url, { method })),
+    masters, image, served: () => served, download: (url, method = 'GET') => handler(new Request(url, { method }), deployContext),
+    status: () => handler(new Request(endpoint + 'status'), deployContext), diagnostics,
     setFailPatch: value => { failPatch = value; },
     setQuoteCurrency: value => { quoteCurrency = value; }, setQuoteFailure: value => { quoteFailure = value; },
     setSubmitFailure: value => { submitFailure = value; }, setSubmitHold: value => { submitHold = value; },
@@ -585,4 +587,42 @@ test('uploader verifies a conditional-write conflict before accepting it and nev
   const existing = uploadFixture({ head: 200 });
   assert.equal(await existing.run(), 'already present');
   assert.deepEqual(existing.operations, [[true, 'HEAD'], [true, 'GET'], [false, 'GET']]);
+});
+
+
+test('hosted status trusts Netlify deploy metadata and rejects production or absent context', async () => {
+  const preview = fixture({ CONTEXT: undefined }, { deploy: { context: 'deploy-preview' } });
+  assert.deepEqual(await (await preview.status()).json(), { sandbox: true, maxQuantity: 10 });
+  for (const [context, reason] of [[{}, 'missing'], [{ deploy: { context: 'production' } }, 'invalid']]) {
+    const f = fixture({ CONTEXT: 'deploy-preview' }, context);
+    const response = await f.status();
+    assert.equal(response.status, 404);
+    assert.deepEqual(await response.json(), { error: 'Studio Print checkout is unavailable.' });
+    assert.deepEqual(f.diagnostics, ['context.deploy.context: ' + reason]);
+  }
+});
+
+test('configuration diagnostics report invalid variable names only to the private logger', async () => {
+  const f = fixture({
+    SQUARE_SANDBOX_TOKEN: '',
+    STUDIO_WEBHOOK_URL: 'sensitive-URL-value',
+    PRODIGI_SANDBOX_KEY: 'sensitive-key-value',
+    STUDIO_DESTINATIONS: 'sensitive-JSON-value',
+    STUDIO_ARTWORK_SIGNING_KEY: env.STUDIO_DATA_KEY,
+  });
+  const response = await f.status();
+  assert.equal(response.status, 503);
+  assert.deepEqual(await response.json(), { error: 'Sandbox checkout configuration is incomplete.' });
+  assert.deepEqual(f.diagnostics, [
+    'STUDIO_WEBHOOK_URL: invalid', 'SQUARE_SANDBOX_TOKEN: missing', 'PRODIGI_SANDBOX_KEY: invalid',
+    'STUDIO_DATA_KEY: reuses another security key', 'STUDIO_ARTWORK_SIGNING_KEY: reuses another security key',
+    'STUDIO_DESTINATIONS: invalid',
+  ]);
+  const missing = fixture({ STUDIO_SANDBOX_ENABLED: undefined });
+  assert.equal((await missing.status()).status, 404);
+  assert.deepEqual(missing.diagnostics, ['STUDIO_SANDBOX_ENABLED: missing']);
+
+  const inactive = fixture({ STUDIO_CHECKOUT_ENABLED: undefined });
+  assert.deepEqual(await (await inactive.status()).json(), { sandbox: false, maxQuantity: 10 });
+  assert.deepEqual(inactive.diagnostics, ['STUDIO_CHECKOUT_ENABLED: missing']);
 });
