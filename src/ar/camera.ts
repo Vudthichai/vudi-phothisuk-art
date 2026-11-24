@@ -4,11 +4,11 @@ import type { LocalRecording } from './recording';
 import type { ARSession } from './engine';
 import './camera.css';
 const root=document.getElementById('ar-root')!;
-const rainforestAtmosphere=__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v5.html';
-const rainforestSculpture=__VPA_AR_EXPERIMENTS__&&(location.pathname==='/rainforest-v4.html'||rainforestAtmosphere);
-const rainforestLiving=__VPA_AR_EXPERIMENTS__&&(location.pathname==='/rainforest-v3.html'||rainforestSculpture);
-const rainforestCinematic=__VPA_AR_EXPERIMENTS__&&(location.pathname==='/rainforest-v2.html'||rainforestLiving);
-const rainforestExperiment=__VPA_AR_EXPERIMENTS__&&(location.pathname==='/rainforest-ar.html'||rainforestCinematic);
+const rainforestAtmosphere=location.pathname==='/rainforest-v5.html';
+const rainforestSculpture=rainforestAtmosphere||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v4.html');
+const rainforestLiving=rainforestSculpture||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v3.html');
+const rainforestCinematic=rainforestLiving||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v2.html');
+const rainforestExperiment=rainforestCinematic||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-ar.html');
 const experience=arById(rainforestExperiment?'mother-nature-original':new URLSearchParams(location.search).get('experience'));
 root.innerHTML=`<button id="ar-exit" class="ar-exit" type="button" aria-label="Exit AR">Exit <span aria-hidden="true">×</span></button>
 <section class="ar-intro"><p class="ar-eyebrow">Forest &amp; Flowers</p><h1>Nature, in another dimension.</h1><p>Turn your certificate artwork-side up, allow camera access, and point your phone at the artwork.</p><p>Use the Mother Nature original certificate or match the artwork image shown below.</p><img id="ar-target-preview" width="680" height="1024" alt="Mother Nature tracking image"><button id="ar-start" type="button">Start camera</button><p class="ar-privacy">Camera stays on your device. Recording is optional, silent and saved only by you.</p><p id="ar-support" role="status"></p></section>
