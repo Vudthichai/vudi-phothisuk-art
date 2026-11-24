@@ -4,7 +4,8 @@ import type { LocalRecording } from './recording';
 import type { ARSession } from './engine';
 import './camera.css';
 const root=document.getElementById('ar-root')!;
-const rainforestSculpture=__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v4.html';
+const rainforestAtmosphere=__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v5.html';
+const rainforestSculpture=__VPA_AR_EXPERIMENTS__&&(location.pathname==='/rainforest-v4.html'||rainforestAtmosphere);
 const rainforestLiving=__VPA_AR_EXPERIMENTS__&&(location.pathname==='/rainforest-v3.html'||rainforestSculpture);
 const rainforestCinematic=__VPA_AR_EXPERIMENTS__&&(location.pathname==='/rainforest-v2.html'||rainforestLiving);
 const rainforestExperiment=__VPA_AR_EXPERIMENTS__&&(location.pathname==='/rainforest-ar.html'||rainforestCinematic);
@@ -50,7 +51,7 @@ async function launch(){
   await video.play();if(request!==generation)return;video.width=video.videoWidth;video.height=video.videoHeight;
   root.dataset.state='preparing';notice('Preparing your sculpture…');prepareTimer=window.setTimeout(()=>fail('AR took too long to start. Please try again.'),30000);
   const {startTracking}=await import('./engine');if(request!==generation)return;
-  const lab=rainforestExperiment?(await import('./experimental/rainforest')).setupRainforestLab(root,{cinematic:rainforestCinematic,living:rainforestLiving,sculpture:rainforestSculpture,diagnostics:!rainforestCinematic||new URLSearchParams(location.search).get('debug')==='1',mistEnabled:new URLSearchParams(location.search).get('mist')!=='0',stabilize:new URLSearchParams(location.search).get('stability')!=='0',rotateReveal:new URLSearchParams(location.search).has('revealRotation')?new URLSearchParams(location.search).get('revealRotation')!=='0':undefined}):undefined;experimentCleanup=lab?.dispose;if(request!==generation){lab?.dispose();return;}
+  const lab=rainforestExperiment?(await import('./experimental/rainforest')).setupRainforestLab(root,{cinematic:rainforestCinematic,living:rainforestLiving,sculpture:rainforestSculpture,atmosphere:rainforestAtmosphere,flowersEnabled:new URLSearchParams(location.search).get('flowers')!=='0',leafEnabled:new URLSearchParams(location.search).get('leaf')!=='0',diagnostics:!rainforestCinematic||new URLSearchParams(location.search).get('debug')==='1',mistEnabled:new URLSearchParams(location.search).get('mist')!=='0',stabilize:new URLSearchParams(location.search).get('stability')!=='0',rotateReveal:new URLSearchParams(location.search).has('revealRotation')?new URLSearchParams(location.search).get('revealRotation')!=='0':undefined}):undefined;experimentCleanup=lab?.dispose;if(request!==generation){lab?.dispose();return;}
   session=await startTracking({surface,video,experience,signal:abort.signal,sceneFactory:lab?.factory,onMetrics:lab?.onMetrics,poseFilter:lab?.poseFilter,trackingTolerance:lab?.trackingTolerance,onSculptureState:state=>{if(request!==generation)return;const note=el('ar-model-note');clearTimeout(modelNoteTimer);note.hidden=rainforestCinematic&&state==='ready';note.textContent=state==='loading'?'Loading detailed sculpture…':state==='ready'?'Tree ready. Step back to see the full canopy.':'Using the lightweight sculpture. Detailed model unavailable.';if(state!=='loading')modelNoteTimer=window.setTimeout(()=>{note.hidden=true;},6000);},onTracking:found=>{
    if(request!==generation)return;
    if(found){clearTimeout(searchTimer);retry.hidden=true;root.dataset.tracking='found';record.disabled=false;notice(rainforestLiving?'Hold the certificate steady. Move gently to explore.':rainforestCinematic?'Move gently. Pinch to adjust the scale.':'Move gently around the sculpture.',true);}else searching();

@@ -8,7 +8,7 @@ type TrackerUpdate={type:string;targetIndex:number;worldMatrix:number[]|null};
 type Controller={inputWidth:number;inputHeight:number;worker:Worker;addImageTargetsFromBuffer:(buffer:ArrayBuffer)=>{dimensions:number[][]};getProjectionMatrix:()=>number[];dummyRun:(video:HTMLVideoElement)=>void;processVideo:(video:HTMLVideoElement)=>void;stopProcessVideo:()=>void};
 type ControllerConstructor=new(options:{inputWidth:number;inputHeight:number;maxTrack:number;warmupTolerance:number;missTolerance:number;filterMinCF:number;filterBeta:number;onUpdate:(data:TrackerUpdate)=>void})=>Controller;
 export type ARMetrics={fps:number;frameP50Ms:number;frameP95Ms:number;renderCpuP95Ms:number;drawCalls:number;triangles:number;geometries:number;textures:number;trackingFound:boolean;lossEvents:number;poseUpdates:number;poseStepMeanTargetWidths:number;poseAgeMs:number|null};
-export type SculptureFactory=(options:{signal:AbortSignal;onState:(state:SculptureState)=>void;onError:(error:Error)=>void})=>{root:Group;update:(time:number,reduced:boolean,tracked:boolean)=>void;dispose:()=>void};
+export type SculptureFactory=(options:{signal:AbortSignal;onState:(state:SculptureState)=>void;onError:(error:Error)=>void;view?:{camera:PerspectiveCamera;scene:Scene}})=>{root:Group;update:(time:number,reduced:boolean,tracked:boolean)=>void;dispose:()=>void};
 export type ARSession={dispose:()=>void; onFrame:(callback:((canvas:HTMLCanvasElement)=>void)|undefined)=>void;setPresentationPaused:(paused:boolean)=>void;setRenderPixelRatio:(ratio:number)=>void};
 export async function startTracking({surface,video,experience,signal,onTracking,onError,onSculptureState,sceneFactory,onMetrics,poseFilter,trackingTolerance}:{surface:HTMLElement;video:HTMLVideoElement;experience:ARExperience;signal:AbortSignal;onTracking:(found:boolean)=>void;onError:(error:Error)=>void;onSculptureState?:(state:SculptureState)=>void;sceneFactory?:SculptureFactory;onMetrics?:(metrics:ARMetrics)=>void;poseFilter?:Pick<ImagePoseFilter,'update'|'reset'>;trackingTolerance?:{warmup:number;miss:number}}):Promise<ARSession> {
   const loadVendor=new Promise<{Controller:ControllerConstructor}>((resolve,reject)=>{
@@ -25,7 +25,8 @@ export async function startTracking({surface,video,experience,signal,onTracking,
   const renderer=new WebGLRenderer({alpha:true,antialias:false,powerPreference:'low-power'});
   renderer.outputColorSpace=SRGBColorSpace;renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.25));renderer.setClearColor(0x000000,0);
   renderer.domElement.className='ar-overlay';surface.appendChild(renderer.domElement);
-  const sculpture=(sceneFactory??createCustomTree)({signal,onError,onState:state=>{surface.dataset.sculpture=state;onSculptureState?.(state);}});anchor.add(sculpture.root);
+  const sculptureOptions={signal,onError,onState:(state:SculptureState)=>{surface.dataset.sculpture=state;onSculptureState?.(state);},view:{camera,scene}};
+  const sculpture=(sceneFactory??createCustomTree)(sculptureOptions);anchor.add(sculpture.root);
   const pmrem=new PMREMGenerator(renderer),room=new RoomEnvironment(),environment=pmrem.fromScene(room,.04,.1,10,{size:128});
   scene.environment=environment.texture;room.dispose();pmrem.dispose();
   const pose=poseFilter??new ImagePoseFilter(),targetPose=new Matrix4();let lastPoseTime=0,frameCallback:((canvas:HTMLCanvasElement)=>void)|undefined;
