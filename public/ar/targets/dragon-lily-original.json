@@ -1,0 +1,40 @@
+{
+  "sourcePdfSha256": "fd61053c855b738c26809473c5f5665b2b0d253e2134d6c2ebd99c716ce40a57",
+  "page": 1,
+  "embeddedImageXref": 14,
+  "imageBoundsPt": [
+    65.72000122070312,
+    113.0,
+    312.2799987792969,
+    441.0
+  ],
+  "embeddedDimensions": [
+    1541,
+    2050
+  ],
+  "targetDimensions": [
+    770,
+    1024
+  ],
+  "targetImageSha256": "85987145dcac7756413d71240e2e0ee40167af06467219be17ba1903d1002fe3",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "7f623313e4964dad9d769ce54aba21a9f107a7c8d3b09a586ac823e86bc47dac",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/dragon-lily/original/",
+      "pdfSha256": "fd61053c855b738c26809473c5f5665b2b0d253e2134d6c2ebd99c716ce40a57",
+      "imagePixelsSha256": "7f623313e4964dad9d769ce54aba21a9f107a7c8d3b09a586ac823e86bc47dac",
+      "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/dragon-lily/original/",
+      "sourceVariant": "bleed"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 3834
+  },
+  "compiledTargetSha256": "d7446279a7948a2ded7ffa6900d0278759dc11a0ee234326fe0b21dff6bb39f0",
+  "compiledBytes": 805515
+}

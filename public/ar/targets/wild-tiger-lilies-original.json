@@ -1,0 +1,40 @@
+{
+  "sourcePdfSha256": "3a9807d901c6354060beea5daf88eeddcddb5139959420c231fe096b64c71397",
+  "page": 1,
+  "embeddedImageXref": 14,
+  "imageBoundsPt": [
+    79.80000305175781,
+    113.0,
+    298.20001220703125,
+    441.0
+  ],
+  "embeddedDimensions": [
+    1365,
+    2050
+  ],
+  "targetDimensions": [
+    682,
+    1024
+  ],
+  "targetImageSha256": "9916c77118fd31cd640ca420cc499b658a6044be3df2a70e4dd22de0156cef27",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "0144a84918d4673e1f3cda59fb8ecc9b53dc485d868cbaf10ad1f6946b623203",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/wild-tiger-lilies/original/",
+      "pdfSha256": "3a9807d901c6354060beea5daf88eeddcddb5139959420c231fe096b64c71397",
+      "imagePixelsSha256": "0144a84918d4673e1f3cda59fb8ecc9b53dc485d868cbaf10ad1f6946b623203",
+      "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/wild-tiger-lilies/original/",
+      "sourceVariant": "bleed"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 4101
+  },
+  "compiledTargetSha256": "c90211627c12ed32c6ad21420894b90e14ad2dd947f0d8aa56ef818ec73e1ab5",
+  "compiledBytes": 870878
+}

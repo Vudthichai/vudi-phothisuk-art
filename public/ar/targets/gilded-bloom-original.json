@@ -1,0 +1,40 @@
+{
+  "sourcePdfSha256": "d12185aa1cccbd5123ca2bc3c9e10456629fafd4b33d6f49fb4b752c31394f11",
+  "page": 1,
+  "embeddedImageXref": 14,
+  "imageBoundsPt": [
+    81.31999969482422,
+    113.0,
+    296.67999267578125,
+    441.0
+  ],
+  "embeddedDimensions": [
+    1346,
+    2050
+  ],
+  "targetDimensions": [
+    672,
+    1024
+  ],
+  "targetImageSha256": "10567a7f54abfb6ae574453d38dfacd7ac4bb3fcdd6e6acb42567db32ef3bdab",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "72d1b6c17f63af344a4dcc6b002853041fb61e67db478ee531a3df2caecb6180",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/gilded-bloom/original/",
+      "pdfSha256": "d12185aa1cccbd5123ca2bc3c9e10456629fafd4b33d6f49fb4b752c31394f11",
+      "imagePixelsSha256": "72d1b6c17f63af344a4dcc6b002853041fb61e67db478ee531a3df2caecb6180",
+      "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/gilded-bloom/original/",
+      "sourceVariant": "bleed"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 3751
+  },
+  "compiledTargetSha256": "6a37b56a3adcdd166b38722bca8ab7c8c5319a24621c0d396232204e28fe6057",
+  "compiledBytes": 810721
+}

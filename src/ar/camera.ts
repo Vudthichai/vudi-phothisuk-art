@@ -5,14 +5,17 @@ import type { ARSession } from './engine';
 import { startGravityInput } from './orientationInput';
 import './camera.css';
 const root=document.getElementById('ar-root')!;
+const params=new URLSearchParams(location.search);
+const hubMode=__VPA_AR_EXPERIMENTS__&&params.get('hub')==='1';
+const hubExperience=hubMode?arById(params.get('experience'),true):undefined;
 const tigerRecognition=__VPA_AR_EXPERIMENTS__&&location.pathname==='/tiger-lily-ar.html';
 const tigerFlower=tigerRecognition&&new URLSearchParams(location.search).get('mode')!=='recognition';
-const rainforestAtmosphere=location.pathname==='/rainforest-v5.html';
+const rainforestAtmosphere=hubMode?hubExperience?.rainforestV5&&params.get('mode')!=='recognition':location.pathname==='/rainforest-v5.html';
 const rainforestSculpture=rainforestAtmosphere||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v4.html');
 const rainforestLiving=rainforestSculpture||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v3.html');
 const rainforestCinematic=rainforestLiving||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v2.html');
 const rainforestExperiment=rainforestCinematic||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-ar.html');
-const experience=arById(tigerRecognition?'tiger-lily-original':rainforestExperiment?'mother-nature-original':new URLSearchParams(location.search).get('experience'),tigerRecognition);
+const experience=hubMode?hubExperience:arById(tigerRecognition?'tiger-lily-original':rainforestExperiment?'mother-nature-original':new URLSearchParams(location.search).get('experience'),tigerRecognition);
 root.innerHTML=`<button id="ar-exit" class="ar-exit" type="button" aria-label="Exit AR">Exit <span aria-hidden="true">×</span></button>
 <section class="ar-intro"><p class="ar-eyebrow">Forest &amp; Flowers</p><h1>Nature, in another dimension.</h1><p>Turn your certificate artwork-side up, allow camera access, and point your phone at the artwork.</p><p>Use the Mother Nature original certificate or match the artwork image shown below.</p><img id="ar-target-preview" width="680" height="1024" alt="Mother Nature tracking image"><button id="ar-start" type="button">Start camera</button><p class="ar-privacy">Camera stays on your device. Recording is optional, silent and saved only by you.</p><p id="ar-support" role="status"></p></section>
 <p id="ar-model-note" class="ar-model-note" role="status" hidden></p>
@@ -28,6 +31,19 @@ if(tigerRecognition){
  const image=root.querySelector<HTMLImageElement>('#ar-target-preview')!;image.alt='Exact Tiger Lily artwork extracted from the original certificate';image.width=756;image.height=1024;
  root.querySelector('#ar-fallback li:nth-child(2)')!.textContent='Return here, tap Continue, then point at Tiger Lily for 10–15 seconds.';
 }
+const hubRecognition=hubMode&&!rainforestExperiment;
+const hubModel=hubRecognition&&Boolean(experience?.modelAsset)&&params.get('mode')!=='recognition';
+if(hubMode&&experience){
+ const selecting=root.querySelector('h1')!;
+ selecting.textContent=experience.certificateLabel;
+ const paragraphs=root.querySelectorAll('.ar-intro>p:not(.ar-eyebrow)');
+ paragraphs[0].textContent='Allow camera access and keep the complete artwork on the selected certificate in view.';
+ paragraphs[1].textContent=rainforestExperiment||hubModel?'Move the certificate and tilt it slowly to check the sculpture.':'A gold outline shows where the artwork is tracked.';
+ const image=root.querySelector<HTMLImageElement>('#ar-target-preview')!;
+ image.alt=`Artwork from ${experience.certificateLabel}`;image.width=Math.round((experience.targetAspect??680/1024)*1024);
+ root.querySelector('#ar-fallback li:nth-child(2)')!.textContent='Return here, tap Continue, then point at the selected certificate for 10–15 seconds.';
+}
+let hasTracked=false;
 let experimentCleanup:(()=>void)|undefined;
 const el=<T extends HTMLElement>(id:string)=>root.querySelector<T>(`#${id}`)!;
 const intro=root.querySelector<HTMLElement>('.ar-intro')!,surface=root.querySelector<HTMLElement>('.ar-surface')!,guidance=root.querySelector<HTMLElement>('.ar-guidance')!,controls=root.querySelector<HTMLElement>('.ar-controls')!;
@@ -40,8 +56,8 @@ function resetRecording(){recording?.cancel();recording=undefined;session?.onFra
 function stop(){experimentCleanup?.();generation++;clearTimeout(modelNoteTimer);el('ar-model-note').hidden=true;clearTimeout(searchTimer);clearTimeout(prepareTimer);clearTimeout(statusTimer);resetRecording();clearClip();abort?.abort();session?.dispose();session=undefined;stream?.getTracks().forEach(t=>t.stop());stream=undefined;video.pause();video.srcObject=null;controls.hidden=true;}
 function notice(message:string,transient=false){clearTimeout(statusTimer);status.textContent=message;guidance.hidden=false;if(transient)statusTimer=window.setTimeout(()=>{guidance.hidden=true;},3000);}
 function fail(message:string){stop();el('ar-exit').hidden=false;surface.hidden=true;intro.hidden=true;review.hidden=true;fallback.hidden=true;root.dataset.state='error';root.dataset.tracking='none';notice(message);retry.hidden=false;retry.textContent='Restart camera';}
-function exit(){stop();if(window.parent!==window)window.parent.postMessage({type:'vpa-ar-exit'},location.origin);else location.href=experience?.certificatePaths[0]??'/collections/forest-and-flowers/';}
-function searching(){root.dataset.tracking='searching';record.disabled=!recording;notice(tigerRecognition?'Keep the complete Tiger Lily certificate artwork in view. Move slowly.':'Keep the complete Mother Nature image in view. Move slowly.');clearTimeout(searchTimer);searchTimer=window.setTimeout(()=>{notice('Try even lighting, less glare, and move closer to the artwork image.');retry.hidden=false;},15000);}
+function exit(){stop();if(window.parent!==window)window.parent.postMessage({type:'vpa-ar-exit'},location.origin);else location.href=hubMode?'/forest-certificate-ar.html':experience?.certificatePaths[0]??'/collections/forest-and-flowers/';}
+function searching(){root.dataset.tracking='searching';record.disabled=!recording;notice(hubMode?(hasTracked?'Tracking lost. Bring the complete artwork back into view.':'Searching for the selected certificate…'):tigerRecognition?'Keep the complete Tiger Lily certificate artwork in view. Move slowly.':'Keep the complete Mother Nature image in view. Move slowly.');clearTimeout(searchTimer);searchTimer=window.setTimeout(()=>{notice('Try even lighting, less glare, and move closer to the artwork image.');retry.hidden=false;},15000);}
 function openPanel(panel:HTMLElement){session?.setPresentationPaused(true);lastFocus=document.activeElement as HTMLElement;panel.hidden=false;controls.hidden=true;el('ar-exit').hidden=true;panel.querySelector<HTMLElement>('button,a')?.focus();}
 function closePanel(panel:HTMLElement){session?.setPresentationPaused(false);panel.hidden=true;el('ar-exit').hidden=false;controls.hidden=root.dataset.state!=='tracking';lastFocus?.focus();}
 function nativeFallback(reason?:string){resetRecording();if(reason)el('ar-fallback-reason').textContent=reason;openPanel(fallback);}
@@ -62,12 +78,12 @@ async function launch(){
   await video.play();if(request!==generation)return;video.width=video.videoWidth;video.height=video.videoHeight;
   root.dataset.state='preparing';notice(tigerRecognition?'Preparing image recognition…':'Preparing your sculpture…');prepareTimer=window.setTimeout(()=>fail('AR took too long to start. Please try again.'),30000);
   const {startTracking}=await import('./engine');if(request!==generation)return;
-  const lab=tigerRecognition?(await import('./experimental/recognition')).setupRecognition(root,experience,tigerFlower):rainforestExperiment?(await import('./experimental/rainforest')).setupRainforestLab(root,{cinematic:rainforestCinematic,living:rainforestLiving,sculpture:rainforestSculpture,atmosphere:rainforestAtmosphere,flowersEnabled:new URLSearchParams(location.search).get('flowers')!=='0',leafEnabled:new URLSearchParams(location.search).get('leaf')!=='0',diagnostics:!rainforestCinematic||new URLSearchParams(location.search).get('debug')==='1',mistEnabled:new URLSearchParams(location.search).get('mist')!=='0',stabilize:new URLSearchParams(location.search).get('stability')!=='0',rotateReveal:new URLSearchParams(location.search).has('revealRotation')?new URLSearchParams(location.search).get('revealRotation')!=='0':undefined}):undefined;experimentCleanup=lab?.dispose;if(request!==generation){lab?.dispose();return;}
-  session=await startTracking({surface,video,experience,signal:abort.signal,readTilt,sceneFactory:lab?.factory,onMetrics:lab?.onMetrics,poseFilter:lab?.poseFilter,trackingTolerance:lab?.trackingTolerance,onSculptureState:state=>{if(request!==generation)return;const note=el('ar-model-note');clearTimeout(modelNoteTimer);note.hidden=(tigerRecognition&&(!tigerFlower||state==='ready'))||rainforestCinematic&&state==='ready';note.textContent=tigerFlower?'Loading orange Tiger Lily…':state==='loading'?'Loading detailed sculpture…':state==='ready'?'Tree ready. Step back to see the full canopy.':'Using the lightweight sculpture. Detailed model unavailable.';if(state!=='loading')modelNoteTimer=window.setTimeout(()=>{note.hidden=true;},6000);},onTracking:found=>{
+  const lab=hubRecognition?(await import('./experimental/recognition')).setupRecognition(root,experience,hubModel,true):tigerRecognition?(await import('./experimental/recognition')).setupRecognition(root,experience,tigerFlower):rainforestExperiment?(await import('./experimental/rainforest')).setupRainforestLab(root,{cinematic:rainforestCinematic,living:rainforestLiving,sculpture:rainforestSculpture,atmosphere:rainforestAtmosphere,flowersEnabled:new URLSearchParams(location.search).get('flowers')!=='0',leafEnabled:new URLSearchParams(location.search).get('leaf')!=='0',diagnostics:!rainforestCinematic||new URLSearchParams(location.search).get('debug')==='1',mistEnabled:new URLSearchParams(location.search).get('mist')!=='0',stabilize:new URLSearchParams(location.search).get('stability')!=='0',rotateReveal:new URLSearchParams(location.search).has('revealRotation')?new URLSearchParams(location.search).get('revealRotation')!=='0':undefined}):undefined;experimentCleanup=lab?.dispose;if(request!==generation){lab?.dispose();return;}
+  session=await startTracking({surface,video,experience,signal:abort.signal,readTilt,sceneFactory:lab?.factory,onMetrics:lab?.onMetrics,poseFilter:lab?.poseFilter,trackingTolerance:lab?.trackingTolerance,onSculptureState:state=>{if(request!==generation)return;const note=el('ar-model-note');clearTimeout(modelNoteTimer);note.hidden=(hubMode&&state==='ready')||(tigerRecognition&&(!tigerFlower||state==='ready'))||rainforestCinematic&&state==='ready';note.textContent=hubMode?`Loading ${experience.title}…`:tigerFlower?'Loading orange Tiger Lily…':state==='loading'?'Loading detailed sculpture…':state==='ready'?'Tree ready. Step back to see the full canopy.':'Using the lightweight sculpture. Detailed model unavailable.';if(state!=='loading')modelNoteTimer=window.setTimeout(()=>{note.hidden=true;},6000);},onTracking:found=>{
    if(request!==generation)return;
-   if(found){clearTimeout(searchTimer);retry.hidden=true;root.dataset.tracking='found';record.disabled=false;notice(tigerRecognition?(tigerFlower?'Tiger Lily recognized. Move gently to explore the flower.':'Tiger Lily recognized. Move gently to inspect the anchored outline.'):rainforestLiving?'Hold the certificate steady. Move gently to explore.':rainforestCinematic?'Move gently. Pinch to adjust the scale.':'Move gently around the sculpture.',true);}else searching();
+   if(found){clearTimeout(searchTimer);retry.hidden=true;root.dataset.tracking='found';record.disabled=false;const reacquired=hasTracked;hasTracked=true;notice(hubMode?(reacquired?'Reacquired · ':'Tracking · ')+experience.certificateLabel:tigerRecognition?(tigerFlower?'Tiger Lily recognized. Move gently to explore the flower.':'Tiger Lily recognized. Move gently to inspect the anchored outline.'):rainforestLiving?'Hold the certificate steady. Move gently to explore.':rainforestCinematic?'Move gently. Pinch to adjust the scale.':'Move gently around the sculpture.',!hubMode);}else searching();
   },onError:error=>{if(request===generation)fail(error.message);}});
-  if(request!==generation){session.dispose();return;}lab?.attachSession(session);clearTimeout(prepareTimer);root.dataset.state='tracking';controls.hidden=false;searching();
+  if(request!==generation){session.dispose();return;}lab?.attachSession(session);clearTimeout(prepareTimer);root.dataset.state='tracking';controls.hidden=false;if(root.dataset.tracking!=='found')searching();
  }catch(error){if(request!==generation)return;const name=(error as Error)?.name;fail(name==='NotAllowedError'?'Camera permission was not granted. Enable camera access in your browser’s site settings and try again.':name==='NotFoundError'?'No camera was found on this device.':name==='NotReadableError'?'The camera is busy. Close other camera apps and try again.':'AR could not start. Check your connection and try Safari or Chrome.');}
 }
 start.addEventListener('click',launch);
@@ -79,7 +95,7 @@ record.addEventListener('click',()=>{
  clearClip();manualRecordStop=false;
  try{
   recording=beginRecording({video,fps:rainforestExperiment?30:24,width:surface.clientWidth,height:surface.clientHeight,onStarted:()=>{recordStart=performance.now();},onComplete:blob=>{
-   resetRecording();record.disabled=root.dataset.tracking!=='found';clipUrl=URL.createObjectURL(blob);clipFile=new File([blob],`${tigerRecognition?'Tiger-Lily-Recognition':'Mother-Nature-AR'}.${blob.type.includes('mp4')?'mp4':'webm'}`,{type:blob.type});const completedClipUrl=clipUrl;if(rainforestExperiment)clip.addEventListener('loadedmetadata',()=>{if(clip.src!==completedClipUrl)return;const duration=clip.duration,usable=Number.isFinite(duration)?duration>=.5&&(manualRecordStop||duration>=8):null;root.dispatchEvent(new CustomEvent('rainforest-recording-result',{detail:{duration:Number.isFinite(duration)?duration:null,usable,manualStop:manualRecordStop}}));if(usable===false){closePanel(review);clearClip();nativeFallback('This browser could not sustain a usable rainforest recording. Use native screen recording instead, and compare a lower render pixel ratio.');}},{once:true});clip.src=clipUrl;
+   resetRecording();record.disabled=root.dataset.tracking!=='found';clipUrl=URL.createObjectURL(blob);clipFile=new File([blob],`${hubMode?experience?.id:tigerRecognition?'Tiger-Lily-Recognition':'Mother-Nature-AR'}.${blob.type.includes('mp4')?'mp4':'webm'}`,{type:blob.type});const completedClipUrl=clipUrl;if(rainforestExperiment)clip.addEventListener('loadedmetadata',()=>{if(clip.src!==completedClipUrl)return;const duration=clip.duration,usable=Number.isFinite(duration)?duration>=.5&&(manualRecordStop||duration>=8):null;root.dispatchEvent(new CustomEvent('rainforest-recording-result',{detail:{duration:Number.isFinite(duration)?duration:null,usable,manualStop:manualRecordStop}}));if(usable===false){closePanel(review);clearClip();nativeFallback('This browser could not sustain a usable rainforest recording. Use native screen recording instead, and compare a lower render pixel ratio.');}},{once:true});clip.src=clipUrl;
    el<HTMLAnchorElement>('ar-save').href=clipUrl;el<HTMLAnchorElement>('ar-save').download=clipFile.name;
    let canShare=false;try{canShare=Boolean(typeof navigator.share==='function'&&navigator.canShare?.({files:[clipFile]}));}catch{/* file sharing unavailable */}el('ar-share').hidden=!canShare;el('ar-share-status').textContent='If the preview is blank or incomplete, use Recording help for native screen recording.';openPanel(review);
   },onError:()=>nativeFallback('This browser could not record the AR composition. Use native screen recording instead.')});
@@ -88,7 +104,7 @@ record.addEventListener('click',()=>{
  }catch{nativeFallback('This browser could not start a composited recording. Use native screen recording instead.');}
 });
 el('ar-share').addEventListener('click',async()=>{
- if(!clipFile)return;try{await navigator.share({files:[clipFile],title:tigerRecognition?'Tiger Lily · Forest & Flowers':'Mother Nature · Forest & Flowers'});}catch(error){if((error as Error).name!=='AbortError')el('ar-share-status').textContent='Sharing is unavailable here. Use Save video, or native screen recording.';}
+ if(!clipFile)return;try{await navigator.share({files:[clipFile],title:hubMode?experience?.certificateLabel:tigerRecognition?'Tiger Lily · Forest & Flowers':'Mother Nature · Forest & Flowers'});}catch(error){if((error as Error).name!=='AbortError')el('ar-share-status').textContent='Sharing is unavailable here. Use Save video, or native screen recording.';}
 });
 el('ar-dismiss').addEventListener('click',()=>{closePanel(review);clearClip();});
 el('ar-capture-help').addEventListener('click',()=>nativeFallback());

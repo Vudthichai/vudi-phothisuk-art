@@ -1,0 +1,40 @@
+{
+  "sourcePdfSha256": "9e3502f5a95e5c24a4f4a1b3e4d4db40efdc7487b2588bc8be9533dc1f203f8e",
+  "page": 1,
+  "embeddedImageXref": 14,
+  "imageBoundsPt": [
+    66.5999984741211,
+    113.0,
+    311.3999938964844,
+    441.0
+  ],
+  "embeddedDimensions": [
+    1530,
+    2050
+  ],
+  "targetDimensions": [
+    764,
+    1024
+  ],
+  "targetImageSha256": "bfbe2d4b1f058d980aa83b25522cb0a0d3ccfcec92d798fcc72bc9fd62528e15",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "107853eedd796dd4abbac808d77a9237c2e0d340b8c1b030566dc6cba63858b8",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/ethereal-bloom/original/",
+      "pdfSha256": "9e3502f5a95e5c24a4f4a1b3e4d4db40efdc7487b2588bc8be9533dc1f203f8e",
+      "imagePixelsSha256": "107853eedd796dd4abbac808d77a9237c2e0d340b8c1b030566dc6cba63858b8",
+      "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/ethereal-bloom/original/",
+      "sourceVariant": "bleed"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 4073
+  },
+  "compiledTargetSha256": "58a4052548364830389b5b45677e3e6c7db505122ffc45b7d88a52812d581ffc",
+  "compiledBytes": 853132
+}

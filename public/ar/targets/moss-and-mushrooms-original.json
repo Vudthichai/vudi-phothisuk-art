@@ -1,0 +1,40 @@
+{
+  "sourcePdfSha256": "b85d0ef80fae195c502eaaf8ac0abad1784b49a386b276f35a7b519e00109f2f",
+  "page": 1,
+  "embeddedImageXref": 14,
+  "imageBoundsPt": [
+    66.52000427246094,
+    113.0,
+    311.4800109863281,
+    441.0
+  ],
+  "embeddedDimensions": [
+    1531,
+    2050
+  ],
+  "targetDimensions": [
+    765,
+    1024
+  ],
+  "targetImageSha256": "3bf2016fce8a172277673b383354afac111a7c04d5b92e9222b504b733501695",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "dfc1c3f4aac60e562ce5fdfca7b8eb7d6674a619d7ebf220e5a1a2d388db173e",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/moss-and-mushrooms/original/",
+      "pdfSha256": "b85d0ef80fae195c502eaaf8ac0abad1784b49a386b276f35a7b519e00109f2f",
+      "imagePixelsSha256": "dfc1c3f4aac60e562ce5fdfca7b8eb7d6674a619d7ebf220e5a1a2d388db173e",
+      "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/moss-and-mushrooms/original/",
+      "sourceVariant": "bleed"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 3910
+  },
+  "compiledTargetSha256": "fe08c1dcb75c6e1e2526e08550d3bea07b31f911aa483541925199291ecec17d",
+  "compiledBytes": 824931
+}

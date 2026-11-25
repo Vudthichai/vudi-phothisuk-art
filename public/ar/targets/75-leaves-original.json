@@ -1,0 +1,40 @@
+{
+  "sourcePdfSha256": "cc1fc629752992f3441cfdc625d0d1b46dc1116c71b6eb3ca53c62a46fd088c0",
+  "page": 1,
+  "embeddedImageXref": 14,
+  "imageBoundsPt": [
+    66.36000061035156,
+    113.0,
+    311.6400146484375,
+    441.0
+  ],
+  "embeddedDimensions": [
+    1533,
+    2050
+  ],
+  "targetDimensions": [
+    766,
+    1024
+  ],
+  "targetImageSha256": "74925931376e49d206b0782745c140419247b27f69f48de14ddbb80b6a2bf60c",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "17ffd54d4b3a391334a310b10b8f4c5f8b06f1c7c0fda33dccb095d72981af62",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/75-leaves/original/",
+      "pdfSha256": "cc1fc629752992f3441cfdc625d0d1b46dc1116c71b6eb3ca53c62a46fd088c0",
+      "imagePixelsSha256": "17ffd54d4b3a391334a310b10b8f4c5f8b06f1c7c0fda33dccb095d72981af62",
+      "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/75-leaves/original/",
+      "sourceVariant": "bleed"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 3898
+  },
+  "compiledTargetSha256": "366fcea634781ed294ec77c3a648b5e02dd3162c286009f7d803ef9647301b51",
+  "compiledBytes": 822956
+}
