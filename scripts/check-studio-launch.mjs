@@ -577,7 +577,7 @@ test('private test requires an invite and atomically limits checkout to one $45 
   assert.equal(f.submits(), 0);
 });
 
-test('approved PA 15222 policy keeps the controlled offer within its caps', async () => {
+test('approved PA 15024 policy keeps the controlled offer within its caps', async () => {
   const previewPolicy = { ...launchPolicy, origins: { ...launchPolicy.origins, 'live-test': preview } };
   const off = fixture({ STUDIO_MODE: 'off' }, 'deploy-preview', previewPolicy);
   assert.deepEqual(await (await off.status()).json(), { mode: 'off', checkout: false });
@@ -585,14 +585,14 @@ test('approved PA 15222 policy keeps the controlled offer within its caps', asyn
 
   const f = fixture({ STUDIO_MODE: 'live-test' }, 'deploy-preview', previewPolicy);
   const { invite } = await (await f.admin({ action: 'test-invite' })).json();
-  const approvedAddress = { invite, zip: '15222' };
+  const approvedAddress = { invite, zip: '15024' };
   const response = await f.post('review', customer(approvedAddress));
   assert.equal(response.status, 200);
   const { printCents, shippingCents, taxCents, totalCents } = await response.json();
   assert.deepEqual({ printCents, shippingCents, taxCents, totalCents },
     { printCents: 4500, shippingCents: 1285, taxCents: 405, totalCents: 6190 });
 
-  for (const change of [{ zip: '15024' }, { size: '12x16' }, { artwork: 'tiger-lily' }, { quantity: 2 }]) {
+  for (const change of [{ zip: '15222' }, { size: '12x16' }, { artwork: 'tiger-lily' }, { quantity: 2 }]) {
     assert.equal((await f.post('review', customer({ ...approvedAddress, ...change }))).status, 400);
   }
   assert.equal(f.orders.size + f.drafts.size + f.submits(), 0);

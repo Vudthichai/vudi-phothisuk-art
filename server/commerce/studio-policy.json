@@ -4,7 +4,7 @@
   "testRun": "first-print-2026",
   "limits": { "customerCents": 15000, "supplierCents": 3500 },
   "destinations": {
-    "PA-15222": {
+    "PA-15024": {
       "shippingCents": { "9x12": 1285, "12x16": 1285 },
       "approvedSupplierCents": { "9x12": 2585, "12x16": 2685 },
       "taxBps": 700,

@@ -61,7 +61,7 @@ submission.
 6. Review and record the actual approved shipping rates and landed supplier
    allowances for **each size** in each permitted ZIP. Have the applicable sales
    tax policy approved first, including whether shipping is taxable. The
-   approved test policy contains only `PA-15222`, with $12.85 customer-paid
+   approved test policy contains only `PA-15024`, with $12.85 customer-paid
    shipping, 7% sales tax including shipping, and supplier allowances of $25.85
    and $26.85 for the two sizes. Each `destinations` entry has
    `shippingCents` and `approvedSupplierCents` maps containing `9x12` and
