@@ -3,9 +3,11 @@ import { artworkReference } from './studio-artwork.mjs';
 import catalog from './studio-catalog.json' with { type: 'json' };
 
 export class StudioError extends Error {
-  constructor(status, message) {
+  constructor(status, message, code, stage) {
     super(message);
     this.status = status;
+    this.code = code;
+    this.stage = stage;
   }
 }
 

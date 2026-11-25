@@ -56,7 +56,6 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
   const draftCalls = [];
   let submits = 0;
   let failDraft = false;
-  let failPatch = false;
   let served = 0;
   const image = new Uint8Array([255, 216, 255, 217]);
   const masters = new Map(Object.values(artworkMasters).map(master => [master.key, {
@@ -163,13 +162,7 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
       }
       const draft = [...drafts.values()].find(value => value.id === url.pathname.split('/')[3]?.split(':')[0]);
       assert(draft, url.pathname);
-      if (init.method === 'PATCH') {
-        assert.equal(url.pathname, `/v5/orders/${draft.id}/items/item-1`);
-        assert.equal(draft.status, 'draft');
-        if (failPatch) throw new Error('request interrupted');
-        draft.items[0].assets = body.assets;
-        return Response.json({ data: draft.items[0] });
-      }
+      assert.notEqual(init.method, 'PATCH', 'Approval must never edit a Prodigi item');
       if (url.pathname.endsWith(':submit')) {
         submits++;
         if (submitHold) await submitHold;
@@ -210,7 +203,6 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
     masters, image, served: () => served, download: (url, method = 'GET') => handler(new Request(url, { method }), deployContext),
     status: () => handler(new Request(endpoint + 'status'), deployContext), diagnostics, providerDiagnostics,
     denyCatalogue: () => { catalogueUnauthorized = true; },
-    setFailPatch: value => { failPatch = value; },
     setQuoteCurrency: value => { quoteCurrency = value; }, setQuoteFailure: value => { quoteFailure = value; },
     setSubmitFailure: value => { submitFailure = value; }, setSubmitHold: value => { submitHold = value; },
     setFailDraft: value => { failDraft = value; }, setInvalidVariant: value => { invalidVariant = value; },
@@ -253,7 +245,7 @@ test('both sizes and all five artwork mappings use authoritative pricing and ori
       assert.equal(asset.printArea, 'default');
       const artworkURL = new URL(asset.url);
       assert.equal(artworkURL.origin + artworkURL.pathname, artworkReference(base, artwork));
-      assert(artworkURL.searchParams.has('sig'));
+      assert(artworkURL.searchParams.has('grant'));
     }
   }
   assert.equal(f.drafts.size, 10);
@@ -357,11 +349,18 @@ test('quantity, missing or excessive supplier cost, modified draft and emergency
   assert.equal((await f.purchase(customer({ quantity: 3 }))).status, 400);
   const { orderId, supplier } = await draftOrder(f);
   const approve = () => f.admin({ action: 'approve', orderId });
+  delete supplier.items[0].sku;
+  const missingSKU = await approve();
+  assert.equal(missingSKU.status, 409);
+  assert.equal((await missingSKU.json()).code, 'DRAFT_PRODUCT');
+  supplier.items[0].sku = 'GLOBAL-PAP-9X12';
   supplier.totals.total.amount = '20.01';
   assert.equal((await approve()).status, 409);
   delete supplier.totals;
   supplier.costs = { total: { amount: '12.34', currency: 'USD' } };
-  assert.equal((await approve()).status, 409);
+  const missingTotals = await approve();
+  assert.equal(missingTotals.status, 409);
+  assert.equal((await missingTotals.json()).code, 'SUPPLIER_TOTAL_INVALID');
   for (const total of [{ amount: '12.34', currency: 'GBP' }, { amount: 12.34, currency: 'USD' },
     { amount: '12.345', currency: 'USD' }, { amount: '0.00', currency: 'USD' },
     { amount: '35.01', currency: 'USD' }]) {
@@ -469,25 +468,56 @@ test('unverified or missing artwork fails before checkout', async () => {
   assert.equal((await fixture({ STUDIO_MODE: 'off' }).purchase(customer())).status, 404);
 });
 
-test('manual approval renews expired artwork links and retries failed renewal without submitting', async () => {
+test('approval renews an expired artwork grant without changing the supplier item', async () => {
   const f = fixture();
   const { orderId, supplier } = await draftOrder(f);
-  const reference = artworkReference(base, 'mother-nature');
-  const config = studioConfig(env, 'production', policy);
-  const expired = signArtwork(config, reference, Date.now() - 49 * 3600000);
-  const asset = supplier.items[0].assets[0];
-  asset.url = expired;
-  assert.equal((await f.download(expired)).status, 404);
-  f.setFailPatch(true);
-  assert.equal((await f.admin({ action: 'approve', orderId })).status, 502);
-  assert.equal(f.submits(), 0);
-  assert.equal(f.records.get('order-' + orderId).data.approval, 'rejected');
-  f.setFailPatch(false);
+  const item = structuredClone(supplier.items[0]);
+  const url = item.assets[0].url;
+  const token = new URL(url).searchParams.get('grant');
+  const grant = f.records.get('artwork-grant-' + createHash('sha256').update(token).digest('hex')).data;
+  const otherMaster = url.replace(artworkMasters['mother-nature'].key, artworkMasters['tiger-lily'].key);
+  assert.equal((await f.download(otherMaster)).status, 404);
+  grant.validUntil = Date.now() - 1000;
+  assert.equal((await f.download(url, 'HEAD')).status, 404);
+  grant.revoked = true;
+  const blocked = await f.admin({ action: 'approve', orderId });
+  assert.equal(blocked.status, 409);
+  assert.equal((await blocked.json()).code, 'ARTWORK_ACCESS');
+  assert.equal(f.records.get('order-' + orderId).data.approval, undefined);
+  delete grant.revoked;
+  const deadline = grant.deadline;
+  grant.deadline = Date.now() + 1000;
+  assert.equal((await f.admin({ action: 'approve', orderId })).status, 409);
+  assert.equal(f.records.get('order-' + orderId).data.approval, undefined);
+  grant.deadline = deadline;
   assert.equal((await f.admin({ action: 'approve', orderId })).status, 200);
   assert.equal(f.submits(), 1);
-  const renewed = supplier.items[0].assets[0].url;
-  assert.notEqual(renewed, expired);
-  assert.equal((await f.download(renewed)).status, 200);
+  assert.deepEqual(supplier.items[0], item);
+  assert.equal((await f.download(url, 'HEAD')).status, 200);
+});
+
+test('legacy artwork must be authentic and have sufficient time left before approval', async () => {
+  const f = fixture();
+  const { orderId, supplier } = await draftOrder(f);
+  delete f.records.get('order-' + orderId).data.artworkGrant;
+  const reference = artworkReference(base, 'mother-nature');
+  const config = studioConfig(env, 'production', policy);
+  const asset = supplier.items[0].assets[0];
+  const signed = signArtwork(config, reference);
+  for (const invalid of [
+    signArtwork(config, reference, Date.now() - 25 * 3600000),
+    signed.replace(/sig=./, 'sig=z'),
+  ]) {
+    asset.url = invalid;
+    const result = await f.admin({ action: 'approve', orderId });
+    assert.equal(result.status, 409);
+    assert.equal((await result.json()).code, 'ARTWORK_ACCESS');
+    assert.equal(f.records.get('order-' + orderId).data.approval, undefined);
+  }
+  asset.url = signed;
+  assert.equal((await f.admin({ action: 'approve', orderId })).status, 200);
+  assert.equal(f.submits(), 1);
+  assert.equal(asset.url, signed);
 });
 
 test('a timeout with a later positive supplier state is reconciled without another submission', async () => {

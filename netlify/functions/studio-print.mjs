@@ -52,6 +52,7 @@ export function createHandler({ env = process.env, launchPolicy = policy, openSt
     const action = url.pathname.split('/').at(-1);
     const statusCheck = request.method === 'GET' && url.pathname === '/api/studio-print/status';
     let preflightCheck = false;
+    let approvalRequest = false;
     try {
       const off = env.STUDIO_MODE === undefined || env.STUDIO_MODE === 'off';
       if (statusCheck && off) return reply({ mode: 'off', checkout: false });
@@ -72,7 +73,7 @@ export function createHandler({ env = process.env, launchPolicy = policy, openSt
       }
       const artworkStore = openArtworkStore();
       if (url.pathname.startsWith('/api/studio-print/artwork/')) {
-        return await downloadArtwork(request, config, artworkStore);
+        return await downloadArtwork(request, config, artworkStore, openStore(config));
       }
       if (action === 'status' && request.method === 'GET') {
         const service = studioService(config, openStore(config), providers(config, fetcher, reportProvider), artworkStore);
@@ -90,16 +91,26 @@ export function createHandler({ env = process.env, launchPolicy = policy, openSt
       const service = studioService(config, openStore(config), providers(config, fetcher, reportProvider), artworkStore);
       const raw = await readBody(request, action === 'webhook' ? 65536 : 8192);
       if (action === 'webhook') return reply(await service.webhook(raw, request.headers.get('x-square-hmacsha256-signature')));
-      return reply(await service[action](json(raw)));
+      const input = json(raw);
+      approvalRequest = action === 'admin' && input?.action === 'approve';
+      return reply(await service[action](input));
     } catch (error) {
       if ((statusCheck || preflightCheck) && error instanceof StudioConfigError) reportConfig(error.issues);
-      if (error instanceof StudioError) return reply({ error: error.message }, error.status);
+      if (error instanceof StudioError) {
+        const code = error.code ?? (approvalRequest ? 'APPROVAL_UNAVAILABLE' : undefined);
+        const stage = error.stage ?? (approvalRequest ? 'order-lookup' : undefined);
+        if (approvalRequest) console.warn('[studio-print approval]', stage, code);
+        return reply({ error: error.message, code, stage }, error.status);
+      }
       // The providers adapter only reports HTTP status and safe request IDs.
       // Avoid logging raw exceptions, authenticated URLs, or webhook bodies.
       const safeError = /^(?:Square|Prodigi) (?:transport failure|API returned HTTP \d{3}(?: \(request [\w-]+\))?)$/.test(error?.message)
         ? error.message : 'Order data, response, or storage verification failed';
       console.error('[studio-print]', ['review', 'checkout', 'webhook', 'admin'].includes(action) ? action : 'request', safeError);
-      return reply({ error: 'The Studio Print order could not be processed. Please retry or check the function logs.' }, 502);
+      return reply(approvalRequest
+        ? { error: 'Approval could not be verified. Reconcile before another attempt.',
+          code: 'APPROVAL_RECONCILIATION', stage: 'unknown' }
+        : { error: 'The Studio Print order could not be processed. Please retry or check the function logs.' }, 502);
     }
   };
 }

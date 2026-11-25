@@ -1,10 +1,70 @@
-import { createHmac, timingSafeEqual } from 'node:crypto';
+import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import sources from '../../docs/studio-print-photographs.json' with { type: 'json' };
 
 export const artworkStoreName = 'studio-print-masters-sandbox';
 export const maxArtworkBytes = 15_000_000;
 const artworkPath = '/api/studio-print/artwork/';
 const lifetimeSeconds = 48 * 3600;
+const leaseMs = lifetimeSeconds * 1000;
+const maxGrantMs = 30 * 24 * 3600000;
+const minFetchMs = 24 * 3600000;
+
+function grantKey(url) {
+  return 'artwork-grant-' + createHash('sha256').update(url.searchParams.get('grant')).digest('hex');
+}
+
+export function draftArtworkURL(config, reference, orderId) {
+  const url = new URL(reference);
+  const token = createHmac('sha256', config.artworkKey)
+    .update(JSON.stringify(['studio-draft-artwork-v1', reference, orderId, 'default']))
+    .digest('hex');
+  url.searchParams.set('grant', token);
+  return url.href;
+}
+
+const strongJSON = { type: 'json', consistency: 'strong' };
+
+export async function createArtworkGrant(store, value, now = Date.now()) {
+  const url = new URL(value);
+  const saved = await store.setJSON(grantKey(url), {
+    path: url.pathname, validUntil: now + leaseMs, deadline: now + maxGrantMs,
+  }, { onlyIfNew: true });
+  if (saved.modified) return true;
+  const entry = await store.getWithMetadata(grantKey(url), strongJSON);
+  return validGrant(entry, url, now) && entry.data.validUntil > now;
+}
+
+function legacyExpiry(config, url, now) {
+  const expiry = url.searchParams.get('expires');
+  const supplied = url.searchParams.get('sig');
+  if (url.searchParams.size !== 2 || !/^\d{10}$/.test(expiry ?? '') ||
+      !/^[a-f\d]{64}$/.test(supplied ?? '') ||
+      Number(expiry) > Math.floor(now / 1000) + lifetimeSeconds ||
+      !timingSafeEqual(signature(config, url, expiry), Buffer.from(supplied, 'hex'))) return 0;
+  return Number(expiry) * 1000;
+}
+
+function validGrant(entry, url, now) {
+  const grant = entry?.data;
+  return grant?.path === url.pathname && !grant.revoked &&
+    Number.isSafeInteger(grant.validUntil) && Number.isSafeInteger(grant.deadline) &&
+    grant.validUntil <= grant.deadline && grant.deadline <= now + maxGrantMs;
+}
+
+// Check before locking, then conditionally extend the lease under the approval lock.
+export async function approvalArtworkAccess(config, store, value, stableURL, renew = false, now = Date.now()) {
+  const url = new URL(value);
+  if (!stableURL) return legacyExpiry(config, url, now) >= now + minFetchMs;
+  if (value !== stableURL) return false;
+  const entry = await store.getWithMetadata(grantKey(url), strongJSON);
+  if (!validGrant(entry, url, now) || entry.data.deadline < now + minFetchMs) return false;
+  if (!renew || entry.data.validUntil >= now + leaseMs) return true;
+  if (!entry.etag) return false;
+  const result = await store.setJSON(grantKey(url), {
+    ...entry.data, validUntil: Math.min(entry.data.deadline, now + leaseMs),
+  }, { onlyIfMatch: entry.etag });
+  return result.modified;
+}
 
 export const artworkMasters = Object.freeze(Object.fromEntries(sources.map(source => {
   const key = `${source.artworkId}-${source.sourceSha256}.jpg`;
@@ -54,18 +114,19 @@ function artworkHeaders() {
   };
 }
 
-export async function downloadArtwork(request, config, store, now = Date.now()) {
+export async function downloadArtwork(request, config, store, grants, now = Date.now()) {
   const url = new URL(request.url);
   const key = url.pathname.startsWith(artworkPath) ? url.pathname.slice(artworkPath.length) : '';
   const master = byKey.get(key);
-  const expiry = url.searchParams.get('expires');
-  const supplied = url.searchParams.get('sig');
   const headers = artworkHeaders();
-  if (!master || url.origin !== config.origin || !['GET', 'HEAD'].includes(request.method) ||
-      url.searchParams.size !== 2 || !/^\d{10}$/.test(expiry ?? '') || !/^[a-f\d]{64}$/.test(supplied ?? '') ||
-      Number(expiry) <= Math.floor(now / 1000) || Number(expiry) > Math.floor(now / 1000) + lifetimeSeconds ||
-      !timingSafeEqual(signature(config, url, expiry), Buffer.from(supplied, 'hex'))) {
-    return new Response(null, { status: 404, headers });
+  const unavailable = () => new Response(null, { status: 404, headers });
+  if (!master || url.origin !== config.origin || !['GET', 'HEAD'].includes(request.method)) return unavailable();
+  if (url.searchParams.has('grant')) {
+    if (url.searchParams.size !== 1 || !/^[a-f\d]{64}$/.test(url.searchParams.get('grant'))) return unavailable();
+    const entry = await grants.getWithMetadata(grantKey(url), strongJSON);
+    if (!validGrant(entry, url, now) || entry.data.validUntil <= now) return unavailable();
+  } else if (legacyExpiry(config, url, now) <= now) {
+    return unavailable();
   }
 
   const head = request.method === 'HEAD';

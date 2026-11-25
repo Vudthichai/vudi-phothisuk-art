@@ -15,8 +15,8 @@ availability, current Standard USD supplier quote, customer cap, and supplier
 cap. A Square event must authenticate and independently match a completed,
 unrefunded payment and the stored order to open one Prodigi draft. Approval is a
 separate operator action. It rechecks the payment, draft contents, approved cost,
-and current USD draft total, then refreshes the signed artwork link before
-submission.
+and current USD draft total. It verifies artwork access before locking approval
+and submits the existing draft without editing its items.
 
 ## Setup, in order
 
@@ -143,10 +143,24 @@ The existing private `studio-print-masters-sandbox` site-wide Blob store is
 reused without copying, overwriting, or publishing the originals. The optional
 local uploader `scripts/upload-studio-masters.mjs` is only for a missing original.
 Supply a local `NETLIFY_SITE_ID` and short-lived `NETLIFY_AUTH_TOKEN` if needed;
-these are not deployment variables. A signed JPG URL is tied to its object and
-origin, expires in 48 hours, and is renewed before approval. Do not put a
+these are not deployment variables. New drafts carry a stable, per-order
+artwork URL backed by a 48-hour access lease. Approval can extend that lease
+without changing the URL, up to a hard deadline 30 days after creation. At
+least 24 hours must remain at approval, including for existing signed URLs.
+These are operational windows, not a guarantee of Prodigi fetch timing.
+Do not put a
 whole-preview password in front of the webhook or signed artwork routes, as
 Square and Prodigi must be able to reach them.
+
+## Recover the controlled test draft
+
+After separate authorization to repair draft `75431017083608576`, run
+`python3 -I scripts/recover-mother-nature-draft.py` from this branch. The script
+verifies the paid order and authenticates the original private artwork, then
+asks separately before adding the replacement line and removing the exact
+broken line. It never submits the draft. Reconcile any uncertain result in
+Prodigi before further writes. Preview approval conflicts report a sanitized
+`code` and `stage`; the function logs those labels without customer data.
 
 ## Local checks
 
