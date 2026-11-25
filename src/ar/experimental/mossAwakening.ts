@@ -57,7 +57,9 @@ export function createMossAwakening(sculpture: Group, upright: Group) {
   });
 
   const mist = createAtmosphereMist();
-  mist.root.scale.setScalar(1.28);
+  mist.root.scale.setScalar(1.2);
+  // Keep the three low wisps and one mid-layer close to the bark.
+  for (const wisp of mist.root.children.slice(4)) wisp.visible = false;
   upright.add(mist.root);
 
   const geometry = new BufferGeometry();
