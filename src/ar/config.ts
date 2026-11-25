@@ -2,6 +2,7 @@ import experiences from './experiences.json';
 import artworkPresentations from './artwork-presentations.json';
 export type BotanicalComposition = {
   leafRain?: boolean;
+  mossAwakening?: boolean;
   float?: number;
   pieces: { asset: string; size: number; position: number[]; rotation: number[] }[];
 };

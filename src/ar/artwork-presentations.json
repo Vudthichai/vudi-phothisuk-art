@@ -9,7 +9,25 @@
     "modelAsset": "/ar/models/blooming-desire.glb"
   },
   "moss-and-mushrooms": {
-    "modelAsset": "/ar/models/rainforest-mushrooms.glb"
+    "composition": {
+      "mossAwakening": true,
+      "pieces": [
+        {
+          "asset": "/ar/models/turkey-tail.glb",
+          "size": 1.32,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            -1.1,
+            0
+          ]
+        }
+      ]
+    }
   },
   "dragon-lily": {
     "composition": {

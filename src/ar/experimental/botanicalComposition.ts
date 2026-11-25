@@ -6,6 +6,7 @@ import type { BotanicalComposition } from '../config';
 import type { SculptureFactory } from '../engine';
 import { createSculptureTimeline } from './sculptureTimeline';
 import { createLeafRain } from './leafRain';
+import { createMossAwakening, mossTurn } from './mossAwakening';
 
 export function createBotanicalComposition(composition: BotanicalComposition, title: string): SculptureFactory {
   return ({ signal, onState, onError }) => {
@@ -29,6 +30,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     let previousTime: number | undefined;
     let floatElapsed = 0;
     let rain: ReturnType<typeof createLeafRain> | undefined;
+    let awakening: ReturnType<typeof createMossAwakening> | undefined;
     onState('loading');
 
     async function load() {
@@ -71,6 +73,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           const [green, gold] = turn.children as Group[];
           rain = createLeafRain(turn, green, gold);
         }
+        if (composition.mossAwakening) awakening = createMossAwakening(turn, upright);
         ready = true;
         onState('ready');
       } catch {
@@ -93,6 +96,9 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         const frame = timeline.update(time, reduced, root.visible);
         if (rain) {
           if (root.visible) rain.update(reduced ? 0 : frame.elapsedSeconds);
+        } else if (awakening) {
+          if (root.visible) awakening.update(frame.elapsedSeconds, reduced);
+          turn.rotation.y = reduced ? 0 : mossTurn(frame.elapsedSeconds);
         } else {
           turn.rotation.y = frame.turn;
           if (root.visible && !reduced) floatElapsed += step;
@@ -106,6 +112,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         clearTimeout(timeout);
         signal.removeEventListener('abort', abort);
         rain?.dispose();
+        awakening?.dispose();
         disposeModel(root);
         root.clear();
       },
