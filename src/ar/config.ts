@@ -1,7 +1,13 @@
 import experiences from './experiences.json';
 import artworkPresentations from './artwork-presentations.json';
-export type ARExperience = { id:string; artworkId:string; title:string; certificateLabel:string; certificatePaths:string[]; entryPaths?:string[]; targetImage:string; targetFile:string; targetIndex:number; targetAspect?:number; previewOnly?:boolean; recognitionOnly?:boolean; modelAsset?:string; rainforestV5?:boolean };
-const presentations: Readonly<Record<string, { modelAsset?: string; rainforestV5?: boolean }>> = artworkPresentations;
+export type BotanicalComposition = {
+  rotationSeconds: number;
+  float?: number;
+  pieces: { asset: string; size: number; position: number[]; rotation: number[] }[];
+};
+type Presentation = { modelAsset?: string; rainforestV5?: boolean; composition?: BotanicalComposition };
+export type ARExperience = { id:string; artworkId:string; title:string; certificateLabel:string; certificatePaths:string[]; entryPaths?:string[]; targetImage:string; targetFile:string; targetIndex:number; targetAspect?:number; previewOnly?:boolean; recognitionOnly?:boolean; } & Presentation;
+const presentations: Readonly<Record<string, Presentation>> = artworkPresentations;
 // The certificate selects the tracked image. The artwork selects its presentation.
 const registeredExperiences: readonly ARExperience[] = experiences.map(certificate => {
   const presentation = presentations[certificate.artworkId];

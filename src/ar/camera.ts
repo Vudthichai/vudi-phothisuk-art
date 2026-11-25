@@ -32,7 +32,7 @@ if(tigerRecognition){
  root.querySelector('#ar-fallback li:nth-child(2)')!.textContent='Return here, tap Continue, then point at Tiger Lily for 10–15 seconds.';
 }
 const hubRecognition=hubMode&&!rainforestExperiment;
-const hubModel=hubRecognition&&Boolean(experience?.modelAsset)&&params.get('mode')!=='recognition';
+const hubModel=hubRecognition&&Boolean(experience?.modelAsset||experience?.composition)&&params.get('mode')!=='recognition';
 if(hubMode&&experience){
  const selecting=root.querySelector('h1')!;
  selecting.textContent=experience.certificateLabel;

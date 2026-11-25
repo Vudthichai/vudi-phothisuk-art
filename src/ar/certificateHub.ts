@@ -8,7 +8,7 @@ for (const experience of entries) {
   const link = document.createElement('a');
   const mode = document.createElement('small');
   const params = new URLSearchParams({ hub: '1', experience: experience.id });
-  const sculpture = experience.rainforestV5 || Boolean(experience.modelAsset);
+  const sculpture = experience.rainforestV5 || Boolean(experience.modelAsset || experience.composition);
   const edition = experience.certificatePaths[0].includes('/collectors-edition/') ? 'Collector’s Edition' : 'Original';
   link.href = `/ar-camera.html?${params}`;
   link.textContent = `${experience.title} · ${edition}`;

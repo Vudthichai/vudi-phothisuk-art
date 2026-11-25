@@ -16,7 +16,7 @@ for(const experience of experiences) {
     assert.equal(experience.entryPaths.length,0,'Previews must not enable certificate-page entry controls.');
     assert.equal(experience.targetAspect,meta.targetDimensions[0]/meta.targetDimensions[1]);
   }
-  for (const key of ['modelAsset','rainforestV5','recognitionOnly']) {
+  for (const key of ['modelAsset','rainforestV5','composition','recognitionOnly']) {
     assert(!Object.hasOwn(experience,key),'Set presentations once per artwork.');
   }
   assert.equal(hash(image),meta.targetImageSha256);assert.equal(hash(target),meta.compiledTargetSha256);
@@ -39,13 +39,30 @@ for(const experience of experiences) {
   }
 }
 assert.deepEqual([...paths].sort(), records.map(record=>record.path).sort());
-for (const [artworkId, presentation] of Object.entries(presentations)) {
-  assert(experiences.some(experience=>experience.artworkId===artworkId));
-  assert(Boolean(presentation.modelAsset)!==Boolean(presentation.rainforestV5));
-  if (presentation.modelAsset) {
-    assert.match(presentation.modelAsset,/^\/ar\/models\/[a-z0-9-]+\.glb$/);
-    assert.equal((await readFile('public'+presentation.modelAsset)).subarray(0,4).toString(),'glTF');
+const modelPaths=new Set();
+assert.deepEqual(Object.keys(presentations).sort(), [...new Set(records.map(record=>record.artworkId))].sort());
+for (const presentation of Object.values(presentations)) {
+  assert.equal([presentation.modelAsset, presentation.rainforestV5, presentation.composition].filter(Boolean).length,1);
+  if (presentation.modelAsset) modelPaths.add(presentation.modelAsset);
+  if (presentation.composition) {
+    const { pieces, rotationSeconds } = presentation.composition;
+    assert(pieces.length>0 && Number.isFinite(rotationSeconds) && rotationSeconds>0);
+    for (const piece of pieces) {
+      assert(Number.isFinite(piece.size) && piece.size>0);
+      for (const tuple of [piece.position, piece.rotation]) {
+        assert.equal(tuple.length,3);
+        assert(tuple.every(Number.isFinite));
+      }
+      modelPaths.add(piece.asset);
+    }
   }
+}
+for (const path of modelPaths) {
+  assert.match(path,/^\/ar\/models\/[a-z0-9-]+\.glb$/);
+  const bytes=await readFile('public'+path);
+  assert.equal(bytes.subarray(0,4).toString(),'glTF');
+  assert.equal(bytes.readUInt32LE(4),2);
+  assert.equal(bytes.readUInt32LE(8),bytes.length);
 }
 const upstream=await load('public/ar/vendor/mindar/UPSTREAM.json');
 for(const [file,digest] of Object.entries(upstream.files))assert.equal(hash(await readFile('public/ar/vendor/mindar/'+file)),digest);
