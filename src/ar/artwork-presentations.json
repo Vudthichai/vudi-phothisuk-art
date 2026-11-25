@@ -13,7 +13,6 @@
   },
   "dragon-lily": {
     "composition": {
-      "rotationSeconds": 44,
       "pieces": [
         {
           "asset": "/ar/models/pink-tiger-lily.glb",
@@ -34,7 +33,6 @@
   },
   "wild-tiger-lilies": {
     "composition": {
-      "rotationSeconds": 52,
       "pieces": [
         {
           "asset": "/ar/models/tiger-lily-orange.glb",
@@ -97,7 +95,6 @@
   },
   "ethereal-bloom": {
     "composition": {
-      "rotationSeconds": 48,
       "pieces": [
         {
           "asset": "/ar/models/ivory-flower.glb",
@@ -119,34 +116,19 @@
   },
   "gilded-bloom": {
     "composition": {
-      "rotationSeconds": 44,
       "pieces": [
         {
           "asset": "/ar/models/golden-blossom.glb",
-          "size": 0.88,
+          "size": 0.93,
           "position": [
-            -0.21,
-            0.12,
+            0,
+            0.09,
             0
           ],
           "rotation": [
-            -0.22,
-            0.22,
-            0.12
-          ]
-        },
-        {
-          "asset": "/ar/models/golden-bud.glb",
-          "size": 0.46,
-          "position": [
-            0.35,
-            0.02,
-            0.15
-          ],
-          "rotation": [
-            -0.05,
-            -0.4,
-            -0.19
+            -0.08,
+            0,
+            0
           ]
         }
       ]
@@ -154,84 +136,41 @@
   },
   "75-leaves": {
     "composition": {
-      "rotationSeconds": 53,
       "pieces": [
         {
           "asset": "/ar/models/rainforest-leaf.glb",
-          "size": 0.66,
+          "size": 1,
           "position": [
-            -0.36,
-            0.08,
-            0.02
+            0,
+            0,
+            0
           ],
           "rotation": [
-            0.11,
-            -0.6,
-            0.46
-          ]
-        },
-        {
-          "asset": "/ar/models/rainforest-leaf.glb",
-          "size": 0.6,
-          "position": [
-            0.36,
-            0.17,
-            -0.13
-          ],
-          "rotation": [
-            -0.4,
-            0.67,
-            -0.55
-          ]
-        },
-        {
-          "asset": "/ar/models/rainforest-leaf.glb",
-          "size": 0.64,
-          "position": [
-            0.03,
-            0.39,
-            -0.19
-          ],
-          "rotation": [
-            -0.2,
-            -0.27,
-            0.26
-          ]
-        },
-        {
-          "asset": "/ar/models/rainforest-leaf.glb",
-          "size": 0.45,
-          "position": [
-            -0.15,
-            0.04,
-            0.35
-          ],
-          "rotation": [
-            0.46,
-            1.3,
-            0.7
+            0,
+            0,
+            0
           ]
         },
         {
           "asset": "/ar/models/golden-leaf.glb",
-          "size": 0.61,
+          "size": 1,
           "position": [
-            0.1,
-            0.32,
-            0.28
+            0,
+            0,
+            0
           ],
           "rotation": [
-            -0.16,
-            -0.18,
-            -0.34
+            0,
+            0,
+            0
           ]
         }
-      ]
+      ],
+      "leafRain": true
     }
   },
   "a-forest-forgotten": {
     "composition": {
-      "rotationSeconds": 55,
       "pieces": [
         {
           "asset": "/ar/models/rainforest-stump.glb",

@@ -4,6 +4,8 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { disposeModel } from '../customTree';
 import type { BotanicalComposition } from '../config';
 import type { SculptureFactory } from '../engine';
+import { createSculptureTimeline } from './sculptureTimeline';
+import { createLeafRain } from './leafRain';
 
 export function createBotanicalComposition(composition: BotanicalComposition, title: string): SculptureFactory {
   return ({ signal, onState, onError }) => {
@@ -23,8 +25,10 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     const timeout = window.setTimeout(abort, 60000);
     let disposed = false;
     let ready = false;
+    const timeline = createSculptureTimeline();
     let previousTime: number | undefined;
-    let elapsed = 0;
+    let floatElapsed = 0;
+    let rain: ReturnType<typeof createLeafRain> | undefined;
     onState('loading');
 
     async function load() {
@@ -61,7 +65,11 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           placement.add(normalized);
           normalized.add(model);
           if (!Number.isFinite(extent) || extent <= 0) throw new Error(`Invalid bounds for ${piece.asset}`);
-          normalized.position.set(-center.x, -bounds.min.y, -center.z);
+          normalized.position.set(-center.x, composition.leafRain ? -center.y : -bounds.min.y, -center.z);
+        }
+        if (composition.leafRain) {
+          const [green, gold] = turn.children as Group[];
+          rain = createLeafRain(turn, green, gold);
         }
         ready = true;
         onState('ready');
@@ -82,9 +90,14 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         const step = previousTime === undefined ? 0 : Math.min(.1, Math.max(0, time - previousTime));
         previousTime = time;
         root.visible = ready && tracked;
-        if (root.visible && !reduced) elapsed += step;
-        turn.rotation.y = reduced ? 0 : elapsed * Math.PI * 2 / composition.rotationSeconds;
-        turn.position.y = reduced ? 0 : (composition.float ?? 0) * Math.sin(elapsed);
+        const frame = timeline.update(time, reduced, root.visible);
+        if (rain) {
+          if (root.visible) rain.update(reduced ? 0 : frame.elapsedSeconds);
+        } else {
+          turn.rotation.y = frame.turn;
+          if (root.visible && !reduced) floatElapsed += step;
+          turn.position.y = reduced ? 0 : (composition.float ?? 0) * Math.sin(floatElapsed);
+        }
       },
       dispose() {
         if (disposed) return;
@@ -92,6 +105,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         abort();
         clearTimeout(timeout);
         signal.removeEventListener('abort', abort);
+        rain?.dispose();
         disposeModel(root);
         root.clear();
       },

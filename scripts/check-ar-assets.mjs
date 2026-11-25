@@ -45,8 +45,9 @@ for (const presentation of Object.values(presentations)) {
   assert.equal([presentation.modelAsset, presentation.rainforestV5, presentation.composition].filter(Boolean).length,1);
   if (presentation.modelAsset) modelPaths.add(presentation.modelAsset);
   if (presentation.composition) {
-    const { pieces, rotationSeconds } = presentation.composition;
-    assert(pieces.length>0 && Number.isFinite(rotationSeconds) && rotationSeconds>0);
+    const { pieces, leafRain } = presentation.composition;
+    assert(pieces.length>0);
+    if (leafRain) assert.equal(pieces.length,2);
     for (const piece of pieces) {
       assert(Number.isFinite(piece.size) && piece.size>0);
       for (const tuple of [piece.position, piece.rotation]) {

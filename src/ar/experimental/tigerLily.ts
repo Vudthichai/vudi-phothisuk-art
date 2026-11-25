@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { disposeModel } from '../customTree';
 import type { SculptureFactory } from '../engine';
+import { createSculptureTimeline } from './sculptureTimeline';
 
 export const TIGER_LILY_MODEL='/ar/models/tiger-lily-orange.glb';
 export const TIGER_LILY_HEIGHT=.95;
@@ -18,6 +19,7 @@ export function placeTigerLily(model:Group, tilt=TIGER_LILY_BLOSSOM_TILT){
 }
 export function createTigerLilyFactory(host:HTMLElement, modelAsset=TIGER_LILY_MODEL, title='Tiger Lily'):SculptureFactory{return ({signal,onState,onError})=>{
  const root=new Group();let model:Group|undefined,placed:ReturnType<typeof placeTigerLily>|undefined,disposed=false,elapsed=0,last:number|undefined;
+ const timeline=createSculptureTimeline();
  const download=new AbortController(),abort=()=>download.abort();signal.addEventListener('abort',abort,{once:true});if(signal.aborted)abort();
  const timer=window.setTimeout(abort,30000);onState('loading');host.dataset.tigerModel='loading';
  async function load(){
@@ -31,9 +33,10 @@ export function createTigerLilyFactory(host:HTMLElement, modelAsset=TIGER_LILY_M
   finally{clearTimeout(timer);}
  }
  void load();
- return {root,uprightRoot:()=>placed?.root,update(time,reduced,tracked){root.visible=tracked;const dt=last===undefined?0:Math.min(.1,Math.max(0,time-last));last=time;
+ return {root,uprightRoot:()=>placed?.root,update(time,reduced,tracked){root.visible=tracked;const {turn}=timeline.update(time,reduced,tracked&&Boolean(placed));
+  const dt=last===undefined?0:Math.min(.1,Math.max(0,time-last));last=time;
   if(!placed||!tracked)return;if(!reduced)elapsed+=dt;
-  placed.turn.rotation.y=reduced?0:elapsed*Math.PI*2/36;
+  placed.turn.rotation.y=turn;
   placed.sway.rotation.z=reduced?0:Math.sin(elapsed*.75)*.025;
   placed.sway.rotation.x=reduced?0:Math.sin(elapsed*.52)*.018;
  },dispose(){if(disposed)return;disposed=true;download.abort();clearTimeout(timer);signal.removeEventListener('abort',abort);if(model)disposeModel(model);root.clear();host.dataset.tigerModel='stopped';}};

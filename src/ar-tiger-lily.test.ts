@@ -18,7 +18,7 @@ it('loads one Tiger asset, pauses motion on lost tracking, respects reduced moti
  vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(0)})));loader.parse.mockResolvedValue({scene:model});
  const host=document.createElement('main'),states:string[]=[],error=vi.fn();const session=createTigerLilyFactory(host)({signal:new AbortController().signal,onState:s=>states.push(s),onError:error});
  await vi.waitFor(()=>expect(states).toEqual(['loading','ready']));expect(fetch).toHaveBeenCalledOnce();expect(error).not.toHaveBeenCalled();
- session.update(0,false,true);session.update(.1,false,true);const turn=session.root.children[0].children[0];const angle=turn.rotation.y;expect(angle).toBeGreaterThan(0);
+ session.update(0,false,true);session.update(.1,false,true);const turn=session.root.children[0].children[0];const angle=turn.rotation.y;expect(angle).toBe(.1 / 11 * Math.PI * 2);
  session.update(.2,false,false);expect(session.root.visible).toBe(false);expect(turn.rotation.y).toBe(angle);session.update(.3,true,true);expect(turn.rotation.y).toBe(0);
  session.dispose();session.dispose();expect(dispose).toHaveBeenCalledOnce();expect(host.dataset.tigerModel).toBe('stopped');
 });
