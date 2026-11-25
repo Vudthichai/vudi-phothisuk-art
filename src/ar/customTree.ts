@@ -49,5 +49,5 @@ export function createCustomTree({signal,onState,loadModel=loadTreeModel}:{signa
     rain.update(time,reduced);rain.mesh.visible=tracked&&!reduced;
   }
   function dispose(){if(disposed)return;disposed=true;download.abort();clearTimeout(timer);signal.removeEventListener('abort',abort);if(model)disposeModel(model);else fallback.dispose();rain.dispose();root.clear();}
-  return {root,ready,update,dispose};
+  return {root,uprightRoot:()=>root,ready,update,dispose};
 }

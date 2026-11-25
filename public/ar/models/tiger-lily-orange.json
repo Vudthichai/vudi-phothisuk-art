@@ -1,0 +1,18 @@
+{
+  "asset": "/ar/models/tiger-lily-orange.glb",
+  "bytes": 10018892,
+  "sha256": "e9f0874d27e499183c28803f6dbb67edbb65a2bfb1fda639911ed53286b02a0c",
+  "triangles": 100000,
+  "source": {
+    "fileName": "Meshy_AI_Tiger_Lily_Blossom_1124061401_image-to-3d-texture.glb",
+    "driveFileId": "1KUVhw72rofj6YWFp5AN4V3sPVkdYOTFu",
+    "bytes": 60398104,
+    "sha256": "d120f7807b99887e67b3d90c619af10c7d1e5e804cc6ef28edf83d315de78219",
+    "triangles": 1144910
+  },
+  "optimization": "Meshopt simplification to 100000 triangles, error .003; base color JPEG92 2048, metallic/roughness PNG1024, normal PNG2048; meshopt compression (position14, normal12, UV14). Original UVs and material maps retained; no recoloring or generated geometry.",
+  "extensionsRequired": [
+    "EXT_meshopt_compression",
+    "KHR_mesh_quantization"
+  ]
+}

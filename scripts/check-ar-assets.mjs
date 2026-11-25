@@ -11,6 +11,7 @@ for(const experience of experiences) {
   assert(experience.targetImage.startsWith('/ar/targets/')&&experience.targetFile.startsWith('/ar/targets/'));
   const image=await readFile('public'+experience.targetImage),target=await readFile('public'+experience.targetFile);
   const meta=await load('public'+experience.targetImage.replace(/\.jpg$/,'.json'));
+  if(experience.previewOnly){assert(experience.recognitionOnly||experience.modelAsset==='/ar/models/tiger-lily-orange.glb');assert.equal(experience.entryPaths.length,0,'Recognition previews must not enable certificate-page entry controls.');assert.equal(experience.targetAspect,meta.targetDimensions[0]/meta.targetDimensions[1]);}
   assert.equal(hash(image),meta.targetImageSha256);assert.equal(hash(target),meta.compiledTargetSha256);
   assert(meta.compiler.matchingFeatures>100&&meta.compiler.featureLevels>0);
   assert(Math.max(...meta.targetDimensions)<=1024);
@@ -26,5 +27,7 @@ for(const experience of experiences) {
 }
 const upstream=await load('public/ar/vendor/mindar/UPSTREAM.json');
 for(const [file,digest] of Object.entries(upstream.files))assert.equal(hash(await readFile('public/ar/vendor/mindar/'+file)),digest);
-console.log(`AR assets verified: ${experiences.length} compiled target, ${paths.size} enabled certificate, exact front-image provenance and upstream hashes. No replacement QR codes.`);
+console.log(`AR assets verified: ${experiences.length} compiled targets, ${paths.size} verified certificate fronts, exact front-image provenance and upstream hashes. No replacement QR codes.`);
 await import('./check-ar-model.mjs');
+
+await import('./check-tiger-lily-model.mjs');
