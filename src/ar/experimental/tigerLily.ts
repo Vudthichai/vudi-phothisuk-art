@@ -31,7 +31,7 @@ export function createTigerLilyFactory(host:HTMLElement):SculptureFactory{return
   finally{clearTimeout(timer);}
  }
  void load();
- return {root,update(time,reduced,tracked){root.visible=tracked;const dt=last===undefined?0:Math.min(.1,Math.max(0,time-last));last=time;
+ return {root,uprightRoot:()=>placed?.root,update(time,reduced,tracked){root.visible=tracked;const dt=last===undefined?0:Math.min(.1,Math.max(0,time-last));last=time;
   if(!placed||!tracked)return;if(!reduced)elapsed+=dt;
   placed.turn.rotation.y=reduced?0:elapsed*Math.PI*2/36;
   placed.sway.rotation.z=reduced?0:Math.sin(elapsed*.75)*.025;
