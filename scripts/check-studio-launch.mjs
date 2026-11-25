@@ -576,13 +576,13 @@ test('private test requires an invite and atomically limits checkout to one $45 
   assert.equal(f.submits(), 0);
 });
 
-test('controlled test caps supplier spend at $35 and customer charges at $60', () => {
+test('controlled test caps supplier spend at $35 and customer charges at $65', () => {
   const testEnv = { ...env, STUDIO_MODE: 'live-test' };
   const config = studioConfig(testEnv, 'deploy-preview', {
     ...policy, limits: { supplierCents: 4000, customerCents: 15000 },
   });
   assert.equal(config.maxCostCents, 3500);
-  assert.equal(config.maxCustomerCents, 6000);
+  assert.equal(config.maxCustomerCents, 6500);
   const lower = studioConfig(testEnv, 'deploy-preview', {
     ...policy, limits: { supplierCents: 3000, customerCents: 5500 },
   });

@@ -114,7 +114,7 @@ studio_admin '{"action":"preflight"}' | jq -e '
   `/studio-editions/mother-nature/#studio-test=<invite>` on the approved preview.
   The browser removes the fragment and keeps the invite in memory. Use your
   approved address. The mode allows one Mother Nature 9 × 12 print at $45, with
-  a **$60 customer total cap** and **$35 supplier cap**. An atomic test claim
+  a **$65 customer total cap** and **$35 supplier cap**. An atomic test claim
   allows one reviewed order per test run, and retries of that order reuse the
   Square idempotency key. Reconcile an uncertain link in Square before trying
   again. An issued Square link can outlive a site pause or browser review, so
