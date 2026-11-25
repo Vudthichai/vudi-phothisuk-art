@@ -1,0 +1,38 @@
+{
+  "sourcePdfSha256": "9b7637dd94e74831b45eb08cafe3415d16edfb7fd39c711186d6a5b1f2807ae1",
+  "page": 1,
+  "embeddedImageXref": 15,
+  "imageBoundsPt": [
+    58.880001068115234,
+    104.0,
+    301.1199951171875,
+    432.0
+  ],
+  "embeddedDimensions": [
+    1514,
+    2050
+  ],
+  "targetDimensions": [
+    756,
+    1024
+  ],
+  "targetImageSha256": "d6c741668269467662262d2710f8207354de64fc71ea4ce7649fd12c511a296c",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "1e50078ae18bd86b77af97348ff90325d1b2162542352936bc08eccafb68b573",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/tiger-lily/original/",
+      "pdfSha256": "9b7637dd94e74831b45eb08cafe3415d16edfb7fd39c711186d6a5b1f2807ae1",
+      "imagePixelsSha256": "1e50078ae18bd86b77af97348ff90325d1b2162542352936bc08eccafb68b573"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 3995
+  },
+  "compiledTargetSha256": "d80270d95fdb0ffb81ecd5bfca542c9fc4602d0d0cd40f8d5ccd75b1052ee227",
+  "compiledBytes": 840140
+}

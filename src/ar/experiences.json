@@ -14,5 +14,21 @@
     "targetFile": "/ar/targets/mother-nature-original.mind",
     "targetIndex": 0,
     "certificateLabel": "Mother Nature original certificate"
+  },
+  {
+    "id": "tiger-lily-original",
+    "artworkId": "tiger-lily",
+    "title": "Tiger Lily",
+    "certificatePaths": [
+      "/coa/forest-and-flowers/tiger-lily/original/"
+    ],
+    "entryPaths": [],
+    "targetImage": "/ar/targets/tiger-lily-original.jpg",
+    "targetFile": "/ar/targets/tiger-lily-original.mind",
+    "targetIndex": 0,
+    "targetAspect": 0.73828125,
+    "certificateLabel": "Tiger Lily original certificate",
+    "previewOnly": true,
+    "recognitionOnly": true
   }
 ]
