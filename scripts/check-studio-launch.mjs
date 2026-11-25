@@ -156,7 +156,7 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
         if (!drafts.has(key)) drafts.set(key, {
           ...body, items: body.items.map(item => ({ ...item, id: 'item-1' })),
           id: `prodigi-${drafts.size + 1}`, status: 'draft', allowedActions: ['submit'],
-          costs: { total: { amount: '12.34', currency: 'USD' } },
+          totals: { total: { amount: '12.34', currency: 'USD' } },
           shipments: [],
         });
         return Response.json({ data: drafts.get(key) }, { status: 202 });
@@ -322,8 +322,8 @@ test('missing credentials, a sandbox Prodigi key, and off mode all fail closed',
   ]) assert.equal((await fixture(overrides).purchase(customer())).status, status);
 });
 
-async function draftOrder(f) {
-  const response = await f.purchase(customer());
+async function draftOrder(f, address = {}) {
+  const response = await f.purchase(customer(address));
   assert.equal(response.status, 200);
   const { orderId } = await response.json();
   const paymentId = f.pay(orderId);
@@ -357,11 +357,19 @@ test('quantity, missing or excessive supplier cost, modified draft and emergency
   assert.equal((await f.purchase(customer({ quantity: 3 }))).status, 400);
   const { orderId, supplier } = await draftOrder(f);
   const approve = () => f.admin({ action: 'approve', orderId });
-  supplier.costs.total.amount = '20.01';
+  supplier.totals.total.amount = '20.01';
   assert.equal((await approve()).status, 409);
+  delete supplier.totals;
+  supplier.costs = { total: { amount: '12.34', currency: 'USD' } };
+  assert.equal((await approve()).status, 409);
+  for (const total of [{ amount: '12.34', currency: 'GBP' }, { amount: 12.34, currency: 'USD' },
+    { amount: '12.345', currency: 'USD' }, { amount: '0.00', currency: 'USD' },
+    { amount: '35.01', currency: 'USD' }]) {
+    supplier.totals = { total };
+    assert.equal((await approve()).status, 409);
+  }
   delete supplier.costs;
-  assert.equal((await approve()).status, 409);
-  supplier.costs = { total: { amount: '20.00', currency: 'USD' } };
+  supplier.totals = { total: { amount: '20.00', currency: 'USD' } };
   supplier.recipient.address.countryCode = 'CA';
   assert.equal((await approve()).status, 409);
   supplier.recipient.address.countryCode = 'US';
@@ -541,6 +549,24 @@ test('Prodigi catalogue variants use structured paper stock and inclusive dimens
     change(variant);
     assert.throws(() => checkVariant(variant, selected), /Lustre print variant is unavailable/);
   }
+});
+
+test('admin view and approval use the documented Prodigi v5 draft totals', async () => {
+  const f = fixture({}, 'production', { ...policy, destinations: launchPolicy.destinations });
+  const { orderId, supplier } = await draftOrder(f, { zip: '15024' });
+  supplier.totals = {
+    items: { amount: '13.00', currency: 'USD' },
+    shipping: { amount: '12.85', currency: 'USD' },
+    tax: { amount: '0.00', currency: 'USD' },
+    total: { amount: '25.85', currency: 'USD' },
+  };
+  const view = await f.admin({ action: 'view', orderId });
+  assert.equal(view.status, 200);
+  assert.deepEqual((await view.json()).fulfillment.costs, supplier.totals);
+  assert.equal(f.submits(), 0);
+  assert.equal((await f.admin({ action: 'approve', orderId })).status, 200);
+  assert.equal((await f.admin({ action: 'approve', orderId })).status, 409);
+  assert.equal(f.submits(), 1);
 });
 
 test('preflight validates both SKUs and private artwork; reviewed orders show tracking and contact', async () => {

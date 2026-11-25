@@ -110,7 +110,7 @@ function checkoutURL(value) {
 function fulfillmentSnapshot(order) {
   return {
     state: order.status,
-    costs: order.costs ?? null,
+    costs: order.totals ?? null,
     tracking: (order.shipments ?? []).map(shipment => ({
       carrier: shipment.carrier, trackingNumber: shipment.trackingNumber, trackingUrl: shipment.trackingUrl,
     })),
@@ -148,7 +148,7 @@ function matchDraft(order, record, details) {
 }
 
 function checkBudget(order, config) {
-  const amount = supplierCents(order.costs?.total);
+  const amount = supplierCents(order.totals?.total);
   if (amount === null || amount <= 0 || amount > config.maxCostCents) {
     throw new StudioError(409, 'A verified USD supplier total within the configured spending limit is required.');
   }
