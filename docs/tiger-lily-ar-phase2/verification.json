@@ -1,0 +1,63 @@
+{
+  "environment": "Chromium software WebGL + complete authentic PDF-front camera fixtures; not physical iPhone/printed-card verification",
+  "cases": {
+    "frontal": {
+      "recognized": true,
+      "recordedDimensions": [
+        332,
+        720
+      ],
+      "authenticTigerModelRequested": true,
+      "noMotherTargetRequests": true,
+      "cameraStopped": true,
+      "latestTrackedSoftwareSample": {
+        "fps": 0.9526531390029118,
+        "frameP50Ms": 1049.699999988079,
+        "frameP95Ms": 2614.9000000059605,
+        "renderCpuP95Ms": 61.599999994039536,
+        "drawCalls": 1,
+        "triangles": 100000,
+        "geometries": 1,
+        "textures": 4,
+        "trackingFound": true,
+        "lossEvents": 0,
+        "poseUpdates": 20,
+        "poseStepMeanTargetWidths": 5.383888261874294e-16,
+        "poseAgeMs": 0.699999988079071
+      }
+    },
+    "moving-oblique": {
+      "recognized": true,
+      "reacquiredAfterOcclusion": true,
+      "authenticTigerModelRequested": true,
+      "noMotherTargetRequests": true,
+      "cameraStopped": true,
+      "latestTrackedSoftwareSample": {
+        "fps": 0.819672131147541,
+        "frameP50Ms": 420.40000000596046,
+        "frameP95Ms": 1613.699999988079,
+        "renderCpuP95Ms": 7.299999982118607,
+        "drawCalls": 1,
+        "triangles": 100000,
+        "geometries": 1,
+        "textures": 4,
+        "trackingFound": true,
+        "lossEvents": 0,
+        "poseUpdates": 27,
+        "poseStepMeanTargetWidths": 0.027895468970229344,
+        "poseAgeMs": 0.7999999821186066
+      }
+    },
+    "negative-mother-nature": {
+      "recognized": false,
+      "observationSeconds": 12,
+      "authenticTigerModelRequested": true,
+      "noMotherTargetRequests": true,
+      "cameraStopped": true
+    }
+  },
+  "errors": [],
+  "permissionDeniedHandled": true,
+  "normalEntryDisabled": true,
+  "passed": true
+}

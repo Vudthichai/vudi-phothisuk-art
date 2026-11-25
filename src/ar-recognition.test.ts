@@ -7,7 +7,7 @@ afterEach(()=>{document.body.innerHTML='';vi.restoreAllMocks();});
 it('registers Tiger Lily for explicit local recognition only and preserves the existing Mother Nature entry points',()=>{
  expect(arExperiences).toHaveLength(1);expect(arExperiences[0].id).toBe('mother-nature-original');
  expect(arForCertificate('/coa/forest-and-flowers/mother-nature/original/')).toBe(arForCertificate('/coa/forest-and-flowers/mother-nature/collectors-edition/'));
- expect(arById('tiger-lily-original')).toBeUndefined();const tiger=arById('tiger-lily-original',true)!;expect(tiger).toMatchObject({artworkId:'tiger-lily',previewOnly:true,recognitionOnly:true,targetIndex:0,targetFile:'/ar/targets/tiger-lily-original.mind',targetAspect:756/1024,entryPaths:[]});
+ expect(arById('tiger-lily-original')).toBeUndefined();const tiger=arById('tiger-lily-original',true)!;expect(tiger).toMatchObject({artworkId:'tiger-lily',previewOnly:true,recognitionOnly:false,modelAsset:'/ar/models/tiger-lily-orange.glb',targetIndex:0,targetFile:'/ar/targets/tiger-lily-original.mind',targetAspect:756/1024,entryPaths:[]});
  expect(arForCertificate('/coa/forest-and-flowers/tiger-lily/original/')).toBeUndefined();expect(arForCertificate('/coa/forest-and-flowers/tiger-lily/collectors-edition/')).toBeUndefined();
 });
 it('shows a flat proportion-correct recognition anchor only while tracked and disposes it once',()=>{

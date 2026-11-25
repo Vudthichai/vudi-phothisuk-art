@@ -29,6 +29,7 @@
     "targetAspect": 0.73828125,
     "certificateLabel": "Tiger Lily original certificate",
     "previewOnly": true,
-    "recognitionOnly": true
+    "recognitionOnly": false,
+    "modelAsset": "/ar/models/tiger-lily-orange.glb"
   }
 ]
