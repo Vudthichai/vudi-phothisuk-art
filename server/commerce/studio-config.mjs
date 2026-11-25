@@ -93,7 +93,7 @@ export function studioConfig(env, deployContext, policy, { preflight = false } =
     testInvite: createHmac('sha256', derive('test invites')).update(`${merchantId}:${policy.testRun}`).digest('hex'),
     testRun: policy.testRun, variants: catalog.variants, destinations,
     maxQuantity: 1, maxCustomerCents: mode === 'live-test' ? Math.min(6000, policy.limits.customerCents) : policy.limits.customerCents,
-    maxCostCents: mode === 'live-test' ? Math.min(2000, policy.limits.supplierCents) : policy.limits.supplierCents,
+    maxCostCents: mode === 'live-test' ? Math.min(3500, policy.limits.supplierCents) : policy.limits.supplierCents,
   };
 }
 
