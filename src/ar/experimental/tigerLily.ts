@@ -6,13 +6,14 @@ import type { SculptureFactory } from '../engine';
 
 export const TIGER_LILY_MODEL='/ar/models/tiger-lily-orange.glb';
 export const TIGER_LILY_HEIGHT=.95;
+export const TIGER_LILY_BLOSSOM_TILT=-Math.PI/6; // Fixed 30° opening tilt; rotates with the flower, never faces the camera.
 /** Source Y becomes the tracked plane's +Z; placement never depends on the camera. */
 export function placeTigerLily(model:Group){
  const bounds=new Box3().setFromObject(model),size=bounds.getSize(new Vector3()),center=bounds.getCenter(new Vector3());
  if(!Number.isFinite(size.y)||size.y<=0)throw new Error('Invalid Tiger Lily model bounds');
  const sheet=new Group(),turn=new Group(),sway=new Group(),fit=new Group();
  sheet.name='Tiger Lily authentic orange blossom';sheet.position.set(0,-.18,.035);sheet.rotation.x=Math.PI/2;
- fit.scale.setScalar(TIGER_LILY_HEIGHT/size.y);model.position.sub(new Vector3(center.x,bounds.min.y,center.z));fit.add(model);sway.add(fit);turn.add(sway);sheet.add(turn);
+ fit.rotation.x=TIGER_LILY_BLOSSOM_TILT;fit.scale.setScalar(TIGER_LILY_HEIGHT/size.y);model.position.sub(new Vector3(center.x,bounds.min.y,center.z));fit.add(model);sway.add(fit);turn.add(sway);sheet.add(turn);
  return {root:sheet,turn,sway};
 }
 export function createTigerLilyFactory(host:HTMLElement):SculptureFactory{return ({signal,onState,onError})=>{

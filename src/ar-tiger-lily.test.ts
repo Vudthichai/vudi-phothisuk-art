@@ -1,15 +1,17 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it, vi } from 'vitest';
-import { Box3, BoxGeometry, Group, Mesh, MeshStandardMaterial, Vector3 } from 'three';
-import { createTigerLilyFactory, placeTigerLily, TIGER_LILY_HEIGHT } from './ar/experimental/tigerLily';
+import { BoxGeometry, Group, Mesh, MeshStandardMaterial, Vector3 } from 'three';
+import { createTigerLilyFactory, placeTigerLily, TIGER_LILY_HEIGHT, TIGER_LILY_BLOSSOM_TILT } from './ar/experimental/tigerLily';
 const loader=vi.hoisted(()=>({parse:vi.fn()}));
 vi.mock('three/addons/loaders/GLTFLoader.js',()=>({GLTFLoader:class{setMeshoptDecoder(){return this;}parseAsync(...args:unknown[]){return loader.parse(...args);}}}));
 function asset(){const model=new Group();model.add(new Mesh(new BoxGeometry(2,4,1),new MeshStandardMaterial()));return model;}
 afterEach(()=>{vi.restoreAllMocks();vi.unstubAllGlobals();loader.parse.mockReset();});
-it('normalizes the authentic model and maps its height onto the target normal without camera-facing placement',()=>{
- const model=asset(),placed=placeTigerLily(model);placed.root.updateMatrixWorld(true);const b=new Box3().setFromObject(placed.root);
- expect(b.min.z).toBeCloseTo(.035);expect(b.max.z-b.min.z).toBeCloseTo(TIGER_LILY_HEIGHT);expect(placed.root.position.y).toBeCloseTo(-.18);expect(placed.root.rotation.x).toBeCloseTo(Math.PI/2);expect(model.children).toHaveLength(1);
+it('keeps size and anchor placement while tilting the opening 30 degrees toward the viewer in model space',()=>{
+ const model=asset(),placed=placeTigerLily(model);placed.root.updateMatrixWorld(true);const fit=placed.sway.children[0];
+ expect(placed.root.position.z).toBeCloseTo(.035);expect(fit.scale.y*4).toBeCloseTo(TIGER_LILY_HEIGHT);expect(fit.rotation.x).toBeCloseTo(-Math.PI/6);expect(fit.rotation.x).toBe(TIGER_LILY_BLOSSOM_TILT);expect(placed.root.position.y).toBeCloseTo(-.18);expect(placed.root.rotation.x).toBeCloseTo(Math.PI/2);expect(model.children).toHaveLength(1);
  const axis=new Vector3(0,1,0).transformDirection(placed.root.matrixWorld);expect(axis.z).toBeCloseTo(1);
+ const opening=new Vector3(0,0,1).transformDirection(fit.matrixWorld),trunk=new Vector3(0,1,0).transformDirection(fit.matrixWorld);expect(opening.z).toBeCloseTo(.5);expect(trunk.z).toBeCloseTo(Math.cos(Math.PI/6));
+ placed.turn.rotation.y=Math.PI/2;placed.root.updateMatrixWorld(true);expect(new Vector3(0,0,1).transformDirection(fit.matrixWorld).distanceTo(opening)).toBeGreaterThan(.5);expect(fit.rotation.x).toBe(TIGER_LILY_BLOSSOM_TILT);
 });
 it('loads one Tiger asset, pauses motion on lost tracking, respects reduced motion and releases resources',async()=>{
  const model=asset(),geometry=(model.children[0] as Mesh).geometry,dispose=vi.spyOn(geometry,'dispose');
