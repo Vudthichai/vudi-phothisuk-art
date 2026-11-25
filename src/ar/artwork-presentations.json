@@ -1,0 +1,6 @@
+{
+  "mother-nature": { "rainforestV5": true },
+  "tiger-lily": { "modelAsset": "/ar/models/tiger-lily-orange.glb" },
+  "blooming-desire": { "modelAsset": "/ar/models/blooming-desire.glb" },
+  "moss-and-mushrooms": { "modelAsset": "/ar/models/rainforest-mushrooms.glb" }
+}

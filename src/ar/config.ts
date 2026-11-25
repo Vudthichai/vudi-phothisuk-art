@@ -1,6 +1,12 @@
 import experiences from './experiences.json';
+import artworkPresentations from './artwork-presentations.json';
 export type ARExperience = { id:string; artworkId:string; title:string; certificateLabel:string; certificatePaths:string[]; entryPaths?:string[]; targetImage:string; targetFile:string; targetIndex:number; targetAspect?:number; previewOnly?:boolean; recognitionOnly?:boolean; modelAsset?:string; rainforestV5?:boolean };
-const registeredExperiences: readonly ARExperience[] = experiences;
+const presentations: Readonly<Record<string, { modelAsset?: string; rainforestV5?: boolean }>> = artworkPresentations;
+// The certificate selects the tracked image. The artwork selects its presentation.
+const registeredExperiences: readonly ARExperience[] = experiences.map(certificate => {
+  const presentation = presentations[certificate.artworkId];
+  return { ...certificate, ...presentation, recognitionOnly: !presentation };
+});
 export const certificateARPreviews = registeredExperiences;
 export const arExperiences: readonly ARExperience[] = registeredExperiences.filter(experience=>!experience.previewOnly);
 // Entry pages may offer an AR experience without being separately compiled image targets.

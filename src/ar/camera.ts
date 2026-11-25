@@ -43,21 +43,38 @@ if(hubMode&&experience){
  image.alt=`Artwork from ${experience.certificateLabel}`;image.width=Math.round((experience.targetAspect??680/1024)*1024);
  root.querySelector('#ar-fallback li:nth-child(2)')!.textContent='Return here, tap Continue, then point at the selected certificate for 10–15 seconds.';
 }
-let hasTracked=false;
+let hasTracked=false,hubLossShown=false;
 let experimentCleanup:(()=>void)|undefined;
 const el=<T extends HTMLElement>(id:string)=>root.querySelector<T>(`#${id}`)!;
 const intro=root.querySelector<HTMLElement>('.ar-intro')!,surface=root.querySelector<HTMLElement>('.ar-surface')!,guidance=root.querySelector<HTMLElement>('.ar-guidance')!,controls=root.querySelector<HTMLElement>('.ar-controls')!;
 const start=el<HTMLButtonElement>('ar-start'),retry=el<HTMLButtonElement>('ar-retry'),status=el('ar-status'),video=surface.querySelector('video')!;
 const record=el<HTMLButtonElement>('ar-record'),review=el('ar-review'),fallback=el('ar-fallback'),clip=el<HTMLVideoElement>('ar-clip');
-let generation=0,stream:MediaStream|undefined,session:ARSession|undefined,abort:AbortController|undefined,searchTimer=0,prepareTimer=0,statusTimer=0,modelNoteTimer=0;
+let generation=0,stream:MediaStream|undefined,session:ARSession|undefined,abort:AbortController|undefined,searchTimer=0,lossNoticeTimer=0,prepareTimer=0,statusTimer=0,modelNoteTimer=0;
 let recording:LocalRecording|undefined,clipUrl:string|undefined,clipFile:File|undefined,tick=0,recordStart=0,manualRecordStop=false,lastFocus:HTMLElement|undefined;
 function clearClip(){clip.pause();clip.removeAttribute('src');clip.load();if(clipUrl)URL.revokeObjectURL(clipUrl);clipUrl=undefined;clipFile=undefined;}
 function resetRecording(){recording?.cancel();recording=undefined;session?.onFrame(undefined);clearInterval(tick);el('ar-timer').textContent='';record.classList.remove('is-recording');record.setAttribute('aria-label','Record video');el('ar-record-label').textContent='Record';}
-function stop(){experimentCleanup?.();generation++;clearTimeout(modelNoteTimer);el('ar-model-note').hidden=true;clearTimeout(searchTimer);clearTimeout(prepareTimer);clearTimeout(statusTimer);resetRecording();clearClip();abort?.abort();session?.dispose();session=undefined;stream?.getTracks().forEach(t=>t.stop());stream=undefined;video.pause();video.srcObject=null;controls.hidden=true;}
+function stop(){experimentCleanup?.();generation++;clearTimeout(modelNoteTimer);el('ar-model-note').hidden=true;clearTimeout(searchTimer);clearTimeout(lossNoticeTimer);clearTimeout(prepareTimer);clearTimeout(statusTimer);resetRecording();clearClip();abort?.abort();session?.dispose();session=undefined;stream?.getTracks().forEach(t=>t.stop());stream=undefined;video.pause();video.srcObject=null;controls.hidden=true;}
 function notice(message:string,transient=false){clearTimeout(statusTimer);status.textContent=message;guidance.hidden=false;if(transient)statusTimer=window.setTimeout(()=>{guidance.hidden=true;},3000);}
 function fail(message:string){stop();el('ar-exit').hidden=false;surface.hidden=true;intro.hidden=true;review.hidden=true;fallback.hidden=true;root.dataset.state='error';root.dataset.tracking='none';notice(message);retry.hidden=false;retry.textContent='Restart camera';}
 function exit(){stop();if(window.parent!==window)window.parent.postMessage({type:'vpa-ar-exit'},location.origin);else location.href=hubMode?'/forest-certificate-ar.html':experience?.certificatePaths[0]??'/collections/forest-and-flowers/';}
-function searching(){root.dataset.tracking='searching';record.disabled=!recording;notice(hubMode?(hasTracked?'Tracking lost. Bring the complete artwork back into view.':'Searching for the selected certificate…'):tigerRecognition?'Keep the complete Tiger Lily certificate artwork in view. Move slowly.':'Keep the complete Mother Nature image in view. Move slowly.');clearTimeout(searchTimer);searchTimer=window.setTimeout(()=>{notice('Try even lighting, less glare, and move closer to the artwork image.');retry.hidden=false;},15000);}
+function searching(){
+ root.dataset.tracking='searching';
+ record.disabled=!recording;
+ if(hubMode&&hasTracked){
+  hubLossShown=false;
+  clearTimeout(statusTimer);
+  guidance.hidden=true;
+  clearTimeout(lossNoticeTimer);
+  lossNoticeTimer=window.setTimeout(()=>{
+   hubLossShown=true;
+   notice('Tracking lost. Bring the complete artwork back into view.');
+  },650);
+ }else{
+  notice(hubMode?'Searching for the selected certificate…':tigerRecognition?'Keep the complete Tiger Lily certificate artwork in view. Move slowly.':'Keep the complete Mother Nature image in view. Move slowly.');
+ }
+ clearTimeout(searchTimer);
+ searchTimer=window.setTimeout(()=>{notice('Try even lighting, less glare, and move closer to the artwork image.');retry.hidden=false;},15000);
+}
 function openPanel(panel:HTMLElement){session?.setPresentationPaused(true);lastFocus=document.activeElement as HTMLElement;panel.hidden=false;controls.hidden=true;el('ar-exit').hidden=true;panel.querySelector<HTMLElement>('button,a')?.focus();}
 function closePanel(panel:HTMLElement){session?.setPresentationPaused(false);panel.hidden=true;el('ar-exit').hidden=false;controls.hidden=root.dataset.state!=='tracking';lastFocus?.focus();}
 function nativeFallback(reason?:string){resetRecording();if(reason)el('ar-fallback-reason').textContent=reason;openPanel(fallback);}
@@ -81,7 +98,20 @@ async function launch(){
   const lab=hubRecognition?(await import('./experimental/recognition')).setupRecognition(root,experience,hubModel,true):tigerRecognition?(await import('./experimental/recognition')).setupRecognition(root,experience,tigerFlower):rainforestExperiment?(await import('./experimental/rainforest')).setupRainforestLab(root,{cinematic:rainforestCinematic,living:rainforestLiving,sculpture:rainforestSculpture,atmosphere:rainforestAtmosphere,flowersEnabled:new URLSearchParams(location.search).get('flowers')!=='0',leafEnabled:new URLSearchParams(location.search).get('leaf')!=='0',diagnostics:!rainforestCinematic||new URLSearchParams(location.search).get('debug')==='1',mistEnabled:new URLSearchParams(location.search).get('mist')!=='0',stabilize:new URLSearchParams(location.search).get('stability')!=='0',rotateReveal:new URLSearchParams(location.search).has('revealRotation')?new URLSearchParams(location.search).get('revealRotation')!=='0':undefined}):undefined;experimentCleanup=lab?.dispose;if(request!==generation){lab?.dispose();return;}
   session=await startTracking({surface,video,experience,signal:abort.signal,readTilt,sceneFactory:lab?.factory,onMetrics:lab?.onMetrics,poseFilter:lab?.poseFilter,trackingTolerance:lab?.trackingTolerance,onSculptureState:state=>{if(request!==generation)return;const note=el('ar-model-note');clearTimeout(modelNoteTimer);note.hidden=(hubMode&&state==='ready')||(tigerRecognition&&(!tigerFlower||state==='ready'))||rainforestCinematic&&state==='ready';note.textContent=hubMode?`Loading ${experience.title}…`:tigerFlower?'Loading orange Tiger Lily…':state==='loading'?'Loading detailed sculpture…':state==='ready'?'Tree ready. Step back to see the full canopy.':'Using the lightweight sculpture. Detailed model unavailable.';if(state!=='loading')modelNoteTimer=window.setTimeout(()=>{note.hidden=true;},6000);},onTracking:found=>{
    if(request!==generation)return;
-   if(found){clearTimeout(searchTimer);retry.hidden=true;root.dataset.tracking='found';record.disabled=false;const reacquired=hasTracked;hasTracked=true;notice(hubMode?(reacquired?'Reacquired · ':'Tracking · ')+experience.certificateLabel:tigerRecognition?(tigerFlower?'Tiger Lily recognized. Move gently to explore the flower.':'Tiger Lily recognized. Move gently to inspect the anchored outline.'):rainforestLiving?'Hold the certificate steady. Move gently to explore.':rainforestCinematic?'Move gently. Pinch to adjust the scale.':'Move gently around the sculpture.',!hubMode);}else searching();
+   if(found){
+    clearTimeout(searchTimer);
+    clearTimeout(lossNoticeTimer);
+    retry.hidden=true;
+    root.dataset.tracking='found';
+    record.disabled=false;
+    if(hubMode){
+     if(!hasTracked||hubLossShown)notice((hasTracked?'Reacquired · ':'Tracking · ')+experience.certificateLabel,true);
+     hubLossShown=false;
+    }else{
+     notice(tigerRecognition?(tigerFlower?'Tiger Lily recognized. Move gently to explore the flower.':'Tiger Lily recognized. Move gently to inspect the anchored outline.'):rainforestLiving?'Hold the certificate steady. Move gently to explore.':rainforestCinematic?'Move gently. Pinch to adjust the scale.':'Move gently around the sculpture.',true);
+    }
+    hasTracked=true;
+   }else searching();
   },onError:error=>{if(request===generation)fail(error.message);}});
   if(request!==generation){session.dispose();return;}lab?.attachSession(session);clearTimeout(prepareTimer);root.dataset.state='tracking';controls.hidden=false;if(root.dataset.tracking!=='found')searching();
  }catch(error){if(request!==generation)return;const name=(error as Error)?.name;fail(name==='NotAllowedError'?'Camera permission was not granted. Enable camera access in your browser’s site settings and try again.':name==='NotFoundError'?'No camera was found on this device.':name==='NotReadableError'?'The camera is busy. Close other camera apps and try again.':'AR could not start. Check your connection and try Safari or Chrome.');}
