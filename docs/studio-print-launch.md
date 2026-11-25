@@ -61,8 +61,9 @@ submission.
 6. Review and record the actual approved shipping rates and landed supplier
    allowances for **each size** in each permitted ZIP. Have the applicable sales
    tax policy approved first, including whether shipping is taxable. The
-   policy is deliberately empty until this is done. For example, each
-   `destinations` entry uses a key of the form `PA-15201`, with
+   approved test policy contains only `PA-15222`, with $12.85 customer-paid
+   shipping, 7% sales tax including shipping, and supplier allowances of $25.85
+   and $26.85 for the two sizes. Each `destinations` entry has
    `shippingCents` and `approvedSupplierCents` maps containing `9x12` and
    `12x16`, a `taxBps` integer, and a boolean `taxShipping`. A quote issued
    for U.S. shipping is country-level; verify supported destinations and all-in
