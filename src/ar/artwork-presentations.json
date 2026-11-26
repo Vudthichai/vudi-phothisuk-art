@@ -3,10 +3,42 @@
     "rainforestV5": true
   },
   "tiger-lily": {
-    "modelAsset": "/ar/models/tiger-lily-orange.glb"
+    "modelAsset": "/ar/models/tiger-lily-orange.glb",
+    "entrance": {
+      "duration": 2.65,
+      "stagger": 0,
+      "softness": 0.24,
+      "atmosphere": 0,
+      "direction": [
+        0.12,
+        0.8,
+        -0.08
+      ]
+    }
   },
   "blooming-desire": {
-    "modelAsset": "/ar/models/blooming-desire.glb"
+    "modelAsset": "/ar/models/blooming-desire.glb",
+    "previewLabel": "Blooming Desire Opening",
+    "previewComposition": {
+      "bloomOpening": true,
+      "pieces": [
+        {
+          "asset": "/ar/models/blooming-desire.glb",
+          "size": 0.95,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "fitHeight": true
+        }
+      ]
+    }
   },
   "moss-and-mushrooms": {
     "composition": {
@@ -46,7 +78,24 @@
             0
           ]
         }
-      ]
+      ],
+      "entrance": {
+        "duration": 2.8,
+        "stagger": 0,
+        "softness": 0.27,
+        "atmosphere": 0.16,
+        "direction": [
+          0.1,
+          0.8,
+          0.1
+        ],
+        "radialCenter": [
+          0.5,
+          0.66,
+          0.53
+        ],
+        "atmosphereColor": 14922440
+      }
     }
   },
   "wild-tiger-lilies": {
@@ -140,7 +189,19 @@
           ]
         }
       ],
-      "float": 0.035
+      "float": 0.035,
+      "petalRain": true,
+      "entrance": {
+        "duration": 2.7,
+        "stagger": 0,
+        "softness": 0.27,
+        "atmosphere": 0,
+        "direction": [
+          -0.17,
+          0.7,
+          0.13
+        ]
+      }
     }
   },
   "gilded-bloom": {
@@ -191,7 +252,8 @@
         ],
         "gold": true
       }
-    }
+    },
+    "previewLabel": "Gilded Bloom V2"
   },
   "75-leaves": {
     "composition": {

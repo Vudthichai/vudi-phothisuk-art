@@ -16,7 +16,7 @@ for(const experience of experiences) {
     assert.equal(experience.entryPaths.length,0,'Previews must not enable certificate-page entry controls.');
     assert.equal(experience.targetAspect,meta.targetDimensions[0]/meta.targetDimensions[1]);
   }
-  for (const key of ['modelAsset','rainforestV5','composition','previewComposition','recognitionOnly']) {
+  for (const key of ['modelAsset','rainforestV5','composition','previewComposition','previewLabel','entrance','recognitionOnly']) {
     assert(!Object.hasOwn(experience,key),'Set presentations once per artwork.');
   }
   assert.equal(hash(image),meta.targetImageSha256);assert.equal(hash(target),meta.compiledTargetSha256);
@@ -41,18 +41,28 @@ for(const experience of experiences) {
 assert.deepEqual([...paths].sort(), records.map(record=>record.path).sort());
 const modelPaths=new Set();
 assert.deepEqual(Object.keys(presentations).sort(), [...new Set(records.map(record=>record.artworkId))].sort());
-for (const presentation of Object.values(presentations)) {
-  assert.equal([presentation.modelAsset, presentation.rainforestV5, presentation.composition].filter(Boolean).length,1);
-  if (presentation.modelAsset) modelPaths.add(presentation.modelAsset);
-  for (const composition of [presentation.composition, presentation.previewComposition].filter(Boolean)) {
-    const { pieces, leafRain, entrance } = composition;
-    if (entrance) {
+function validateEntrance(entrance) {
+  if (entrance) {
       assert(Number.isFinite(entrance.duration) && entrance.duration>0);
       assert(Number.isFinite(entrance.stagger) && entrance.stagger>=0);
       assert(Number.isFinite(entrance.softness) && entrance.softness>0 && entrance.softness<=.5);
       assert(Number.isFinite(entrance.atmosphere) && entrance.atmosphere>=0 && entrance.atmosphere<=1);
       assert(entrance.direction.length===3 && entrance.direction.every(Number.isFinite) && entrance.direction.some(Boolean));
-    }
+      if (entrance.radialCenter) {
+        assert(entrance.radialCenter.length===3 && entrance.radialCenter.every(value=>value>=0 && value<=1));
+      }
+      if (entrance.atmosphereColor!==undefined) {
+        assert(Number.isInteger(entrance.atmosphereColor) && entrance.atmosphereColor>=0 && entrance.atmosphereColor<=0xffffff);
+      }
+  }
+}
+for (const presentation of Object.values(presentations)) {
+  validateEntrance(presentation.entrance);
+  assert.equal([presentation.modelAsset, presentation.rainforestV5, presentation.composition].filter(Boolean).length,1);
+  if (presentation.modelAsset) modelPaths.add(presentation.modelAsset);
+  for (const composition of [presentation.composition, presentation.previewComposition].filter(Boolean)) {
+    const { pieces, leafRain, entrance } = composition;
+    validateEntrance(entrance);
     assert(pieces.length>0);
     if (leafRain) assert.equal(pieces.length,2);
     for (const piece of pieces) {

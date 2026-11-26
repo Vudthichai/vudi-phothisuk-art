@@ -18,7 +18,7 @@ for (const experience of entries) {
     const preview = document.createElement('a');
     params.set('variant', 'v2');
     preview.href = `/ar-camera.html?${params}`;
-    preview.textContent = 'Preview Gilded Bloom V2';
+    preview.textContent = `Preview ${experience.previewLabel ?? experience.title}`;
     item.append(preview);
     params.delete('variant');
   }

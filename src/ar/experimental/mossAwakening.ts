@@ -2,12 +2,13 @@ import { BufferAttribute, BufferGeometry, Group, MathUtils, Mesh, MeshStandardMa
 import { createAtmosphereMist } from './atmosphereMist';
 import { SCULPTURE_TIMING } from './sculptureTimeline';
 
-const sporesStart = 9;
-const fullReveal = 12;
+const sporesStart = 5;
+const fullReveal = 6;
+const turnRampSeconds = fullReveal - sporesStart;
 
 export function mossTurn(elapsed: number) {
-  const ramp = MathUtils.clamp((elapsed - sporesStart) / (fullReveal - sporesStart), 0, 1);
-  const trackedTurnSeconds = 3 * ramp ** 3 * (1 - ramp / 2) + Math.max(0, elapsed - fullReveal);
+  const ramp = MathUtils.clamp((elapsed - sporesStart) / turnRampSeconds, 0, 1);
+  const trackedTurnSeconds = turnRampSeconds * ramp ** 3 * (1 - ramp / 2) + Math.max(0, elapsed - fullReveal);
   return trackedTurnSeconds / SCULPTURE_TIMING.revolutionSeconds * Math.PI * 2;
 }
 
@@ -29,7 +30,7 @@ export function createMossAwakening(sculpture: Group, upright: Group) {
           awakeningPosition = (position - awakeningOrigin) / max(awakeningExtent, vec3(0.00001));`);
       shader.fragmentShader = 'varying vec3 awakeningPosition; uniform float awakeningTime;\n' +
         shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
-          if (awakeningTime < 9.0) {
+          if (awakeningTime < ${sporesStart.toFixed(1)}) {
             vec3 p = awakeningPosition;
             vec3 pigment = diffuseColor.rgb;
             float lightness = dot(pigment, vec3(.2126, .7152, .0722));
@@ -39,21 +40,24 @@ export function createMossAwakening(sculpture: Group, upright: Group) {
             float edge = smoothstep(.075, .18, lightness);
             float cap = smoothstep(.006, .032, pigment.r - pigment.g) * smoothstep(.019, .073, lightness);
             float shelf = (1.0 - moss) * max(edge, cap * smoothstep(.20, .54, p.y));
-            float barkTime = .12 + p.y * 1.45 + .32 * p.z + .17 * grain;
-            float fanTime = 5.45 + p.y * .94 + abs(p.x - .53) * 1.70
-                            + p.z * .58 + grain * .16;
-            float revealAt = mix(barkTime, fanTime, smoothstep(.28, .52, shelf));
-            float softness = mix(.19, .70, smoothstep(.28, .52, shelf));
-            float appearance = smoothstep(revealAt - softness, revealAt + softness, awakeningTime);
+            float barkTime = .17 + p.y * .83 + .14 * p.z + .08 * grain;
+            float fanTime = 2.05 + p.y * .62 + abs(p.x - .53) * 1.72
+                            + p.z * .48 + grain * .15;
+            float shelfMask = smoothstep(.28, .52, shelf);
+            float revealAt = mix(barkTime, fanTime, shelfMask);
+            float softness = mix(.19, .76, shelfMask);
+            float fadeEnd = min(revealAt + softness, ${sporesStart.toFixed(1)});
+            float appearance = smoothstep(revealAt - softness, fadeEnd, awakeningTime)
+                               * smoothstep(0.0, .27, awakeningTime);
             float dither = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(.06711056, .00583715))));
-            if (appearance < .999 && appearance <= dither) discard;
-            float liveMoss = smoothstep(1.9 + p.y * 2.5 + grain * .31,
-                                       2.5 + p.y * 2.5 + grain * .31, awakeningTime);
+            if (appearance <= dither) discard;
+            float mossTime = .95 + p.y * 1.44 + grain * .15;
+            float liveMoss = smoothstep(mossTime, mossTime + .43, awakeningTime);
             vec3 dormant = pigment * vec3(.68, .30, .24);
             diffuseColor.rgb = mix(pigment, dormant, moss * (1.0 - liveMoss));
           }`);
     };
-    material.customProgramCacheKey = () => 'moss-awakening-v1';
+    material.customProgramCacheKey = () => 'moss-awakening-v2';
     material.needsUpdate = true;
   });
 
@@ -78,7 +82,7 @@ export function createMossAwakening(sculpture: Group, upright: Group) {
       uniform float awakeningTime;
       varying float intensity;
       void main() {
-        float age = max(0.0, awakeningTime - 9.0);
+        float age = max(0.0, awakeningTime - ${sporesStart.toFixed(1)});
         float life = 4.0 + position.x * 3.0;
         float delay = position.y * 4.5;
         float progress = fract(max(0.0, age - delay) / life);
@@ -105,7 +109,7 @@ export function createMossAwakening(sculpture: Group, upright: Group) {
   return {
     update(elapsed: number, reduced: boolean) {
       clock.value = reduced ? fullReveal : elapsed;
-      const ambient = .48 - .29 * MathUtils.smoothstep(elapsed, 1, 11);
+      const ambient = .48 - .29 * MathUtils.smoothstep(elapsed, 1, fullReveal);
       mist.update(elapsed, reduced, reduced ? .17 : ambient);
       spores.visible = !reduced && elapsed >= sporesStart;
     },

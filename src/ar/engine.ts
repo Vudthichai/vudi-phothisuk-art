@@ -1,8 +1,9 @@
-import { Scene, Group, Matrix4, Vector3, Quaternion, PerspectiveCamera, WebGLRenderer, HemisphereLight, DirectionalLight, SRGBColorSpace, PMREMGenerator } from 'three';
+import { Scene, Group, Matrix4, Vector3, Quaternion, PerspectiveCamera, WebGLRenderer, SRGBColorSpace, PMREMGenerator } from 'three';
 import type { SculptureState } from './customTree';
 import { createCustomTree } from './customTree';
 import { ImagePoseFilter } from './pose';
 import { cameraUpFromTilt, GravityAlignment } from './gravity';
+import { applyStudioLighting } from './studioLighting';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import type { ARExperience } from './config';
 type TrackerUpdate={type:string;targetIndex:number;worldMatrix:number[]|null};
@@ -32,8 +33,8 @@ export async function startTracking({surface,video,experience,signal,onTracking,
   scene.environment=environment.texture;room.dispose();pmrem.dispose();
   const gravity=new GravityAlignment(),cameraUp=new Vector3();
   const pose=poseFilter??new ImagePoseFilter(),targetPose=new Matrix4();let lastPoseTime=0,frameCallback:((canvas:HTMLCanvasElement)=>void)|undefined;
-  scene.add(new HemisphereLight(sceneFactory?0xf4f8f4:0xfff8e8,sceneFactory?0x26352c:0x3d301d,2));
-  const light=new DirectionalLight(sceneFactory?0xfff5e4:0xffe2aa,3);light.position.set(-1,2,3);scene.add(light);
+  const variant=experience.previewComposition&&experience.composition===experience.previewComposition?'v2':undefined;
+  applyStudioLighting(scene,experience.artworkId,Boolean(sceneFactory),variant);
   let controller:Controller|undefined,disposed=false,frame=0,found=false,lastRender=0,presentationPaused=false;
   let postMatrix=new Matrix4();
   const frameTimes:number[]=[],cpuTimes:number[]=[],steps:number[]=[];let windowStart=performance.now(),frames=0,lastFrameAt=0,lossEvents=0,poseUpdates=0,lastPoseAt=0,previousPose:Vector3|undefined;

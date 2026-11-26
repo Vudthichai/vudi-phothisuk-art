@@ -7,15 +7,19 @@ export type Entrance = {
   atmosphere: number;
   direction: number[];
   gold?: boolean;
+  radialCenter?: number[];
+  atmosphereColor?: number;
 };
 export type BotanicalComposition = {
   leafRain?: boolean;
+  petalRain?: boolean;
+  bloomOpening?: boolean;
   mossAwakening?: boolean;
   float?: number;
   entrance?: Entrance;
-  pieces: { asset: string; size: number; position: number[]; rotation: number[] }[];
+  pieces: { asset: string; size: number; position: number[]; rotation: number[]; fitHeight?: boolean }[];
 };
-type Presentation = { modelAsset?: string; rainforestV5?: boolean; composition?: BotanicalComposition; previewComposition?: BotanicalComposition };
+type Presentation = { modelAsset?: string; rainforestV5?: boolean; composition?: BotanicalComposition; previewComposition?: BotanicalComposition; previewLabel?: string; entrance?: Entrance };
 export type ARExperience = { id:string; artworkId:string; title:string; certificateLabel:string; certificatePaths:string[]; entryPaths?:string[]; targetImage:string; targetFile:string; targetIndex:number; targetAspect?:number; previewOnly?:boolean; recognitionOnly?:boolean; } & Presentation;
 const presentations: Readonly<Record<string, Presentation>> = artworkPresentations;
 // The certificate selects the tracked image. The artwork selects its presentation.

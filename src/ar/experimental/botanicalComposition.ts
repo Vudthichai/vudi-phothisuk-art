@@ -6,6 +6,8 @@ import type { BotanicalComposition } from '../config';
 import type { SculptureFactory } from '../engine';
 import { createSculptureTimeline } from './sculptureTimeline';
 import { createLeafRain } from './leafRain';
+import { createEtherealPetals } from './etherealPetals';
+import { createBloomOpening } from './bloomOpening';
 import { createSculptureEntrance } from './sculptureEntrance';
 import { createMossAwakening, mossTurn } from './mossAwakening';
 
@@ -31,6 +33,8 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     let previousTime: number | undefined;
     let floatElapsed = 0;
     let rain: ReturnType<typeof createLeafRain> | undefined;
+    let petals: ReturnType<typeof createEtherealPetals> | undefined;
+    let bloom: ReturnType<typeof createBloomOpening> | undefined;
     let awakening: ReturnType<typeof createMossAwakening> | undefined;
     let entrance: ReturnType<typeof createSculptureEntrance> | undefined;
     onState('loading');
@@ -59,7 +63,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           const bounds = new Box3().setFromObject(model);
           const size = bounds.getSize(new Vector3());
           const center = bounds.getCenter(new Vector3());
-          const extent = Math.max(size.x, size.y, size.z);
+          const extent = piece.fitHeight ? size.y : Math.max(size.x, size.y, size.z);
           const placement = new Group();
           const normalized = new Group();
           placement.position.fromArray(piece.position);
@@ -77,6 +81,8 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         }
         if (composition.mossAwakening) awakening = createMossAwakening(turn, upright);
         if (composition.entrance) entrance = createSculptureEntrance(composition.entrance, turn, upright);
+        if (composition.petalRain) petals = createEtherealPetals(upright);
+        if (composition.bloomOpening) bloom = createBloomOpening(turn);
         ready = true;
         onState('ready');
       } catch {
@@ -103,7 +109,9 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           if (root.visible) awakening.update(frame.elapsedSeconds, reduced);
           turn.rotation.y = reduced ? 0 : mossTurn(frame.elapsedSeconds);
         } else {
-          turn.rotation.y = entrance ? entrance.update(frame.elapsedSeconds, reduced) : frame.turn;
+          if (root.visible) petals?.update(frame.elapsedSeconds, reduced);
+          turn.rotation.y = bloom ? bloom.update(frame.elapsedSeconds, reduced)
+            : entrance ? entrance.update(frame.elapsedSeconds, reduced) : frame.turn;
           if (root.visible && !reduced) floatElapsed += step;
           turn.position.y = reduced ? 0 : (composition.float ?? 0) * Math.sin(floatElapsed);
         }
@@ -115,6 +123,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         clearTimeout(timeout);
         signal.removeEventListener('abort', abort);
         rain?.dispose();
+        petals?.dispose();
         awakening?.dispose();
         entrance?.dispose();
         disposeModel(root);

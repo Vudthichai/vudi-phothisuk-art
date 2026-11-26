@@ -27,3 +27,20 @@ it('handles failed downloads and disposes an asset that finishes parsing after E
  const model=asset(),dispose=vi.spyOn((model.children[0] as Mesh).geometry,'dispose');let finish!:(v:{scene:Group})=>void;
  vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(0)})));loader.parse.mockImplementation(()=>new Promise(resolve=>finish=resolve));const session=createTigerLilyFactory(document.createElement('main'))({signal:new AbortController().signal,onState:()=>{},onError:vi.fn()});await vi.waitFor(()=>expect(finish).toBeTypeOf('function'));session.dispose();finish({scene:model});await vi.waitFor(()=>expect(dispose).toHaveBeenCalledOnce());expect(session.root.children).toHaveLength(0);
 });
+it('runs the approved orange lily entrance once and hands off to the V5 turn rate',async()=>{
+ const model=asset(), fetch=vi.fn(async()=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(0)}));
+ vi.stubGlobal('fetch',fetch);loader.parse.mockResolvedValue({scene:model});
+ const settings={duration:2.65,stagger:0,softness:.24,atmosphere:0,direction:[0,1,0]};
+ const host=document.createElement('main');
+ const session=createTigerLilyFactory(host,undefined,undefined,settings)({signal:new AbortController().signal,onState:()=>{},onError:error=>{throw error;}});
+ await vi.waitFor(()=>expect(host.dataset.tigerModel).toBe('ready'));
+ const turn=session.root.children[0].children[0];
+ session.update(0,false,true);session.update(1,false,true);
+ expect(turn.rotation.y).toBe(0);
+ session.update(1.1,false,false);session.update(9,false,true);session.update(10.64,false,true);
+ expect(turn.rotation.y).toBe(0);
+ session.update(11.65,false,true);
+ expect(turn.rotation.y).toBeCloseTo(2*Math.PI/11,10);
+ expect(fetch).toHaveBeenCalledTimes(1);
+ session.dispose();
+});

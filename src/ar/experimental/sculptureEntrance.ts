@@ -1,4 +1,4 @@
-import { BufferAttribute, BufferGeometry, Group, MathUtils, Mesh, MeshStandardMaterial, Points, ShaderMaterial, Vector3 } from 'three';
+import { BufferAttribute, BufferGeometry, Group, MathUtils, Mesh, MeshStandardMaterial, Sprite, Points, ShaderMaterial, Vector3 } from 'three';
 import type { Entrance } from '../config';
 import { createAtmosphereMist } from './atmosphereMist';
 import { SCULPTURE_TIMING } from './sculptureTimeline';
@@ -14,6 +14,7 @@ export function entranceTiming(entrance: Entrance, pieceCount: number, elapsed: 
 export function createSculptureEntrance(settings: Entrance, sculpture: Group, upright: Group) {
   const direction = new Vector3().fromArray(settings.direction);
   direction.divideScalar(Math.abs(direction.x) + Math.abs(direction.y) + Math.abs(direction.z));
+  const radialCenter = new Vector3().fromArray(settings.radialCenter ?? [.5, .5, .5]);
   const assigned = new Set<MeshStandardMaterial>();
   const progress = sculpture.children.map(piece => {
     const time = { value: 0 };
@@ -32,17 +33,21 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
         shader.uniforms.entranceExtent = { value: extent };
         shader.uniforms.entranceDirection = { value: direction };
         shader.uniforms.entranceSoftness = { value: settings.softness };
+        shader.uniforms.entranceCenter = { value: radialCenter };
+        shader.uniforms.entranceRadial = { value: settings.radialCenter ? 1 : 0 };
         shader.uniforms.entranceGold = { value: settings.gold ? 1 : 0 };
         shader.vertexShader = 'varying vec3 entrancePosition; uniform vec3 entranceOrigin, entranceExtent;\n' +
           shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
             entrancePosition = (position - entranceOrigin) / max(entranceExtent, vec3(.00001));`);
         shader.fragmentShader = `varying vec3 entrancePosition;
-          uniform vec3 entranceDirection;
-          uniform float entranceProgress, entranceSoftness, entranceGold;\n` +
+          uniform vec3 entranceDirection, entranceCenter;
+          uniform float entranceProgress, entranceSoftness, entranceGold, entranceRadial;\n` +
           shader.fragmentShader.replace('#include <opaque_fragment>', `
             if (entranceProgress < 1.0) {
               float fleck = fract(sin(dot(floor(entrancePosition * 88.0), vec3(41.7, 73.1, 17.3))) * 43758.5453);
-              float axis = dot(entrancePosition - .5, entranceDirection) + .5 + (fleck - .5) * .14;
+              float line = dot(entrancePosition - .5, entranceDirection) + .5;
+              float radius = min(1.0, length((entrancePosition - entranceCenter) * vec3(1.45, 1.0, 1.45)));
+              float axis = mix(line, radius, entranceRadial) + (fleck - .5) * .14;
               float front = mix(-.10 - entranceSoftness, 1.10 + entranceSoftness, entranceProgress);
               float coverage = 1.0 - smoothstep(front - entranceSoftness, front + entranceSoftness, axis);
               float grain = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(.06711056, .00583715))));
@@ -61,6 +66,11 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
   const mist = settings.atmosphere > 0 ? createAtmosphereMist() : undefined;
   if (mist) {
     for (const wisp of mist.root.children.slice(2)) wisp.visible = false;
+    if (settings.atmosphereColor !== undefined) {
+      for (const wisp of mist.root.children) {
+        if (wisp instanceof Sprite) wisp.material.color.setHex(settings.atmosphereColor);
+      }
+    }
     upright.add(mist.root);
   }
 
