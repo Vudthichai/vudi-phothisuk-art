@@ -1,61 +1,37 @@
-import { certificateARPreviews, FIRST_BREATH_LABEL, FIRST_BREATH_VARIANT } from './config';
-import { creativePreviewFor } from './creativePreviews';
+import { artworkHubEntries, certificateEdition, finalCameraPath } from './finalExperiences';
 
 const list = document.querySelector('#certificates')!;
-const entries = [...certificateARPreviews].sort((a, b) => a.certificatePaths[0].localeCompare(b.certificatePaths[0]));
 
-for (const experience of entries) {
+for (const { title, certificates } of artworkHubEntries()) {
   const item = document.createElement('li');
+  const heading = document.createElement('h2');
+  heading.textContent = title;
   const link = document.createElement('a');
-  const mode = document.createElement('small');
-  const params = new URLSearchParams({ hub: '1', experience: experience.id });
-  const sculpture = experience.rainforestV5 || Boolean(experience.modelAsset || experience.composition);
-  const edition = experience.certificatePaths[0].includes('/collectors-edition/') ? 'Collector’s Edition' : 'Original';
-  link.href = `/ar-camera.html?${params}`;
-  link.textContent = `${experience.title} · ${edition}`;
-  mode.textContent = sculpture ? 'Recognition and 3D sculpture' : 'Recognition outline';
-  item.append(link, mode);
-  if (experience.previewComposition) {
-    const preview = document.createElement('a');
-    params.set('variant', 'v2');
-    preview.href = `/ar-camera.html?${params}`;
-    preview.textContent = `Preview ${experience.previewLabel ?? experience.title}`;
-    item.append(preview);
-    params.delete('variant');
+  link.className = 'ar-launch';
+  link.href = finalCameraPath(certificates[0]);
+  link.textContent = 'Experience in AR';
+  link.setAttribute('aria-label', `Experience ${title} in AR`);
+  const actions = document.createElement('div');
+  actions.className = 'ar-actions';
+  if (certificates.length > 1) {
+    const label = document.createElement('label');
+    label.textContent = 'Certificate edition';
+    const edition = document.createElement('select');
+    edition.setAttribute('aria-label', `${title} certificate edition`);
+    for (const certificate of certificates) {
+      const option = document.createElement('option');
+      option.value = certificate.id;
+      option.textContent = certificateEdition(certificate);
+      edition.append(option);
+    }
+    edition.addEventListener('change', () => {
+      const selected = certificates.find(certificate => certificate.id === edition.value);
+      if (selected) link.href = finalCameraPath(selected);
+    });
+    label.append(edition);
+    actions.append(label);
   }
-  if (experience.previewV3Composition) {
-    const preview = document.createElement('a');
-    params.set('variant', 'v3');
-    preview.href = `/ar-camera.html?${params}`;
-    preview.textContent = 'Preview V3 · Golden Awakening';
-    preview.setAttribute('aria-label', 'Preview Gilded Bloom V3 · Golden Awakening');
-    item.append(preview);
-    params.delete('variant');
-  }
-  if (experience.previewFirstBreathComposition) {
-    const preview = document.createElement('a');
-    params.set('variant', FIRST_BREATH_VARIANT);
-    preview.href = `/ar-camera.html?${params}`;
-    preview.textContent = `Preview ${FIRST_BREATH_LABEL}`;
-    item.append(preview);
-    params.delete('variant');
-  }
-  const creative = creativePreviewFor(experience);
-  if (creative) {
-    const preview = document.createElement('a');
-    params.set('variant', creative.variant);
-    preview.href = `/ar-camera.html?${params}`;
-    preview.textContent = `Preview ${creative.label}`;
-    item.append(preview);
-    params.delete('variant');
-  }
-  if (sculpture) {
-    const outline = document.createElement('a');
-    params.set('mode', 'recognition');
-    outline.href = `/ar-camera.html?${params}`;
-    outline.textContent = 'Test with outline';
-    outline.setAttribute('aria-label', `Test ${experience.title} ${edition} with outline`);
-    item.append(outline);
-  }
+  actions.append(link);
+  item.append(heading, actions);
   list.append(item);
 }

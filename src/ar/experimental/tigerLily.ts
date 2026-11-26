@@ -20,7 +20,7 @@ export function placeTigerLily(model:Group, tilt=TIGER_LILY_BLOSSOM_TILT){
  fit.rotation.x=tilt;fit.scale.setScalar(TIGER_LILY_HEIGHT/size.y);model.position.sub(new Vector3(center.x,bounds.min.y,center.z));fit.add(model);sway.add(fit);turn.add(sway);sheet.add(turn);
  return {root:sheet,turn,sway};
 }
-export function createTigerLilyFactory(host:HTMLElement, modelAsset=TIGER_LILY_MODEL, title='Tiger Lily', entranceSettings?: Entrance, cinematics?: LilyCinematics):SculptureFactory{return ({signal,onState,onError})=>{
+export function createTigerLilyFactory(host:HTMLElement, modelAsset=TIGER_LILY_MODEL, title='Tiger Lily', entranceSettings?: Entrance, cinematics?: LilyCinematics, finalLilyLight = false):SculptureFactory{return ({signal,onState,onError})=>{
  const root=new Group();let model:Group|undefined,placed:ReturnType<typeof placeTigerLily>|undefined,disposed=false,elapsed=0,last:number|undefined;
  const timeline=createSculptureTimeline();
  let entrance:ReturnType<typeof createSculptureEntrance>|undefined;
@@ -35,7 +35,7 @@ export function createTigerLilyFactory(host:HTMLElement, modelAsset=TIGER_LILY_M
    if(disposed||download.signal.aborted){disposeModel(model);model=undefined;if(!disposed&&!signal.aborted)throw new Error('Tiger Lily loading timed out');return;}
    placed=placeTigerLily(model,modelAsset===TIGER_LILY_MODEL?TIGER_LILY_BLOSSOM_TILT:0);root.add(placed.root);
    if(entranceSettings)entrance=createSculptureEntrance(entranceSettings,placed.turn,placed.root);
-   if(cinematics)lily=createLilyCinematics(cinematics,placed.turn,placed.root,entranceSettings);
+   if(cinematics)lily=createLilyCinematics(cinematics,placed.turn,placed.root,entranceSettings,finalLilyLight);
    host.dataset.tigerModel='ready';onState('ready');
   }catch(error){if(!disposed&&!signal.aborted){host.dataset.tigerModel='error';onError(new Error(`${title} could not load. Check your connection and restart the camera, or use the recognition-only test.`));}}
   finally{clearTimeout(timer);}

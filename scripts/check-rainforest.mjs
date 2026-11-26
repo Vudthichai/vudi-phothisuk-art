@@ -3,7 +3,10 @@ import {readFile,access,readdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {MeshoptDecoder} from '../node_modules/three/examples/jsm/libs/meshopt_decoder.module.js';
 if(process.argv.includes('--production')){
- for(const name of ['rainforest-ar.html','rainforest-v2.html','rainforest-v3.html','rainforest-v4.html'])await assert.rejects(access(`dist/${name}`));await access('dist/rainforest-v5.html');const assets=await readdir('dist/assets');assert(assets.some(n=>n.includes('ancient-rainforest')),'Approved V5 model must ship in production');console.log('Production includes approved V5 rainforest and excludes older experimental pages.');
+ for(const name of ['rainforest-ar.html','rainforest-v2.html','rainforest-v3.html','rainforest-v4.html','tiger-lily-ar.html','msat-ar.html'])await assert.rejects(access(`dist/${name}`));
+ await Promise.all(['rainforest-v5.html','ar-camera.html','forest-certificate-ar.html'].map(name=>access(`dist/${name}`)));
+ const assets=await readdir('dist/assets');assert(assets.some(n=>n.includes('ancient-rainforest')),'Approved V5 model must ship in production');
+ console.log('Production includes the collection hub, its camera, and approved V5. Legacy experiment pages remain available in review builds.');
 }else{
  const path='src/ar/experimental/assets/ancient-rainforest',meta=JSON.parse(await readFile(path+'.json','utf8')),bytes=await readFile(path+'.glb');assert.equal(bytes.length,meta.bytes);assert(bytes.length<20_000_000);assert.equal(createHash('sha256').update(bytes).digest('hex'),meta.sha256);
  const n=bytes.readUInt32LE(12),j=JSON.parse(bytes.toString('utf8',20,20+n)),base=28+n;assert.equal(bytes.toString('ascii',0,4),'glTF');assert.equal(j.meshes.length,1);assert.equal(j.materials.length,1);assert.equal(j.animations?.length??0,0);assert(j.buffers.every(b=>!b.uri));assert(j.images.every(i=>!i.uri&&i.bufferView!==undefined));

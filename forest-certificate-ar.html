@@ -4,26 +4,32 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>Forest &amp; Flowers Certificate AR Tests</title>
+  <title>Forest &amp; Flowers AR</title>
+  <link rel="stylesheet" href="/src/signatureTypography.css">
   <style>
+    * { box-sizing: border-box; }
     body { margin: 0; background: #f8f6ef; color: #193724; font: 1rem/1.55 system-ui, sans-serif; }
     main { max-width: 48rem; margin: auto; padding: 2rem 1rem; }
-    h1 { font: 2.5rem/1.12 Georgia, serif; margin: 0; }
-    ol { list-style: none; padding: 0; display: grid; gap: .6rem; }
-    li { background: white; padding: .65rem .85rem; border: 1px solid #d9dfd3; border-radius: .35rem; }
-    a { color: inherit; display: inline-block; padding: .3rem 0; }
-    li > a:first-child { font-weight: 650; }
-    small { display: block; }
-    li a + a { margin-inline-start: 1rem; }
+    h1, h2 { font-family: 'Bodoni Moda', Georgia, serif; font-weight: 400; }
+    h1 { font-size: clamp(2.125rem, 8vw, 3.3rem); line-height: 1.1; margin: 0; }
+    main > p { max-width: 41rem; }
+    ol { list-style: none; padding: 0; display: grid; gap: .65rem; }
+    li { display: flex; align-items: center; justify-content: space-between; gap: .65rem 1rem; flex-wrap: wrap; padding: .8rem 1rem; border: 1px solid #d9dfd3; border-radius: .4rem; background: #fff; }
+    h2 { margin: 0; font-size: 1.45rem; }
+    .ar-actions { display: flex; align-items: end; gap: .65rem; flex-wrap: wrap; }
+    label { display: grid; gap: .2rem; color: #3c5144; font-size: .78rem; }
+    select, .ar-launch { min-height: 44px; padding: .5rem .75rem; border: 1px solid #284735; border-radius: .3rem; font: inherit; font-size: .95rem; }
+    select { background: #fff; color: #193724; }
+    .ar-launch { display: inline-flex; align-items: center; background: #193724; color: #fff; text-decoration: none; }
+    :focus-visible { outline: 3px solid #9d7733; outline-offset: 3px; }
   </style>
 </head>
 <body>
   <main>
-    <h1>Forest &amp; Flowers Certificate AR Tests</h1>
-    <p>Choose your certificate. In Safari, tap Start camera and allow camera and motion access. Move and tilt the artwork slowly, then cover it and uncover it to check reacquisition.</p>
-    <p><a href="/msat-ar.html">Preview MSAT — The Living Signature</a> with the physical magnet.<br>
-      <a href="/msat-ar.html?variant=two-line">Preview MSAT with two-line portrait typography</a></p>
+    <h1>Forest &amp; Flowers AR</h1>
+    <p>Open an artwork in Safari, allow camera access, and point your phone at the matching printed certificate.</p>
     <ol id="certificates"></ol>
+    <noscript>Enable JavaScript to open the AR experiences.</noscript>
   </main>
   <script type="module" src="/src/ar/certificateHub.ts"></script>
 </body>
