@@ -1,5 +1,6 @@
 import experiences from './experiences.json';
 import artworkPresentations from './artwork-presentations.json';
+export type LilyCinematics = 'sunlit-flame' | 'blushing-ember' | 'the-dance';
 export type Entrance = {
   duration: number;
   stagger: number;
@@ -21,12 +22,13 @@ export type BotanicalComposition = {
   mossAwakening?: boolean;
   stumpRebirth?: boolean;
   creativeFinish?: 'moss' | 'gilded';
+  lilyCinematics?: LilyCinematics;
   float?: number;
   entrance?: Entrance;
   pieces: { asset: string; size: number; position: number[]; rotation: number[]; fitHeight?: boolean }[];
 };
 type Presentation = { modelAsset?: string; rainforestV5?: boolean; composition?: BotanicalComposition; previewComposition?: BotanicalComposition; previewV3Composition?: BotanicalComposition; previewFirstBreath?: boolean; previewLabel?: string; entrance?: Entrance };
-export type ARExperience = { id:string; artworkId:string; title:string; certificateLabel:string; certificatePaths:string[]; entryPaths?:string[]; targetImage:string; targetFile:string; targetIndex:number; targetAspect?:number; previewOnly?:boolean; recognitionOnly?:boolean; previewFirstBreathComposition?: BotanicalComposition; } & Presentation;
+export type ARExperience = { id:string; artworkId:string; title:string; certificateLabel:string; certificatePaths:string[]; entryPaths?:string[]; targetImage:string; targetFile:string; targetIndex:number; targetAspect?:number; previewOnly?:boolean; recognitionOnly?:boolean; previewFirstBreathComposition?: BotanicalComposition; lilyCinematics?: LilyCinematics; } & Presentation;
 export const FIRST_BREATH_VARIANT = 'first-breath';
 export const FIRST_BREATH_LABEL = 'Blooming Desire — First Breath';
 const presentations: Readonly<Record<string, Presentation>> = artworkPresentations;

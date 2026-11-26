@@ -13,6 +13,7 @@ import { createFirstBreathAtmosphere } from './firstBreathAtmosphere';
 import { createSculptureEntrance } from './sculptureEntrance';
 import { createMossAwakening, mossTurn } from './mossAwakening';
 import { createStumpRebirth } from './stumpRebirth';
+import { createLilyCinematics } from './lilyCinematics';
 
 export function createBotanicalComposition(composition: BotanicalComposition, title: string): SculptureFactory {
   return ({ signal, onState, onError }) => {
@@ -42,6 +43,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     let awakening: ReturnType<typeof createMossAwakening> | undefined;
     let rebirth: ReturnType<typeof createStumpRebirth> | undefined;
     let entrance: ReturnType<typeof createSculptureEntrance> | undefined;
+    let lily: ReturnType<typeof createLilyCinematics> | undefined;
     onState('loading');
 
     async function load() {
@@ -91,6 +93,9 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           turn.add(...support.children.slice());
         }
         if (composition.entrance) entrance = createSculptureEntrance(composition.entrance, turn, upright, composition.creativeFinish === 'gilded');
+        if (composition.lilyCinematics) {
+          lily = createLilyCinematics(composition.lilyCinematics, turn, upright, composition.entrance);
+        }
         if (composition.petalRain) petals = createEtherealPetals(upright);
         if (composition.bloomOpening || composition.firstBreath) {
           bloom = createBloomOpening(turn, composition.firstBreath);
@@ -111,7 +116,8 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     return {
       root,
       uprightRoot: () => upright,
-      ...((composition.creativeFinish || composition.stumpRebirth) && { pausePresentation: () => { timeline.update(0, false, false); } }),
+      ...((composition.creativeFinish || composition.stumpRebirth || composition.lilyCinematics) &&
+        { pausePresentation: () => { timeline.update(0, false, false); } }),
       update(time, reduced, tracked) {
         const step = previousTime === undefined ? 0 : Math.min(.1, Math.max(0, time - previousTime));
         previousTime = time;
@@ -129,8 +135,10 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
             petals?.update(frame.elapsedSeconds, reduced);
             breath?.update(frame.elapsedSeconds, reduced);
           }
-          turn.rotation.y = bloom ? bloom.update(frame.elapsedSeconds, reduced)
+          const angle = bloom ? bloom.update(frame.elapsedSeconds, reduced)
             : entrance ? entrance.update(frame.elapsedSeconds, reduced) : frame.turn;
+          turn.rotation.y = lily?.turnAt(frame.elapsedSeconds, reduced) ?? angle;
+          if (root.visible) lily?.update(frame.elapsedSeconds, reduced);
           if (root.visible && !reduced) floatElapsed += step;
           turn.position.y = reduced ? 0 : (composition.float ?? 0) * Math.sin(floatElapsed);
         }
@@ -147,6 +155,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         awakening?.dispose();
         rebirth?.dispose();
         entrance?.dispose();
+        lily?.dispose();
         disposeModel(root);
         root.clear();
       },

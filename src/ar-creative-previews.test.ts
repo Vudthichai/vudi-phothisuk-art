@@ -31,3 +31,21 @@ it('layers the Moss and Gilded refinements onto their existing presentations', (
   expect(creativePreviewFor(gilded)?.composition?.(gilded))
     .toEqual({ ...gilded.previewV3Composition, creativeFinish: 'gilded' });
 });
+
+it('retains the original lilies, placements and stagger on the optional lily studies', () => {
+  const tiger = arById('tiger-lily-original', true)!;
+  expect(tiger.modelAsset).toBe('/ar/models/tiger-lily-orange.glb');
+  expect(creativePreviewFor(tiger)?.lilyCinematics).toBe('sunlit-flame');
+  for (const [id, variant] of [
+    ['dragon-lily-original', 'blushing-ember'],
+    ['wild-tiger-lilies-original', 'the-dance'],
+  ]) {
+    const entry = arById(id, true)!;
+    const preview = creativePreviewFor(entry)?.composition?.(entry);
+    expect(preview?.lilyCinematics).toBe(variant);
+    expect(preview?.pieces).toBe(entry.composition?.pieces);
+    expect(preview?.entrance).toEqual(variant === 'blushing-ember'
+      ? { ...entry.composition?.entrance, atmosphere: 0 }
+      : entry.composition?.entrance);
+  }
+});

@@ -31,6 +31,7 @@ const rainforestExperiment=rainforestCinematic||(__VPA_AR_EXPERIMENTS__&&locatio
 const experience=msatMode?msatExperience:hubMode?(hubExperience&&(previewComposition||creativePreview)?{
   ...hubExperience,
   composition:previewComposition??hubExperience.composition,
+  lilyCinematics:creativePreview?.lilyCinematics,
   certificateLabel:creativePreview?.label??previewLabel??hubExperience.certificateLabel,
 }:hubExperience):arById(tigerRecognition?'tiger-lily-original':rainforestExperiment?'mother-nature-original':new URLSearchParams(location.search).get('experience'),tigerRecognition);
 root.innerHTML=`<button id="ar-exit" class="ar-exit" type="button" aria-label="Exit AR">Exit <span aria-hidden="true">×</span></button>
