@@ -1,0 +1,40 @@
+{
+  "sourcePdfSha256": "8e32f60be059bf73ed1dac3586b4fd09a5ec298a46b05da87c427606f957690f",
+  "page": 1,
+  "embeddedImageXref": 14,
+  "imageBoundsPt": [
+    80.83999633789062,
+    113.0,
+    297.1600036621094,
+    441.0
+  ],
+  "embeddedDimensions": [
+    1352,
+    2050
+  ],
+  "targetDimensions": [
+    675,
+    1024
+  ],
+  "targetImageSha256": "a6248973689ab7a4e7b057380b74c3f2de5c6ac9d48cc4430b348c9e004baa11",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "10d8eded8aab1c5a63c223ba16267bcd99a1cb1c3479259e33095f97c108ed7d",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/a-forest-forgotten/original/",
+      "pdfSha256": "8e32f60be059bf73ed1dac3586b4fd09a5ec298a46b05da87c427606f957690f",
+      "imagePixelsSha256": "10d8eded8aab1c5a63c223ba16267bcd99a1cb1c3479259e33095f97c108ed7d",
+      "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/a-forest-forgotten/original/",
+      "sourceVariant": "bleed"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 3843
+  },
+  "compiledTargetSha256": "8cce34601ef3ac444a4eba74e0a73c7c55c9ef68da0cc274e01a3a2e3c5438b8",
+  "compiledBytes": 822676
+}

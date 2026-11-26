@@ -15,7 +15,7 @@ beforeEach(()=>{
  vi.spyOn(performance,'now').mockReturnValue(100);
 });
 afterEach(()=>{vi.restoreAllMocks();vi.unstubAllGlobals();vi.useRealTimers();stop.mockClear();drawImage.mockClear();captureStream.mockClear();delete (HTMLCanvasElement.prototype as Partial<HTMLCanvasElement>).captureStream;});
-function setup(fps?:24|30){const complete=vi.fn(),error=vi.fn(),video=document.createElement('video');Object.defineProperties(video,{videoWidth:{value:1280},videoHeight:{value:720}});const session=beginRecording({video,fps,width:393,height:852,onComplete:complete,onError:error});return {session,complete,error,video};}
+function setup(fps?:24|30,drawCaption?:Parameters<typeof beginRecording>[0]['drawCaption']){const complete=vi.fn(),error=vi.fn(),video=document.createElement('video');Object.defineProperties(video,{videoWidth:{value:1280},videoHeight:{value:720}});const session=beginRecording({video,fps,drawCaption,width:393,height:852,onComplete:complete,onError:error});return {session,complete,error,video};}
 it('requires both canvas capture and a supported recorder; prefers supported MP4',()=>{
  expect(recordingMimeType()).toBe('video/mp4');vi.stubGlobal('MediaRecorder',undefined);expect(recordingMimeType()).toBeUndefined();
 });
@@ -24,6 +24,13 @@ it('composites both layers and returns a clip at the explicit twelve-second limi
  session.draw(overlay);vi.mocked(performance.now).mockReturnValue(160);session.draw(overlay);
  expect(drawImage.mock.calls.some(call=>call[0]===video)).toBe(true);expect(drawImage.mock.calls.some(call=>call[0]===overlay)).toBe(true);
  vi.advanceTimersByTime(12000);expect(complete).toHaveBeenCalledOnce();expect(error).not.toHaveBeenCalled();expect(stop).toHaveBeenCalledOnce();
+});
+it('draws the optional caption above the camera and WebGL layers',()=>{
+ const caption=vi.fn(),{session}=setup(24,caption),overlay=document.createElement('canvas');
+ session.draw(overlay);
+ expect(caption).toHaveBeenCalledWith(expect.any(Object),332,720);
+ expect(caption.mock.invocationCallOrder[0]).toBeGreaterThan(drawImage.mock.invocationCallOrder.at(-1)!);
+ session.cancel();
 });
 it('discards partial video and releases canvas tracks on cancellation/exit',()=>{
  const {session,complete,error}=setup();session.cancel();session.cancel();vi.advanceTimersByTime(20000);

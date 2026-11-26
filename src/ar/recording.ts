@@ -10,7 +10,7 @@ export function coverRect(sourceWidth:number,sourceHeight:number,width:number,he
   return {x:(width-sourceWidth*scale)/2,y:(height-sourceHeight*scale)/2,width:sourceWidth*scale,height:sourceHeight*scale};
 }
 export type LocalRecording={draw:(overlay:HTMLCanvasElement)=>void;stop:()=>void;cancel:()=>void};
-export function beginRecording({video,width,height,onComplete,onError,onStarted,fps=24}:{video:HTMLVideoElement;width:number;height:number;onComplete:(blob:Blob)=>void;onError:()=>void;onStarted?:()=>void;fps?:24|30}):LocalRecording {
+export function beginRecording({video,width,height,onComplete,onError,onStarted,drawCaption,fps=24}:{video:HTMLVideoElement;width:number;height:number;onComplete:(blob:Blob)=>void;onError:()=>void;onStarted?:()=>void;drawCaption?:(context:CanvasRenderingContext2D,width:number,height:number)=>void;fps?:24|30}):LocalRecording {
   const mimeType=recordingMimeType();if(!mimeType)throw new Error('Composite recording unavailable');
   const canvas=document.createElement('canvas'),ratio=Math.min(1,720/Math.max(width,height));
   canvas.width=Math.max(2,Math.round(width*ratio/2)*2);canvas.height=Math.max(2,Math.round(height*ratio/2)*2);
@@ -42,6 +42,7 @@ export function beginRecording({video,width,height,onComplete,onError,onStarted,
       try{
         const rect=coverRect(video.videoWidth,video.videoHeight,canvas.width,canvas.height);
         context.drawImage(video,rect.x,rect.y,rect.width,rect.height);context.drawImage(overlay,0,0,canvas.width,canvas.height);
+        drawCaption?.(context,canvas.width,canvas.height);
         if(frames===0){clearTimeout(timer);timer=window.setTimeout(()=>stop(),CLIP_SECONDS*1000);onStarted?.();}frames++;if(fps===30)captureTrack?.requestFrame?.();
       }catch{error();}
     },stop,

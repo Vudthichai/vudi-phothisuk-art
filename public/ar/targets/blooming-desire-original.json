@@ -1,0 +1,40 @@
+{
+  "sourcePdfSha256": "1259ef820c92ee134555616e73ec0ed0735a96b81f234dd8ae9da96d3a64bde3",
+  "page": 1,
+  "embeddedImageXref": 14,
+  "imageBoundsPt": [
+    79.80000305175781,
+    113.0,
+    298.20001220703125,
+    441.0
+  ],
+  "embeddedDimensions": [
+    1365,
+    2050
+  ],
+  "targetDimensions": [
+    682,
+    1024
+  ],
+  "targetImageSha256": "f97d0a0565a80c11676aa646f4c50d0f666f73c5a1c553524e3f382040c67736",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "38e5f9a78b9a13d5f2a3ce9f81023035391217281ea7413a6f5dd6d956c94979",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/blooming-desire/original/",
+      "pdfSha256": "1259ef820c92ee134555616e73ec0ed0735a96b81f234dd8ae9da96d3a64bde3",
+      "imagePixelsSha256": "38e5f9a78b9a13d5f2a3ce9f81023035391217281ea7413a6f5dd6d956c94979",
+      "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/blooming-desire/original/",
+      "sourceVariant": "bleed"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 4186
+  },
+  "compiledTargetSha256": "2f947e0e9bda0e30d2526e3f192db7ac2268cdbd47ade7354cc06ffb57671d81",
+  "compiledBytes": 889569
+}

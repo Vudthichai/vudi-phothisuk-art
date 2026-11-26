@@ -22,6 +22,6 @@ export default function CertificateAR({ experience, onClose }: { experience:AREx
     };
   },[onClose]);
   return <dialog ref={dialog} className="certificate-ar-modal" aria-label={`${experience.title} augmented reality`} onCancel={event=>{event.preventDefault();onClose();}}>
-    <iframe ref={frame} src={experience.id === 'mother-nature-original' ? '/rainforest-v5.html' : `/ar-camera.html?experience=${encodeURIComponent(experience.id)}`} title={`${experience.title} augmented reality camera`} allow="camera; web-share" referrerPolicy="same-origin"/>
+    <iframe ref={frame} src={experience.id === 'mother-nature-original' ? '/rainforest-v5.html' : `/ar-camera.html?experience=${encodeURIComponent(experience.id)}`} title={`${experience.title} augmented reality camera`} allow="camera; accelerometer; gyroscope; web-share" referrerPolicy="same-origin"/>
   </dialog>;
 }

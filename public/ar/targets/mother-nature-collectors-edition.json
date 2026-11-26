@@ -1,0 +1,40 @@
+{
+  "sourcePdfSha256": "f46657a805155b6648b00af6d336e4ba91b496ff169550a20b9c2e069678db61",
+  "page": 1,
+  "embeddedImageXref": 14,
+  "imageBoundsPt": [
+    65.95999908447266,
+    113.0,
+    312.0400085449219,
+    441.0
+  ],
+  "embeddedDimensions": [
+    1538,
+    2050
+  ],
+  "targetDimensions": [
+    768,
+    1024
+  ],
+  "targetImageSha256": "b6b6004231a152860c45e4f85c5ad28ee312e9579ef79f56497def777eb63a0e",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "6c040a22d9cf3386e6994fcee1ef3a92b83c67ae1eabc8f73788232e07a0deef",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/mother-nature/collectors-edition/",
+      "pdfSha256": "f46657a805155b6648b00af6d336e4ba91b496ff169550a20b9c2e069678db61",
+      "imagePixelsSha256": "6c040a22d9cf3386e6994fcee1ef3a92b83c67ae1eabc8f73788232e07a0deef",
+      "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/mother-nature/collectors-edition/",
+      "sourceVariant": "bleed"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 3866
+  },
+  "compiledTargetSha256": "4ca5a06069c6f53de535a384fd0793951508be34e0297cf2c49d7117b3c69976",
+  "compiledBytes": 813694
+}

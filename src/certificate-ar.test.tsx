@@ -43,7 +43,7 @@ it('opens an isolated, camera-capable AR frame only on request and exits back to
  expect(screen.getByRole('dialog')).toBeTruthy();
  const iframe=screen.getByTitle('Mother Nature augmented reality camera');
  expect(iframe.getAttribute('src')).toBe('/rainforest-v5.html');
- expect(iframe.getAttribute('allow')).toBe('camera; web-share');
+ expect(iframe.getAttribute('allow')).toBe('camera; accelerometer; gyroscope; web-share');
  fireEvent(window,new MessageEvent('message',{origin:location.origin,source:(iframe as HTMLIFrameElement).contentWindow,data:{type:'vpa-ar-exit'}}));
  await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
  expect(screen.getByRole('heading',{level:1,name:'Mother Nature'})).toBeTruthy();

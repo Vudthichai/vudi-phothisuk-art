@@ -1,4 +1,4 @@
-@font-face{font-family:'Bodoni Moda';src:url('/fonts/bodoni-moda-regular.ttf') format('truetype');font-display:swap}
+@import '../signatureTypography.css';
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#f7f5ef;color:#12351d;font-family:Arial,Helvetica,sans-serif}button,a{touch-action:manipulation}button,.ar-actions a{min-height:48px;padding:12px 18px;border:1px solid #12351d;background:#12351d;color:#f7f5ef;font:inherit;cursor:pointer}button:disabled{opacity:.55;cursor:default}[hidden]{display:none!important}:focus-visible{outline:3px solid #c99a37;outline-offset:3px}
 .ar-intro{max-width:480px;padding:72px 24px 28px;margin:auto;line-height:1.6}.ar-intro h1{font:400 clamp(30px,6vw,42px)/1.15 'Bodoni Moda',Georgia,serif;margin:16px 0}.ar-eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase}.ar-intro img{display:block;width:auto;height:135px;max-width:100%;object-fit:contain;margin:18px auto}.ar-intro>button{width:100%}.ar-intro p{font-size:15px}.ar-privacy{font-size:12px!important;line-height:1.6}
 .ar-exit{position:fixed;z-index:10;right:max(14px,env(safe-area-inset-right));top:calc(12px + env(safe-area-inset-top));border:1px solid rgb(255 255 255 / 35%);background:rgb(18 35 24 / 80%);color:#fff;min-width:76px;border-radius:24px;min-height:44px;padding:10px 15px;font-size:14px}.ar-exit span{margin-left:8px}
@@ -8,3 +8,78 @@
 .ar-panel{position:fixed;z-index:20;inset:0;overflow-y:auto;background:#f7f5ef;padding:calc(28px + env(safe-area-inset-top)) 24px calc(24px + env(safe-area-inset-bottom));line-height:1.65}.ar-panel>*{max-width:520px;margin-left:auto;margin-right:auto}.ar-panel h2{font:400 34px/1.2 'Bodoni Moda',Georgia,serif}.ar-panel p,.ar-panel li{font-size:14px}.ar-panel li{margin-bottom:12px}.ar-panel video{display:block;max-height:50dvh;max-width:100%;background:#181c16;width:auto}.ar-actions{display:flex;gap:12px;flex-wrap:wrap}.ar-actions a{text-decoration:none;display:inline-flex;align-items:center}.ar-actions button:last-child{background:transparent;color:#12351d}body:has(#ar-root[data-state="error"]){background:#181c16}
 @media(max-height:650px){.ar-intro{padding-top:56px}.ar-intro img{height:95px}.ar-intro h1{font-size:28px}}
 .ar-model-note{position:fixed;z-index:3;left:max(12px,env(safe-area-inset-left));top:calc(12px + env(safe-area-inset-top));max-width:calc(100vw - 112px);margin:0;border-radius:8px;padding:8px 10px;background:rgb(18 35 24 / 84%);color:#fff;font-size:12px;line-height:1.4;pointer-events:none}
+
+.msat-tagline {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  width: max-content;
+  margin: 0;
+  pointer-events: none;
+  transform: translateX(-50%);
+  color: #12351d;
+  font: 400 44px/1.02 'Bodoni Moda', Didot, Georgia, serif;
+  font-synthesis: none;
+  letter-spacing: -.035em;
+}
+.msat-line { position: relative; display: block; white-space: pre; isolation: isolate; }
+.msat-line::before {
+  position: absolute;
+  z-index: -1;
+  inset: -.25em -.54em;
+  border-radius: 46%;
+  background: rgb(252 248 230 / 65%);
+  filter: blur(.19em);
+  content: none;
+}
+.msat-line[data-painted]::before { content: ''; }
+.msat-tagline[data-busy] .msat-line::before { background: rgb(252 248 230 / 91%); }
+.msat-line-sizing { visibility: hidden; }
+.msat-glyphs {
+  position: absolute;
+  inset: 0 auto auto 0;
+  text-shadow: 0 0 .08em #fff8e5, 0 0 .17em #fff8e5;
+}
+.msat-caret {
+  display: inline-block;
+  width: max(1px, .035em);
+  height: .76em;
+  margin-inline-start: .055em;
+  vertical-align: -.03em;
+  background: currentColor;
+}
+.msat-nav {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  visibility: hidden;
+  max-width: 100%;
+}
+.msat-nav[data-ready] { visibility: visible; }
+.msat-nav a {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid rgb(255 255 255 / 30%);
+  border-radius: 24px;
+  background: rgb(18 43 28 / 94%);
+  color: #fff9eb;
+  font: 400 14px/1.2 Arial, Helvetica, sans-serif;
+  text-align: center;
+  text-underline-offset: .22em;
+}
+[data-msat] .ar-controls {
+  bottom: max(10px, env(safe-area-inset-bottom));
+  left: max(10px, env(safe-area-inset-left));
+  right: max(10px, env(safe-area-inset-right));
+  gap: 6px;
+}
+[data-msat] #ar-timer { min-height: 27px; }
+.msat-record-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
+[data-msat] .ar-controls #ar-record { min-height: 48px; }
+[data-msat] #ar-capture-help { min-height: 44px; }
+[data-msat] .ar-guidance { top: calc(14px + env(safe-area-inset-top)); right: 100px; text-align: left; }

@@ -1,0 +1,40 @@
+{
+  "sourcePdfSha256": "6dc888821bc238331a52b29827e629ac10aa0a034404389b17d98c6a73266e77",
+  "page": 1,
+  "embeddedImageXref": 14,
+  "imageBoundsPt": [
+    65.95999908447266,
+    113.0,
+    312.0400085449219,
+    441.0
+  ],
+  "embeddedDimensions": [
+    1538,
+    2050
+  ],
+  "targetDimensions": [
+    768,
+    1024
+  ],
+  "targetImageSha256": "2202d15fc9d3c7f19ba191774f4410cd095e9dde706cadd849a7b08a65be2ce0",
+  "operation": "Exact embedded front-image selection; proportional downsample only. No crop, recoloring, or artwork generation.",
+  "collectorsEditionCompatible": false,
+  "embeddedImagePixelsSha256": "604cc32a8dd136f8b4e67d26f836cfd3c04ce1cfb367e40297e066155f19c597",
+  "certificateSources": [
+    {
+      "path": "/coa/forest-and-flowers/tiger-lily/collectors-edition/",
+      "pdfSha256": "6dc888821bc238331a52b29827e629ac10aa0a034404389b17d98c6a73266e77",
+      "imagePixelsSha256": "604cc32a8dd136f8b4e67d26f836cfd3c04ce1cfb367e40297e066155f19c597",
+      "qrUrl": "https://vudiphothisukart.com/coa/forest-and-flowers/tiger-lily/collectors-edition/",
+      "sourceVariant": "bleed"
+    }
+  ],
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 10,
+    "matchingFeatures": 3940
+  },
+  "compiledTargetSha256": "04163896f6b0abc31d0a07368ab927c3e1e2d2d048abed5676f98402d3daad76",
+  "compiledBytes": 827819
+}

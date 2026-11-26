@@ -1,0 +1,19 @@
+{
+  "sourcePath": "public/brand/msat-floral.png",
+  "sourceSha256": "e72ffbf741ac3fd1902e6051012ddd03c3f9cb35c1f2a6dc608a0e0eb4b06edd",
+  "sourceVerification": "Provisional. Authentic MSAT floral artwork. No physical magnet print proof was located, so magnet layout and tracking await on-device review.",
+  "targetDimensions": [
+    960,
+    960
+  ],
+  "targetImageSha256": "cffd310435ffddb6f7468caa15821ee7e75d09e92472a5c3033646944b274ac5",
+  "operation": "Proportional downsample centered on white square with 24-pixel minimum margin. No crop, recoloring, added artwork, or tracking pattern.",
+  "compiler": {
+    "name": "MindAR",
+    "version": "1.2.5",
+    "featureLevels": 11,
+    "matchingFeatures": 1922
+  },
+  "compiledTargetSha256": "1100aafff13c02c428f047bfeb8d683d32fec0172a814b8d4e11f5b13ffd8842",
+  "compiledBytes": 430713
+}

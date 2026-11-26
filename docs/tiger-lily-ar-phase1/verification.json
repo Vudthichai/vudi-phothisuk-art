@@ -1,0 +1,59 @@
+{
+  "environment": "Chromium software WebGL + complete authentic PDF-front camera fixtures; not physical iPhone/printed-card verification",
+  "errors": [],
+  "cases": {
+    "frontal": {
+      "recognized": true,
+      "noModelRequests": true,
+      "noMotherTargetRequests": true,
+      "cameraStopped": true,
+      "latestTrackedSoftwareSample": {
+        "fps": 7.270744342570218,
+        "frameP50Ms": 116.69999998807907,
+        "frameP95Ms": 208.90000000596046,
+        "renderCpuP95Ms": 4.5999999940395355,
+        "drawCalls": 1,
+        "triangles": 0,
+        "geometries": 1,
+        "textures": 1,
+        "trackingFound": true,
+        "lossEvents": 0,
+        "poseUpdates": 25,
+        "poseStepMeanTargetWidths": 5.30716330938198e-16,
+        "poseAgeMs": 134.69999998807907
+      }
+    },
+    "moving-oblique": {
+      "recognized": true,
+      "reacquiredAfterOcclusion": true,
+      "noModelRequests": true,
+      "noMotherTargetRequests": true,
+      "cameraStopped": true,
+      "latestTrackedSoftwareSample": {
+        "fps": 8.845208845208845,
+        "frameP50Ms": 124.69999998807907,
+        "frameP95Ms": 208.09999999403954,
+        "renderCpuP95Ms": 4,
+        "drawCalls": 1,
+        "triangles": 0,
+        "geometries": 1,
+        "textures": 1,
+        "trackingFound": true,
+        "lossEvents": 0,
+        "poseUpdates": 16,
+        "poseStepMeanTargetWidths": 0.007752719378293503,
+        "poseAgeMs": 150.09999999403954
+      }
+    },
+    "negative-mother-nature": {
+      "recognized": false,
+      "observationSeconds": 12,
+      "noModelRequests": true,
+      "noMotherTargetRequests": true,
+      "cameraStopped": true
+    }
+  },
+  "permissionDeniedHandled": true,
+  "normalEntryDisabled": true,
+  "passed": true
+}
