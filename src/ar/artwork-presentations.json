@@ -19,6 +19,7 @@
   "blooming-desire": {
     "modelAsset": "/ar/models/blooming-desire.glb",
     "previewLabel": "Blooming Desire Opening",
+    "previewFirstBreath": true,
     "previewComposition": {
       "bloomOpening": true,
       "pieces": [

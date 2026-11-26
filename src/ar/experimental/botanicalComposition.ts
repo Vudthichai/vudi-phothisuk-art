@@ -9,6 +9,7 @@ import { createLeafRain } from './leafRain';
 import { createGildedBotanical } from './gildedBotanical';
 import { createEtherealPetals } from './etherealPetals';
 import { createBloomOpening } from './bloomOpening';
+import { createFirstBreathAtmosphere } from './firstBreathAtmosphere';
 import { createSculptureEntrance } from './sculptureEntrance';
 import { createMossAwakening, mossTurn } from './mossAwakening';
 
@@ -36,6 +37,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     let rain: ReturnType<typeof createLeafRain> | undefined;
     let petals: ReturnType<typeof createEtherealPetals> | undefined;
     let bloom: ReturnType<typeof createBloomOpening> | undefined;
+    let breath: ReturnType<typeof createFirstBreathAtmosphere> | undefined;
     let awakening: ReturnType<typeof createMossAwakening> | undefined;
     let entrance: ReturnType<typeof createSculptureEntrance> | undefined;
     onState('loading');
@@ -87,7 +89,10 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         }
         if (composition.entrance) entrance = createSculptureEntrance(composition.entrance, turn, upright);
         if (composition.petalRain) petals = createEtherealPetals(upright);
-        if (composition.bloomOpening) bloom = createBloomOpening(turn);
+        if (composition.bloomOpening || composition.firstBreath) {
+          bloom = createBloomOpening(turn, composition.firstBreath);
+          if (composition.firstBreath) breath = createFirstBreathAtmosphere(upright, bloom.stamen, 4.4);
+        }
         ready = true;
         onState('ready');
       } catch {
@@ -114,7 +119,10 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           if (root.visible) awakening.update(frame.elapsedSeconds, reduced);
           turn.rotation.y = reduced ? 0 : mossTurn(frame.elapsedSeconds);
         } else {
-          if (root.visible) petals?.update(frame.elapsedSeconds, reduced);
+          if (root.visible) {
+            petals?.update(frame.elapsedSeconds, reduced);
+            breath?.update(frame.elapsedSeconds, reduced);
+          }
           turn.rotation.y = bloom ? bloom.update(frame.elapsedSeconds, reduced)
             : entrance ? entrance.update(frame.elapsedSeconds, reduced) : frame.turn;
           if (root.visible && !reduced) floatElapsed += step;
@@ -129,6 +137,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         signal.removeEventListener('abort', abort);
         rain?.dispose();
         petals?.dispose();
+        breath?.dispose();
         awakening?.dispose();
         entrance?.dispose();
         disposeModel(root);

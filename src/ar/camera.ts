@@ -1,4 +1,4 @@
-import { arById } from './config';
+import { arById, FIRST_BREATH_LABEL, FIRST_BREATH_VARIANT } from './config';
 import { msatExperience, msatTagline } from './msatConfig';
 import { beginRecording, recordingMimeType, CLIP_SECONDS } from './recording';
 import type { LocalRecording } from './recording';
@@ -12,8 +12,10 @@ const hubMode=__VPA_AR_EXPERIMENTS__&&!msatMode&&params.get('hub')==='1';
 const reviewMode=hubMode||msatMode;
 const hubExperience=hubMode?arById(params.get('experience'),true):undefined;
 const variant=params.get('variant');
-const previewComposition=variant==='v3'?hubExperience?.previewV3Composition:variant==='v2'?hubExperience?.previewComposition:undefined;
-const previewLabel=variant==='v3'?'Gilded Bloom V3 · Golden Awakening':hubExperience?.previewLabel;
+const previewComposition=variant===FIRST_BREATH_VARIANT?hubExperience?.previewFirstBreathComposition
+  :variant==='v3'?hubExperience?.previewV3Composition:variant==='v2'?hubExperience?.previewComposition:undefined;
+const previewLabel=variant===FIRST_BREATH_VARIANT?FIRST_BREATH_LABEL
+  :variant==='v3'?'Gilded Bloom V3 · Golden Awakening':hubExperience?.previewLabel;
 const tigerRecognition=__VPA_AR_EXPERIMENTS__&&location.pathname==='/tiger-lily-ar.html';
 const tigerFlower=tigerRecognition&&new URLSearchParams(location.search).get('mode')!=='recognition';
 const rainforestAtmosphere=hubMode?hubExperience?.rainforestV5&&params.get('mode')!=='recognition':location.pathname==='/rainforest-v5.html';

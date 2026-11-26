@@ -16,19 +16,24 @@ export type BotanicalComposition = {
   leafRain?: boolean;
   petalRain?: boolean;
   bloomOpening?: boolean;
+  firstBreath?: boolean;
   gildedBotanical?: boolean;
   mossAwakening?: boolean;
   float?: number;
   entrance?: Entrance;
   pieces: { asset: string; size: number; position: number[]; rotation: number[]; fitHeight?: boolean }[];
 };
-type Presentation = { modelAsset?: string; rainforestV5?: boolean; composition?: BotanicalComposition; previewComposition?: BotanicalComposition; previewV3Composition?: BotanicalComposition; previewLabel?: string; entrance?: Entrance };
-export type ARExperience = { id:string; artworkId:string; title:string; certificateLabel:string; certificatePaths:string[]; entryPaths?:string[]; targetImage:string; targetFile:string; targetIndex:number; targetAspect?:number; previewOnly?:boolean; recognitionOnly?:boolean; } & Presentation;
+type Presentation = { modelAsset?: string; rainforestV5?: boolean; composition?: BotanicalComposition; previewComposition?: BotanicalComposition; previewV3Composition?: BotanicalComposition; previewFirstBreath?: boolean; previewLabel?: string; entrance?: Entrance };
+export type ARExperience = { id:string; artworkId:string; title:string; certificateLabel:string; certificatePaths:string[]; entryPaths?:string[]; targetImage:string; targetFile:string; targetIndex:number; targetAspect?:number; previewOnly?:boolean; recognitionOnly?:boolean; previewFirstBreathComposition?: BotanicalComposition; } & Presentation;
+export const FIRST_BREATH_VARIANT = 'first-breath';
+export const FIRST_BREATH_LABEL = 'Blooming Desire — First Breath';
 const presentations: Readonly<Record<string, Presentation>> = artworkPresentations;
 // The certificate selects the tracked image. The artwork selects its presentation.
 const registeredExperiences: readonly ARExperience[] = experiences.map(certificate => {
   const presentation = presentations[certificate.artworkId];
-  return { ...certificate, ...presentation, recognitionOnly: !presentation };
+  const previewFirstBreathComposition = presentation?.previewFirstBreath && presentation.previewComposition
+    ? { ...presentation.previewComposition, firstBreath: true } : undefined;
+  return { ...certificate, ...presentation, recognitionOnly: !presentation, previewFirstBreathComposition };
 });
 export const certificateARPreviews = registeredExperiences;
 export const arExperiences: readonly ARExperience[] = registeredExperiences.filter(experience=>!experience.previewOnly);

@@ -16,7 +16,7 @@ for(const experience of experiences) {
     assert.equal(experience.entryPaths.length,0,'Previews must not enable certificate-page entry controls.');
     assert.equal(experience.targetAspect,meta.targetDimensions[0]/meta.targetDimensions[1]);
   }
-  for (const key of ['modelAsset','rainforestV5','composition','previewComposition','previewV3Composition','previewLabel','entrance','recognitionOnly']) {
+  for (const key of ['modelAsset','rainforestV5','composition','previewComposition','previewV3Composition','previewFirstBreath','previewLabel','entrance','recognitionOnly']) {
     assert(!Object.hasOwn(experience,key),'Set presentations once per artwork.');
   }
   assert.equal(hash(image),meta.targetImageSha256);assert.equal(hash(target),meta.compiledTargetSha256);
@@ -82,6 +82,10 @@ for (const presentation of Object.values(presentations)) {
   validateEntrance(presentation.entrance);
   assert.equal([presentation.modelAsset, presentation.rainforestV5, presentation.composition].filter(Boolean).length,1);
   if (presentation.modelAsset) modelPaths.add(presentation.modelAsset);
+  if (presentation.previewFirstBreath) {
+    assert.equal(presentation.previewComposition?.bloomOpening, true);
+    assert.deepEqual(presentation.previewComposition.pieces.map(piece => piece.asset), [presentation.modelAsset]);
+  }
   for (const composition of [presentation.composition, presentation.previewComposition, presentation.previewV3Composition].filter(Boolean)) {
     const { pieces, leafRain, entrance } = composition;
     validateEntrance(entrance);
