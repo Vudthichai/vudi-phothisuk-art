@@ -13,6 +13,7 @@ import { createAtmosphereMist } from './atmosphereMist';
 import { createAttachedFlowers } from './flowers';
 import { createForegroundLeaf } from './foregroundLeaf';
 import { LIVING_CONFIG, createLivingReveal, createMaterialFade, createRootBotanicals } from './living';
+import { createAncientSunlight } from './ancientSunlight';
 export type Placement={height:number;x:number;y:number;yaw:number};
 export const DEFAULT_PLACEMENT:Placement={height:3,x:0,y:-.55,yaw:0};
 export function placeRainforest(asset:Group,placement:Placement){
@@ -24,12 +25,13 @@ export function placeRainforest(asset:Group,placement:Placement){
 }
 export const CINEMATIC_PLACEMENT:Placement={height:2.6,x:0,y:-.55,yaw:-12};
 export const LIVING_PLACEMENT:Placement={...CINEMATIC_PLACEMENT,height:LIVING_CONFIG.previousHeight*LIVING_CONFIG.settled};
-export type RainforestOptions={cinematic?:boolean;diagnostics?:boolean;mistEnabled?:boolean;stabilize?:boolean;living?:boolean;sculpture?:boolean;atmosphere?:boolean;flowersEnabled?:boolean;leafEnabled?:boolean;rotateReveal?:boolean};
+export type RainforestOptions={cinematic?:boolean;diagnostics?:boolean;mistEnabled?:boolean;stabilize?:boolean;living?:boolean;sculpture?:boolean;atmosphere?:boolean;flowersEnabled?:boolean;leafEnabled?:boolean;rotateReveal?:boolean;ancientSunlight?:boolean};
 export function setupRainforestLab(host:HTMLElement,options:RainforestOptions={}){
  const atmosphere=options.atmosphere===true,sculpture=options.sculpture===true||atmosphere,living=options.living===true||sculpture,cinematic=options.cinematic===true||living,diagnostics=options.diagnostics??!cinematic,defaults=living?LIVING_PLACEMENT:cinematic?CINEMATIC_PLACEMENT:DEFAULT_PLACEMENT;
+ const ancientSunlight=atmosphere&&options.ancientSunlight===true;
  const panel=document.createElement('details');panel.className='rainforest-lab';panel.innerHTML=`<summary>Rainforest lab · controls &amp; metrics</summary><p>Experimental · Mother Nature image target. No growth animation or automatic spin. Move back to frame the canopy.</p><label>Tree height (target widths)<input data-setting="height" type="range" min=".75" max="6" step=".05" value="3"><output data-value="height">3</output></label><label>Across artwork<input data-setting="x" type="range" min="-1" max="1" step=".01" value="0"><output data-value="x">0</output></label><label>Along artwork<input data-setting="y" type="range" min="-.7" max=".7" step=".01" value="-.55"><output data-value="y">-.55</output></label><label>Manual trunk angle<input data-setting="yaw" type="range" min="-180" max="180" step="1" value="0"><output data-value="yaw">0</output></label><label>Render pixel ratio (quality / performance)<input data-quality type="range" min=".5" max="1.25" step=".25" value="1"><output data-quality-value>1</output></label><button data-reset type="button">Reset placement</button><pre data-metrics aria-live="off">Waiting for model and tracking…</pre><button data-copy type="button">Copy diagnostics</button><p data-copy-status role="status"></p><p><a href="${modelUrl}" download="Ancient-Rainforest-Mobile.glb">Download optimized GLB</a></p><p>FPS is submitted browser render frames, not a GPU or physical iPhone benchmark. Pose steps include phone motion. JS heap is unavailable in Safari; GPU counts are not bytes.</p>`;if(living){panel.querySelector('p')!.textContent=atmosphere?'V5 atmospheric review: approved fixed-size tree, unchanged fade/rotation. Effects use independent query flags.':sculpture?'V4 internal review: fixed scale, 0.7-second fade and continuous 11-second rotation.':'V3 internal review: 50% to 60% materialization, one optional turn, then rest.';panel.querySelector<HTMLInputElement>('input[data-setting=height]')!.step='.01';}if(diagnostics)host.append(panel);
  let session:ARSession|undefined;let activePlacement:((p:Placement)=>void)|undefined;const placement={...defaults};let mistEnabled=cinematic&&options.mistEnabled!==false;let activeMist:((enabled:boolean)=>void)|undefined;let disposed=false;
- const report:Record<string,unknown>={experiment:atmosphere?'ancient-rainforest-v5':sculpture?'ancient-rainforest-v4':living?'ancient-rainforest-v3':cinematic?'ancient-rainforest-v2':'ancient-rainforest',sampledAt:new Date().toISOString(),userAgent:navigator.userAgent,placement,mistEnabled,flowersEnabled:atmosphere&&options.flowersEnabled!==false,leafEnabled:atmosphere&&options.leafEnabled!==false,collectorScale:1,renderPixelRatio:1,load:{state:'waiting'},samples:[]};
+ const report:Record<string,unknown>={experiment:ancientSunlight?'ancient-tree-sunlight':atmosphere?'ancient-rainforest-v5':sculpture?'ancient-rainforest-v4':living?'ancient-rainforest-v3':cinematic?'ancient-rainforest-v2':'ancient-rainforest',sampledAt:new Date().toISOString(),userAgent:navigator.userAgent,placement,mistEnabled,flowersEnabled:atmosphere&&options.flowersEnabled!==false,leafEnabled:atmosphere&&options.leafEnabled!==false,collectorScale:1,renderPixelRatio:1,load:{state:'waiting'},samples:[]};
  const print=()=>{if(!diagnostics)return;panel.querySelector('[data-metrics]')!.textContent=JSON.stringify({...report,samples:(report.samples as unknown[]).slice(-1)},null,2);};
  panel.addEventListener('input',event=>{const input=event.target as HTMLInputElement,key=input.dataset.setting as keyof Placement;if(input.hasAttribute('data-mist')){mistEnabled=input.checked;report.mistEnabled=mistEnabled;activeMist?.(mistEnabled);print();return;}if(input.hasAttribute('data-quality')){const value=Number(input.value);report.renderPixelRatio=value;panel.querySelector('[data-quality-value]')!.textContent=input.value;session?.setRenderPixelRatio(value);print();return;}if(!(key in placement))return;placement[key]=Number(input.value);panel.querySelector(`[data-value="${key}"]`)!.textContent=input.value;activePlacement?.({...placement});print();});
  panel.querySelector('[data-reset]')!.addEventListener('click',()=>{Object.assign(placement,defaults);for(const input of panel.querySelectorAll<HTMLInputElement>('input[data-setting]')){const key=input.dataset.setting as keyof Placement;input.value=String(placement[key]);panel.querySelector(`[data-value="${key}"]`)!.textContent=input.value;}activePlacement?.({...placement});print();});
@@ -52,6 +54,7 @@ export function setupRainforestLab(host:HTMLElement,options:RainforestOptions={}
  const factory:SculptureFactory=({signal,onState,onError,view})=>{
   const root=new Group();let model:Group|undefined,placed:ReturnType<typeof placeRainforest>|undefined,disposed=false,mist:ReturnType<typeof createCinematicMist>|undefined,botanicals:ReturnType<typeof createRootBotanicals>|undefined,fade:ReturnType<typeof createMaterialFade>|undefined;
   let flowers:ReturnType<typeof createAttachedFlowers>|undefined,leaf:ReturnType<typeof createForegroundLeaf>|undefined,decorationFrame:Group|undefined;
+  let sunlight:ReturnType<typeof createAncientSunlight>|undefined;
   const reveal=sculpture?createSculptureTimeline():living?createLivingReveal(options.rotateReveal??LIVING_CONFIG.rotate):undefined;let revealState=reveal?.update(0,false,false);const download=new AbortController(),started=performance.now();
   const abort=()=>download.abort();signal.addEventListener('abort',abort,{once:true});if(signal.aborted)abort();const timeout=window.setTimeout(abort,60000);onState('loading');report.load={state:'loading',startedMs:started};print();
   void(async()=>{try{
@@ -68,11 +71,13 @@ export function setupRainforestLab(host:HTMLElement,options:RainforestOptions={}
      report.flowerCount=flowers?.count??0;report.flowerAnchors=flowers?.anchors.map(a=>a.position.toArray())??[];report.leafReady=Boolean(leaf);host.dataset.flowerCount=String(flowers?.count??0);
     }
     fade=createMaterialFade(root);fade(0);root.visible=false;
+    if(ancientSunlight)sunlight=createAncientSunlight(model,placed.root);
    }
    const applyPlacement=(value:Placement)=>{
     const height=value.height*(revealState?.heightFactor??1),turn=revealState?.turn??0;
     placed!.setPlacement({...value,height,yaw:value.yaw+turn*180/Math.PI});
     mist?.root.scale.setScalar(height);
+    sunlight?.root.scale.setScalar(height);
     if(decorationFrame){decorationFrame.scale.setScalar(height);decorationFrame.rotation.y=value.yaw*Math.PI/180+turn;}
     if(botanicals){botanicals.root.scale.setScalar(height);botanicals.root.rotation.y=value.yaw*Math.PI/180+turn;}
    };
@@ -86,10 +91,13 @@ export function setupRainforestLab(host:HTMLElement,options:RainforestOptions={}
    if(reveal&&placed){revealState=reveal.update(_time,_reduced,tracked);root.visible=revealState.started;activePlacement?.(placement);fade?.(revealState.opacity);
     host.dataset.reveal=!revealState.started?'waiting':revealState.progress<1?'revealing':'settled';host.dataset.revealHeight=String(placement.height*revealState.heightFactor);host.dataset.revealTurn=String(revealState.turn);if('elapsedSeconds' in revealState)host.dataset.presentationSeconds=String(revealState.elapsedSeconds);
    }
-   mist?.update(_time,_reduced,revealState?.opacity??1);
-   if(leaf){const seconds=revealState&&'elapsedSeconds' in revealState?Number(revealState.elapsedSeconds):_time;leaf.update(seconds,_reduced,tracked,revealState?.opacity??1);if(diagnostics)report.foregroundLeaf=leaf.state();if(host.dataset.leafActive!==String(leaf.mesh.visible))host.dataset.leafActive=String(leaf.mesh.visible);if(host.dataset.leafLaunches!==String(leaf.launches))host.dataset.leafLaunches=String(leaf.launches);}
+   const opacity=revealState?.opacity??1;
+   const seconds=revealState&&'elapsedSeconds' in revealState?Number(revealState.elapsedSeconds):_time;
+   mist?.update(sunlight?seconds:_time,_reduced,sunlight&&!_reduced?opacity*.76:opacity);
+   sunlight?.update(seconds,placement.yaw*Math.PI/180+(revealState?.turn??0),opacity,_reduced,tracked);
+   if(leaf){leaf.update(seconds,_reduced,tracked,opacity);if(diagnostics)report.foregroundLeaf=leaf.state();if(host.dataset.leafActive!==String(leaf.mesh.visible))host.dataset.leafActive=String(leaf.mesh.visible);if(host.dataset.leafLaunches!==String(leaf.launches))host.dataset.leafLaunches=String(leaf.launches);}
 
-  },dispose(){if(disposed)return;disposed=true;download.abort();clearTimeout(timeout);signal.removeEventListener('abort',abort);mist?.dispose();flowers?.dispose();leaf?.dispose();botanicals?.dispose();if(model)disposeModel(model);activePlacement=undefined;activeMist=undefined;root.clear();}};
+  },dispose(){if(disposed)return;disposed=true;download.abort();clearTimeout(timeout);signal.removeEventListener('abort',abort);mist?.dispose();flowers?.dispose();leaf?.dispose();botanicals?.dispose();sunlight?.dispose();if(model)disposeModel(model);activePlacement=undefined;activeMist=undefined;root.clear();}};
  };
  return {factory,trackingTolerance:living?{warmup:3,miss:3}:undefined,poseFilter:cinematic&&options.stabilize!==false?new StableImagePose(living):undefined,onMetrics:diagnostics?collectMetrics:undefined,attachSession:(value:ARSession)=>{session=value;session.setRenderPixelRatio(Number(report.renderPixelRatio));},dispose(){disposed=true;pinch?.dispose();resetButton?.removeEventListener('click',resetView);resetButton?.remove();reviewHelp?.remove();host.removeEventListener('rainforest-recording-result',recordingResult);host.removeEventListener('webglcontextlost',contextLost,true);for(const input of panel.querySelectorAll<HTMLInputElement>('input,button[data-reset]'))input.disabled=true;report.endedAt=new Date().toISOString();print();}};
 }

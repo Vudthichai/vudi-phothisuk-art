@@ -35,3 +35,50 @@ it('keeps all additions independently disabled without changing approved size, f
  const scene=new Scene(),camera=new PerspectiveCamera(),view=setupRainforestLab(host,{atmosphere:true,flowersEnabled:false,leafEnabled:false,mistEnabled:false});const states:string[]=[];const sculpture=view.factory({signal:new AbortController().signal,onState:s=>states.push(s),onError:e=>{throw e;},view:{camera,scene}});
  await vi.waitFor(()=>expect(states).toContain('ready'));sculpture.update(0,false,true);sculpture.update(.7,false,true);sculpture.update(11,false,true);expect(host.dataset.revealHeight).toBe('1.56');expect(Number(host.dataset.revealTurn)).toBeCloseTo(2*Math.PI);expect(host.dataset.flowerCount).toBe('0');expect(scene.getObjectByName('Occasional foreground rainforest leaf')).toBeUndefined();expect(sculpture.root.getObjectByName('Layered rainforest atmosphere')).toBeUndefined();expect(view.trackingTolerance).toEqual({warmup:3,miss:3});expect(host.querySelector('input')).toBeNull();sculpture.dispose();view.dispose();
 });
+
+it('opt-in Ancient Tree sunlight shares the approved asset and pauses its upright petal drift',async()=>{
+ const models=[terrain(),terrain()];
+ const parse=vi.spyOn(GLTFLoader.prototype,'parseAsync');
+ models.forEach(model=>parse.mockResolvedValueOnce({scene:model} as never));
+ const fetchModel=vi.fn(async(_url:string)=>({ok:true,arrayBuffer:async()=>new ArrayBuffer(8)}));
+ vi.stubGlobal('fetch',fetchModel);
+ const scenes=[];
+ for(const ancientSunlight of [false,true]){
+  const host=document.createElement('main');
+  host.innerHTML='<div class="ar-surface"></div><div class="ar-controls"></div><div class="ar-actions"></div><div class="ar-guidance"></div>';
+  const lab=setupRainforestLab(host,{atmosphere:true,flowersEnabled:false,leafEnabled:false,ancientSunlight});
+  const states:string[]=[];
+  const instance=lab.factory({signal:new AbortController().signal,onState:s=>states.push(s),onError:error=>{throw error;}});
+  await vi.waitFor(()=>expect(states).toContain('ready'));
+  instance.update(0,false,true);
+  instance.update(4.7,false,true);
+  scenes.push({host,instance,lab});
+ }
+ const [approved,preview]=scenes;
+ expect(fetchModel.mock.calls).toHaveLength(2);
+ expect(fetchModel.mock.calls[0][0]).toEqual(fetchModel.mock.calls[1][0]);
+ expect(approved.instance.root.getObjectByName('Ancient Tree breeze')).toBeUndefined();
+ expect(preview.host.dataset.revealHeight).toBe(approved.host.dataset.revealHeight);
+ expect(preview.host.dataset.revealTurn).toBe(approved.host.dataset.revealTurn);
+ expect(preview.instance.uprightRoot?.()?.position.toArray()).toEqual(approved.instance.uprightRoot?.()?.position.toArray());
+ const petals=preview.instance.root.getObjectByName('Occasional Ancient Tree petals') as InstancedMesh;
+ const material=(models[1].children[0] as Mesh).material as MeshStandardMaterial;
+ expect(material.customProgramCacheKey()).toContain('ancient-sunlight');
+ expect(((models[0].children[0] as Mesh).material as MeshStandardMaterial).customProgramCacheKey()).not.toContain('ancient-sunlight');
+ expect(petals.visible).toBe(true);
+ expect(petals.count).toBe(1);
+ const before=new Matrix4();
+ petals.getMatrixAt(0,before);
+ preview.instance.update(6,false,false);
+ expect(petals.visible).toBe(false);
+ preview.instance.update(30,false,true);
+ const resumed=new Matrix4();
+ petals.getMatrixAt(0,resumed);
+ expect(resumed.equals(before)).toBe(true);
+ preview.instance.update(30,true,true);
+ expect(petals.visible).toBe(false);
+ expect(preview.host.dataset.revealTurn).toBe('0');
+ const disposal=vi.spyOn(petals.geometry,'dispose');
+ for(const {instance,lab} of scenes){instance.dispose();lab.dispose();}
+ expect(disposal).toHaveBeenCalledOnce();
+});

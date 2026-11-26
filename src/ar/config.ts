@@ -19,6 +19,7 @@ export type BotanicalComposition = {
   firstBreath?: boolean;
   gildedBotanical?: boolean;
   mossAwakening?: boolean;
+  stumpRebirth?: boolean;
   float?: number;
   entrance?: Entrance;
   pieces: { asset: string; size: number; position: number[]; rotation: number[]; fitHeight?: boolean }[];

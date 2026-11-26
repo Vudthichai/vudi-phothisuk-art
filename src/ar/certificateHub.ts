@@ -1,4 +1,5 @@
 import { certificateARPreviews, FIRST_BREATH_LABEL, FIRST_BREATH_VARIANT } from './config';
+import { creativePreviewFor } from './creativePreviews';
 
 const list = document.querySelector('#certificates')!;
 const entries = [...certificateARPreviews].sort((a, b) => a.certificatePaths[0].localeCompare(b.certificatePaths[0]));
@@ -36,6 +37,15 @@ for (const experience of entries) {
     params.set('variant', FIRST_BREATH_VARIANT);
     preview.href = `/ar-camera.html?${params}`;
     preview.textContent = `Preview ${FIRST_BREATH_LABEL}`;
+    item.append(preview);
+    params.delete('variant');
+  }
+  const creative = creativePreviewFor(experience);
+  if (creative) {
+    const preview = document.createElement('a');
+    params.set('variant', creative.variant);
+    preview.href = `/ar-camera.html?${params}`;
+    preview.textContent = `Preview ${creative.label}`;
     item.append(preview);
     params.delete('variant');
   }

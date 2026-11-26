@@ -12,6 +12,7 @@ import { createBloomOpening } from './bloomOpening';
 import { createFirstBreathAtmosphere } from './firstBreathAtmosphere';
 import { createSculptureEntrance } from './sculptureEntrance';
 import { createMossAwakening, mossTurn } from './mossAwakening';
+import { createStumpRebirth } from './stumpRebirth';
 
 export function createBotanicalComposition(composition: BotanicalComposition, title: string): SculptureFactory {
   return ({ signal, onState, onError }) => {
@@ -39,6 +40,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     let bloom: ReturnType<typeof createBloomOpening> | undefined;
     let breath: ReturnType<typeof createFirstBreathAtmosphere> | undefined;
     let awakening: ReturnType<typeof createMossAwakening> | undefined;
+    let rebirth: ReturnType<typeof createStumpRebirth> | undefined;
     let entrance: ReturnType<typeof createSculptureEntrance> | undefined;
     onState('loading');
 
@@ -83,6 +85,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           rain = createLeafRain(turn, green, gold);
         }
         if (composition.mossAwakening) awakening = createMossAwakening(turn, upright);
+        if (composition.stumpRebirth) rebirth = createStumpRebirth(turn, upright);
         if (composition.gildedBotanical) {
           const support = createGildedBotanical(turn.children[0] as Group);
           turn.add(...support.children.slice());
@@ -108,6 +111,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     return {
       root,
       uprightRoot: () => upright,
+      ...(composition.stumpRebirth && { pausePresentation: () => { timeline.update(0, false, false); } }),
       update(time, reduced, tracked) {
         const step = previousTime === undefined ? 0 : Math.min(.1, Math.max(0, time - previousTime));
         previousTime = time;
@@ -118,6 +122,8 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         } else if (awakening) {
           if (root.visible) awakening.update(frame.elapsedSeconds, reduced);
           turn.rotation.y = reduced ? 0 : mossTurn(frame.elapsedSeconds);
+        } else if (rebirth) {
+          if (root.visible) turn.rotation.y = rebirth.update(frame.elapsedSeconds, reduced);
         } else {
           if (root.visible) {
             petals?.update(frame.elapsedSeconds, reduced);
@@ -139,6 +145,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         petals?.dispose();
         breath?.dispose();
         awakening?.dispose();
+        rebirth?.dispose();
         entrance?.dispose();
         disposeModel(root);
         root.clear();
