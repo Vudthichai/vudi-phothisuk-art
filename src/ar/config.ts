@@ -21,7 +21,7 @@ export type BotanicalComposition = {
   gildedBotanical?: boolean;
   mossAwakening?: boolean;
   stumpRebirth?: boolean;
-  creativeFinish?: 'moss' | 'gilded';
+  creativeFinish?: 'moss' | 'gilded' | 'ethereal' | 'leaves';
   lilyCinematics?: LilyCinematics;
   float?: number;
   entrance?: Entrance;

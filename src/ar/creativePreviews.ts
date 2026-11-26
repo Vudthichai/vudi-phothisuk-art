@@ -46,6 +46,20 @@ const previews: Readonly<Record<string, CreativePreview>> = {
     label: 'Wild Tiger Lilies — The Dance',
     composition: ({ composition }) => composition && { ...composition, lilyCinematics: 'the-dance' },
   },
+  'ethereal-bloom': {
+    variant: 'floating-serenity',
+    label: 'Ethereal Bloom — Floating Serenity',
+    composition: ({ composition }) => composition && {
+      ...composition,
+      creativeFinish: 'ethereal',
+      entrance: composition.entrance && { ...composition.entrance, duration: 3.12, softness: .31 },
+    },
+  },
+  '75-leaves': {
+    variant: 'the-golden-moment',
+    label: '75 Leaves — The Golden Moment',
+    composition: ({ composition }) => composition && { ...composition, creativeFinish: 'leaves' },
+  },
 };
 
 export function creativePreviewFor(experience?: ARExperience) {

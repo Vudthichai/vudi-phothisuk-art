@@ -69,7 +69,7 @@ if(msatMode){
  const image=root.querySelector<HTMLImageElement>('#ar-target-preview')!;
  image.alt='White MSAT magnet with the forest-green botanical monogram';image.width=image.height=512;
  root.querySelector('#ar-fallback li:nth-child(2)')!.textContent='Return here, tap Continue, then point at the MSAT magnet for 10–15 seconds.';
- mountMsatHud(root);
+ mountMsatHud(root,params.get('variant')==='two-line');
 }
 let hasTracked=false,hubLossShown=false;
 let experimentCleanup:(()=>void)|undefined;

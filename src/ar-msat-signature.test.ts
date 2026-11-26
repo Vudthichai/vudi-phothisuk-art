@@ -1,6 +1,6 @@
 import { expect, it } from 'vitest';
 import { msatPresentation } from './ar/experimental/msatSignature';
-import { msatTypewriter } from './ar/experimental/msatOverlay';
+import { msatCaptionLines, msatTypewriter } from './ar/experimental/msatOverlay';
 import { createSculptureTimeline } from './ar/experimental/sculptureTimeline';
 import { msatExperience, msatTagline } from './ar/msatConfig';
 import { certificateARPreviews } from './ar/config';
@@ -10,6 +10,13 @@ it('keeps the magnet and authentic phrase separate from the 15 certificate targe
   expect(certificateARPreviews).toHaveLength(15);
   expect(certificateARPreviews.some(entry => entry.targetFile === msatExperience.targetFile)).toBe(false);
   expect(msatExperience.certificatePaths).toEqual([]);
+});
+
+it('keeps the approved single line and only wraps narrow screens in the optional preview', () => {
+  expect(msatCaptionLines(320, false)).toEqual([msatTagline]);
+  expect(msatCaptionLines(430, true)).toEqual(['Make some art', 'today.']);
+  expect(msatCaptionLines(431, true)).toEqual([msatTagline]);
+  expect(msatCaptionLines(320, true).join(' ')).toBe(msatTagline);
 });
 
 it('types whole glyphs through the final period and removes the caret after one reveal', () => {

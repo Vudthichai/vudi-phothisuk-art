@@ -49,3 +49,14 @@ it('retains the original lilies, placements and stagger on the optional lily stu
       : entry.composition?.entrance);
   }
 });
+
+it('keeps the Ethereal flower and both leaf-rain assets in the optional studies', () => {
+  const ethereal = arById('ethereal-bloom-original', true)!;
+  const serene = creativePreviewFor(ethereal)?.composition?.(ethereal);
+  expect(serene?.pieces).toBe(ethereal.composition?.pieces);
+  expect(serene?.petalRain).toBe(true);
+  expect(serene?.entrance?.duration).toBeGreaterThan(ethereal.composition!.entrance!.duration);
+  const leaves = arById('75-leaves-original', true)!;
+  expect(creativePreviewFor(leaves)?.composition?.(leaves))
+    .toEqual({ ...leaves.composition, creativeFinish: 'leaves' });
+});

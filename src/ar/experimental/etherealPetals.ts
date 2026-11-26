@@ -50,7 +50,7 @@ function petalVariation(slot: number, offset: number) {
 }
 
 /** Mount to the gravity-aligned root. The tracked clock owns pauses and resumes. */
-export function createEtherealPetals(upright: Group) {
+export function createEtherealPetals(upright: Group, serene = false) {
   const geometry = createPetalGeometry();
   const material = new MeshBasicMaterial({
     side: DoubleSide, vertexColors: true, transparent: true, opacity: .77, depthWrite: false,
@@ -62,11 +62,14 @@ export function createEtherealPetals(upright: Group) {
   upright.add(petals);
 
   const lanes = Array.from({ length: PETAL_COUNT }, (_, slot) => ({
-    seconds: 8.4 + petalVariation(slot, 1) * 3.7,
+    seconds: (serene ? 9.3 : 8.4) + petalVariation(slot, 1) * (serene ? 5.4 : 3.7),
     size: .065 + petalVariation(slot, 2) * .045,
     x: (petalVariation(slot, 3) - .5) * 1.17,
-    z: (slot % 2 ? .22 : -.25) + (petalVariation(slot, 4) - .5) * .39,
+    z: (slot % 2 ? .22 : -.25) + (petalVariation(slot, 4) - .5) * (serene ? .53 : .39),
     phase: petalVariation(slot, 5) * Math.PI * 2,
+    driftRate: serene ? .57 + .30 * petalVariation(slot, 6) : .87,
+    flutterRate: serene ? .93 + .75 * petalVariation(slot, 7) : 2.12,
+    arrival: serene ? .13 + .53 * petalVariation(slot, 8) : .16,
   }));
   for (let slot = 0; slot < PETAL_COUNT; slot++) {
     petals.setColorAt(slot, new Color(PETAL_COLORS[slot % PETAL_COLORS.length]));
@@ -89,31 +92,34 @@ export function createEtherealPetals(upright: Group) {
     if (disposed) return;
     petals.visible = !reduced;
     if (!reduced) {
-      const arrival = MathUtils.smoothstep(elapsed, .16, 1.3);
-      lanes.forEach(({ seconds, size, x, z, phase }, slot) => {
+      const arrivalScale = serene ? 1 : MathUtils.smoothstep(elapsed, .16, 1.3);
+      lanes.forEach(({ seconds, size, x, z, phase, driftRate, flutterRate, arrival }, slot) => {
         const time = elapsed + seconds * (slot + .46) / PETAL_COUNT;
         const progress = (time % seconds) / seconds;
-        const drift = phase + time * .87;
-        const flutter = phase + time * 2.12;
+        const drift = phase + time * driftRate;
+        const flutter = phase + time * flutterRate;
         const envelope = MathUtils.smoothstep(progress, 0, .07) *
           (1 - MathUtils.smoothstep(progress, .9, 1));
+        const appear = serene ? MathUtils.smoothstep(elapsed, arrival, arrival + 1.43) : arrivalScale;
+        const descent = serene ? progress + .018 * Math.sin(progress * Math.PI * 2) : progress;
         pose.position.set(
           x + .14 * Math.sin(drift) + .032 * Math.sin(flutter),
-          1.27 - 1.48 * progress,
-          z + .075 * Math.sin(drift * 1.19),
+          1.27 - 1.48 * descent,
+          z + (serene ? .12 : .075) * Math.sin(drift * 1.19),
         );
         pose.rotation.set(
-          .64 * Math.sin(flutter),
-          drift * .8 + .52 * Math.cos(flutter),
+          .64 * Math.sin(flutter) + (serene ? .12 * Math.sin(drift) : 0),
+          drift * (serene ? .57 : .8) + .52 * Math.cos(flutter),
           .67 * Math.sin(drift * 1.5) + .23 * Math.sin(flutter * .63),
         );
-        pose.scale.setScalar(size * envelope * arrival);
+        pose.scale.setScalar(size * envelope * appear);
         pose.updateMatrix();
         petals.setMatrixAt(slot, pose.matrix);
       });
       petals.instanceMatrix.needsUpdate = true;
     }
-    const haze = reduced ? .19 : .19 * MathUtils.smoothstep(elapsed, 0, 1.55);
+    const veil = serene ? .17 + .075 * (1 - MathUtils.smoothstep(elapsed, 1.3, 4.2)) : .19;
+    const haze = reduced ? .19 : veil * MathUtils.smoothstep(elapsed, 0, serene ? 1.8 : 1.55);
     mist.update(elapsed, reduced, haze);
   }
 

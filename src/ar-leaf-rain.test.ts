@@ -1,4 +1,4 @@
-import { BoxGeometry, Group, InstancedMesh, Matrix4, Mesh, MeshStandardMaterial } from 'three';
+import { BoxGeometry, Group, InstancedMesh, Matrix4, Mesh, MeshStandardMaterial, ShaderLib } from 'three';
 import { expect, it } from 'vitest';
 import { createLeafRain } from './ar/experimental/leafRain';
 
@@ -34,4 +34,44 @@ it('batches independent falling leaves and periodically adds just one golden lea
   rain.update(16);
   expect(goldInstances.visible).toBe(true);
   rain.dispose();
+});
+
+it('keeps the original rain counts and golden cadence while refining motion and reflections', () => {
+  const approved = new Group();
+  const optional = new Group();
+  const original = createLeafRain(approved, leaf(), leaf());
+  const refined = createLeafRain(optional, leaf(), leaf(), true);
+  const [baseGreen, baseGold] = approved.children as InstancedMesh[];
+  const [refinedGreen, refinedGold] = optional.children as InstancedMesh[];
+  const material = refinedGold.material as MeshStandardMaterial;
+  const shader = { ...ShaderLib.standard, uniforms: {} } as Parameters<typeof material.onBeforeCompile>[0];
+  material.onBeforeCompile(shader, null!);
+  const reflection = shader.uniforms.goldLeafReflection;
+
+  expect(refinedGreen.count).toBe(baseGreen.count);
+  expect(refinedGold.count).toBe(baseGold.count);
+  expect((baseGold.material as MeshStandardMaterial).customProgramCacheKey()).not.toBe(material.customProgramCacheKey());
+  for (const seconds of [0, 1.9, 2, 4.6, 7.79, 7.8, 9, 15, 17.6, 20.8]) {
+    original.update(seconds);
+    refined.update(seconds);
+    expect(refinedGold.visible).toBe(baseGold.visible);
+    expect(reflection.value).toBeCloseTo(seconds === 4.6 || seconds === 17.6 ? 1 : 0, 5);
+  }
+
+  original.update(1.1);
+  refined.update(1.1);
+  const first = new Matrix4(), next = new Matrix4();
+  refinedGreen.getMatrixAt(6, first);
+  refined.update(1.25);
+  refinedGreen.getMatrixAt(6, next);
+  expect(next.elements[13]).toBeLessThan(first.elements[13]);
+  refined.update(1.1);
+  expect(refinedGreen.instanceMatrix.array).not.toEqual(baseGreen.instanceMatrix.array);
+  // The factory passes a zero clock for reduced motion.
+  refined.update(0);
+  original.update(0);
+  expect(refinedGreen.instanceMatrix.array).toEqual(baseGreen.instanceMatrix.array);
+  expect(reflection.value).toBe(0);
+  refined.dispose();
+  original.dispose();
 });

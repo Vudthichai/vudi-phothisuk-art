@@ -84,7 +84,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         }
         if (composition.leafRain) {
           const [green, gold] = turn.children as Group[];
-          rain = createLeafRain(turn, green, gold);
+          rain = createLeafRain(turn, green, gold, composition.creativeFinish === 'leaves');
         }
         if (composition.mossAwakening) awakening = createMossAwakening(turn, upright, composition.creativeFinish === 'moss');
         if (composition.stumpRebirth) rebirth = createStumpRebirth(turn, upright);
@@ -96,7 +96,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         if (composition.lilyCinematics) {
           lily = createLilyCinematics(composition.lilyCinematics, turn, upright, composition.entrance);
         }
-        if (composition.petalRain) petals = createEtherealPetals(upright);
+        if (composition.petalRain) petals = createEtherealPetals(upright, composition.creativeFinish === 'ethereal');
         if (composition.bloomOpening || composition.firstBreath) {
           bloom = createBloomOpening(turn, composition.firstBreath);
           if (composition.firstBreath) breath = createFirstBreathAtmosphere(upright, bloom.stamen, 4.4);
@@ -140,7 +140,8 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           turn.rotation.y = lily?.turnAt(frame.elapsedSeconds, reduced) ?? angle;
           if (root.visible) lily?.update(frame.elapsedSeconds, reduced);
           if (root.visible && !reduced) floatElapsed += step;
-          turn.position.y = reduced ? 0 : (composition.float ?? 0) * Math.sin(floatElapsed);
+          const floatTime = composition.creativeFinish === 'ethereal' ? frame.elapsedSeconds : floatElapsed;
+          turn.position.y = reduced ? 0 : (composition.float ?? 0) * Math.sin(floatTime);
         }
       },
       dispose() {
