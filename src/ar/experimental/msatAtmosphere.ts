@@ -80,6 +80,7 @@ export function createMsatAtmosphere(upright: Group) {
     const leaf = index >= blushPetals.length;
     return {
       mesh: leaf ? leaves.mesh : petals.mesh,
+      leaf,
       slot: leaf ? index - blushPetals.length : index,
       lifetime: 8.5 + grain(index, 1) * 4.8,
       entry: (index + .43) / lanes,
@@ -93,17 +94,23 @@ export function createMsatAtmosphere(upright: Group) {
 
   let goldVisible = false;
   let disposed = false;
-  function update(elapsed: number, reduced: boolean) {
+  function update(elapsed: number, reduced: boolean, typingCompleteAt?: number) {
     if (disposed) return;
     petals.mesh.visible = leaves.mesh.visible = !reduced;
     if (reduced) return;
     const fadeIn = MathUtils.smoothstep(elapsed, .3, 1.7);
+    // The same tracked timestamp drives the punctuation and the breath of air.
+    const swirlAge = typingCompleteAt === undefined ? -1 : elapsed - typingCompleteAt;
+    const swirl = MathUtils.smoothstep(swirlAge, 0, .48) *
+      (1 - MathUtils.smoothstep(swirlAge, .52, 1.65));
+    const sweepAngle = Math.min(1.65, Math.max(0, swirlAge)) * 2.7;
 
     for (const particle of particles) {
       const age = elapsed + particle.lifetime * particle.entry;
       const progress = age % particle.lifetime / particle.lifetime;
-      const phase = particle.phase + age * .91;
-      const flutter = particle.phase + age * 2.01;
+      const phase = particle.phase + age * (particle.leaf ? 1.32 : .94);
+      const flutter = particle.phase + age * (particle.leaf ? 1.8 : 3.45);
+      const sweep = sweepAngle + particle.phase * .62;
       const envelope = MathUtils.smoothstep(progress, 0, .09) *
         (1 - MathUtils.smoothstep(progress, .9, 1));
       const height = 1.31 - 1.87 * progress;
@@ -111,16 +118,19 @@ export function createMsatAtmosphere(upright: Group) {
         MathUtils.smoothstep(height, 1.08, 1.31),
         1 - MathUtils.smoothstep(height, -.54, -.38),
       );
-      const edge = particle.edge + .06 * (.5 + .5 * Math.sin(phase));
+      const edge = particle.edge + .07 * (.5 + .5 * Math.sin(phase)) +
+        (particle.leaf ? 0 : .027 * (.5 + .5 * Math.sin(flutter)));
+      const outward = (.075 + .033 * Math.cos(sweep)) * swirl;
       pose.position.set(
-        particle.side * MathUtils.lerp(edge, .30, beyondSilhouette * .75),
-        height,
-        particle.depth + .055 * Math.sin(phase * .73),
+        particle.side * (MathUtils.lerp(edge, .30, beyondSilhouette * .75) + outward),
+        height + (.045 + .034 * Math.sin(sweep)) * swirl,
+        particle.depth + (particle.leaf ? .10 : .052) * Math.cos(phase) +
+          .12 * particle.side * Math.sin(sweep) * swirl,
       );
       pose.rotation.set(
-        .57 * Math.sin(flutter),
-        phase * .68 + .41 * Math.cos(flutter),
-        .68 * Math.sin(phase * 1.21),
+        (particle.leaf ? .52 : .87) * Math.sin(flutter),
+        phase * (particle.leaf ? 1.12 : .50) + .43 * Math.cos(flutter) + .67 * swirl,
+        (particle.leaf ? .48 : .76) * Math.sin(phase * 1.21) + .51 * particle.side * swirl,
       );
       pose.scale.setScalar(particle.size * envelope * fadeIn);
       pose.updateMatrix();

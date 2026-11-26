@@ -1,3 +1,5 @@
+@import '../signatureTypography.css';
+
 .home-header{min-height:108px;border-bottom:0}.home-signature{display:block;width:142px;height:85px;object-fit:contain}
 .forest-home{color:#153e2b;background:#fff;padding-bottom:20px;font-family:Arial,Helvetica,sans-serif}
 .forest-opening{width:94%;max-width:1800px;margin:auto;padding-top:18px}
@@ -35,7 +37,6 @@
 .forest-hero-image:not(.is-whole){height:auto;max-height:none;aspect-ratio:3198/1799}.forest-hero-image:not(.is-whole) img{object-fit:contain;object-position:center}
 
 /* Live brand lettering stays sharp at every display scale. */
-@font-face{font-family:'Bodoni Moda';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/bodoni-moda-regular.ttf') format('truetype')}
 .forest-masthead h1{font-family:'Bodoni Moda',Didot,serif;font-weight:400;font-synthesis:none;font-optical-sizing:auto;font-size:clamp(32px,6vw,92px);line-height:1.2;letter-spacing:-.035em;width:100%;max-width:none;color:#12351d;text-wrap:balance}
 .home-ocean-copy{margin-left:auto;margin-right:0}
 @media(max-width:700px){.forest-masthead h1{font-size:clamp(30px,6.4vw,44px);letter-spacing:-.035em}.home-ocean-copy{margin-left:0;max-width:none}}
@@ -68,7 +69,7 @@ button.forest-hero-image{display:block;width:100%;border:0;padding:0;color:inher
   display: inline-block;
   max-width: 100%;
   clip-path: none;
-  animation: home-title-curtain 1.5s ease-in-out .25s 1 backwards;
+  animation: home-title-curtain var(--signature-reveal-duration) ease-in-out var(--signature-reveal-delay) 1 backwards;
 }
 @keyframes home-title-curtain {
   from { clip-path: inset(-.2em 100% -.2em 0); }

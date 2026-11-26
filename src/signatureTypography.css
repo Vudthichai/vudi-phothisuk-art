@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Bodoni Moda';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/bodoni-moda-regular.ttf') format('truetype');
+}
+
+:root {
+  --signature-reveal-duration: 1.5s;
+  --signature-reveal-delay: .25s;
+}

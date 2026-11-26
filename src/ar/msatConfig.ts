@@ -1,6 +1,7 @@
 import type { ARExperience } from './config';
 
 export const msatTagline = 'Make some art today.';
+export const MSAT_ENTRANCE_SECONDS = 2;
 export const msatExperience: ARExperience = {
   id: 'msat-signature',
   artworkId: 'msat-signature',

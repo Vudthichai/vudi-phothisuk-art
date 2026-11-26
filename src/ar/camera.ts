@@ -1,5 +1,6 @@
 import { arById, FIRST_BREATH_LABEL, FIRST_BREATH_VARIANT } from './config';
-import { msatExperience, msatTagline } from './msatConfig';
+import { msatExperience } from './msatConfig';
+import { drawMsatCaption, mountMsatHud } from './experimental/msatOverlay';
 import { beginRecording, recordingMimeType, CLIP_SECONDS } from './recording';
 import type { LocalRecording } from './recording';
 import type { ARSession } from './engine';
@@ -59,13 +60,7 @@ if(msatMode){
  const image=root.querySelector<HTMLImageElement>('#ar-target-preview')!;
  image.alt='White MSAT magnet with the forest-green botanical monogram';image.width=image.height=512;
  root.querySelector('#ar-fallback li:nth-child(2)')!.textContent='Return here, tap Continue, then point at the MSAT magnet for 10–15 seconds.';
- const live=document.createElement('p');
- live.textContent=msatTagline;live.className='msat-tagline-live';live.hidden=true;
- root.append(live);
- const explore=document.createElement('a');
- explore.href='https://vudiphothisukart.com/';explore.textContent='Explore the Art';
- explore.className='msat-explore';explore.hidden=true;
- root.querySelector('.ar-controls')!.prepend(explore);
+ mountMsatHud(root);
 }
 let hasTracked=false,hubLossShown=false;
 let experimentCleanup:(()=>void)|undefined;
@@ -148,7 +143,9 @@ record.addEventListener('click',()=>{
  if(!recordingMimeType()){nativeFallback('Direct AR recording is unavailable in this browser. Use your phone’s screen recorder instead.');return;}
  clearClip();manualRecordStop=false;
  try{
-  recording=beginRecording({video,fps:rainforestExperiment?30:24,width:surface.clientWidth,height:surface.clientHeight,onStarted:()=>{recordStart=performance.now();},onComplete:blob=>{
+  recording=beginRecording({video,fps:rainforestExperiment?30:24,width:surface.clientWidth,height:surface.clientHeight,
+   drawCaption:msatMode?(context,width,height)=>drawMsatCaption(context,width,height,root):undefined,
+   onStarted:()=>{recordStart=performance.now();},onComplete:blob=>{
    resetRecording();record.disabled=root.dataset.tracking!=='found';clipUrl=URL.createObjectURL(blob);clipFile=new File([blob],`${reviewMode?experience?.id:tigerRecognition?'Tiger-Lily-Recognition':'Mother-Nature-AR'}.${blob.type.includes('mp4')?'mp4':'webm'}`,{type:blob.type});const completedClipUrl=clipUrl;if(rainforestExperiment)clip.addEventListener('loadedmetadata',()=>{if(clip.src!==completedClipUrl)return;const duration=clip.duration,usable=Number.isFinite(duration)?duration>=.5&&(manualRecordStop||duration>=8):null;root.dispatchEvent(new CustomEvent('rainforest-recording-result',{detail:{duration:Number.isFinite(duration)?duration:null,usable,manualStop:manualRecordStop}}));if(usable===false){closePanel(review);clearClip();nativeFallback('This browser could not sustain a usable rainforest recording. Use native screen recording instead, and compare a lower render pixel ratio.');}},{once:true});clip.src=clipUrl;
    el<HTMLAnchorElement>('ar-save').href=clipUrl;el<HTMLAnchorElement>('ar-save').download=clipFile.name;
    let canShare=false;try{canShare=Boolean(typeof navigator.share==='function'&&navigator.canShare?.({files:[clipFile]}));}catch{/* file sharing unavailable */}el('ar-share').hidden=!canShare;el('ar-share-status').textContent='If the preview is blank or incomplete, use Recording help for native screen recording.';openPanel(review);

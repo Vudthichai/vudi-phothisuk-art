@@ -10,7 +10,7 @@ type TrackerUpdate={type:string;targetIndex:number;worldMatrix:number[]|null};
 type Controller={inputWidth:number;inputHeight:number;worker:Worker;addImageTargetsFromBuffer:(buffer:ArrayBuffer)=>{dimensions:number[][]};getProjectionMatrix:()=>number[];dummyRun:(video:HTMLVideoElement)=>void;processVideo:(video:HTMLVideoElement)=>void;stopProcessVideo:()=>void};
 type ControllerConstructor=new(options:{inputWidth:number;inputHeight:number;maxTrack:number;warmupTolerance:number;missTolerance:number;filterMinCF:number;filterBeta:number;onUpdate:(data:TrackerUpdate)=>void})=>Controller;
 export type ARMetrics={fps:number;frameP50Ms:number;frameP95Ms:number;renderCpuP95Ms:number;drawCalls:number;triangles:number;geometries:number;textures:number;trackingFound:boolean;lossEvents:number;poseUpdates:number;poseStepMeanTargetWidths:number;poseAgeMs:number|null};
-export type SculptureFactory=(options:{signal:AbortSignal;onState:(state:SculptureState)=>void;onError:(error:Error)=>void;view?:{camera:PerspectiveCamera;scene:Scene}})=>{root:Group;uprightRoot?:()=>Group|undefined;screenUprightFallback?:boolean;update:(time:number,reduced:boolean,tracked:boolean)=>void;dispose:()=>void};
+export type SculptureFactory=(options:{signal:AbortSignal;onState:(state:SculptureState)=>void;onError:(error:Error)=>void;view?:{camera:PerspectiveCamera;scene:Scene}})=>{root:Group;uprightRoot?:()=>Group|undefined;screenUprightFallback?:boolean;pausePresentation?:()=>void;update:(time:number,reduced:boolean,tracked:boolean)=>void;dispose:()=>void};
 export type ARSession={dispose:()=>void; onFrame:(callback:((canvas:HTMLCanvasElement)=>void)|undefined)=>void;setPresentationPaused:(paused:boolean)=>void;setRenderPixelRatio:(ratio:number)=>void};
 export async function startTracking({surface,video,experience,signal,onTracking,onError,onSculptureState,sceneFactory,onMetrics,poseFilter,trackingTolerance,readTilt}:{surface:HTMLElement;video:HTMLVideoElement;experience:ARExperience;signal:AbortSignal;onTracking:(found:boolean)=>void;onError:(error:Error)=>void;onSculptureState?:(state:SculptureState)=>void;sceneFactory?:SculptureFactory;onMetrics?:(metrics:ARMetrics)=>void;poseFilter?:Pick<ImagePoseFilter,'update'|'reset'>;trackingTolerance?:{warmup:number;miss:number};readTilt?:()=>{beta:number;gamma:number;screenAngle:number}|undefined}):Promise<ARSession> {
   const loadVendor=new Promise<{Controller:ControllerConstructor}>((resolve,reject)=>{
@@ -94,6 +94,6 @@ export async function startTracking({surface,video,experience,signal,onTracking,
       frame=requestAnimationFrame(animate);
     };
     frame=requestAnimationFrame(animate);
-    return {dispose,setRenderPixelRatio:ratio=>{renderer.setPixelRatio(Math.min(1.25,Math.max(.5,ratio)));resize();},onFrame:callback=>{frameCallback=callback;},setPresentationPaused:paused=>{presentationPaused=paused;if(onMetrics){lastFrameAt=0;windowStart=performance.now();frames=0;}}};
+    return {dispose,setRenderPixelRatio:ratio=>{renderer.setPixelRatio(Math.min(1.25,Math.max(.5,ratio)));resize();},onFrame:callback=>{frameCallback=callback;},setPresentationPaused:paused=>{presentationPaused=paused;if(paused)sculpture.pausePresentation?.();if(onMetrics){lastFrameAt=0;windowStart=performance.now();frames=0;}}};
   }catch(error){dispose();throw error;}
 }

@@ -39,3 +39,27 @@ it('frames the monogram and tagline with two small falling batches and an occasi
   atmosphere.dispose();
   expect(upright.children).toHaveLength(0);
 });
+
+it('sweeps outward once at the final period and returns to the continuous fall', () => {
+  const upright = new Group();
+  const atmosphere = createMsatAtmosphere(upright);
+  const batches = upright.children as InstancedMesh[];
+  const matrix = new Matrix4();
+  const centers = (elapsed: number, typingCompleteAt?: number) => {
+    atmosphere.update(elapsed, false, typingCompleteAt);
+    return batches.flatMap(mesh => Array.from({ length: mesh.count }, (_, slot) => {
+      mesh.getMatrixAt(slot, matrix);
+      return new Vector3().setFromMatrixPosition(matrix);
+    }));
+  };
+
+  const period = 5.8;
+  expect(centers(period - .1, period)).toEqual(centers(period - .1));
+  const base = centers(period + .49);
+  const swirl = centers(period + .49, period);
+  expect(swirl.every((point, slot) => Math.abs(point.x) > Math.abs(base[slot].x))).toBe(true);
+  expect(swirl).toEqual(centers(period + .49, period));
+  expect(centers(period + 2, period)).toEqual(centers(period + 2));
+  expect(centers(period + 20, period)).toEqual(centers(period + 20));
+  atmosphere.dispose();
+});

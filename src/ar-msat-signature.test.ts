@@ -1,5 +1,7 @@
 import { expect, it } from 'vitest';
 import { msatPresentation } from './ar/experimental/msatSignature';
+import { msatTypewriter } from './ar/experimental/msatOverlay';
+import { createSculptureTimeline } from './ar/experimental/sculptureTimeline';
 import { msatExperience, msatTagline } from './ar/msatConfig';
 import { certificateARPreviews } from './ar/config';
 
@@ -10,12 +12,27 @@ it('keeps the magnet and authentic phrase separate from the 15 certificate targe
   expect(msatExperience.certificatePaths).toEqual([]);
 });
 
-it('raises the tagline in a single gentle fade and holds it without turning the monogram', () => {
-  expect(msatPresentation(2, false)).toMatchObject({ opacity: 0, explore: false });
-  expect(msatPresentation(2.75, false)).toMatchObject({ opacity: .5, explore: false });
-  expect(msatPresentation(3.5, false)).toMatchObject({ opacity: 1, explore: true, taglineY: -.16 });
-  const later = msatPresentation(40, false);
-  expect(later.opacity).toBe(1);
-  expect(Math.abs(later.yaw)).toBeLessThanOrEqual(.065);
-  expect(msatPresentation(0, true)).toMatchObject({ opacity: 1, explore: true, yaw: 0, float: 0 });
+it('types whole glyphs through the final period and removes the caret after one reveal', () => {
+  const at = (time: number, reduced = false) => msatTypewriter(time, 2.25, 1.5, reduced);
+  expect(at(2.2)).toEqual({ count: 0, shown: false, complete: false, cursor: false });
+  expect(at(2.25)).toMatchObject({ count: 0, shown: true, cursor: true });
+  expect(at(3).count).toBe(10);
+  expect(msatTagline.slice(0, at(3.74).count)).toBe('Make some art today');
+  expect(msatTagline.slice(0, at(3.75).count)).toBe(msatTagline);
+  expect(at(40)).toEqual(at(3.75));
+  expect(at(0, true)).toEqual(at(3.75));
+});
+
+it('resumes at the same glyph after a tracking pause and keeps the emblem facing forward', () => {
+  const clock = createSculptureTimeline();
+  const at = (wallTime: number, tracked: boolean) =>
+    msatTypewriter(clock.update(wallTime, false, tracked).elapsedSeconds, 2.25, 1.5, false);
+  at(10, true);
+  const partial = at(13, true);
+  expect(partial.count).toBe(10);
+  at(14, false);
+  expect(at(21, true)).toEqual(partial);
+  expect(at(22, true).complete).toBe(true);
+  expect(Math.abs(msatPresentation(40, false).yaw)).toBeLessThanOrEqual(.065);
+  expect(msatPresentation(40, true)).toEqual({ yaw: 0, float: 0 });
 });
