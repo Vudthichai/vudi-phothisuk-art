@@ -1,4 +1,4 @@
-import { BoxGeometry, Group, InstancedMesh, Matrix4, Mesh, MeshStandardMaterial, ShaderLib } from 'three';
+import { BoxGeometry, Group, InstancedMesh, Matrix4, Mesh, MeshStandardMaterial, ShaderLib, Vector3 } from 'three';
 import { expect, it } from 'vitest';
 import { createLeafRain } from './ar/experimental/leafRain';
 
@@ -74,4 +74,32 @@ it('keeps the original rain counts and golden cadence while refining motion and 
   expect(reflection.value).toBe(0);
   refined.dispose();
   original.dispose();
+});
+
+it('concentrates one warm beam near the original gold path without changing either leaf batch', () => {
+  const approved = new Group(), final = new Group();
+  const original = createLeafRain(approved, leaf(), leaf(), true);
+  const illuminated = createLeafRain(final, leaf(), leaf(), true, true);
+  const [green, gold] = final.children as InstancedMesh[];
+  const beam = final.getObjectByName('Warm beam following the golden leaf')!;
+  const matrix = new Matrix4();
+  const offsets = [];
+  for (const time of [4, 5]) {
+    original.update(time);
+    illuminated.update(time);
+    expect(beam.visible).toBe(true);
+    expect(green.instanceMatrix.array).toEqual((approved.children[0] as InstancedMesh).instanceMatrix.array);
+    expect(gold.instanceMatrix.array).toEqual((approved.children[1] as InstancedMesh).instanceMatrix.array);
+    gold.getMatrixAt(0, matrix);
+    offsets.push(beam.position.clone().sub(new Vector3().setFromMatrixPosition(matrix)));
+  }
+  expect(offsets[0].distanceTo(offsets[1])).toBeLessThan(.0001);
+  expect(offsets[0].y).toBeGreaterThan(.1);
+  for (const time of [0, 2, 7.5, 9]) {
+    illuminated.update(time);
+    expect(beam.visible).toBe(false);
+  }
+  illuminated.dispose();
+  original.dispose();
+  expect(beam.parent).toBeNull();
 });

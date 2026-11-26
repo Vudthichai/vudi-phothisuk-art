@@ -18,6 +18,29 @@ const shelfOrigins = [
   [.36, .445, .08], [.26, .401, -.26], [.38, .379, .23],
 ];
 
+const fanGrowth = `
+  vec3 shelfExpansion(vec3 p, vec3 fan, vec3 root, float stagger) {
+    vec3 local = (p - fan) * vec3(1., 1.75, 1.);
+    float edge = 1. - smoothstep(.065, .16, length(local));
+    float opened = .78 * smoothstep(2.15 + stagger, 5.3 + stagger, awakeningTime)
+      + .22 * smoothstep(4.4 + stagger, 36. + stagger * 6., awakeningTime);
+    return (root - p) * vec3(.18, .065, .18) * edge * (1. - opened);
+  }
+`;
+
+const fanExpansion = `
+  if (awakeningMotion > .5 && awakeningTime < 40.2) {
+    // Measured caps and attachment points in the 1.2-wide sculpture's coordinate system.
+    vec3 dimensions = vec3(.99565, .55977, 1.2);
+    vec3 p = (awakeningPosition - vec3(.5, 0., .5)) * dimensions;
+    vec3 movement = shelfExpansion(p, vec3(-.24, .44, .28), vec3(-.11, .39, .18), .26)
+      + shelfExpansion(p, vec3(.09, .48, .145), vec3(.015, .43, .04), .0)
+      + shelfExpansion(p, vec3(.25, .43, -.19), vec3(.13, .38, -.07), .64)
+      + shelfExpansion(p, vec3(.37, .40, .17), vec3(.28, .36, .12), .43);
+    transformed += movement * awakeningExtent / dimensions;
+  }
+`;
+
 const dewReflection = `#include <normal_fragment_maps>
   if (awakeningTime > 5.05) {
     vec3 p = awakeningPosition;
@@ -47,7 +70,7 @@ function createSporeGeometry() {
   return { geometry, seeds };
 }
 
-function createShelfSpores(authoredYaw: number) {
+function createShelfSpores(authoredYaw: number, continuous: boolean) {
   const { geometry, seeds } = createSporeGeometry();
   const count = seeds.length / 3;
   const origins = new Float32Array(count * 3);
@@ -73,9 +96,9 @@ function createShelfSpores(authoredYaw: number) {
         vec4 view = modelViewMatrix * vec4(p, 1.0);
         gl_Position = projectionMatrix * view;
         float targetUnits = length(modelViewMatrix[1].xyz);
-        gl_PointSize = clamp((4.0 + 4.5 * position.y) * targetUnits / max(.001, -view.z), 1.5, 5.0);
+        gl_PointSize = clamp((${continuous ? '5.0' : '4.0'} + 4.5 * position.y) * targetUnits / max(.001, -view.z), 1.5, 5.0);
         intensity = smoothstep(.025, .20, t) * (1. - smoothstep(.59, 1., t))
-          * (.20 + .26 * position.y);
+          * (${continuous ? '.29' : '.20'} + .26 * position.y);
         warmth = position.z;
       }`,
     fragmentShader: `
@@ -95,9 +118,10 @@ function createShelfSpores(authoredYaw: number) {
       if (!points.visible) return;
       for (let i = 0; i < count; i++) {
         const seed = seeds[i * 3];
-        const life = 3.5 + 1.85 * seeds[i * 3 + 2];
-        const period = life + .9 + seeds[i * 3 + 1];
-        const start = sporesStart + i * .25 + seed * .42;
+        const life = 3.5 + (continuous ? 1.5 : 1.85) * seeds[i * 3 + 2];
+        const period = continuous ? 5.4 : life + .9 + seeds[i * 3 + 1];
+        // Distributed starts bridge the end of every cohort without a shared reset.
+        const start = sporesStart + (continuous ? i * period / count + seed * .14 : i * .25 + seed * .42);
         const birth = start + Math.floor(Math.max(0, elapsed - start) / period) * period;
         const age = (elapsed - birth) / life;
         ages[i] = MathUtils.clamp(age, 0, 1);
@@ -116,8 +140,9 @@ function createShelfSpores(authoredYaw: number) {
   };
 }
 
-export function createMossAwakening(sculpture: Group, upright: Group, forestFinish = false) {
+export function createMossAwakening(sculpture: Group, upright: Group, forestFinish = false, finalForest = false) {
   const clock = { value: 0 };
+  const motion = { value: 1 };
   sculpture.traverse(object => {
     if (!(object instanceof Mesh) || !(object.material instanceof MeshStandardMaterial)) return;
     object.geometry.computeBoundingBox();
@@ -129,9 +154,12 @@ export function createMossAwakening(sculpture: Group, upright: Group, forestFini
       shader.uniforms.awakeningTime = clock;
       shader.uniforms.awakeningOrigin = { value: origin };
       shader.uniforms.awakeningExtent = { value: extent };
+      if (finalForest) shader.uniforms.awakeningMotion = motion;
       shader.vertexShader = 'varying vec3 awakeningPosition; uniform vec3 awakeningOrigin, awakeningExtent;\n' +
+        (finalForest ? 'uniform float awakeningTime, awakeningMotion;\n' + fanGrowth : '') +
         shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
-          awakeningPosition = (position - awakeningOrigin) / max(awakeningExtent, vec3(0.00001));`);
+          awakeningPosition = (position - awakeningOrigin) / max(awakeningExtent, vec3(0.00001));
+          ${finalForest ? fanExpansion : ''}`);
       shader.fragmentShader = 'varying vec3 awakeningPosition; uniform float awakeningTime;\n' +
         shader.fragmentShader.replace('#include <map_fragment>', `#include <map_fragment>
           if (awakeningTime < ${sporesStart.toFixed(1)}) {
@@ -168,7 +196,7 @@ export function createMossAwakening(sculpture: Group, upright: Group, forestFini
         shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', dewReflection);
       };
     }
-    material.customProgramCacheKey = () => forestFinish ? 'moss-awakening-dew' : 'moss-awakening-v2';
+    material.customProgramCacheKey = () => finalForest ? 'moss-awakening-growth' : forestFinish ? 'moss-awakening-dew' : 'moss-awakening-v2';
     material.needsUpdate = true;
   });
 
@@ -178,7 +206,7 @@ export function createMossAwakening(sculpture: Group, upright: Group, forestFini
   for (const wisp of mist.root.children.slice(4)) wisp.visible = false;
   upright.add(mist.root);
 
-  const spores = forestFinish ? createShelfSpores(sculpture.children[0]?.rotation.y ?? 0) : createBarkSpores(clock);
+  const spores = forestFinish ? createShelfSpores(sculpture.children[0]?.rotation.y ?? 0, finalForest) : createBarkSpores(clock);
   const points = spores.points;
   points.frustumCulled = false;
   points.renderOrder = 2;
@@ -186,6 +214,7 @@ export function createMossAwakening(sculpture: Group, upright: Group, forestFini
   return {
     update(elapsed: number, reduced: boolean) {
       clock.value = reduced ? (forestFinish ? sporesStart : fullReveal) : elapsed;
+      motion.value = reduced ? 0 : 1;
       const ambient = .48 - .29 * MathUtils.smoothstep(elapsed, 1, fullReveal);
       const breathing = forestFinish ? .025 * Math.sin(elapsed * .61) : 0;
       mist.update(elapsed, reduced, reduced ? .17 : ambient + breathing);

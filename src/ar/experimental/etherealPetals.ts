@@ -50,10 +50,10 @@ function petalVariation(slot: number, offset: number) {
 }
 
 /** Mount to the gravity-aligned root. The tracked clock owns pauses and resumes. */
-export function createEtherealPetals(upright: Group, serene = false) {
+export function createEtherealPetals(upright: Group, serene = false, canopy = false) {
   const geometry = createPetalGeometry();
   const material = new MeshBasicMaterial({
-    side: DoubleSide, vertexColors: true, transparent: true, opacity: .77, depthWrite: false,
+    side: DoubleSide, vertexColors: true, transparent: true, opacity: .77, depthWrite: false, forceSinglePass: canopy,
   });
   const petals = new InstancedMesh(geometry, material, PETAL_COUNT);
   petals.name = 'Drifting blush petals';
@@ -64,7 +64,8 @@ export function createEtherealPetals(upright: Group, serene = false) {
   const lanes = Array.from({ length: PETAL_COUNT }, (_, slot) => ({
     seconds: (serene ? 9.3 : 8.4) + petalVariation(slot, 1) * (serene ? 5.4 : 3.7),
     size: .065 + petalVariation(slot, 2) * .045,
-    x: (petalVariation(slot, 3) - .5) * 1.17,
+    x: canopy ? (slot % 2 ? 1 : -1) * (.22 + petalVariation(slot, 3) * .50)
+      : (petalVariation(slot, 3) - .5) * 1.17,
     z: (slot % 2 ? .22 : -.25) + (petalVariation(slot, 4) - .5) * (serene ? .53 : .39),
     phase: petalVariation(slot, 5) * Math.PI * 2,
     driftRate: serene ? .57 + .30 * petalVariation(slot, 6) : .87,
@@ -104,7 +105,7 @@ export function createEtherealPetals(upright: Group, serene = false) {
         const descent = serene ? progress + .018 * Math.sin(progress * Math.PI * 2) : progress;
         pose.position.set(
           x + .14 * Math.sin(drift) + .032 * Math.sin(flutter),
-          1.27 - 1.48 * descent,
+          (canopy ? 1.38 - 1.60 * descent : 1.27 - 1.48 * descent),
           z + (serene ? .12 : .075) * Math.sin(drift * 1.19),
         );
         pose.rotation.set(

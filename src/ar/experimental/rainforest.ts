@@ -25,7 +25,7 @@ export function placeRainforest(asset:Group,placement:Placement){
 }
 export const CINEMATIC_PLACEMENT:Placement={height:2.6,x:0,y:-.55,yaw:-12};
 export const LIVING_PLACEMENT:Placement={...CINEMATIC_PLACEMENT,height:LIVING_CONFIG.previousHeight*LIVING_CONFIG.settled};
-export type RainforestOptions={cinematic?:boolean;diagnostics?:boolean;mistEnabled?:boolean;stabilize?:boolean;living?:boolean;sculpture?:boolean;atmosphere?:boolean;flowersEnabled?:boolean;leafEnabled?:boolean;rotateReveal?:boolean;ancientSunlight?:boolean};
+export type RainforestOptions={cinematic?:boolean;diagnostics?:boolean;mistEnabled?:boolean;stabilize?:boolean;living?:boolean;sculpture?:boolean;atmosphere?:boolean;flowersEnabled?:boolean;leafEnabled?:boolean;rotateReveal?:boolean;ancientSunlight?:boolean;offerLegacyFallback?:boolean};
 export function setupRainforestLab(host:HTMLElement,options:RainforestOptions={}){
  const atmosphere=options.atmosphere===true,sculpture=options.sculpture===true||atmosphere,living=options.living===true||sculpture,cinematic=options.cinematic===true||living,diagnostics=options.diagnostics??!cinematic,defaults=living?LIVING_PLACEMENT:cinematic?CINEMATIC_PLACEMENT:DEFAULT_PLACEMENT;
  const ancientSunlight=atmosphere&&options.ancientSunlight===true;
@@ -46,7 +46,9 @@ export function setupRainforestLab(host:HTMLElement,options:RainforestOptions={}
   if(surface)pinch=installAnchoredPinch(surface,factor=>{report.collectorScale=factor;Object.assign(placement,defaults,{height:defaults.height*factor});activePlacement?.({...placement});print();},()=>!disposed&&Boolean(activePlacement)&&host.dataset.tracking==='found'&&host.querySelector<HTMLElement>('.ar-controls')?.hidden===false);
   resetButton=document.createElement('button');resetButton.type='button';resetButton.className='rainforest-reset';resetButton.textContent='Reset';resetButton.setAttribute('aria-label','Reset view');resetButton.addEventListener('click',resetView);host.querySelector('.ar-controls')?.append(resetButton);
   reviewHelp=document.createElement('button');reviewHelp.type='button';reviewHelp.textContent='Use screen recording';reviewHelp.addEventListener('click',()=>{host.querySelector<HTMLButtonElement>('#ar-dismiss')?.click();host.querySelector<HTMLButtonElement>('#ar-capture-help')?.click();});host.querySelector('.ar-actions')?.append(reviewHelp);
-  const fallback=host.querySelector<HTMLAnchorElement>('.rainforest-v1-fallback')??document.createElement('a');fallback.className='rainforest-v1-fallback';fallback.href=atmosphere?(__VPA_AR_EXPERIMENTS__?'/rainforest-v4.html':'/ar-camera.html?experience=mother-nature-original'):sculpture?'/rainforest-v3.html':living?'/rainforest-v2.html':'/rainforest-ar.html';fallback.textContent=living?'Try the previous rainforest preview':'Try the original rainforest preview';host.querySelector('.ar-guidance')?.append(fallback);
+  if(options.offerLegacyFallback!==false){
+   const fallback=host.querySelector<HTMLAnchorElement>('.rainforest-v1-fallback')??document.createElement('a');fallback.className='rainforest-v1-fallback';fallback.href=atmosphere?(__VPA_AR_EXPERIMENTS__?'/rainforest-v4.html':'/ar-camera.html?experience=mother-nature-original'):sculpture?'/rainforest-v3.html':living?'/rainforest-v2.html':'/rainforest-ar.html';fallback.textContent=living?'Try the previous rainforest preview':'Try the original rainforest preview';host.querySelector('.ar-guidance')?.append(fallback);
+  }
  }
  const recordingResult=(event:Event)=>{report.lastRecording=(event as CustomEvent).detail;print();};host.addEventListener('rainforest-recording-result',recordingResult);
  const contextLost=()=>{report.gpuContextLossEvents=Number(report.gpuContextLossEvents??0)+1;print();};host.addEventListener('webglcontextlost',contextLost,true);

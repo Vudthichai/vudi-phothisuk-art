@@ -1,5 +1,6 @@
 import { arById, FIRST_BREATH_LABEL, FIRST_BREATH_VARIANT } from './config';
 import { creativePreviewFor } from './creativePreviews';
+import { FINAL_AR_VARIANT, finalExperience } from './finalExperiences';
 import { msatExperience } from './msatConfig';
 import { drawMsatCaption, mountMsatHud } from './experimental/msatOverlay';
 import { beginRecording, recordingMimeType, CLIP_SECONDS } from './recording';
@@ -10,12 +11,13 @@ import './camera.css';
 const root=document.getElementById('ar-root')!;
 const params=new URLSearchParams(location.search);
 const msatMode=__VPA_AR_EXPERIMENTS__&&location.pathname==='/msat-ar.html';
-const hubMode=__VPA_AR_EXPERIMENTS__&&!msatMode&&params.get('hub')==='1';
+const hubMode=!msatMode&&params.get('hub')==='1'&&(__VPA_AR_EXPERIMENTS__||/^\/ar-camera(?:\.html)?\/?$/.test(location.pathname));
 const reviewMode=hubMode||msatMode;
 const hubExperience=hubMode?arById(params.get('experience'),true):undefined;
 const variant=params.get('variant');
+const finalMode=hubMode&&(variant===FINAL_AR_VARIANT||!__VPA_AR_EXPERIMENTS__);
 const creative=creativePreviewFor(hubExperience);
-const creativePreview=creative?.variant===variant&&params.get('mode')!=='recognition'?creative:undefined;
+const creativePreview=!finalMode&&creative?.variant===variant&&params.get('mode')!=='recognition'?creative:undefined;
 const previewComposition=hubExperience&&creativePreview?.composition?creativePreview.composition(hubExperience)
   :variant===FIRST_BREATH_VARIANT?hubExperience?.previewFirstBreathComposition
   :variant==='v3'?hubExperience?.previewV3Composition:variant==='v2'?hubExperience?.previewComposition:undefined;
@@ -28,7 +30,7 @@ const rainforestSculpture=rainforestAtmosphere||(__VPA_AR_EXPERIMENTS__&&locatio
 const rainforestLiving=rainforestSculpture||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v3.html');
 const rainforestCinematic=rainforestLiving||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v2.html');
 const rainforestExperiment=rainforestCinematic||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-ar.html');
-const experience=msatMode?msatExperience:hubMode?(hubExperience&&(previewComposition||creativePreview)?{
+const experience=msatMode?msatExperience:hubMode?(hubExperience&&finalMode?finalExperience(hubExperience):hubExperience&&(previewComposition||creativePreview)?{
   ...hubExperience,
   composition:previewComposition??hubExperience.composition,
   lilyCinematics:creativePreview?.lilyCinematics,
@@ -56,7 +58,7 @@ if(hubMode&&experience){
  selecting.textContent=experience.certificateLabel;
  const paragraphs=root.querySelectorAll('.ar-intro>p:not(.ar-eyebrow)');
  paragraphs[0].textContent='Allow camera access and keep the complete artwork on the selected certificate in view.';
- paragraphs[1].textContent=rainforestExperiment||hubModel?'Move the certificate and tilt it slowly to check the sculpture.':'A gold outline shows where the artwork is tracked.';
+ paragraphs[1].textContent=rainforestExperiment||hubModel?'Move your phone slowly to see the sculpture from different angles.':'A gold outline shows where the artwork is tracked.';
  const image=root.querySelector<HTMLImageElement>('#ar-target-preview')!;
  image.alt=`Artwork from ${experience.certificateLabel}`;image.width=Math.round((experience.targetAspect??680/1024)*1024);
  root.querySelector('#ar-fallback li:nth-child(2)')!.textContent='Return here, tap Continue, then point at the selected certificate for 10–15 seconds.';
@@ -123,7 +125,7 @@ async function launch(){
   await video.play();if(request!==generation)return;video.width=video.videoWidth;video.height=video.videoHeight;
   root.dataset.state='preparing';notice(tigerRecognition?'Preparing image recognition…':'Preparing your sculpture…');prepareTimer=window.setTimeout(()=>fail('AR took too long to start. Please try again.'),30000);
   const {startTracking}=await import('./engine');if(request!==generation)return;
-  const lab=hubRecognition?(await import('./experimental/recognition')).setupRecognition(root,experience,hubModel,true):tigerRecognition?(await import('./experimental/recognition')).setupRecognition(root,experience,tigerFlower):rainforestExperiment?(await import('./experimental/rainforest')).setupRainforestLab(root,{cinematic:rainforestCinematic,living:rainforestLiving,sculpture:rainforestSculpture,atmosphere:rainforestAtmosphere,ancientSunlight:creativePreview?.variant==='ancient-tree',flowersEnabled:new URLSearchParams(location.search).get('flowers')!=='0',leafEnabled:new URLSearchParams(location.search).get('leaf')!=='0',diagnostics:!rainforestCinematic||new URLSearchParams(location.search).get('debug')==='1',mistEnabled:new URLSearchParams(location.search).get('mist')!=='0',stabilize:new URLSearchParams(location.search).get('stability')!=='0',rotateReveal:new URLSearchParams(location.search).has('revealRotation')?new URLSearchParams(location.search).get('revealRotation')!=='0':undefined}):undefined;experimentCleanup=lab?.dispose;if(request!==generation){lab?.dispose();return;}
+  const lab=hubRecognition?(await import('./experimental/recognition')).setupRecognition(root,experience,hubModel,true):tigerRecognition?(await import('./experimental/recognition')).setupRecognition(root,experience,tigerFlower):rainforestExperiment?(await import('./experimental/rainforest')).setupRainforestLab(root,{cinematic:rainforestCinematic,living:rainforestLiving,sculpture:rainforestSculpture,atmosphere:rainforestAtmosphere,ancientSunlight:creativePreview?.variant==='ancient-tree',offerLegacyFallback:!finalMode,flowersEnabled:new URLSearchParams(location.search).get('flowers')!=='0',leafEnabled:new URLSearchParams(location.search).get('leaf')!=='0',diagnostics:!rainforestCinematic||new URLSearchParams(location.search).get('debug')==='1',mistEnabled:new URLSearchParams(location.search).get('mist')!=='0',stabilize:new URLSearchParams(location.search).get('stability')!=='0',rotateReveal:new URLSearchParams(location.search).has('revealRotation')?new URLSearchParams(location.search).get('revealRotation')!=='0':undefined}):undefined;experimentCleanup=lab?.dispose;if(request!==generation){lab?.dispose();return;}
   session=await startTracking({surface,video,experience,signal:abort.signal,readTilt,sceneFactory:lab?.factory,onMetrics:lab?.onMetrics,poseFilter:lab?.poseFilter,trackingTolerance:lab?.trackingTolerance,onSculptureState:state=>{if(request!==generation)return;const note=el('ar-model-note');clearTimeout(modelNoteTimer);note.hidden=(reviewMode&&state==='ready')||(tigerRecognition&&(!tigerFlower||state==='ready'))||rainforestCinematic&&state==='ready';note.textContent=reviewMode?`Loading ${experience.title}…`:tigerFlower?'Loading orange Tiger Lily…':state==='loading'?'Loading detailed sculpture…':state==='ready'?'Tree ready. Step back to see the full canopy.':'Using the lightweight sculpture. Detailed model unavailable.';if(state!=='loading')modelNoteTimer=window.setTimeout(()=>{note.hidden=true;},6000);},onTracking:found=>{
    if(request!==generation)return;
    if(found){

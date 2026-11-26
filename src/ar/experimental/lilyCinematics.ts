@@ -4,6 +4,7 @@ import {
 } from 'three';
 import type { Entrance, LilyCinematics } from '../config';
 import { SCULPTURE_TIMING } from './sculptureTimeline';
+import { createLilyBeam, lilyBeamLighting } from './lilyBeam';
 
 const presets = {
   'sunlit-flame': { sweepStart: 1.05, sweepEnd: 4.15, petalBase: .47, tint: [.27, .15, .045], shimmer: 0 },
@@ -20,7 +21,7 @@ export function lilyCinematicTurn(elapsed: number, revealEnd: number, reduced: b
   return rotating * Math.PI * 2 / SCULPTURE_TIMING.revolutionSeconds;
 }
 
-function addLilyLight(piece: Group, sweep: { value: number }, preset: typeof presets[LilyCinematics]) {
+function addLilyLight(piece: Group, sweep: { value: number }, preset: typeof presets[LilyCinematics], beam?: ReturnType<typeof createLilyBeam>) {
   piece.traverse(object => {
     if (!(object instanceof Mesh) || !(object.material instanceof MeshStandardMaterial)) return;
     if (!object.geometry.boundingBox) object.geometry.computeBoundingBox();
@@ -28,6 +29,7 @@ function addLilyLight(piece: Group, sweep: { value: number }, preset: typeof pre
     const material = object.material;
     const existingCompile = material.onBeforeCompile.bind(material);
     const existingKey = material.customProgramCacheKey();
+    const beamFrame = beam?.trackMesh(object);
     material.onBeforeCompile = (shader, renderer) => {
       existingCompile(shader, renderer);
       shader.uniforms.lilySweep = sweep;
@@ -55,18 +57,30 @@ function addLilyLight(piece: Group, sweep: { value: number }, preset: typeof pre
             float grazing = 1. - abs(dot(normal, normalize(vViewPosition)));
             reflectedLight.directDiffuse *= 1. + light * lilyTint;
             reflectedLight.directSpecular *= 1. + light * (lilyTint * 1.28 + lilyShimmer * grazing);
-          }`);
+          }
+          ${beam ? lilyBeamLighting : ''}`);
+      if (beam && beamFrame) {
+        Object.assign(shader.uniforms, beam.uniforms, { lilyBeamMeshToUpright: beamFrame });
+        shader.vertexShader = 'varying vec3 lilyBeamSurface; uniform mat4 lilyBeamMeshToUpright;\n' +
+          shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+            lilyBeamSurface = (lilyBeamMeshToUpright * vec4(position, 1.)).xyz;`);
+        shader.fragmentShader = 'varying vec3 lilyBeamSurface; uniform vec3 lilyBeamSource, lilyBeamTip, lilyBeamTint; uniform float lilyBeamAmount;\n' +
+          shader.fragmentShader;
+      }
     };
-    material.customProgramCacheKey = () => `${existingKey}|lily-petal-light`;
+    material.customProgramCacheKey = () => `${existingKey}|lily-petal-light${beam ? '|directional-shaft' : ''}`;
     material.needsUpdate = true;
   });
 }
 
-/** Motes stay gravity-aligned while their emission point follows the actual throat. */
-function createLilyAir(upright: Group, turn: Group, piece: Group, blush: boolean) {
+function lilyThroat(turn: Group, piece: Group, blush: boolean) {
   // Measured in the existing Tiger and Dragon placements, after their fixed tilt.
   const throat = blush ? new Vector3(0, .54, -.16) : new Vector3(.008, .515, -.29);
-  piece.worldToLocal(turn.localToWorld(throat));
+  return piece.worldToLocal(turn.localToWorld(throat));
+}
+
+/** Motes stay gravity-aligned while their emission point follows the actual throat. */
+function createLilyAir(upright: Group, piece: Group, throat: Vector3, blush: boolean) {
   const vertices: number[] = [];
   for (let i = 0; i < 7; i++) {
     vertices.push(((i * 7 + 2) % 13) / 13, ((i * 5 + 3) % 11) / 11, (i + .5) / 7);
@@ -149,20 +163,23 @@ function createLilyAir(upright: Group, turn: Group, piece: Group, blush: boolean
   };
 }
 
-export function createLilyCinematics(variant: LilyCinematics, turn: Group, upright: Group, entrance?: Entrance) {
+export function createLilyCinematics(variant: LilyCinematics, turn: Group, upright: Group, entrance?: Entrance, finalLilyLight = false) {
   const preset = presets[variant];
   const pieces = turn.children as Group[];
+  const blush = variant === 'blushing-ember';
+  const throat = variant !== 'the-dance' && pieces[0] ? lilyThroat(turn, pieces[0], blush) : undefined;
+  const beam = finalLilyLight && throat ? createLilyBeam(upright, pieces[0], throat, blush) : undefined;
   const revealEnd = entrance?.phases?.reduce((end, phase) => Math.max(end, phase.start + phase.duration), 0)
     ?? (entrance ? entrance.duration + (pieces.length - 1) * entrance.stagger : 0);
   const blooms = pieces.map((piece, index) => {
     const sweep = { value: -1 };
-    addLilyLight(piece, sweep, preset);
+    addLilyLight(piece, sweep, preset, beam);
     return {
       piece, sweep, x: piece.rotation.x, z: piece.rotation.z,
       start: entrance?.phases?.[index]?.start ?? index * (entrance?.stagger ?? 0),
     };
   });
-  const air = variant !== 'the-dance' ? createLilyAir(upright, turn, pieces[0], variant === 'blushing-ember') : undefined;
+  const air = throat ? createLilyAir(upright, pieces[0], throat, blush) : undefined;
   return {
     turnAt(elapsed: number, reduced: boolean) {
       return lilyCinematicTurn(elapsed, revealEnd, reduced);
@@ -181,9 +198,11 @@ export function createLilyCinematics(variant: LilyCinematics, turn: Group, uprig
         piece.rotation.z = z + motion * strength * .65 * Math.sin(age * (rate + .14) + index * 1.03);
       });
       air?.update(elapsed, reduced);
+      beam?.update(elapsed, reduced);
     },
     dispose() {
       air?.dispose();
+      beam?.dispose();
     },
   };
 }

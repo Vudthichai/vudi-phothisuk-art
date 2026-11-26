@@ -17,6 +17,7 @@
     "test:ar:rainforest": "node scripts/check-rainforest.mjs"
   },
   "dependencies": {
+    "meshoptimizer": "0.22.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.0",

@@ -10,6 +10,7 @@ import { createGildedBotanical } from './gildedBotanical';
 import { createEtherealPetals } from './etherealPetals';
 import { createBloomOpening } from './bloomOpening';
 import { createFirstBreathAtmosphere } from './firstBreathAtmosphere';
+import { createFallingBloomSparks } from './fallingBloomSparks';
 import { createSculptureEntrance } from './sculptureEntrance';
 import { createMossAwakening, mossTurn } from './mossAwakening';
 import { createStumpRebirth } from './stumpRebirth';
@@ -40,10 +41,12 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     let petals: ReturnType<typeof createEtherealPetals> | undefined;
     let bloom: ReturnType<typeof createBloomOpening> | undefined;
     let breath: ReturnType<typeof createFirstBreathAtmosphere> | undefined;
+    let bloomSparks: ReturnType<typeof createFallingBloomSparks> | undefined;
     let awakening: ReturnType<typeof createMossAwakening> | undefined;
     let rebirth: ReturnType<typeof createStumpRebirth> | undefined;
     let entrance: ReturnType<typeof createSculptureEntrance> | undefined;
     let lily: ReturnType<typeof createLilyCinematics> | undefined;
+    let disposeCanopy: (() => void) | undefined;
     onState('loading');
 
     async function load() {
@@ -84,22 +87,32 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         }
         if (composition.leafRain) {
           const [green, gold] = turn.children as Group[];
-          rain = createLeafRain(turn, green, gold, composition.creativeFinish === 'leaves');
+          rain = createLeafRain(turn, green, gold, composition.creativeFinish === 'leaves', composition.finalCanopy === 'leaves');
         }
-        if (composition.mossAwakening) awakening = createMossAwakening(turn, upright, composition.creativeFinish === 'moss');
-        if (composition.stumpRebirth) rebirth = createStumpRebirth(turn, upright);
+        if (composition.mossAwakening) {
+          const finalForest = composition.finalForest === 'moss';
+          awakening = createMossAwakening(turn, upright, finalForest || composition.creativeFinish === 'moss', finalForest);
+        }
+        if (composition.stumpRebirth) rebirth = createStumpRebirth(turn, upright, composition.finalForest === 'rebirth');
         if (composition.gildedBotanical) {
           const support = createGildedBotanical(turn.children[0] as Group);
           turn.add(...support.children.slice());
         }
+        if (composition.finalCanopy === 'ethereal') {
+          const { createEtherealCanopy } = await import('./etherealCanopy');
+          disposeCanopy = await createEtherealCanopy(turn, turn.children[0] as Group, pending.signal);
+        }
         if (composition.entrance) entrance = createSculptureEntrance(composition.entrance, turn, upright, composition.creativeFinish === 'gilded');
         if (composition.lilyCinematics) {
-          lily = createLilyCinematics(composition.lilyCinematics, turn, upright, composition.entrance);
+          lily = createLilyCinematics(composition.lilyCinematics, turn, upright, composition.entrance, composition.finalLilyLight);
         }
-        if (composition.petalRain) petals = createEtherealPetals(upright, composition.creativeFinish === 'ethereal');
+        if (composition.petalRain) {
+          petals = createEtherealPetals(upright, composition.creativeFinish === 'ethereal', composition.finalCanopy === 'ethereal');
+        }
         if (composition.bloomOpening || composition.firstBreath) {
-          bloom = createBloomOpening(turn, composition.firstBreath);
+          bloom = createBloomOpening(turn, composition.firstBreath, composition.finalBloom);
           if (composition.firstBreath) breath = createFirstBreathAtmosphere(upright, bloom.stamen, 4.4);
+          if (composition.finalBloom) bloomSparks = createFallingBloomSparks(upright);
         }
         ready = true;
         onState('ready');
@@ -116,7 +129,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     return {
       root,
       uprightRoot: () => upright,
-      ...((composition.creativeFinish || composition.stumpRebirth || composition.lilyCinematics) &&
+      ...((composition.creativeFinish || composition.stumpRebirth || composition.lilyCinematics || composition.finalBloom) &&
         { pausePresentation: () => { timeline.update(0, false, false); } }),
       update(time, reduced, tracked) {
         const step = previousTime === undefined ? 0 : Math.min(.1, Math.max(0, time - previousTime));
@@ -134,6 +147,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           if (root.visible) {
             petals?.update(frame.elapsedSeconds, reduced);
             breath?.update(frame.elapsedSeconds, reduced);
+            bloomSparks?.update(frame.elapsedSeconds, reduced);
           }
           const angle = bloom ? bloom.update(frame.elapsedSeconds, reduced)
             : entrance ? entrance.update(frame.elapsedSeconds, reduced) : frame.turn;
@@ -153,10 +167,12 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         rain?.dispose();
         petals?.dispose();
         breath?.dispose();
+        bloomSparks?.dispose();
         awakening?.dispose();
         rebirth?.dispose();
         entrance?.dispose();
         lily?.dispose();
+        disposeCanopy?.();
         disposeModel(root);
         root.clear();
       },

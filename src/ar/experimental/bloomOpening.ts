@@ -4,11 +4,14 @@ import { SCULPTURE_TIMING } from './sculptureTimeline';
 export const BLOOM_OPENING_SECONDS = 5.1;
 export const BLOOM_HOLD_SECONDS = .5;
 
-export function firstBreathPresentation(elapsed: number, reduced: boolean) {
+export function firstBreathPresentation(elapsed: number, reduced: boolean, refinedEntrance = false) {
   const sweepStart = 4.55;
   const sweepEnd = 5.85;
+  const reveal = refinedEntrance
+    ? MathUtils.smoothstep(elapsed, .04, 1.92)
+    : MathUtils.clamp(elapsed / 2, 0, 1);
   return {
-    fade: reduced ? 1 : MathUtils.clamp(elapsed / 2, 0, 1),
+    fade: reduced ? 1 : reveal,
     sweep: reduced || elapsed <= sweepStart || elapsed >= sweepEnd
       ? -1 : (elapsed - sweepStart) / (sweepEnd - sweepStart),
   };
@@ -96,7 +99,7 @@ const firstBreathLighting = `
     reflectedLight.directSpecular *= mix(vec3(1.), vec3(1.15, 1.095, 1.03), warmth);
   }`;
 
-export function createBloomOpening(sculpture: Group, firstBreath = false) {
+export function createBloomOpening(sculpture: Group, firstBreath = false, refinedEntrance = false) {
   const progress = { value: 0 };
   const fade = { value: 0 }, sweep = { value: -1 };
   const stamen = new Vector3(0, .43, .05);
@@ -145,7 +148,7 @@ export function createBloomOpening(sculpture: Group, firstBreath = false) {
     update(elapsed: number, reduced: boolean) {
       progress.value = reduced ? 1 : MathUtils.clamp(elapsed / BLOOM_OPENING_SECONDS, 0, 1);
       if (firstBreath) {
-        const phase = firstBreathPresentation(elapsed, reduced);
+        const phase = firstBreathPresentation(elapsed, reduced, refinedEntrance);
         fade.value = phase.fade;
         sweep.value = phase.sweep;
       }

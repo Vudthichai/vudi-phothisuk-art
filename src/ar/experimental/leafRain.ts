@@ -1,4 +1,7 @@
-import { DynamicDrawUsage, Group, InstancedMesh, Matrix4, Mesh, MeshStandardMaterial, Object3D, MathUtils } from 'three';
+import {
+  DoubleSide, DynamicDrawUsage, Group, InstancedMesh, Matrix4, Mesh,
+  MeshStandardMaterial, Object3D, MathUtils, PlaneGeometry, ShaderMaterial, Vector3,
+} from 'three';
 
 const GREEN_COUNT = 17;
 const GOLD_INTERVAL = 13;
@@ -9,7 +12,7 @@ function fraction(seed: number) {
   return value - Math.floor(value);
 }
 
-function addGoldReflection(material: MeshStandardMaterial, reflection: { value: number }) {
+function addGoldReflection(material: MeshStandardMaterial, reflection: { value: number }, beam: boolean) {
   material.onBeforeCompile = shader => {
     shader.uniforms.goldLeafReflection = reflection;
     shader.fragmentShader = 'uniform float goldLeafReflection;\n' +
@@ -17,14 +20,73 @@ function addGoldReflection(material: MeshStandardMaterial, reflection: { value: 
         float angle = abs(dot(normal, normalize(vViewPosition)));
         float facing = smoothstep(.15, .68, angle);
         vec3 goldReflection = reflectedLight.indirectSpecular + .65 * reflectedLight.directSpecular;
-        outgoingLight += goldReflection * vec3(.32, .24, .15) * goldLeafReflection * facing;
+        outgoingLight += goldReflection * ${beam ? 'vec3(.57, .39, .19)' : 'vec3(.32, .24, .15)'} * goldLeafReflection * facing;
+        ${beam ? 'outgoingLight += diffuseColor.rgb * vec3(.11, .067, .02) * goldLeafReflection * facing;' : ''}
         #include <opaque_fragment>`);
   };
-  material.customProgramCacheKey = () => 'leaf-gold-reflection';
+  material.customProgramCacheKey = () => beam ? 'leaf-gold-sunbeam' : 'leaf-gold-reflection';
   material.needsUpdate = true;
 }
 
-export function createLeafRain(field: Group, green: Group, gold: Group, refined = false) {
+function createGoldSunbeam(field: Group) {
+  const axis = new Vector3(-.28, .95, -.13).normalize();
+  const strength = { value: 0 };
+  const geometry = new PlaneGeometry(1, 1);
+  const material = new ShaderMaterial({
+    uniforms: { strength, sunAxis: { value: axis } },
+    transparent: true, depthWrite: false, side: DoubleSide, forceSinglePass: true,
+    vertexShader: `
+      uniform vec3 sunAxis;
+      varying vec2 beamUV;
+      void main() {
+        beamUV = uv;
+        vec3 center = (modelViewMatrix * vec4(0., 0., 0., 1.)).xyz;
+        vec3 along = mat3(modelViewMatrix) * sunAxis;
+        float units = length(along);
+        along /= units;
+        vec3 across = cross(along, normalize(-center));
+        across /= max(.001, length(across));
+        vec3 projected = center + units * (across * position.x * .35 + along * position.y * .72);
+        gl_Position = projectionMatrix * vec4(projected, 1.);
+      }`,
+    fragmentShader: `
+      uniform float strength;
+      varying vec2 beamUV;
+      void main() {
+        float height = beamUV.y;
+        float width = mix(.46, .14, height);
+        float distanceToRay = (beamUV.x * 2. - 1.) / width;
+        float concentration = exp(-2.25 * distanceToRay * distanceToRay);
+        float ends = smoothstep(0., .18, height) * (1. - smoothstep(.66, 1., height));
+        float gradient = mix(.18, .085, height);
+        gl_FragColor = vec4(1., .63, .24, strength * concentration * ends * gradient);
+        #include <tonemapping_fragment>
+        #include <colorspace_fragment>
+      }`,
+  });
+  const mesh = new Mesh(geometry, material);
+  mesh.name = 'Warm beam following the golden leaf';
+  mesh.frustumCulled = false;
+  mesh.visible = false;
+  field.add(mesh);
+  return {
+    update(center: Vector3, warmth: number) {
+      strength.value = warmth;
+      mesh.visible = warmth > 0;
+      if (mesh.visible) {
+        mesh.position.copy(center).addScaledVector(axis, .24);
+        mesh.position.z -= .055;
+      }
+    },
+    dispose() {
+      mesh.removeFromParent();
+      geometry.dispose();
+      material.dispose();
+    },
+  };
+}
+
+export function createLeafRain(field: Group, green: Group, gold: Group, refined = false, goldenLight = false) {
   const pose = new Object3D();
   const matrix = new Matrix4();
   const reflection = { value: 0 };
@@ -35,8 +97,8 @@ export function createLeafRain(field: Group, green: Group, gold: Group, refined 
     const meshes: { mesh: InstancedMesh; rest: Matrix4 }[] = [];
     source.traverse(object => {
       if (!(object instanceof Mesh)) return;
-      if (refined && source === gold && object.material instanceof MeshStandardMaterial) {
-        addGoldReflection(object.material, reflection);
+      if ((refined || goldenLight) && source === gold && object.material instanceof MeshStandardMaterial) {
+        addGoldReflection(object.material, reflection, goldenLight);
       }
       const mesh = new InstancedMesh(object.geometry, object.material, count);
       mesh.instanceMatrix.setUsage(DynamicDrawUsage);
@@ -50,6 +112,7 @@ export function createLeafRain(field: Group, green: Group, gold: Group, refined 
 
   const greenBatches = batches(green, GREEN_COUNT);
   const goldBatches = batches(gold, 1);
+  const sunbeam = goldenLight ? createGoldSunbeam(field) : undefined;
   function place(slot: number, cycle: number, progress: number, phase: number, breeze: number, golden = false) {
     const seed = slot * 103 + cycle * 53;
     const x = (fraction(seed + 1) - .5) * .84;
@@ -90,10 +153,14 @@ export function createLeafRain(field: Group, green: Group, gold: Group, refined 
       const goldVisible = goldAge >= 2 && goldAge < 2 + GOLD_FALL;
       if (goldVisible) {
         const progress = (goldAge - 2) / GOLD_FALL;
-        reflection.value = breeze * MathUtils.smoothstep(progress, .27, .43) * (1 - MathUtils.smoothstep(progress, .47, .70));
+        const warmth = MathUtils.smoothstep(progress, .08, .33) * (1 - MathUtils.smoothstep(progress, .55, .88));
+        reflection.value = goldenLight ? warmth
+          : breeze * MathUtils.smoothstep(progress, .27, .43) * (1 - MathUtils.smoothstep(progress, .47, .70));
         place(GREEN_COUNT, goldCycle, progress, goldAge - 2, breeze, true);
+        sunbeam?.update(pose.position, warmth);
       } else {
         reflection.value = 0;
+        sunbeam?.update(pose.position, 0);
       }
       for (const { mesh } of greenBatches) mesh.instanceMatrix.needsUpdate = true;
       for (const { mesh } of goldBatches) {
@@ -102,6 +169,7 @@ export function createLeafRain(field: Group, green: Group, gold: Group, refined 
       }
     },
     dispose() {
+      sunbeam?.dispose();
       for (const { mesh } of [...greenBatches, ...goldBatches]) mesh.dispose();
     },
   };
