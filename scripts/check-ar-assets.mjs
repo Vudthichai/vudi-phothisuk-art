@@ -39,7 +39,29 @@ for(const experience of experiences) {
   }
 }
 assert.deepEqual([...paths].sort(), records.map(record=>record.path).sort());
-const modelPaths=new Set();
+const msat = await load('public/ar/targets/msat-magnet.json');
+const msatImage = await readFile('public/ar/targets/msat-magnet.jpg');
+const msatTarget = await readFile('public/ar/targets/msat-magnet.mind');
+assert.equal(hash(await readFile(msat.sourcePath)), msat.sourceSha256);
+assert.equal(hash(msatImage), msat.targetImageSha256);
+assert.equal(hash(msatTarget), msat.compiledTargetSha256);
+assert.equal(msatTarget.length, msat.compiledBytes);
+assert(msat.compiler.matchingFeatures > 100 && msat.compiler.featureLevels > 0);
+assert.equal(msat.targetDimensions[0], msat.targetDimensions[1]);
+assert(!experiences.some(experience => experience.targetFile === '/ar/targets/msat-magnet.mind'));
+
+const msatModelPath = '/ar/models/msat-signature.glb';
+const msatModel = await readFile('public' + msatModelPath);
+const msatGltf = JSON.parse(msatModel.toString('utf8', 20, 20 + msatModel.readUInt32LE(12)));
+const [msatPrimitive] = msatGltf.meshes.flatMap(mesh => mesh.primitives);
+assert(msatModel.length < 4_000_000);
+assert(msatGltf.extensionsRequired.includes('EXT_meshopt_compression'));
+assert.equal(msatGltf.meshes.flatMap(mesh => mesh.primitives).length, 1);
+assert.equal(msatGltf.accessors[msatPrimitive.indices].count / 3, 110_000);
+assert.equal(msatGltf.images.length, 3);
+assert(msatGltf.images.every(image => Number.isInteger(image.bufferView) && !image.uri));
+
+const modelPaths=new Set([msatModelPath]);
 assert.deepEqual(Object.keys(presentations).sort(), [...new Set(records.map(record=>record.artworkId))].sort());
 function validateEntrance(entrance) {
   if (entrance) {
@@ -99,6 +121,7 @@ for (const path of modelPaths) {
 const upstream=await load('public/ar/vendor/mindar/UPSTREAM.json');
 for(const [file,digest] of Object.entries(upstream.files))assert.equal(hash(await readFile('public/ar/vendor/mindar/'+file)),digest);
 console.log(`AR assets verified: ${experiences.length} compiled targets, ${paths.size} verified certificate fronts, exact front-image provenance and upstream hashes. No replacement QR codes.`);
+console.log('Optional MSAT tracker verified separately against the authentic floral artwork.');
 await import('./check-ar-model.mjs');
 
 await import('./check-tiger-lily-model.mjs');

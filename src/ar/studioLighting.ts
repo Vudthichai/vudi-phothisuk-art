@@ -13,6 +13,13 @@ const frontKey: Beam['direction'] = [-2.8, 3.3, 3.8];
 const softFill: Beam['direction'] = [3.2, .75, 2.1];
 const petalRim: Beam['direction'] = [1.2, 2.5, -2.8];
 const profiles: Readonly<Partial<Record<string, StudioProfile>>> = {
+  'msat-signature': {
+    hemisphere: { sky: 0xf6f4e9, ground: 0x424e42, intensity: 1.04 },
+    key: { color: 0xfff0dc, intensity: 1.83, direction: frontKey },
+    fill: { color: 0xe8f4eb, intensity: .35, direction: softFill },
+    rim: { color: 0xffefda, intensity: .36, direction: petalRim },
+    reflections: .73,
+  },
   'tiger-lily': {
     hemisphere: { sky: 0xfffaee, ground: 0x4d4436, intensity: 1.06 },
     key: { color: 0xffedda, intensity: 2.17, direction: frontKey },
