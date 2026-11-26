@@ -22,10 +22,18 @@ function blossomJoint(blossom: Group) {
   const underside = new Vector3(center.x, bounds.min.y, center.z);
   // A ray along the botanical axis finds the real underside, between the
   // petals' outer edges. Bury the narrow stem tip slightly inside the surface.
-  const origin = underside.clone().addScaledVector(up, -.07).applyMatrix4(frame);
   const axis = up.clone().transformDirection(frame);
-  const hit = new Raycaster(origin, axis).intersectObject(blossom, true)[0];
-  return (hit ? hit.point.clone().applyMatrix4(intoFrame) : underside).addScaledVector(up, .018);
+  const ray = new Raycaster(new Vector3(), axis);
+  let joint: Vector3 | undefined;
+  // Offset two probes slightly so a central ray on a triangle seam cannot
+  // skip the underside and attach through the opposite side of the blossom.
+  for (const [x, z] of [[0, 0], [.0011, .0017], [-.0017, .0011]]) {
+    ray.ray.origin.copy(underside).add(new Vector3(x, -.07, z)).applyMatrix4(frame);
+    const hit = ray.intersectObject(blossom, true)[0];
+    const point = hit?.point.clone().applyMatrix4(intoFrame);
+    if (point && (!joint || point.y < joint.y - .00001)) joint = point;
+  }
+  return (joint ?? underside).addScaledVector(up, .018);
 }
 
 function tube(curve: CatmullRomCurve3, sections: number, sides: number, radius: (u: number) => number, color: Color) {
