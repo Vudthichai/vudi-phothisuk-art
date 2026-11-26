@@ -253,7 +253,81 @@
         "gold": true
       }
     },
-    "previewLabel": "Gilded Bloom V2"
+    "previewLabel": "Gilded Bloom V2",
+    "previewV3Composition": {
+      "gildedBotanical": true,
+      "pieces": [
+        {
+          "asset": "/ar/models/gilded-blossom-v2.glb",
+          "size": 0.83,
+          "position": [
+            0,
+            0.48,
+            0
+          ],
+          "rotation": [
+            -0.18,
+            0,
+            0
+          ]
+        }
+      ],
+      "entrance": {
+        "duration": 2.15,
+        "stagger": 0,
+        "softness": 0.21,
+        "atmosphere": 0,
+        "direction": [
+          0,
+          1,
+          0
+        ],
+        "radialCenter": [
+          0.5,
+          0.53,
+          0.5
+        ],
+        "gold": true,
+        "goldOrigin": [
+          0,
+          0.85,
+          0
+        ],
+        "phases": [
+          {
+            "start": 0.35,
+            "duration": 2.15
+          },
+          {
+            "start": 1.75,
+            "duration": 1.38,
+            "direction": [
+              0,
+              -1,
+              0
+            ]
+          },
+          {
+            "start": 2.45,
+            "duration": 1.15,
+            "direction": [
+              -0.7,
+              0.3,
+              0
+            ]
+          },
+          {
+            "start": 2.67,
+            "duration": 1.08,
+            "direction": [
+              0.7,
+              0.3,
+              0
+            ]
+          }
+        ]
+      }
+    }
   },
   "75-leaves": {
     "composition": {

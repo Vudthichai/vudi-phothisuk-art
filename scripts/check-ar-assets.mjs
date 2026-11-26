@@ -16,7 +16,7 @@ for(const experience of experiences) {
     assert.equal(experience.entryPaths.length,0,'Previews must not enable certificate-page entry controls.');
     assert.equal(experience.targetAspect,meta.targetDimensions[0]/meta.targetDimensions[1]);
   }
-  for (const key of ['modelAsset','rainforestV5','composition','previewComposition','previewLabel','entrance','recognitionOnly']) {
+  for (const key of ['modelAsset','rainforestV5','composition','previewComposition','previewV3Composition','previewLabel','entrance','recognitionOnly']) {
     assert(!Object.hasOwn(experience,key),'Set presentations once per artwork.');
   }
   assert.equal(hash(image),meta.targetImageSha256);assert.equal(hash(target),meta.compiledTargetSha256);
@@ -60,10 +60,24 @@ for (const presentation of Object.values(presentations)) {
   validateEntrance(presentation.entrance);
   assert.equal([presentation.modelAsset, presentation.rainforestV5, presentation.composition].filter(Boolean).length,1);
   if (presentation.modelAsset) modelPaths.add(presentation.modelAsset);
-  for (const composition of [presentation.composition, presentation.previewComposition].filter(Boolean)) {
+  for (const composition of [presentation.composition, presentation.previewComposition, presentation.previewV3Composition].filter(Boolean)) {
     const { pieces, leafRain, entrance } = composition;
     validateEntrance(entrance);
     assert(pieces.length>0);
+    if (composition.gildedBotanical) {
+      assert.equal(pieces.length,1);
+      assert.equal(entrance.phases.length,4);
+    }
+    if (entrance?.phases) {
+      assert.equal(entrance.phases.length,pieces.length+(composition.gildedBotanical?3:0));
+      for (const phase of entrance.phases) {
+        assert(Number.isFinite(phase.start) && phase.start>=0);
+        assert(Number.isFinite(phase.duration) && phase.duration>0);
+        if (phase.direction) {
+          assert(phase.direction.length===3 && phase.direction.every(Number.isFinite) && phase.direction.some(Boolean));
+        }
+      }
+    }
     if (leafRain) assert.equal(pieces.length,2);
     for (const piece of pieces) {
       assert(Number.isFinite(piece.size) && piece.size>0);

@@ -6,6 +6,7 @@ import type { BotanicalComposition } from '../config';
 import type { SculptureFactory } from '../engine';
 import { createSculptureTimeline } from './sculptureTimeline';
 import { createLeafRain } from './leafRain';
+import { createGildedBotanical } from './gildedBotanical';
 import { createEtherealPetals } from './etherealPetals';
 import { createBloomOpening } from './bloomOpening';
 import { createSculptureEntrance } from './sculptureEntrance';
@@ -80,6 +81,10 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           rain = createLeafRain(turn, green, gold);
         }
         if (composition.mossAwakening) awakening = createMossAwakening(turn, upright);
+        if (composition.gildedBotanical) {
+          const support = createGildedBotanical(turn.children[0] as Group);
+          turn.add(...support.children.slice());
+        }
         if (composition.entrance) entrance = createSculptureEntrance(composition.entrance, turn, upright);
         if (composition.petalRain) petals = createEtherealPetals(upright);
         if (composition.bloomOpening) bloom = createBloomOpening(turn);

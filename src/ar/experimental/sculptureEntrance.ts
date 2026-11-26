@@ -4,19 +4,25 @@ import { createAtmosphereMist } from './atmosphereMist';
 import { SCULPTURE_TIMING } from './sculptureTimeline';
 
 export function entranceTiming(entrance: Entrance, pieceCount: number, elapsed: number, reduced: boolean) {
-  const end = entrance.duration + (pieceCount - 1) * entrance.stagger;
+  const end = entrance.phases?.reduce((latest, phase) => Math.max(latest, phase.start + phase.duration), 0)
+    ?? (entrance.duration + (pieceCount - 1) * entrance.stagger);
   return {
-    progress: (index: number) => reduced ? 1 : MathUtils.clamp((elapsed - index * entrance.stagger) / entrance.duration, 0, 1),
+    progress(index: number) {
+      const phase = entrance.phases?.[index];
+      const start = phase?.start ?? index * entrance.stagger;
+      return reduced ? 1 : MathUtils.clamp((elapsed - start) / (phase?.duration ?? entrance.duration), 0, 1);
+    },
     turn: reduced ? 0 : Math.max(0, elapsed - end) / SCULPTURE_TIMING.revolutionSeconds * Math.PI * 2,
   };
 }
 
 export function createSculptureEntrance(settings: Entrance, sculpture: Group, upright: Group) {
-  const direction = new Vector3().fromArray(settings.direction);
-  direction.divideScalar(Math.abs(direction.x) + Math.abs(direction.y) + Math.abs(direction.z));
   const radialCenter = new Vector3().fromArray(settings.radialCenter ?? [.5, .5, .5]);
   const assigned = new Set<MeshStandardMaterial>();
-  const progress = sculpture.children.map(piece => {
+  const progress = sculpture.children.map((piece, index) => {
+    const phaseDirection = settings.phases?.[index]?.direction;
+    const direction = new Vector3().fromArray(phaseDirection ?? settings.direction);
+    direction.divideScalar(Math.abs(direction.x) + Math.abs(direction.y) + Math.abs(direction.z));
     const time = { value: 0 };
     piece.traverse(object => {
       if (!(object instanceof Mesh) || !(object.material instanceof MeshStandardMaterial)) return;
@@ -34,7 +40,7 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
         shader.uniforms.entranceDirection = { value: direction };
         shader.uniforms.entranceSoftness = { value: settings.softness };
         shader.uniforms.entranceCenter = { value: radialCenter };
-        shader.uniforms.entranceRadial = { value: settings.radialCenter ? 1 : 0 };
+        shader.uniforms.entranceRadial = { value: settings.radialCenter && !phaseDirection ? 1 : 0 };
         shader.uniforms.entranceGold = { value: settings.gold ? 1 : 0 };
         shader.vertexShader = 'varying vec3 entrancePosition; uniform vec3 entranceOrigin, entranceExtent;\n' +
           shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
@@ -52,7 +58,8 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
               float coverage = 1.0 - smoothstep(front - entranceSoftness, front + entranceSoftness, axis);
               float grain = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(.06711056, .00583715))));
               if (coverage <= grain) discard;
-              float glint = exp(-pow((axis - front + .09) * 15.0, 2.0)) * coverage;
+              float distanceToFront = (axis - front + .09) * 15.0;
+              float glint = exp(-distanceToFront * distanceToFront) * coverage;
               outgoingLight += entranceGold * glint * vec3(.24, .15, .047);
             }
             #include <opaque_fragment>`);
@@ -74,7 +81,8 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
     upright.add(mist.root);
   }
 
-  const fragments = settings.gold ? createGoldFragments(upright) : undefined;
+  const fragments = settings.gold ? createGoldFragments(upright, settings.goldOrigin) : undefined;
+  const firstPhase = settings.phases?.[0];
   return {
     update(elapsed: number, reduced: boolean) {
       const timing = entranceTiming(settings, progress.length, elapsed, reduced);
@@ -84,7 +92,9 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
         mist.update(elapsed, reduced, intensity);
         mist.root.visible = intensity > 0;
       }
-      fragments?.update(timing.progress(0));
+      fragments?.update(firstPhase && !reduced
+        ? MathUtils.clamp(elapsed / (firstPhase.start + firstPhase.duration), 0, 1)
+        : timing.progress(0));
       return timing.turn;
     },
     dispose() {
@@ -95,7 +105,7 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
   };
 }
 
-function createGoldFragments(root: Group) {
+function createGoldFragments(root: Group, origin?: number[]) {
   const geometry = new BufferGeometry();
   const seeds = new Float32Array(36 * 3);
   for (let i = 0; i < 36; i++) {
@@ -106,18 +116,21 @@ function createGoldFragments(root: Group) {
   geometry.setAttribute('position', new BufferAttribute(seeds, 3));
   const progress = { value: 0 };
   const material = new ShaderMaterial({
-    uniforms: { progress }, transparent: true, depthWrite: false,
+    uniforms: { progress, origin: { value: new Vector3().fromArray(origin ?? [0, .40, 0]) },
+      convergence: { value: origin ? .88 : .58 } }, transparent: true, depthWrite: false,
     vertexShader: `
-      uniform float progress;
+      uniform float progress, convergence;
+      uniform vec3 origin;
       varying float alpha;
       void main() {
         float slide = smoothstep(0.0, 1.0, progress);
         float angle = 6.2831853 * position.x - slide * 1.65;
-        float radius = (.34 + position.z * .29) * (1.0 - .58 * slide);
-        vec3 p = vec3(cos(angle) * radius, .40 + (position.y - .5) * (.99 - .55 * slide), sin(angle) * radius);
+        float radius = (.34 + position.z * .29) * (1.0 - convergence * slide);
+        float height = (position.y - .5) * (.99 - (.55 + (convergence - .58)) * slide);
+        vec3 p = origin + vec3(cos(angle) * radius, height, sin(angle) * radius);
         gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
         gl_PointSize = 1.3 + position.z * 3.0;
-        alpha = smoothstep(0.0,.18,progress) * (1.0-smoothstep(.50,1.0,progress)) * (.25 + position.z * .60);
+        alpha = smoothstep(0.0, convergence > .6 ? .105 : .18,progress) * (1.0-smoothstep(.50,1.0,progress)) * (.25 + position.z * .60);
       }`,
     fragmentShader: `
       varying float alpha;

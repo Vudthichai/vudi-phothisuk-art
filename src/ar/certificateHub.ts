@@ -22,6 +22,15 @@ for (const experience of entries) {
     item.append(preview);
     params.delete('variant');
   }
+  if (experience.previewV3Composition) {
+    const preview = document.createElement('a');
+    params.set('variant', 'v3');
+    preview.href = `/ar-camera.html?${params}`;
+    preview.textContent = 'Preview V3 · Golden Awakening';
+    preview.setAttribute('aria-label', 'Preview Gilded Bloom V3 · Golden Awakening');
+    item.append(preview);
+    params.delete('variant');
+  }
   if (sculpture) {
     const outline = document.createElement('a');
     params.set('mode', 'recognition');
