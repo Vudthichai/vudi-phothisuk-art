@@ -40,10 +40,11 @@ export function createMossAwakening(sculpture: Group, upright: Group) {
             float cap = smoothstep(.006, .032, pigment.r - pigment.g) * smoothstep(.019, .073, lightness);
             float shelf = (1.0 - moss) * max(edge, cap * smoothstep(.20, .54, p.y));
             float barkTime = .12 + p.y * 1.45 + .32 * p.z + .17 * grain;
-            float fanTime = 5.12 + p.y * 1.24 + abs(p.x - .53) * 2.05
-                            + p.z * .70 + grain * .20;
+            float fanTime = 5.45 + p.y * .94 + abs(p.x - .53) * 1.70
+                            + p.z * .58 + grain * .16;
             float revealAt = mix(barkTime, fanTime, smoothstep(.28, .52, shelf));
-            float appearance = smoothstep(revealAt - .11, revealAt + .20, awakeningTime);
+            float softness = mix(.19, .70, smoothstep(.28, .52, shelf));
+            float appearance = smoothstep(revealAt - softness, revealAt + softness, awakeningTime);
             float dither = fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(.06711056, .00583715))));
             if (appearance < .999 && appearance <= dither) discard;
             float liveMoss = smoothstep(1.9 + p.y * 2.5 + grain * .31,

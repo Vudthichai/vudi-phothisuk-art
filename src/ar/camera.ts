@@ -8,6 +8,7 @@ const root=document.getElementById('ar-root')!;
 const params=new URLSearchParams(location.search);
 const hubMode=__VPA_AR_EXPERIMENTS__&&params.get('hub')==='1';
 const hubExperience=hubMode?arById(params.get('experience'),true):undefined;
+const previewComposition=params.get('variant')==='v2'?hubExperience?.previewComposition:undefined;
 const tigerRecognition=__VPA_AR_EXPERIMENTS__&&location.pathname==='/tiger-lily-ar.html';
 const tigerFlower=tigerRecognition&&new URLSearchParams(location.search).get('mode')!=='recognition';
 const rainforestAtmosphere=hubMode?hubExperience?.rainforestV5&&params.get('mode')!=='recognition':location.pathname==='/rainforest-v5.html';
@@ -15,7 +16,7 @@ const rainforestSculpture=rainforestAtmosphere||(__VPA_AR_EXPERIMENTS__&&locatio
 const rainforestLiving=rainforestSculpture||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v3.html');
 const rainforestCinematic=rainforestLiving||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-v2.html');
 const rainforestExperiment=rainforestCinematic||(__VPA_AR_EXPERIMENTS__&&location.pathname==='/rainforest-ar.html');
-const experience=hubMode?hubExperience:arById(tigerRecognition?'tiger-lily-original':rainforestExperiment?'mother-nature-original':new URLSearchParams(location.search).get('experience'),tigerRecognition);
+const experience=hubMode?(hubExperience&&previewComposition?{...hubExperience,composition:previewComposition,certificateLabel:hubExperience.certificateLabel+' · V2'}:hubExperience):arById(tigerRecognition?'tiger-lily-original':rainforestExperiment?'mother-nature-original':new URLSearchParams(location.search).get('experience'),tigerRecognition);
 root.innerHTML=`<button id="ar-exit" class="ar-exit" type="button" aria-label="Exit AR">Exit <span aria-hidden="true">×</span></button>
 <section class="ar-intro"><p class="ar-eyebrow">Forest &amp; Flowers</p><h1>Nature, in another dimension.</h1><p>Turn your certificate artwork-side up, allow camera access, and point your phone at the artwork.</p><p>Use the Mother Nature original certificate or match the artwork image shown below.</p><img id="ar-target-preview" width="680" height="1024" alt="Mother Nature tracking image"><button id="ar-start" type="button">Start camera</button><p class="ar-privacy">Camera stays on your device. Recording is optional, silent and saved only by you.</p><p id="ar-support" role="status"></p></section>
 <p id="ar-model-note" class="ar-model-note" role="status" hidden></p>

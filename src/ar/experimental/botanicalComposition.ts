@@ -6,6 +6,7 @@ import type { BotanicalComposition } from '../config';
 import type { SculptureFactory } from '../engine';
 import { createSculptureTimeline } from './sculptureTimeline';
 import { createLeafRain } from './leafRain';
+import { createSculptureEntrance } from './sculptureEntrance';
 import { createMossAwakening, mossTurn } from './mossAwakening';
 
 export function createBotanicalComposition(composition: BotanicalComposition, title: string): SculptureFactory {
@@ -31,6 +32,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     let floatElapsed = 0;
     let rain: ReturnType<typeof createLeafRain> | undefined;
     let awakening: ReturnType<typeof createMossAwakening> | undefined;
+    let entrance: ReturnType<typeof createSculptureEntrance> | undefined;
     onState('loading');
 
     async function load() {
@@ -74,6 +76,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           rain = createLeafRain(turn, green, gold);
         }
         if (composition.mossAwakening) awakening = createMossAwakening(turn, upright);
+        if (composition.entrance) entrance = createSculptureEntrance(composition.entrance, turn, upright);
         ready = true;
         onState('ready');
       } catch {
@@ -100,7 +103,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           if (root.visible) awakening.update(frame.elapsedSeconds, reduced);
           turn.rotation.y = reduced ? 0 : mossTurn(frame.elapsedSeconds);
         } else {
-          turn.rotation.y = frame.turn;
+          turn.rotation.y = entrance ? entrance.update(frame.elapsedSeconds, reduced) : frame.turn;
           if (root.visible && !reduced) floatElapsed += step;
           turn.position.y = reduced ? 0 : (composition.float ?? 0) * Math.sin(floatElapsed);
         }
@@ -113,6 +116,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         signal.removeEventListener('abort', abort);
         rain?.dispose();
         awakening?.dispose();
+        entrance?.dispose();
         disposeModel(root);
         root.clear();
       },

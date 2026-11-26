@@ -14,6 +14,14 @@ for (const experience of entries) {
   link.textContent = `${experience.title} · ${edition}`;
   mode.textContent = sculpture ? 'Recognition and 3D sculpture' : 'Recognition outline';
   item.append(link, mode);
+  if (experience.previewComposition) {
+    const preview = document.createElement('a');
+    params.set('variant', 'v2');
+    preview.href = `/ar-camera.html?${params}`;
+    preview.textContent = 'Preview Gilded Bloom V2';
+    item.append(preview);
+    params.delete('variant');
+  }
   if (sculpture) {
     const outline = document.createElement('a');
     params.set('mode', 'recognition');

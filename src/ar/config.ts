@@ -1,12 +1,21 @@
 import experiences from './experiences.json';
 import artworkPresentations from './artwork-presentations.json';
+export type Entrance = {
+  duration: number;
+  stagger: number;
+  softness: number;
+  atmosphere: number;
+  direction: number[];
+  gold?: boolean;
+};
 export type BotanicalComposition = {
   leafRain?: boolean;
   mossAwakening?: boolean;
   float?: number;
+  entrance?: Entrance;
   pieces: { asset: string; size: number; position: number[]; rotation: number[] }[];
 };
-type Presentation = { modelAsset?: string; rainforestV5?: boolean; composition?: BotanicalComposition };
+type Presentation = { modelAsset?: string; rainforestV5?: boolean; composition?: BotanicalComposition; previewComposition?: BotanicalComposition };
 export type ARExperience = { id:string; artworkId:string; title:string; certificateLabel:string; certificatePaths:string[]; entryPaths?:string[]; targetImage:string; targetFile:string; targetIndex:number; targetAspect?:number; previewOnly?:boolean; recognitionOnly?:boolean; } & Presentation;
 const presentations: Readonly<Record<string, Presentation>> = artworkPresentations;
 // The certificate selects the tracked image. The artwork selects its presentation.
