@@ -20,6 +20,7 @@ export type BotanicalComposition = {
   gildedBotanical?: boolean;
   mossAwakening?: boolean;
   stumpRebirth?: boolean;
+  creativeFinish?: 'moss' | 'gilded';
   float?: number;
   entrance?: Entrance;
   pieces: { asset: string; size: number; position: number[]; rotation: number[]; fitHeight?: boolean }[];

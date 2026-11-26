@@ -1,11 +1,15 @@
-import { BufferAttribute, BufferGeometry, Group, MathUtils, Mesh, MeshStandardMaterial, Sprite, Points, ShaderMaterial, Vector3 } from 'three';
+import { BufferAttribute, BufferGeometry, Group, MathUtils, Mesh, MeshStandardMaterial, Sprite, Points, ShaderMaterial, Vector3, Vector4, Matrix4 } from 'three';
 import type { Entrance } from '../config';
 import { createAtmosphereMist } from './atmosphereMist';
 import { SCULPTURE_TIMING } from './sculptureTimeline';
 
-export function entranceTiming(entrance: Entrance, pieceCount: number, elapsed: number, reduced: boolean) {
-  const end = entrance.phases?.reduce((latest, phase) => Math.max(latest, phase.start + phase.duration), 0)
+function entranceEnd(entrance: Entrance, pieceCount: number) {
+  return entrance.phases?.reduce((latest, phase) => Math.max(latest, phase.start + phase.duration), 0)
     ?? (entrance.duration + (pieceCount - 1) * entrance.stagger);
+}
+
+export function entranceTiming(entrance: Entrance, pieceCount: number, elapsed: number, reduced: boolean) {
+  const end = entranceEnd(entrance, pieceCount);
   return {
     progress(index: number) {
       const phase = entrance.phases?.[index];
@@ -16,7 +20,12 @@ export function entranceTiming(entrance: Entrance, pieceCount: number, elapsed: 
   };
 }
 
-export function createSculptureEntrance(settings: Entrance, sculpture: Group, upright: Group) {
+export function createSculptureEntrance(settings: Entrance, sculpture: Group, upright: Group, goldenAwakening = false) {
+  const settledTime = { value: -1 };
+  const end = entranceEnd(settings, sculpture.children.length);
+  if (goldenAwakening) sculpture.updateWorldMatrix(true, true);
+  const sculptureInverse = goldenAwakening ? sculpture.matrixWorld.clone().invert() : undefined;
+  const meshFrame = new Matrix4();
   const radialCenter = new Vector3().fromArray(settings.radialCenter ?? [.5, .5, .5]);
   const assigned = new Set<MeshStandardMaterial>();
   const progress = sculpture.children.map((piece, index) => {
@@ -33,6 +42,10 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
       const bounds = object.geometry.boundingBox!;
       const origin = bounds.min;
       const extent = bounds.max.clone().sub(origin);
+      // Project the same light path into each mesh so the highlight follows connected foliage.
+      const reflectionAxis = sculptureInverse
+        ? new Vector4(.74, .24, .15, .18).applyMatrix4(meshFrame.multiplyMatrices(sculptureInverse, object.matrixWorld).transpose())
+        : undefined;
       material.onBeforeCompile = shader => {
         shader.uniforms.entranceProgress = time;
         shader.uniforms.entranceOrigin = { value: origin };
@@ -63,8 +76,27 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
               outgoingLight += entranceGold * glint * vec3(.24, .15, .047);
             }
             #include <opaque_fragment>`);
+        if (reflectionAxis) {
+          shader.uniforms.gildedSettledTime = settledTime;
+          shader.uniforms.gildedReflectionAxis = { value: reflectionAxis };
+          shader.vertexShader = 'varying float gildedSweepPosition; uniform vec4 gildedReflectionAxis;\n' +
+            shader.vertexShader.replace('#include <begin_vertex>', `#include <begin_vertex>
+              gildedSweepPosition = dot(gildedReflectionAxis, vec4(position, 1.0));`);
+          shader.fragmentShader = 'varying float gildedSweepPosition; uniform float gildedSettledTime;\n' +
+            shader.fragmentShader.replace('#include <opaque_fragment>', `
+              if (gildedSettledTime > 0.0) {
+                float interval = mod(gildedSettledTime, 13.5);
+                float phase = smoothstep(.40, 4.95, interval);
+                float envelope = smoothstep(.40, 1.48, interval) * (1.0 - smoothstep(4.0, 4.95, interval));
+                float fromCenter = (gildedSweepPosition - mix(-.30, 1.0, phase)) * 3.3;
+                float sweep = exp(-fromCenter * fromCenter) * envelope;
+                vec3 reflection = reflectedLight.indirectSpecular + reflectedLight.directSpecular * .65;
+                outgoingLight += reflection * sweep * vec3(.20, .145, .072);
+              }
+              #include <opaque_fragment>`);
+        }
       };
-      material.customProgramCacheKey = () => 'botanical-entrance-v1';
+      material.customProgramCacheKey = () => reflectionAxis ? 'botanical-entrance-gilded' : 'botanical-entrance-v1';
       material.needsUpdate = true;
     });
     return time;
@@ -81,7 +113,7 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
     upright.add(mist.root);
   }
 
-  const fragments = settings.gold ? createGoldFragments(upright, settings.goldOrigin) : undefined;
+  const fragments = settings.gold ? createGoldFragments(upright, settings.goldOrigin, goldenAwakening) : undefined;
   const firstPhase = settings.phases?.[0];
   return {
     update(elapsed: number, reduced: boolean) {
@@ -92,9 +124,10 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
         mist.update(elapsed, reduced, intensity);
         mist.root.visible = intensity > 0;
       }
+      settledTime.value = reduced ? -1 : elapsed - end;
       fragments?.update(firstPhase && !reduced
         ? MathUtils.clamp(elapsed / (firstPhase.start + firstPhase.duration), 0, 1)
-        : timing.progress(0));
+        : timing.progress(0), settledTime.value);
       return timing.turn;
     },
     dispose() {
@@ -105,7 +138,11 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
   };
 }
 
-function createGoldFragments(root: Group, origin?: number[]) {
+const idleGoldAfter = 1.9;
+const idleGoldInterval = 10.3;
+const idleGoldLength = 2.8;
+
+function createGoldFragments(root: Group, origin: number[] | undefined, refined: boolean) {
   const geometry = new BufferGeometry();
   const seeds = new Float32Array(36 * 3);
   for (let i = 0; i < 36; i++) {
@@ -115,10 +152,31 @@ function createGoldFragments(root: Group, origin?: number[]) {
   }
   geometry.setAttribute('position', new BufferAttribute(seeds, 3));
   const progress = { value: 0 };
+  const idle = { value: -1 };
   const material = new ShaderMaterial({
     uniforms: { progress, origin: { value: new Vector3().fromArray(origin ?? [0, .40, 0]) },
-      convergence: { value: origin ? .88 : .58 } }, transparent: true, depthWrite: false,
-    vertexShader: `
+      convergence: { value: origin ? .88 : .58 }, ...(refined && { idle }) }, transparent: true, depthWrite: false,
+    vertexShader: refined ? `
+      uniform float progress, idle;
+      uniform vec3 origin;
+      varying float alpha;
+      void main() {
+        float gather = smoothstep(.07 * position.y, .88 + .10 * position.z, progress);
+        float angle = 6.2831853 * position.x - gather * (1.2 + .64 * position.z);
+        float radius = mix(.25 + .20 * position.z, .026, gather);
+        vec3 drift = vec3(cos(angle) * radius, (position.y - .5) * mix(.78, .045, gather), sin(angle) * radius);
+        alpha = smoothstep(.025 + .10 * position.y, .26, progress)
+          * (1.0 - smoothstep(.67, 1.0, progress)) * (.22 + .47 * position.z);
+        if (idle >= 0.0) {
+          float t = idle / ${idleGoldLength.toFixed(1)};
+          drift = vec3(.13 + .13 * sin(t * 2.7), .12 + .32 * t, .19 + .085 * t);
+          alpha = .46 * smoothstep(.02, .24, t) * (1.0 - smoothstep(.56, 1.0, t));
+        }
+        vec4 view = modelViewMatrix * vec4(origin + drift, 1.0);
+        gl_Position = projectionMatrix * view;
+        float targetUnits = length(modelViewMatrix[1].xyz);
+        gl_PointSize = clamp((5.4 + 2.2 * position.z) * targetUnits / max(.001, -view.z), 1.1, 3.7);
+      }` : `
       uniform float progress, convergence;
       uniform vec3 origin;
       varying float alpha;
@@ -132,7 +190,12 @@ function createGoldFragments(root: Group, origin?: number[]) {
         gl_PointSize = 1.3 + position.z * 3.0;
         alpha = smoothstep(0.0, convergence > .6 ? .105 : .18,progress) * (1.0-smoothstep(.50,1.0,progress)) * (.25 + position.z * .60);
       }`,
-    fragmentShader: `
+    fragmentShader: refined ? `
+      varying float alpha;
+      void main() {
+        vec2 p = abs(gl_PointCoord - .5);
+        gl_FragColor = vec4(.98,.80,.51,alpha * (1.0-smoothstep(.08,.49,p.x+p.y)));
+      }` : `
       varying float alpha;
       void main() {
         vec2 p = abs(gl_PointCoord - .5);
@@ -143,9 +206,12 @@ function createGoldFragments(root: Group, origin?: number[]) {
   points.frustumCulled = false;
   root.add(points);
   return {
-    update(value: number) {
+    update(value: number, settled: number) {
       progress.value = value;
-      points.visible = value > 0 && value < 1;
+      const cycle = (settled - idleGoldAfter) % idleGoldInterval;
+      idle.value = refined && settled >= idleGoldAfter && cycle < idleGoldLength ? cycle : -1;
+      if (refined) geometry.setDrawRange(0, idle.value >= 0 ? 1 : seeds.length / 3);
+      points.visible = (value > 0 && value < 1) || idle.value >= 0;
     },
     dispose() {
       points.removeFromParent();

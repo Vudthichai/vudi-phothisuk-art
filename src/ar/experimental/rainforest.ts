@@ -86,7 +86,7 @@ export function setupRainforestLab(host:HTMLElement,options:RainforestOptions={}
    report.load={state:'ready',bytes:bytes.byteLength,fetchMs:fetched-started,decodeAndParseMs:performance.now()-fetched,totalMs:performance.now()-started};onState('ready');print();
   }catch(error){if(!disposed&&!signal.aborted){report.load={state:'error',error:(error as Error).message,elapsedMs:performance.now()-started};print();onError(new Error('The experimental rainforest tree could not load. Restart camera to retry.'));}}
   finally{clearTimeout(timeout);}})();
-  return {root,uprightRoot:()=>placed?.root,update(_time,_reduced,tracked){
+  return {root,uprightRoot:()=>placed?.root,...(ancientSunlight&&{pausePresentation:()=>{reveal?.update(0,false,false);}}),update(_time,_reduced,tracked){
    if(model&&tracked&&report.firstTrackedRenderSubmittedMs===undefined){report.firstTrackedRenderSubmittedMs=performance.now()-started;print();}
    if(reveal&&placed){revealState=reveal.update(_time,_reduced,tracked);root.visible=revealState.started;activePlacement?.(placement);fade?.(revealState.opacity);
     host.dataset.reveal=!revealState.started?'waiting':revealState.progress<1?'revealing':'settled';host.dataset.revealHeight=String(placement.height*revealState.heightFactor);host.dataset.revealTurn=String(revealState.turn);if('elapsedSeconds' in revealState)host.dataset.presentationSeconds=String(revealState.elapsedSeconds);

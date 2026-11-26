@@ -58,6 +58,7 @@ it('opt-in Ancient Tree sunlight shares the approved asset and pauses its uprigh
  expect(fetchModel.mock.calls).toHaveLength(2);
  expect(fetchModel.mock.calls[0][0]).toEqual(fetchModel.mock.calls[1][0]);
  expect(approved.instance.root.getObjectByName('Ancient Tree breeze')).toBeUndefined();
+ expect(approved.instance.pausePresentation).toBeUndefined();
  expect(preview.host.dataset.revealHeight).toBe(approved.host.dataset.revealHeight);
  expect(preview.host.dataset.revealTurn).toBe(approved.host.dataset.revealTurn);
  expect(preview.instance.uprightRoot?.()?.position.toArray()).toEqual(approved.instance.uprightRoot?.()?.position.toArray());
@@ -75,7 +76,11 @@ it('opt-in Ancient Tree sunlight shares the approved asset and pauses its uprigh
  const resumed=new Matrix4();
  petals.getMatrixAt(0,resumed);
  expect(resumed.equals(before)).toBe(true);
- preview.instance.update(30,true,true);
+ preview.instance.pausePresentation?.();
+ preview.instance.update(120,false,true);
+ petals.getMatrixAt(0,resumed);
+ expect(resumed.equals(before)).toBe(true);
+ preview.instance.update(120,true,true);
  expect(petals.visible).toBe(false);
  expect(preview.host.dataset.revealTurn).toBe('0');
  const disposal=vi.spyOn(petals.geometry,'dispose');

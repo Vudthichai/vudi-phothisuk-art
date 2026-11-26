@@ -84,13 +84,13 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           const [green, gold] = turn.children as Group[];
           rain = createLeafRain(turn, green, gold);
         }
-        if (composition.mossAwakening) awakening = createMossAwakening(turn, upright);
+        if (composition.mossAwakening) awakening = createMossAwakening(turn, upright, composition.creativeFinish === 'moss');
         if (composition.stumpRebirth) rebirth = createStumpRebirth(turn, upright);
         if (composition.gildedBotanical) {
           const support = createGildedBotanical(turn.children[0] as Group);
           turn.add(...support.children.slice());
         }
-        if (composition.entrance) entrance = createSculptureEntrance(composition.entrance, turn, upright);
+        if (composition.entrance) entrance = createSculptureEntrance(composition.entrance, turn, upright, composition.creativeFinish === 'gilded');
         if (composition.petalRain) petals = createEtherealPetals(upright);
         if (composition.bloomOpening || composition.firstBreath) {
           bloom = createBloomOpening(turn, composition.firstBreath);
@@ -111,7 +111,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     return {
       root,
       uprightRoot: () => upright,
-      ...(composition.stumpRebirth && { pausePresentation: () => { timeline.update(0, false, false); } }),
+      ...((composition.creativeFinish || composition.stumpRebirth) && { pausePresentation: () => { timeline.update(0, false, false); } }),
       update(time, reduced, tracked) {
         const step = previousTime === undefined ? 0 : Math.min(.1, Math.max(0, time - previousTime));
         previousTime = time;

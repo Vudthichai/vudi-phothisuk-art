@@ -1,5 +1,6 @@
 import { expect, it } from 'vitest';
-import { entranceTiming } from './ar/experimental/sculptureEntrance';
+import { Group, Points } from 'three';
+import { createSculptureEntrance, entranceTiming } from './ar/experimental/sculptureEntrance';
 import { createSculptureTimeline, SCULPTURE_TIMING } from './ar/experimental/sculptureTimeline';
 
 const settings = { duration: 2, stagger: .5, softness: .2, atmosphere: .1, direction: [0, 1, 0] };
@@ -45,4 +46,33 @@ it('supports a fragment lead-in and separate flower, stem, and leaf phases', () 
   const still = entranceTiming(phased, 4, 0, true);
   expect([0, 1, 2, 3].map(still.progress)).toEqual([1, 1, 1, 1]);
   expect(still.turn).toBe(0);
+});
+
+it('reuses the optional gilded entrance batch for one occasional mote without affecting the original', () => {
+  const approved = new Group();
+  const optional = new Group();
+  const sculpture = new Group();
+  sculpture.add(new Group());
+  const settingsWithGold = { ...settings, atmosphere: 0, gold: true };
+  const original = createSculptureEntrance(settingsWithGold, sculpture, approved);
+  const refined = createSculptureEntrance(settingsWithGold, sculpture, optional, true);
+  const [batch] = optional.children as Points[];
+
+  expect(refined.update(1, false)).toBe(original.update(1, false));
+  expect(batch.visible).toBe(true);
+  expect(batch.geometry.drawRange.count).toBe(36);
+
+  expect(refined.update(4.8, false)).toBe(original.update(4.8, false));
+  expect(approved.children[0].visible).toBe(false);
+  expect(batch.visible).toBe(true);
+  expect(batch.geometry.drawRange.count).toBe(1);
+  refined.update(6.8, false);
+  expect(batch.visible).toBe(false);
+  refined.update(4.8, true);
+  expect(batch.visible).toBe(false);
+
+  refined.dispose();
+  original.dispose();
+  expect(optional.children).toHaveLength(0);
+  expect(approved.children).toHaveLength(0);
 });

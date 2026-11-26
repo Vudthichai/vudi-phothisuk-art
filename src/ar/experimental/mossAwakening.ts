@@ -1,4 +1,4 @@
-import { BufferAttribute, BufferGeometry, Group, MathUtils, Mesh, MeshStandardMaterial, Points, ShaderMaterial } from 'three';
+import { BufferAttribute, BufferGeometry, DynamicDrawUsage, Group, MathUtils, Mesh, MeshStandardMaterial, Points, ShaderMaterial } from 'three';
 import { createAtmosphereMist } from './atmosphereMist';
 import { SCULPTURE_TIMING } from './sculptureTimeline';
 
@@ -12,7 +12,111 @@ export function mossTurn(elapsed: number) {
   return trackedTurnSeconds / SCULPTURE_TIMING.revolutionSeconds * Math.PI * 2;
 }
 
-export function createMossAwakening(sculpture: Group, upright: Group) {
+// Fan edges sampled from the approved, levelled sculpture in target-width units.
+const shelfOrigins = [
+  [-.30, .389, .36], [-.18, .501, .22], [.07, .548, .17],
+  [.36, .445, .08], [.26, .401, -.26], [.38, .379, .23],
+];
+
+const dewReflection = `#include <normal_fragment_maps>
+  if (awakeningTime > 5.05) {
+    vec3 p = awakeningPosition;
+    vec3 pigment = diffuseColor.rgb;
+    float moss = smoothstep(.003, .028, pigment.g - pigment.r * .93)
+      * smoothstep(.005, .036, pigment.g - pigment.b);
+    float fan = smoothstep(.12, .28, dot(pigment, vec3(.2126, .7152, .0722)))
+      * smoothstep(.39, .63, p.y);
+    float droplets = smoothstep(.74, .98, sin(p.x * 85. + p.z * 57.)
+      * sin(p.y * 94. - p.x * 43.) * cos(p.z * 91. + p.y * 43.));
+    float beam = sin(7.5 * p.x + 4. * p.z - awakeningTime * .72);
+    float edge = pow(max(0., dot(normal, normalize(vec3(.31, .49, .81)))), 3.);
+    float reflection = max(moss * .92, fan * .57) * droplets * edge
+      * smoothstep(.38, .93, beam) * smoothstep(5.05, 6.4, awakeningTime);
+    roughnessFactor = mix(roughnessFactor, min(roughnessFactor, .24), reflection * .62);
+  }`;
+
+function createSporeGeometry() {
+  const seeds = new Float32Array(12 * 3);
+  for (let i = 0; i < 12; i++) {
+    seeds[i * 3] = ((i * 7) % 13) / 13;
+    seeds[i * 3 + 1] = ((i * 11) % 17) / 17;
+    seeds[i * 3 + 2] = ((i * 5) % 11) / 11;
+  }
+  const geometry = new BufferGeometry();
+  geometry.setAttribute('position', new BufferAttribute(seeds, 3));
+  return { geometry, seeds };
+}
+
+function createShelfSpores(authoredYaw: number) {
+  const { geometry, seeds } = createSporeGeometry();
+  const count = seeds.length / 3;
+  const origins = new Float32Array(count * 3);
+  const ages = new Float32Array(count);
+  const birthPositions = new BufferAttribute(origins, 3).setUsage(DynamicDrawUsage);
+  const progress = new BufferAttribute(ages, 1).setUsage(DynamicDrawUsage);
+  geometry.setAttribute('birthPosition', birthPositions);
+  geometry.setAttribute('sporeProgress', progress);
+  const material = new ShaderMaterial({
+    transparent: true, depthWrite: false,
+    vertexShader: `
+      attribute vec3 birthPosition;
+      attribute float sporeProgress;
+      varying float intensity;
+      varying float warmth;
+      void main() {
+        float t = clamp(sporeProgress, 0., 1.);
+        float phase = position.x * 6.2831853;
+        float drift = sin(phase + t * 3.5) - sin(phase);
+        float curl = cos(phase + t * 3.1) - cos(phase);
+        vec3 p = birthPosition + vec3(drift * (.038 + .034 * position.y),
+          t * (.24 + .35 * position.z), curl * (.024 + .036 * position.z));
+        vec4 view = modelViewMatrix * vec4(p, 1.0);
+        gl_Position = projectionMatrix * view;
+        float targetUnits = length(modelViewMatrix[1].xyz);
+        gl_PointSize = clamp((4.0 + 4.5 * position.y) * targetUnits / max(.001, -view.z), 1.5, 5.0);
+        intensity = smoothstep(.025, .20, t) * (1. - smoothstep(.59, 1., t))
+          * (.20 + .26 * position.y);
+        warmth = position.z;
+      }`,
+    fragmentShader: `
+      varying float intensity;
+      varying float warmth;
+      void main() {
+        float radius = length(gl_PointCoord - .5) * 2.;
+        vec3 color = mix(vec3(.83, .88, .72), vec3(.96, .84, .65), warmth * .68);
+        gl_FragColor = vec4(color, intensity * (1. - smoothstep(.05, 1., radius)));
+      }`,
+  });
+  const points = new Points(geometry, material);
+  return {
+    points,
+    update(elapsed: number, reduced: boolean) {
+      points.visible = !reduced && elapsed > sporesStart;
+      if (!points.visible) return;
+      for (let i = 0; i < count; i++) {
+        const seed = seeds[i * 3];
+        const life = 3.5 + 1.85 * seeds[i * 3 + 2];
+        const period = life + .9 + seeds[i * 3 + 1];
+        const start = sporesStart + i * .25 + seed * .42;
+        const birth = start + Math.floor(Math.max(0, elapsed - start) / period) * period;
+        const age = (elapsed - birth) / life;
+        ages[i] = MathUtils.clamp(age, 0, 1);
+        const [x, y, z] = shelfOrigins[i % shelfOrigins.length];
+        // Follow the shelf at release, then rise on the independent gravity axis.
+        const yaw = authoredYaw + mossTurn(birth);
+        const cos = Math.cos(yaw), sin = Math.sin(yaw);
+        const offset = (seed - .5) * .019;
+        origins[i * 3] = (x + offset) * cos + z * sin;
+        origins[i * 3 + 1] = y;
+        origins[i * 3 + 2] = z * cos - (x + offset) * sin;
+      }
+      birthPositions.needsUpdate = true;
+      progress.needsUpdate = true;
+    },
+  };
+}
+
+export function createMossAwakening(sculpture: Group, upright: Group, forestFinish = false) {
   const clock = { value: 0 };
   sculpture.traverse(object => {
     if (!(object instanceof Mesh) || !(object.material instanceof MeshStandardMaterial)) return;
@@ -57,7 +161,14 @@ export function createMossAwakening(sculpture: Group, upright: Group) {
             diffuseColor.rgb = mix(pigment, dormant, moss * (1.0 - liveMoss));
           }`);
     };
-    material.customProgramCacheKey = () => 'moss-awakening-v2';
+    if (forestFinish) {
+      const compile = material.onBeforeCompile;
+      material.onBeforeCompile = (shader, renderer) => {
+        compile(shader, renderer);
+        shader.fragmentShader = shader.fragmentShader.replace('#include <normal_fragment_maps>', dewReflection);
+      };
+    }
+    material.customProgramCacheKey = () => forestFinish ? 'moss-awakening-dew' : 'moss-awakening-v2';
     material.needsUpdate = true;
   });
 
@@ -67,14 +178,31 @@ export function createMossAwakening(sculpture: Group, upright: Group) {
   for (const wisp of mist.root.children.slice(4)) wisp.visible = false;
   upright.add(mist.root);
 
-  const geometry = new BufferGeometry();
-  const seeds = new Float32Array(12 * 3);
-  for (let i = 0; i < 12; i++) {
-    seeds[i * 3] = ((i * 7) % 13) / 13;
-    seeds[i * 3 + 1] = ((i * 11) % 17) / 17;
-    seeds[i * 3 + 2] = ((i * 5) % 11) / 11;
-  }
-  geometry.setAttribute('position', new BufferAttribute(seeds, 3));
+  const spores = forestFinish ? createShelfSpores(sculpture.children[0]?.rotation.y ?? 0) : createBarkSpores(clock);
+  const points = spores.points;
+  points.frustumCulled = false;
+  points.renderOrder = 2;
+  upright.add(points);
+  return {
+    update(elapsed: number, reduced: boolean) {
+      clock.value = reduced ? (forestFinish ? sporesStart : fullReveal) : elapsed;
+      const ambient = .48 - .29 * MathUtils.smoothstep(elapsed, 1, fullReveal);
+      const breathing = forestFinish ? .025 * Math.sin(elapsed * .61) : 0;
+      mist.update(elapsed, reduced, reduced ? .17 : ambient + breathing);
+      spores.update(elapsed, reduced);
+    },
+    dispose() {
+      mist.dispose();
+      mist.root.removeFromParent();
+      points.removeFromParent();
+      points.geometry.dispose();
+      points.material.dispose();
+    },
+  };
+}
+
+function createBarkSpores(clock: { value: number }) {
+  const { geometry } = createSporeGeometry();
   const material = new ShaderMaterial({
     transparent: true, depthWrite: false,
     uniforms: { awakeningTime: clock },
@@ -101,24 +229,11 @@ export function createMossAwakening(sculpture: Group, upright: Group) {
         gl_FragColor = vec4(.86, .87, .70, intensity * (1.0 - smoothstep(.05, 1.0, radius)));
       }`,
   });
-  const spores = new Points(geometry, material);
-  spores.frustumCulled = false;
-  spores.renderOrder = 2;
-  upright.add(spores);
-
+  const points = new Points(geometry, material);
   return {
+    points,
     update(elapsed: number, reduced: boolean) {
-      clock.value = reduced ? fullReveal : elapsed;
-      const ambient = .48 - .29 * MathUtils.smoothstep(elapsed, 1, fullReveal);
-      mist.update(elapsed, reduced, reduced ? .17 : ambient);
-      spores.visible = !reduced && elapsed >= sporesStart;
-    },
-    dispose() {
-      mist.dispose();
-      mist.root.removeFromParent();
-      spores.removeFromParent();
-      geometry.dispose();
-      material.dispose();
+      points.visible = !reduced && elapsed >= sporesStart;
     },
   };
 }

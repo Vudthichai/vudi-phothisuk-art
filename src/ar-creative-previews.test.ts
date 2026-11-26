@@ -22,3 +22,12 @@ it('derives Rebirth from the approved stump placement on both certificate editio
   expect(certificateARPreviews).toHaveLength(15);
   expect(creativePreviewFor(arById('blooming-desire-original', true))).toBeUndefined();
 });
+
+it('layers the Moss and Gilded refinements onto their existing presentations', () => {
+  const moss = arById('moss-and-mushrooms-original', true)!;
+  expect(creativePreviewFor(moss)?.composition?.(moss))
+    .toEqual({ ...moss.composition, creativeFinish: 'moss' });
+  const gilded = arById('gilded-bloom-original', true)!;
+  expect(creativePreviewFor(gilded)?.composition?.(gilded))
+    .toEqual({ ...gilded.previewV3Composition, creativeFinish: 'gilded' });
+});

@@ -35,7 +35,8 @@ export async function startTracking({surface,video,experience,signal,onTracking,
   const gravity=new GravityAlignment(),cameraUp=new Vector3();
   const pose=poseFilter??new ImagePoseFilter(),targetPose=new Matrix4();let lastPoseTime=0,frameCallback:((canvas:HTMLCanvasElement)=>void)|undefined;
   const warmGold=experience.artworkId==='gilded-bloom'&&Boolean(experience.composition)&&
-    (experience.composition===experience.previewComposition||experience.composition===experience.previewV3Composition);
+    (experience.composition===experience.previewComposition||experience.composition===experience.previewV3Composition||
+      experience.composition?.creativeFinish==='gilded');
   applyStudioLighting(scene,experience.artworkId,Boolean(sceneFactory),warmGold?'v2':undefined);
   let controller:Controller|undefined,disposed=false,frame=0,found=false,lastRender=0,presentationPaused=false;
   let postMatrix=new Matrix4();
