@@ -19,13 +19,14 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
     const time = { value: 0 };
     piece.traverse(object => {
       if (!(object instanceof Mesh) || !(object.material instanceof MeshStandardMaterial)) return;
-      if (assigned.has(object.material)) object.material = object.material.clone();
-      assigned.add(object.material);
+      const material = assigned.has(object.material) ? object.material.clone() : object.material;
+      object.material = material;
+      assigned.add(material);
       object.geometry.computeBoundingBox();
       const bounds = object.geometry.boundingBox!;
       const origin = bounds.min;
       const extent = bounds.max.clone().sub(origin);
-      object.material.onBeforeCompile = shader => {
+      material.onBeforeCompile = shader => {
         shader.uniforms.entranceProgress = time;
         shader.uniforms.entranceOrigin = { value: origin };
         shader.uniforms.entranceExtent = { value: extent };
@@ -51,8 +52,8 @@ export function createSculptureEntrance(settings: Entrance, sculpture: Group, up
             }
             #include <opaque_fragment>`);
       };
-      object.material.customProgramCacheKey = () => 'botanical-entrance-v1';
-      object.material.needsUpdate = true;
+      material.customProgramCacheKey = () => 'botanical-entrance-v1';
+      material.needsUpdate = true;
     });
     return time;
   });
