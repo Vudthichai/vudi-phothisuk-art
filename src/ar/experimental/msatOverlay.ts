@@ -2,15 +2,13 @@ import { MSAT_ENTRANCE_SECONDS, msatTagline } from '../msatConfig';
 import { coverRect } from '../recording';
 
 export type EmblemBounds = { left: number; top: number; right: number; bottom: number };
-const singleLine = [msatTagline];
-const twoLines = ['Make some art', 'today.'];
 const lineHeight = 1.02;
 const forest = '#12351d';
 
 type CaptionFrame = {
   fontSize: number;
-  widths: number[];
-  glyphs: HTMLElement[];
+  width: number;
+  glyphs: HTMLElement;
   caret: HTMLElement;
   busy: boolean;
   center: number;
@@ -73,6 +71,7 @@ export function mountMsatHud(host: HTMLElement) {
 export function createMsatOverlay(host: HTMLElement) {
   const caption = host.querySelector<HTMLElement>('.msat-tagline')!;
   const nav = host.querySelector<HTMLElement>('.msat-nav')!;
+  const controls = host.querySelector<HTMLElement>('.ar-controls')!;
   const surface = host.querySelector<HTMLElement>('.ar-surface')!;
   const video = surface.querySelector('video')!;
   const style = getComputedStyle(host);
@@ -82,16 +81,29 @@ export function createMsatOverlay(host: HTMLElement) {
   caret.className = 'msat-caret';
   caret.dataset.msatCaret = '';
   caret.setAttribute('aria-hidden', 'true');
+  const line = document.createElement('span');
+  line.className = 'msat-line';
+  line.setAttribute('aria-hidden', 'true');
+  const sizer = document.createElement('span');
+  sizer.className = 'msat-line-sizing';
+  sizer.textContent = msatTagline;
+  const glyphContainer = document.createElement('span');
+  glyphContainer.className = 'msat-glyphs';
+  const typed = document.createElement('span');
+  typed.dataset.msatTyped = '';
+  glyphContainer.append(typed, caret);
+  line.append(sizer, glyphContainer);
+  caption.replaceChildren(line);
   const sampler = document.createElement('canvas');
   sampler.width = 12;
   sampler.height = 6;
   let sampleContext = sampler.getContext('2d', { willReadFrequently: true });
   let sampleAt = -Infinity, busy = true, width = 0, height = 0, fontSize = 44;
-  let rows: { wrapper: HTMLElement; glyphContainer: HTMLElement; typed: HTMLElement; string: string; offset: number }[] = [];
+  let leftEdge = 20, rightEdge = 20;
   let captionFrame: CaptionFrame | undefined;
   let lastCount = -1, lastCursor = false, shown = false, lastComplete = false;
   void document.fonts?.load('400 48px "Bodoni Moda"', msatTagline).then(() => {
-    captionFrame = undefined;
+    width = 0;
   }, () => {});
 
   function measure() {
@@ -100,31 +112,12 @@ export function createMsatOverlay(host: HTMLElement) {
     if (w === width && h === height) return;
     width = w;
     height = h;
-    const lines = w <= 520 ? twoLines : singleLine;
-    fontSize = Math.max(27, Math.min(64, w * (lines === twoLines ? .125 : .087), h * .105));
+    const rect = controls.getBoundingClientRect();
+    leftEdge = rect.width ? Math.max(20, rect.left + 10) : 20;
+    rightEdge = rect.width ? Math.min(w - 20, rect.right - 10) : w - 20;
+    fontSize = Math.min(68, w * .104, h * .105);
     caption.style.fontSize = `${fontSize}px`;
-    caption.replaceChildren();
-    let offset = 0;
-    rows = lines.map(string => {
-      const wrapper = document.createElement('span');
-      wrapper.className = 'msat-line';
-      wrapper.setAttribute('aria-hidden', 'true');
-      const sizer = document.createElement('span');
-      sizer.className = 'msat-line-sizing';
-      sizer.textContent = string;
-      const glyphContainer = document.createElement('span');
-      glyphContainer.className = 'msat-glyphs';
-      const typed = document.createElement('span');
-      typed.dataset.msatTyped = '';
-      glyphContainer.append(typed);
-      wrapper.append(sizer, glyphContainer);
-      caption.append(wrapper);
-      const row = { wrapper, glyphContainer, typed, string, offset };
-      offset += string.length + 1;
-      return row;
-    });
     captionFrame = undefined;
-    lastCount = -1;
   }
 
   function sample(at: number, left: number, top: number, span: number, depth: number) {
@@ -156,7 +149,7 @@ export function createMsatOverlay(host: HTMLElement) {
   return {
     captionHeight() {
       measure();
-      return rows.length * fontSize * lineHeight + fontSize * .47;
+      return fontSize * (lineHeight + .47);
     },
     update(elapsed: number, reduced: boolean, tracked: boolean, bounds?: EmblemBounds) {
       const phase = msatTypewriter(elapsed, start, duration, reduced);
@@ -172,32 +165,30 @@ export function createMsatOverlay(host: HTMLElement) {
       shown = true;
       if (lastCount !== phase.count || lastCursor !== phase.cursor || lastComplete !== phase.complete) {
         caption.dataset.typing = phase.complete ? 'complete' : 'typing';
-        let active = rows[0];
-        for (const row of rows) {
-          const length = Math.max(0, phase.count - row.offset);
-          row.typed.textContent = row.string.slice(0, length);
-          if (phase.count >= row.offset) active = row;
-          row.wrapper.toggleAttribute('data-painted', length > 0);
-        }
+        typed.textContent = msatTagline.slice(0, phase.count);
+        line.toggleAttribute('data-painted', phase.count > 0);
         caret.hidden = !phase.cursor;
-        if (phase.cursor) active.glyphContainer.append(caret);
         lastCount = phase.count;
         lastCursor = phase.cursor;
         lastComplete = phase.complete;
       }
       if (!captionFrame) {
-        captionFrame = {
-          fontSize, widths: rows.map(row => row.wrapper.getBoundingClientRect().width),
-          glyphs: rows.map(row => row.typed), caret, busy, center: 0, top: 0,
-        };
+        const textWidth = line.getBoundingClientRect().width;
+        const available = Math.max(1, rightEdge - leftEdge);
+        if (textWidth > available) {
+          fontSize *= available / textWidth;
+          caption.style.fontSize = `${fontSize}px`;
+        }
+        captionFrame = { fontSize, width: line.getBoundingClientRect().width,
+          glyphs: typed, caret, busy, center: 0, top: 0 };
       }
-      const span = Math.max(...captionFrame.widths);
-      const margin = Math.min(width / 2, span / 2 + 16);
-      const center = Math.max(margin, Math.min(width - margin, (bounds.left + bounds.right) / 2));
+      const span = captionFrame.width;
+      const center = Math.max(leftEdge + span / 2,
+        Math.min(rightEdge - span / 2, (bounds.left + bounds.right) / 2));
       const top = bounds.bottom + Math.min(14, fontSize * .24);
       if (center !== captionFrame.center) caption.style.left = `${center}px`;
       if (top !== captionFrame.top) caption.style.top = `${top}px`;
-      sample(elapsed, center - span / 2, top, span, rows.length * fontSize * lineHeight);
+      sample(elapsed, center - span / 2, top, span, fontSize * lineHeight);
       captionFrame.center = center;
       captionFrame.top = top;
       captionFrame.busy = busy;
@@ -217,21 +208,20 @@ export function drawMsatCaption(ctx: CanvasRenderingContext2D, width: number, he
   const caption = captionFrames.get(host);
   const surface = host.querySelector<HTMLElement>('.ar-surface');
   if (!caption || !surface?.clientWidth || !surface.clientHeight) return;
-  const { widths, glyphs, caret, busy, fontSize, center, top } = caption;
+  const { width: textWidth, glyphs, caret, busy, fontSize, center, top } = caption;
   ctx.save();
   ctx.scale(width / surface.clientWidth, height / surface.clientHeight);
   ctx.font = `400 ${fontSize}px "Bodoni Moda", Didot, Georgia, serif`;
   ctx.letterSpacing = `${fontSize * -.035}px`;
   ctx.textBaseline = 'middle';
   const rowHeight = fontSize * lineHeight;
-  for (let i = 0; i < widths.length; i++) {
-    const text = glyphs[i].textContent;
-    if (!text) continue;
-    const left = center - widths[i] / 2;
-    const y = top + (i + .5) * rowHeight;
+  const text = glyphs.textContent;
+  if (text) {
+    const left = center - textWidth / 2;
+    const y = top + .5 * rowHeight;
     ctx.save();
     ctx.translate(center, y);
-    ctx.scale(widths[i] / 2 + fontSize * .62, rowHeight * .75);
+    ctx.scale(textWidth / 2 + fontSize * .62, rowHeight * .75);
     const halo = ctx.createRadialGradient(0, 0, .16, 0, 0, 1);
     halo.addColorStop(0, `rgba(252,248,230,${busy ? .95 : .77})`);
     halo.addColorStop(.70, `rgba(252,248,230,${busy ? .84 : .59})`);
