@@ -46,3 +46,48 @@ it('releases one gravity-aligned shelf-spore batch only in the optional preview'
   expect(approvedSpores.geometry.getAttribute('birthPosition')).toBeUndefined();
   approved.dispose();
 });
+
+it('keeps the release-candidate undershelf spores continuous with intermittent bursts in one batch', () => {
+  const upright = new Group();
+  const turn = new Group();
+  upright.add(turn);
+  const release = createMossAwakening(turn, upright, true, true);
+  const batches = upright.children.filter(child => child instanceof Points);
+  expect(batches).toHaveLength(1);
+  const [spores] = batches;
+  const ages = spores.geometry.getAttribute('sporeProgress');
+  const origins = spores.geometry.getAttribute('birthPosition');
+  expect(origins.count).toBe(60);
+  release.update(4.99, false);
+  expect(spores.visible).toBe(false);
+  release.update(11, false);
+  expect(spores.visible).toBe(true);
+  expect(new Set(Array.from({ length: 48 }, (_, index) => origins.getY(index))).size).toBe(8);
+  expect(origins.getY(0)).toBeCloseTo(.342);
+  expect(origins.getY(1)).toBeCloseTo(.453);
+
+  const inFlight = (from: number, to: number) => {
+    let count = 0;
+    for (let index = from; index < to; index++) {
+      const progress = ages.getX(index);
+      if (progress > .08 && progress < .92) count++;
+    }
+    return count;
+  };
+  expect(inFlight(48, 60)).toBe(0);
+  release.update(14.1, false);
+  expect(inFlight(48, 60)).toBe(6);
+  release.update(17, false);
+  expect(inFlight(48, 60)).toBe(0);
+  const density = [];
+  for (let time = 18; time < 68; time += .13) {
+    release.update(time, false);
+    density.push(inFlight(0, 48));
+  }
+  expect(Math.min(...density)).toBeGreaterThanOrEqual(27);
+  expect(Math.max(...density)).toBeLessThanOrEqual(32);
+  release.update(68, true);
+  expect(spores.visible).toBe(false);
+  release.dispose();
+  expect(upright.children).toEqual([turn]);
+});

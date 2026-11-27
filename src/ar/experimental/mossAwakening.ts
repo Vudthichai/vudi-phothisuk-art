@@ -18,6 +18,16 @@ const shelfOrigins = [
   [.36, .445, .08], [.26, .401, -.26], [.38, .379, .23],
 ];
 
+// Measured just below the baked cap surfaces, with local outward directions.
+const capUndersides = [
+  [-.30, .342, .36, -.66, .75], [-.18, .453, .22, -.85, .53],
+  [.07, .503, .17, .08, 1.0], [.39, .409, .05, .98, -.20],
+  [.24, .370, -.28, .38, -.92], [.395, .345, .241, .90, .44],
+  [-.38, .263, -.25, -.89, -.45], [.02, .237, .53, .11, .99],
+];
+const steadySporeCount = 48;
+const burstSporeCount = 12;
+
 const fanGrowth = `
   vec3 shelfExpansion(vec3 p, vec3 fan, vec3 root, float stagger) {
     vec3 local = (p - fan) * vec3(1., 1.75, 1.);
@@ -58,9 +68,9 @@ const dewReflection = `#include <normal_fragment_maps>
     roughnessFactor = mix(roughnessFactor, min(roughnessFactor, .24), reflection * .62);
   }`;
 
-function createSporeGeometry() {
-  const seeds = new Float32Array(12 * 3);
-  for (let i = 0; i < 12; i++) {
+function createSporeGeometry(count = 12) {
+  const seeds = new Float32Array(count * 3);
+  for (let i = 0; i < count; i++) {
     seeds[i * 3] = ((i * 7) % 13) / 13;
     seeds[i * 3 + 1] = ((i * 11) % 17) / 17;
     seeds[i * 3 + 2] = ((i * 5) % 11) / 11;
@@ -70,7 +80,7 @@ function createSporeGeometry() {
   return { geometry, seeds };
 }
 
-function createShelfSpores(authoredYaw: number, continuous: boolean) {
+function createShelfSpores(authoredYaw: number) {
   const { geometry, seeds } = createSporeGeometry();
   const count = seeds.length / 3;
   const origins = new Float32Array(count * 3);
@@ -96,9 +106,9 @@ function createShelfSpores(authoredYaw: number, continuous: boolean) {
         vec4 view = modelViewMatrix * vec4(p, 1.0);
         gl_Position = projectionMatrix * view;
         float targetUnits = length(modelViewMatrix[1].xyz);
-        gl_PointSize = clamp((${continuous ? '5.0' : '4.0'} + 4.5 * position.y) * targetUnits / max(.001, -view.z), 1.5, 5.0);
+        gl_PointSize = clamp((4.0 + 4.5 * position.y) * targetUnits / max(.001, -view.z), 1.5, 5.0);
         intensity = smoothstep(.025, .20, t) * (1. - smoothstep(.59, 1., t))
-          * (${continuous ? '.29' : '.20'} + .26 * position.y);
+          * (.20 + .26 * position.y);
         warmth = position.z;
       }`,
     fragmentShader: `
@@ -118,10 +128,9 @@ function createShelfSpores(authoredYaw: number, continuous: boolean) {
       if (!points.visible) return;
       for (let i = 0; i < count; i++) {
         const seed = seeds[i * 3];
-        const life = 3.5 + (continuous ? 1.5 : 1.85) * seeds[i * 3 + 2];
-        const period = continuous ? 5.4 : life + .9 + seeds[i * 3 + 1];
-        // Distributed starts bridge the end of every cohort without a shared reset.
-        const start = sporesStart + (continuous ? i * period / count + seed * .14 : i * .25 + seed * .42);
+        const life = 3.5 + 1.85 * seeds[i * 3 + 2];
+        const period = life + .9 + seeds[i * 3 + 1];
+        const start = sporesStart + i * .25 + seed * .42;
         const birth = start + Math.floor(Math.max(0, elapsed - start) / period) * period;
         const age = (elapsed - birth) / life;
         ages[i] = MathUtils.clamp(age, 0, 1);
@@ -135,6 +144,104 @@ function createShelfSpores(authoredYaw: number, continuous: boolean) {
         origins[i * 3 + 2] = z * cos - (x + offset) * sin;
       }
       birthPositions.needsUpdate = true;
+      progress.needsUpdate = true;
+    },
+  };
+}
+
+function createReleaseSpores(authoredYaw: number) {
+  const count = steadySporeCount + burstSporeCount;
+  const { geometry, seeds } = createSporeGeometry(count);
+  const origins = new Float32Array(count * 3);
+  const directions = new Float32Array(count * 2);
+  const ages = new Float32Array(count);
+  const birthPositions = new BufferAttribute(origins, 3).setUsage(DynamicDrawUsage);
+  const birthDirections = new BufferAttribute(directions, 2).setUsage(DynamicDrawUsage);
+  const progress = new BufferAttribute(ages, 1).setUsage(DynamicDrawUsage);
+  geometry.setAttribute('birthPosition', birthPositions);
+  geometry.setAttribute('birthDirection', birthDirections);
+  geometry.setAttribute('sporeProgress', progress);
+  const emissions = Array.from({ length: count }, (_, index) => {
+    const seed = seeds[index * 3];
+    const isBurst = index >= steadySporeCount;
+    const beat = index - steadySporeCount;
+    const period = isBurst ? 22.4 : 5.55;
+    const delay = isBurst ? (beat < 6 ? 7.7 : 18.4) + (beat % 6) * .15 : index * period / steadySporeCount;
+    const offset = (seed - .5) * .025;
+    const [x, y, z, outwardX, outwardZ] = capUndersides[index % capUndersides.length];
+    return {
+      x: x - outwardZ * offset, y, z: z + outwardX * offset,
+      outwardX, outwardZ, period, start: sporesStart + delay + seed * .12,
+      life: (isBurst ? 2.65 : 3.35) + 1.65 * seeds[index * 3 + 2],
+      lastRelease: -1,
+    };
+  });
+  const material = new ShaderMaterial({
+    transparent: true, depthWrite: false,
+    vertexShader: `
+      attribute vec3 birthPosition;
+      attribute vec2 birthDirection;
+      attribute float sporeProgress;
+      varying float intensity;
+      varying float warmth;
+      void main() {
+        float t = clamp(sporeProgress, 0., 1.);
+        float phase = position.x * 6.2831853;
+        vec2 across = vec2(-birthDirection.y, birthDirection.x);
+        float release = smoothstep(0., .31, t);
+        float coast = release * (.098 + .083 * position.y) + t * (.084 + .089 * position.z);
+        float side = (sin(phase + t * (4.5 + 2.7 * position.y)) - sin(phase)) * (.027 + .036 * position.z);
+        vec2 drift = birthDirection * coast + across * side;
+        float drop = sin(min(t / .23, 1.) * 3.141593) * (.014 + .022 * position.y);
+        float rise = smoothstep(.14, .91, t) * (.24 + .40 * position.z) + .073 * t;
+        vec3 p = birthPosition + vec3(drift.x, rise - drop, drift.y);
+        vec4 view = modelViewMatrix * vec4(p, 1.);
+        gl_Position = projectionMatrix * view;
+        float units = length(modelViewMatrix[1].xyz) * projectionMatrix[1][1];
+        gl_PointSize = clamp((4.0 + 5.9 * position.y) * units / max(.001, -view.z), 2.1, 6.0);
+        intensity = smoothstep(.018, .17, t) * (1. - smoothstep(.61, .99, t))
+          * (.38 + .34 * position.y);
+        warmth = position.z;
+      }`,
+    fragmentShader: `
+      varying float intensity;
+      varying float warmth;
+      void main() {
+        float radius = length(gl_PointCoord - .5) * 2.;
+        float core = 1. - smoothstep(.22, .72, radius);
+        float edge = 1. - smoothstep(.53, 1., radius);
+        // A soft umber edge gives the warm core contrast against pale backgrounds.
+        vec3 light = mix(vec3(1., .96, .83), vec3(1., .76, .43), warmth * .87);
+        vec3 color = mix(vec3(.19, .125, .065), light, smoothstep(.18, .72, core));
+        gl_FragColor = vec4(color, intensity * (.66 * edge + .34 * core));
+      }`,
+  });
+  const points = new Points(geometry, material);
+  return {
+    points,
+    update(elapsed: number, reduced: boolean) {
+      points.visible = !reduced && elapsed > sporesStart;
+      if (!points.visible) return;
+      let changedBirths = false;
+      emissions.forEach((emission, index) => {
+        const { start, period, life } = emission;
+        const release = Math.floor(Math.max(0, elapsed - start) / period);
+        const birth = start + release * period;
+        ages[index] = MathUtils.clamp((elapsed - birth) / life, 0, 1);
+        if (release === emission.lastRelease) return;
+        emission.lastRelease = release;
+        changedBirths = true;
+        // Emission follows the rotating cap; detached spores drift in gravity space.
+        const yaw = authoredYaw + mossTurn(birth);
+        const cos = Math.cos(yaw), sin = Math.sin(yaw);
+        const { x, y, z, outwardX, outwardZ } = emission;
+        birthPositions.setXYZ(index, x * cos + z * sin, y, z * cos - x * sin);
+        birthDirections.setXY(index, outwardX * cos + outwardZ * sin, outwardZ * cos - outwardX * sin);
+      });
+      if (changedBirths) {
+        birthPositions.needsUpdate = true;
+        birthDirections.needsUpdate = true;
+      }
       progress.needsUpdate = true;
     },
   };
@@ -206,7 +313,9 @@ export function createMossAwakening(sculpture: Group, upright: Group, forestFini
   for (const wisp of mist.root.children.slice(4)) wisp.visible = false;
   upright.add(mist.root);
 
-  const spores = forestFinish ? createShelfSpores(sculpture.children[0]?.rotation.y ?? 0, finalForest) : createBarkSpores(clock);
+  const authoredYaw = sculpture.children[0]?.rotation.y ?? 0;
+  const spores = finalForest ? createReleaseSpores(authoredYaw)
+    : forestFinish ? createShelfSpores(authoredYaw) : createBarkSpores(clock);
   const points = spores.points;
   points.frustumCulled = false;
   points.renderOrder = 2;
