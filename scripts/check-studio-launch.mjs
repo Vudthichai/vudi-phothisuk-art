@@ -70,8 +70,6 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
       return entry && { ...entry, data: new Blob([image]).stream() };
     },
   };
-  let submitFailure;
-  let submitHold;
   let invalidVariant = false;
   let quoteCurrency = 'USD';
   let quoteFailure = false;
@@ -153,7 +151,10 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
         const key = init.headers['Idempotency-Key'];
         assert.equal(key.length, 64);
         if (!drafts.has(key)) drafts.set(key, {
-          ...body, items: body.items.map(item => ({ ...item, id: 'item-1' })),
+          ...body, items: body.items.map(item => ({
+            ...item, id: 'item-1', status: 'pending',
+            assets: item.assets.map(asset => ({ ...asset, status: 'NotYetDownloaded' })),
+          })),
           id: `prodigi-${drafts.size + 1}`, status: 'draft', allowedActions: ['submit'],
           totals: { total: { amount: '12.34', currency: 'USD' } },
           shipments: [],
@@ -162,15 +163,8 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
       }
       const draft = [...drafts.values()].find(value => value.id === url.pathname.split('/')[3]?.split(':')[0]);
       assert(draft, url.pathname);
-      assert.notEqual(init.method, 'PATCH', 'Approval must never edit a Prodigi item');
-      if (url.pathname.endsWith(':submit')) {
-        submits++;
-        if (submitHold) await submitHold;
-        if (submitFailure === 'transport') throw new Error('request interrupted');
-        if (submitFailure) return new Response(null, { status: submitFailure });
-        draft.status = 'submitted';
-        draft.allowedActions = [];
-      }
+      if (url.pathname.endsWith(':submit')) submits++;
+      assert.equal(init.method, 'GET', 'Dashboard preparation must not write to an existing supplier draft');
       return Response.json({ data: draft });
     }
     assert.fail('Unexpected provider address ' + url.origin + url.pathname);
@@ -204,7 +198,6 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
     status: () => handler(new Request(endpoint + 'status'), deployContext), diagnostics, providerDiagnostics,
     denyCatalogue: () => { catalogueUnauthorized = true; },
     setQuoteCurrency: value => { quoteCurrency = value; }, setQuoteFailure: value => { quoteFailure = value; },
-    setSubmitFailure: value => { submitFailure = value; }, setSubmitHold: value => { submitHold = value; },
     setFailDraft: value => { failDraft = value; }, setInvalidVariant: value => { invalidVariant = value; },
   };
 }
@@ -274,7 +267,7 @@ test('unsigned events, unsuccessful payments and amount changes cannot create dr
   assert.equal(f.drafts.size, 0);
 });
 
-test('duplicate webhooks, temporary provider failures, and concurrent admin approvals are safe', async () => {
+test('duplicate webhooks and dashboard reconciliation preserve one draft', async () => {
   const f = fixture();
   const { reviewId } = await (await f.post('review', customer())).json();
   const checkout = { reviewId };
@@ -290,16 +283,19 @@ test('duplicate webhooks, temporary provider failures, and concurrent admin appr
   assert.equal(f.submits(), 0);
   assert.equal((await f.post('admin', { action: 'approve', orderId })).status, 401);
   f.pay(orderId, { refunded_money: { amount: 1, currency: 'USD' } });
-  assert.equal((await f.admin({ action: 'approve', orderId })).status, 409);
+  assert.equal((await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId })).status, 409);
   f.pay(orderId);
-  const approvals = await Promise.all([f.admin({ action: 'approve', orderId }), f.admin({ action: 'approve', orderId })]);
-  assert.deepEqual(approvals.map(result => result.status).sort(), [200, 409]);
-  assert.equal(f.submits(), 1);
+  assert.equal((await f.admin({ action: 'approve', orderId })).status, 400);
+  assert.equal((await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId })).status, 200);
+  assert.equal(f.submits(), 0);
   const supplier = [...f.drafts.values()][0];
   supplier.status = 'shipped';
   supplier.shipments = [{ carrier: 'Fixture carrier', trackingNumber: '12345', trackingUrl: 'https://carrier.example.test/12345' }];
   const refreshed = await (await f.admin({ action: 'refresh', orderId })).json();
   assert.equal(refreshed.state, 'shipped');
+  assert.equal(refreshed.approval, 'accepted');
+  assert.equal(f.records.get('order-' + orderId).data.approval, 'accepted');
+  assert.equal((await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId })).status, 409);
   assert.equal(refreshed.costs.total.amount, '12.34');
   assert.equal(refreshed.tracking[0].trackingNumber, '12345');
 });
@@ -348,7 +344,7 @@ test('quantity, missing or excessive supplier cost, modified draft and emergency
   const f = fixture();
   assert.equal((await f.purchase(customer({ quantity: 3 }))).status, 400);
   const { orderId, supplier } = await draftOrder(f);
-  const approve = () => f.admin({ action: 'approve', orderId });
+  const approve = () => f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId });
   delete supplier.items[0].sku;
   const missingSKU = await approve();
   assert.equal(missingSKU.status, 409);
@@ -385,45 +381,6 @@ test('quantity, missing or excessive supplier cost, modified draft and emergency
   assert.equal(f.submits(), 0);
   assert.equal((await f.admin({ action: 'resume', confirm: 'resume-studio-print' })).status, 200);
   assert.equal((await approve()).status, 200);
-});
-
-test('definite rejection permits immediate retry; timeout requires explicit reconciliation', async () => {
-  const rejected = fixture();
-  const first = await draftOrder(rejected);
-  rejected.setSubmitFailure(422);
-  assert.equal((await rejected.admin({ action: 'approve', orderId: first.orderId })).status, 502);
-  assert.equal(rejected.records.get('order-' + first.orderId).data.approval, 'rejected');
-  rejected.setSubmitFailure(null);
-  assert.equal((await rejected.admin({ action: 'approve', orderId: first.orderId })).status, 200);
-
-  const ambiguous = fixture();
-  const { orderId } = await draftOrder(ambiguous);
-  ambiguous.setSubmitFailure('transport');
-  assert.equal((await ambiguous.admin({ action: 'approve', orderId })).status, 502);
-  ambiguous.setSubmitFailure(null);
-  ambiguous.records.get('order-' + orderId).data.approvalAttemptAt = new Date(Date.now() - 180000).toISOString();
-  assert.equal((await ambiguous.admin({ action: 'approve', orderId })).status, 409);
-  assert.equal((await ambiguous.admin({ action: 'reset-approval', orderId })).status, 409);
-  assert.equal(ambiguous.submits(), 1);
-  const reset = await ambiguous.admin({ action: 'reset-approval', orderId, confirm: 'confirmed-no-submission' });
-  assert.equal(reset.status, 200);
-  assert.equal((await ambiguous.admin({ action: 'approve', orderId })).status, 200);
-});
-
-test('status refresh during a provider call preserves the approval write and never resubmits', async () => {
-  const f = fixture();
-  const { orderId } = await draftOrder(f);
-  let release;
-  f.setSubmitHold(new Promise(resolve => { release = resolve; }));
-  const inFlight = f.admin({ action: 'approve', orderId });
-  while (f.submits() === 0) await new Promise(resolve => setImmediate(resolve));
-  const refreshed = await (await f.admin({ action: 'refresh', orderId })).json();
-  assert.equal(refreshed.approval, 'pending');
-  assert.equal((await f.admin({ action: 'approve', orderId })).status, 409);
-  release();
-  assert.equal((await inFlight).status, 200);
-  assert.equal(f.records.get('order-' + orderId).data.approval, 'accepted');
-  assert.equal(f.submits(), 1);
 });
 
 test('private artwork is gated by the allowlist, signature, expiry, origin, and sandbox environment', async () => {
@@ -480,18 +437,18 @@ test('approval renews an expired artwork grant without changing the supplier ite
   grant.validUntil = Date.now() - 1000;
   assert.equal((await f.download(url, 'HEAD')).status, 404);
   grant.revoked = true;
-  const blocked = await f.admin({ action: 'approve', orderId });
+  const blocked = await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId });
   assert.equal(blocked.status, 409);
   assert.equal((await blocked.json()).code, 'ARTWORK_ACCESS');
   assert.equal(f.records.get('order-' + orderId).data.approval, undefined);
   delete grant.revoked;
   const deadline = grant.deadline;
   grant.deadline = Date.now() + 1000;
-  assert.equal((await f.admin({ action: 'approve', orderId })).status, 409);
+  assert.equal((await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId })).status, 409);
   assert.equal(f.records.get('order-' + orderId).data.approval, undefined);
   grant.deadline = deadline;
-  assert.equal((await f.admin({ action: 'approve', orderId })).status, 200);
-  assert.equal(f.submits(), 1);
+  assert.equal((await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId })).status, 200);
+  assert.equal(f.submits(), 0);
   assert.deepEqual(supplier.items[0], item);
   assert.equal((await f.download(url, 'HEAD')).status, 200);
 });
@@ -509,28 +466,47 @@ test('legacy artwork must be authentic and have sufficient time left before appr
     signed.replace(/sig=./, 'sig=z'),
   ]) {
     asset.url = invalid;
-    const result = await f.admin({ action: 'approve', orderId });
+    const result = await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId });
     assert.equal(result.status, 409);
     assert.equal((await result.json()).code, 'ARTWORK_ACCESS');
     assert.equal(f.records.get('order-' + orderId).data.approval, undefined);
   }
   asset.url = signed;
-  assert.equal((await f.admin({ action: 'approve', orderId })).status, 200);
-  assert.equal(f.submits(), 1);
+  assert.equal((await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId })).status, 200);
+  assert.equal(f.submits(), 0);
   assert.equal(asset.url, signed);
 });
 
-test('a timeout with a later positive supplier state is reconciled without another submission', async () => {
-  const f = fixture();
-  const { orderId, supplier } = await draftOrder(f);
-  f.setSubmitFailure('transport');
-  assert.equal((await f.admin({ action: 'approve', orderId })).status, 502);
-  f.records.get('order-' + orderId).data.approvalAttemptAt = new Date(Date.now() - 180000).toISOString();
-  supplier.status = 'in_production';
-  const refreshed = await (await f.admin({ action: 'refresh', orderId })).json();
-  assert.equal(refreshed.approval, 'accepted');
-  assert.equal((await f.admin({ action: 'approve', orderId })).status, 409);
-  assert.equal(f.submits(), 1);
+test('dashboard preparation renews only the exact expired legacy link for the recovered test draft', async () => {
+  const testPolicy = { ...policy, destinations: launchPolicy.destinations };
+  const testEnv = { ...env, STUDIO_MODE: 'live-test' };
+  const f = fixture(testEnv, 'deploy-preview', testPolicy);
+  const { invite } = await (await f.admin({ action: 'test-invite' })).json();
+  const { orderId, supplier } = await draftOrder(f, { zip: '15024', invite });
+  const record = f.records.get('order-' + orderId).data;
+  supplier.id = record.prodigiId = '75431017083608576';
+  record.approval = 'rejected';
+  delete record.artworkGrant;
+  const config = studioConfig(testEnv, 'deploy-preview', testPolicy);
+  const artwork = artworkReference(preview, 'mother-nature');
+  const expired = signArtwork(config, artwork, Date.now() - 49 * 3600000);
+  const other = signArtwork(config, artwork, Date.now() - 50 * 3600000);
+  supplier.items[0].id = '75448401795763712';
+  supplier.items[0].assets[0].url = expired;
+  supplier.items.push({ id: '75431017103042048', status: 'ignored', quantity: 1 });
+  supplier.totals = { total: { amount: '25.85', currency: 'USD' } };
+  assert.equal((await f.download(expired)).status, 404);
+  const reply = await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId });
+  assert.equal(reply.status, 200);
+  const ready = await reply.json();
+  assert.equal(ready.prodigiId, '75431017083608576');
+  assert.equal(ready.supplierTotalCents, 2585);
+  assert(ready.artworkValidUntil > Date.now());
+  assert.equal((await f.download(expired, 'HEAD')).status, 200);
+  assert.equal((await f.download(other)).status, 404);
+  assert.equal(record.approval, 'rejected');
+  assert.equal(f.submits(), 0);
+  assert.equal(supplier.items[0].assets[0].url, expired);
 });
 
 test('review expires and live supplier checks block payment without a usable quote', async () => {
@@ -581,6 +557,46 @@ test('Prodigi catalogue variants use structured paper stock and inclusive dimens
   }
 });
 
+test('the recovered pending item can be prepared without fulfilling the ignored line', async () => {
+  const f = fixture({}, 'production', { ...policy, destinations: launchPolicy.destinations });
+  const { orderId, supplier } = await draftOrder(f, { zip: '15024' });
+  const replacement = {
+    ...supplier.items[0], id: '75448401795763712', status: 'pending',
+    assets: supplier.items[0].assets.map(asset => ({ ...asset, status: 'NotYetDownloaded' })),
+  };
+  supplier.items = [
+    { id: '75431017103042048', status: 'ignored', quantity: 1,
+      assets: [{ ...replacement.assets[0], status: 'NotYetDownloaded' }] },
+    replacement,
+  ];
+  supplier.totals = {
+    items: { amount: '13.00', currency: 'USD' },
+    shipping: { amount: '12.85', currency: 'USD' },
+    tax: { amount: '0.00', currency: 'USD' },
+    total: { amount: '25.85', currency: 'USD' },
+  };
+  const record = f.records.get('order-' + orderId).data;
+  record.approval = 'rejected';
+  const result = await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId });
+  assert.equal(result.status, 200);
+  assert.equal((await result.json()).supplierTotalCents, 2585);
+  assert.equal(f.records.get('order-' + orderId).data.approval, 'rejected');
+  const assertConflict = async code => {
+    const conflict = await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId });
+    assert.equal(conflict.status, 409);
+    assert.equal((await conflict.json()).code, code);
+  };
+  replacement.status = 'unexpected';
+  await assertConflict('DRAFT_ITEM_STATUS');
+  replacement.status = 'pending';
+  replacement.assets[0].status = 'unexpected';
+  await assertConflict('DRAFT_ASSET_STATUS');
+  replacement.assets[0].status = 'NotYetDownloaded';
+  supplier.items.push({ ...replacement, id: 'extra-item' });
+  await assertConflict('DRAFT_PRODUCT');
+  assert.equal(f.submits(), 0);
+});
+
 test('admin view and approval use the documented Prodigi v5 draft totals', async () => {
   const f = fixture({}, 'production', { ...policy, destinations: launchPolicy.destinations });
   const { orderId, supplier } = await draftOrder(f, { zip: '15024' });
@@ -594,9 +610,9 @@ test('admin view and approval use the documented Prodigi v5 draft totals', async
   assert.equal(view.status, 200);
   assert.deepEqual((await view.json()).fulfillment.costs, supplier.totals);
   assert.equal(f.submits(), 0);
-  assert.equal((await f.admin({ action: 'approve', orderId })).status, 200);
-  assert.equal((await f.admin({ action: 'approve', orderId })).status, 409);
-  assert.equal(f.submits(), 1);
+  assert.equal((await f.admin({ action: 'prepare-dashboard', confirm: 'prepare-dashboard-fulfillment', orderId })).status, 200);
+  assert.equal((await f.admin({ action: 'prepare-dashboard', orderId })).status, 409);
+  assert.equal(f.submits(), 0);
 });
 
 test('preflight validates both SKUs and private artwork; reviewed orders show tracking and contact', async () => {

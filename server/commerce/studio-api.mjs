@@ -1,7 +1,7 @@
 import { createHash, createHmac, randomUUID } from 'node:crypto';
 import { decryptRecipient, encryptRecipient, equal, fileIdentity, fulfillmentDetails, selection, StudioError, validId } from './studio-config.mjs';
 
-import { approvalArtworkAccess, artworkMasters, artworkReady, createArtworkGrant, draftArtworkURL } from './studio-artwork.mjs';
+import { prepareArtworkAccess, artworkMasters, artworkReady, createArtworkGrant, draftArtworkURL } from './studio-artwork.mjs';
 import { shippingQuote, supplierCents } from './studio-finance.mjs';
 
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -123,7 +123,7 @@ const submissionStates = new Set([
 ]);
 const settled = record => Date.now() - Date.parse(record.approvalAttemptAt) >= 120000;
 const adminActions = new Set([
-  'retry-draft', 'refresh', 'approve', 'reset-approval', 'pause', 'resume', 'view', 'list', 'preflight', 'test-invite',
+  'retry-draft', 'refresh', 'prepare-dashboard', 'pause', 'resume', 'view', 'list', 'preflight', 'test-invite',
 ]);
 const reviewValidMs = 10 * 60 * 1000;
 const reviewKey = id => 'review-' + id;
@@ -133,22 +133,34 @@ const reviewIdValid = value => typeof value === 'string' && /^[a-f\d]{8}-(?:[a-f
 const approvalConflict = (code, message, stage = 'draft-validation') =>
   new StudioError(409, message, code, stage);
 
+const draftItemStatuses = new Set(['pending', 'ok', 'not_yet_downloaded']);
+const draftAssetStatuses = new Set(['NotYetDownloaded', 'not_yet_downloaded', 'in_progress', 'complete']);
+
 function matchDraft(order, record, details) {
-  const actual = order.items?.[0];
+  const items = Array.isArray(order.items) ? order.items : [];
+  const ignored = items.filter(item => item?.status === 'ignored');
+  const candidates = items.filter(item => item?.status !== 'ignored');
+  const actual = candidates[0];
   const asset = actual?.assets?.[0];
   const expected = details.recipient;
   const recipient = order.recipient;
   if (order.status !== 'draft' || !order.allowedActions?.includes('submit') || order.shippingMethod !== 'standard') {
     throw approvalConflict('DRAFT_STATE_OR_SHIPPING', 'Prodigi draft state or shipping method is invalid.');
   }
-  if (order.items?.length !== 1 || !validId(actual?.id) ||
+  if (candidates.length !== 1 || !validId(actual?.id) ||
       typeof (actual.sku ?? actual.catalogueVariantId) !== 'string' ||
       (actual.sku ?? actual.catalogueVariantId).toUpperCase() !== record.sku ||
       actual.quantity !== record.quantity || actual.sizing !== 'fitPrintArea') {
     throw approvalConflict('DRAFT_PRODUCT', 'Prodigi draft product differs from the verified order.');
   }
+  if (!draftItemStatuses.has(actual.status)) {
+    throw approvalConflict('DRAFT_ITEM_STATUS', 'Prodigi draft item status is not recognized as ready for approval.');
+  }
   if (actual.assets?.length !== 1 || asset?.printArea !== 'default' || typeof asset.url !== 'string') {
     throw approvalConflict('DRAFT_ARTWORK', 'Prodigi draft artwork differs from the verified order.');
+  }
+  if (!draftAssetStatuses.has(asset.status)) {
+    throw approvalConflict('DRAFT_ASSET_STATUS', 'Prodigi draft artwork status is not recognized as ready for approval.');
   }
   let identity;
   try { identity = fileIdentity(asset.url); } catch {
@@ -160,6 +172,12 @@ function matchDraft(order, record, details) {
   if (recipient?.name !== expected.name || recipient.email !== expected.email ||
       Object.entries(expected.address).some(([key, value]) => (recipient.address?.[key] ?? '') !== value)) {
     throw approvalConflict('DRAFT_RECIPIENT', 'Prodigi draft shipping information differs from the verified order.');
+  }
+  // Prodigi support #392619 confirmed retained ignored lines are not fulfilled or billed.
+  if (new Set(items.map(item => item?.id)).size !== items.length ||
+      ignored.some(item => !validId(item.id) || item.sku != null || item.catalogueVariantId != null ||
+        item.unitPrice != null || item.lineTotal != null)) {
+    throw approvalConflict('DRAFT_IGNORED_ITEMS_UNEXPECTED', 'Ignored Prodigi lines contain unexpected product or pricing data.');
   }
   return asset.url;
 }
@@ -508,7 +526,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
         throw new Error('Square payment mismatch');
       }
       return {
-        orderId: record.orderId, paymentLinkId: record.paymentLinkId, artwork: record.artwork, size: record.size, quantity: record.quantity,
+        orderId: record.orderId, prodigiId: record.prodigiId ?? null, paymentLinkId: record.paymentLinkId, artwork: record.artwork, size: record.size, quantity: record.quantity,
         paymentStatus: payment?.status ?? 'awaiting_payment', refundedCents: payment?.refunded_money?.amount ?? 0,
         approval: record.approval ?? null, fulfillment: supplier ? fulfillmentSnapshot(supplier) : null,
         amounts: { totalCents: record.totalCents, shippingCents: record.shippingCents, taxCents: record.taxCents },
@@ -526,60 +544,34 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     }
     const snapshot = fulfillmentSnapshot(order);
     if (input.action === 'refresh') {
-      // A refresh must never invalidate the ETag held by an in-flight submission.
-      let approval = record.approval ?? null;
-      if (approval !== 'pending') {
-        await store.setJSON(orderKey(record.orderId), { ...record, ...snapshot, updatedAt: now() }, { onlyIfMatch: etag });
-      } else if (settled(record) && submissionStates.has(snapshot.state)) {
-        const saved = await store.setJSON(orderKey(record.orderId), {
-          ...record, ...snapshot, approval: 'accepted', approvalCompletedAt: now(), updatedAt: now(),
-        }, { onlyIfMatch: etag });
-        if (saved.modified) approval = 'accepted';
+      const submitted = submissionStates.has(snapshot.state);
+      if (record.approval === 'pending' && (!submitted || !settled(record))) {
+        return { orderId: record.orderId, prodigiId: record.prodigiId, ...snapshot, approval: 'pending' };
+      }
+      const approval = submitted ? 'accepted' : record.approval ?? null;
+      const saved = await store.setJSON(orderKey(record.orderId), {
+        ...record, ...snapshot, approval, updatedAt: now(),
+        ...(submitted && { approvalCompletedAt: record.approvalCompletedAt ?? now() }),
+      }, { onlyIfMatch: etag });
+      if (!saved.modified) {
+        throw approvalConflict('RECONCILIATION_CONFLICT', 'Order changed during reconciliation.', 'order-lookup');
       }
       return { orderId: record.orderId, prodigiId: record.prodigiId, ...snapshot, approval };
     }
 
-    let details;
-    try {
-      details = fulfillmentDetails(record, config);
-    } catch (error) {
-      if (error instanceof StudioError) {
-        throw approvalConflict('ORDER_BINDING', 'The stored order binding requires reconciliation.', 'order-validation');
-      }
-      throw error;
+    if (record.approvalCompletedAt || record.approval === 'pending' || record.approval === 'accepted') {
+      throw approvalConflict('APPROVAL_ALREADY_STARTED', 'Reconcile the existing supplier status before proceeding.', 'approval-lock');
     }
-    if (input.action === 'reset-approval') {
-      if (record.approval !== 'pending' || input.confirm !== 'confirmed-no-submission' ||
-          !settled(record)) {
-        throw new StudioError(409, 'Confirm the previous attempt was not accepted after reconciling with Prodigi.');
-      }
-      matchDraft(order, record, details);
-      const saved = await store.setJSON(orderKey(record.orderId), { ...record, ...snapshot, approval: 'rejected' }, { onlyIfMatch: etag });
-      if (!saved.modified) throw new StudioError(409, 'Order changed. Refresh and try again.');
-      return { state: snapshot.state, approval: 'rejected' };
+    if (input.confirm !== 'prepare-dashboard-fulfillment') {
+      throw approvalConflict('DASHBOARD_CONFIRMATION_REQUIRED', 'Confirm preparation for dashboard fulfillment.', 'order-validation');
     }
 
-    if (record.approvalCompletedAt || record.approval === 'pending') {
-      throw approvalConflict('APPROVAL_ALREADY_STARTED', 'Approval already started. Reconcile the supplier state.', 'approval-lock');
+    const details = fulfillmentDetails(record, config);
+    const artworkURL = matchDraft(order, record, details);
+    const supplierTotalCents = checkBudget(order, config);
+    if (supplierTotalCents > record.approvedSupplierCents || record.totalCents > config.maxCustomerCents) {
+      throw approvalConflict('SUPPLIER_ORDER_LIMIT', 'The order exceeds an approved spending limit.');
     }
-    const stableURL = record.artworkGrant ? draftArtworkURL(config, details.file, record.orderId) : null;
-    async function validateDraft(draft, renew = false) {
-      const url = matchDraft(draft, record, details);
-      if (checkBudget(draft, config) > record.approvedSupplierCents) {
-        throw approvalConflict('SUPPLIER_ORDER_LIMIT', 'The supplier total exceeds the approved order amount.');
-      }
-      if (!await approvalArtworkAccess(config, store, url, stableURL, renew)) {
-        throw approvalConflict('ARTWORK_ACCESS', 'The draft artwork link cannot provide sufficient authorized access.', 'artwork-access');
-      }
-    }
-
-    async function assertApprovalEnabled() {
-      if (!await enabled()) {
-        throw new StudioError(503, 'Studio Print fulfillment is paused.', 'FULFILLMENT_PAUSED', 'fulfillment-gate');
-      }
-    }
-
-    await validateDraft(order);
     if (!await artworkReady(artworkStore, details.artwork)) {
       throw new StudioError(503, 'The private artwork master is unavailable.', 'ARTWORK_UNAVAILABLE', 'artwork-access');
     }
@@ -588,44 +580,21 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     }
     const { order: squareOrder } = await square('/orders/' + record.orderId);
     checkOrder(squareOrder, record, config.locationId);
-    await assertApprovalEnabled();
-    const approvalAttemptAt = now();
-    const claim = { ...record, approval: 'pending', approvalAttemptAt };
-    const lock = await store.setJSON(orderKey(record.orderId), claim, { onlyIfMatch: etag });
-    if (!lock.modified) {
-      throw approvalConflict('APPROVAL_LOCK_CONFLICT', 'Order changed before approval could start.', 'approval-lock');
+    await requireEnabled();
+    const stableURL = record.artworkGrant ? draftArtworkURL(config, details.file, record.orderId) : null;
+    // One existing preview draft predates renewable links. Reauthorize only its
+    // exact, authentic legacy URL and keep the grant within its original-age limit.
+    const recoverLegacy = config.mode === 'live-test' && record.prodigiId === '75431017083608576' &&
+      order.items.some(item => item.id === '75448401795763712' && item.status !== 'ignored');
+    if (recoverLegacy && supplierTotalCents !== 2585) {
+      throw approvalConflict('TEST_SUPPLIER_TOTAL', 'The controlled draft no longer totals $25.85 USD.');
     }
-    let result;
-    let submissionStarted = false;
-    try {
-      await assertApprovalEnabled();
-      const current = await prodigi(apiPath);
-      if (current?.id !== record.prodigiId || current.merchantReference !== record.orderId) {
-        throw approvalConflict('DRAFT_IDENTITY', 'Prodigi draft identity differs from the verified order.', 'pre-submit');
-      }
-      await validateDraft(current, true);
-      await assertApprovalEnabled();
-      submissionStarted = true;
-      result = await prodigi(apiPath + ':submit', {});
-    } catch (error) {
-      // Only an ambiguous submission can leave an order pending reconciliation.
-      if (!submissionStarted || (error instanceof ProviderError && [400, 422].includes(error.status))) {
-        await store.setJSON(orderKey(record.orderId), { ...claim, approval: 'rejected' }, { onlyIfMatch: lock.etag });
-      }
-      if (error instanceof StudioError && ['draft-validation', 'artwork-access'].includes(error.stage)) {
-        error.stage = 'pre-submit';
-      }
-      throw error;
+    const artworkValidUntil = await prepareArtworkAccess(config, store, artworkURL, stableURL, recoverLegacy);
+    if (!artworkValidUntil) {
+      throw approvalConflict('ARTWORK_ACCESS', 'The draft artwork link cannot provide sufficient authorized access.', 'artwork-access');
     }
-    if (result?.id !== record.prodigiId || !submissionStates.has(result.status)) {
-      throw new Error('Prodigi submission outcome requires reconciliation');
-    }
-    const state = result.status;
-    const saved = await store.setJSON(orderKey(record.orderId), {
-      ...claim, approval: 'accepted', approvalCompletedAt: now(), state, updatedAt: now(),
-    }, { onlyIfMatch: lock.etag });
-    if (!saved.modified) throw new Error('Approval result requires reconciliation');
-    return { orderId: record.orderId, prodigiId: record.prodigiId, state };
+    return { orderId: record.orderId, prodigiId: record.prodigiId, state: 'draft',
+      fulfillmentMode: 'dashboard', supplierTotalCents, artworkValidUntil };
   }
 
   return { review, checkout, webhook, admin, enabled };

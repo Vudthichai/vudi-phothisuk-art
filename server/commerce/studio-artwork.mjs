@@ -51,19 +51,35 @@ function validGrant(entry, url, now) {
     grant.validUntil <= grant.deadline && grant.deadline <= now + maxGrantMs;
 }
 
-// Check before locking, then conditionally extend the lease under the approval lock.
-export async function approvalArtworkAccess(config, store, value, stableURL, renew = false, now = Date.now()) {
+function legacyGrantKey(url) {
+  return 'artwork-legacy-grant-' + createHash('sha256').update(url.href).digest('hex');
+}
+
+// Extend private access server-side without changing the URL on the supplier draft.
+export async function prepareArtworkAccess(config, store, value, stableURL, recoverLegacy = false, now = Date.now()) {
   const url = new URL(value);
-  if (!stableURL) return legacyExpiry(config, url, now) >= now + minFetchMs;
-  if (value !== stableURL) return false;
-  const entry = await store.getWithMetadata(grantKey(url), strongJSON);
-  if (!validGrant(entry, url, now) || entry.data.deadline < now + minFetchMs) return false;
-  if (!renew || entry.data.validUntil >= now + leaseMs) return true;
-  if (!entry.etag) return false;
-  const result = await store.setJSON(grantKey(url), {
-    ...entry.data, validUntil: Math.min(entry.data.deadline, now + leaseMs),
-  }, { onlyIfMatch: entry.etag });
-  return result.modified;
+  if (!stableURL) {
+    const expiry = legacyExpiry(config, url, now);
+    if (expiry >= now + minFetchMs) return expiry;
+    const deadline = expiry - leaseMs + maxGrantMs;
+    if (!recoverLegacy || !expiry || deadline < now + minFetchMs) return null;
+    const key = legacyGrantKey(url);
+    await store.setJSON(key, { path: url.pathname, validUntil: Math.min(deadline, now + leaseMs), deadline },
+      { onlyIfNew: true });
+    return extendGrant(store, key, url, now);
+  }
+  if (value !== stableURL) return null;
+  return extendGrant(store, grantKey(url), url, now);
+}
+
+async function extendGrant(store, key, url, now) {
+  const entry = await store.getWithMetadata(key, strongJSON);
+  if (!validGrant(entry, url, now) || entry.data.deadline < now + minFetchMs) return null;
+  const validUntil = Math.min(entry.data.deadline, now + leaseMs);
+  if (entry.data.validUntil >= validUntil) return entry.data.validUntil;
+  if (!entry.etag) return null;
+  const result = await store.setJSON(key, { ...entry.data, validUntil }, { onlyIfMatch: entry.etag });
+  return result.modified ? validUntil : null;
 }
 
 export const artworkMasters = Object.freeze(Object.fromEntries(sources.map(source => {
@@ -125,8 +141,14 @@ export async function downloadArtwork(request, config, store, grants, now = Date
     if (url.searchParams.size !== 1 || !/^[a-f\d]{64}$/.test(url.searchParams.get('grant'))) return unavailable();
     const entry = await grants.getWithMetadata(grantKey(url), strongJSON);
     if (!validGrant(entry, url, now) || entry.data.validUntil <= now) return unavailable();
-  } else if (legacyExpiry(config, url, now) <= now) {
-    return unavailable();
+  } else {
+    const expiry = legacyExpiry(config, url, now);
+    if (!expiry) return unavailable();
+    if (expiry <= now) {
+      if (config.mode !== 'live-test') return unavailable();
+      const entry = await grants.getWithMetadata(legacyGrantKey(url), strongJSON);
+      if (!validGrant(entry, url, now) || entry.data.validUntil <= now) return unavailable();
+    }
   }
 
   const head = request.method === 'HEAD';

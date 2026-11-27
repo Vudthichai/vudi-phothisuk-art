@@ -13,10 +13,10 @@ rather than exposing a supplier quote as customer shipping. Before issuing the
 Square link it verifies the selected Lustre 240gsm catalogue variant, master
 availability, current Standard USD supplier quote, customer cap, and supplier
 cap. A Square event must authenticate and independently match a completed,
-unrefunded payment and the stored order to open one Prodigi draft. Approval is a
-separate operator action. It rechecks the payment, draft contents, approved cost,
-and current USD draft total. It verifies artwork access before locking approval
-and submits the existing draft without editing its items.
+unrefunded payment and the stored order to open one Prodigi draft. Fulfillment is a
+separate operator action in the Prodigi dashboard. The application rechecks
+payment, draft contents, approved cost and artwork access before preparing the
+draft for dashboard submission. It never submits or edits supplier items.
 
 ## Setup, in order
 
@@ -120,22 +120,21 @@ studio_admin '{"action":"preflight"}' | jq -e '
   Square idempotency key. Reconcile an uncertain link in Square before trying
   again. An issued Square link can outlive a site pause or browser review, so
   deactivate it in Square if the test is abandoned.
-- Use `studio_admin '{"action":"list"}'` to find the Square order ID.
-  Run `view` with that `orderId` to verify payment, address (in the provider draft),
-  the Prodigi draft, artwork proof, and costs. Only with separate authorization
-  submit via `studio_admin '{"action":"approve","orderId":"<Square order ID>"}'`.
-  Check the quoted supplier charge against the cap, including any charges
-  identified by Prodigi. If the final charge cannot be verified, stop. The
-  planned maximum exposure is $80 across the two transactions, subject to
-  supplier billing after submission. The integration never submits from a webhook.
-- Use `view` for tracking, and send it with the existing business email. Square
-  handles the payment receipt; verify it arrives in the controlled purchase.
-  `pause` stops new checkout and fulfillment from this function. Reconcile any
-  already issued links separately. For a paid missing draft, use
-  `retry-draft` with the Square payment ID. If an approval timed out, use
-  `refresh` first; an ambiguous submission remains locked unless reconciled.
-  Consult Prodigi before using `reset-approval` with
-  `confirm: "confirmed-no-submission"`.
+- Use `studio_admin '{"action":"list"}'` to find the Square order ID. Run
+  `view` with that ID to check the payment and linked draft.
+- With authorization to prepare fulfillment, run
+  `studio_admin '{"action":"prepare-dashboard","orderId":"<Square order ID>","confirm":"prepare-dashboard-fulfillment"}'`.
+  This checks the order and gives the verified supplier amount and artwork
+  expiry in Unix milliseconds. Compare the returned draft ID and total
+  against Prodigi. A successful result is not a submission. With separate
+  submission authorization, use **Send to production** on that existing draft
+  in Prodigi. Do not issue a second submission if the outcome is unclear.
+- Run `studio_admin '{"action":"refresh","orderId":"<Square order ID>"}'`
+  after dashboard submission to store the live supplier status and tracking.
+  `view` is read-only. A paused or held supplier order requires review before
+  fulfillment. A local checkout pause does not stop a manual dashboard action.
+  Reconcile issued Square links separately. For a paid missing draft, use
+  `retry-draft` with the Square payment ID.
 - Clear the local operator token with `unset STUDIO_OPERATOR_TOKEN STUDIO_ORIGIN`
   and close the test. Decide separately whether to enable the public store.
 
@@ -144,9 +143,11 @@ reused without copying, overwriting, or publishing the originals. The optional
 local uploader `scripts/upload-studio-masters.mjs` is only for a missing original.
 Supply a local `NETLIFY_SITE_ID` and short-lived `NETLIFY_AUTH_TOKEN` if needed;
 these are not deployment variables. New drafts carry a stable, per-order
-artwork URL backed by a 48-hour access lease. Approval can extend that lease
+artwork URL backed by a 48-hour access lease. Dashboard preparation can extend that lease
 without changing the URL, up to a hard deadline 30 days after creation. At
-least 24 hours must remain at approval, including for existing signed URLs.
+least 24 hours must remain when preparing a draft. For the recovered preview
+draft only, preparation can reauthorize its exact, validly signed legacy URL
+without changing Prodigi, within the same 30-day lifetime from signing.
 These are operational windows, not a guarantee of Prodigi fetch timing.
 Do not put a
 whole-preview password in front of the webhook or signed artwork routes, as
@@ -154,13 +155,15 @@ Square and Prodigi must be able to reach them.
 
 ## Recover the controlled test draft
 
-After separate authorization to repair draft `75431017083608576`, run
-`python3 -I scripts/recover-mother-nature-draft.py` from this branch. The script
-verifies the paid order and authenticates the original private artwork, then
-asks separately before adding the replacement line and removing the exact
-broken line. It never submits the draft. Reconcile any uncertain result in
-Prodigi before further writes. Preview approval conflicts report a sanitized
-`code` and `stage`; the function logs those labels without customer data.
+Draft `75431017083608576` has already had its line repaired. Use the read-only
+`view` action and Prodigi GET first. The expected active item is
+`75448401795763712`, one `GLOBAL-PAP-9X12` at a `$25.85 USD` supplier total.
+Prodigi support ticket #392619 confirmed ignored items are neither fulfilled
+nor billed, and draft artwork may show `NotYetDownloaded`. Once the updated
+preview is deployed and verified, use the dashboard preparation action above
+to restore its existing URL. Keep the preview and its artwork access active
+until Prodigi has downloaded the file. Do not rerun the historical line-repair
+script for this already repaired draft.
 
 ## Local checks
 

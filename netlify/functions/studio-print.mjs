@@ -92,7 +92,7 @@ export function createHandler({ env = process.env, launchPolicy = policy, openSt
       const raw = await readBody(request, action === 'webhook' ? 65536 : 8192);
       if (action === 'webhook') return reply(await service.webhook(raw, request.headers.get('x-square-hmacsha256-signature')));
       const input = json(raw);
-      approvalRequest = action === 'admin' && input?.action === 'approve';
+      approvalRequest = action === 'admin' && input?.action === 'prepare-dashboard';
       return reply(await service[action](input));
     } catch (error) {
       if ((statusCheck || preflightCheck) && error instanceof StudioConfigError) reportConfig(error.issues);
