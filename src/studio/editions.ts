@@ -30,15 +30,20 @@ export const studioEditions: readonly StudioEdition[] = [
   { id: 'studio-75-leaves', artworkId: '75-leaves', contribution: studioContributions['75-leaves'] },
   { id: 'studio-a-forest-forgotten', artworkId: 'a-forest-forgotten', contribution: studioContributions['a-forest-forgotten'] },
 ];
+const bundleEditions = catalog.bundleArtworkIds.map(artworkId => {
+  const edition = studioEditions.find(item => item.artworkId === artworkId);
+  if (!edition) throw new Error(`Missing Studio bundle artwork: ${artworkId}`);
+  return edition;
+});
 export const studioCollectionBundle = {
   id: 'studio-forest-and-flowers-collection',
   title: 'Forest & Flowers — Studio Edition Collection',
-  editionIds: studioEditions.map(edition => edition.id),
+  editionIds: bundleEditions.map(edition => edition.id),
   // Approved gallery-wall photography can be supplied later; null renders nothing.
   galleryWallImage: null as ForestImage | null,
   options: studioSizes.map(size => {
-    const priceCents = size.priceCents * (studioEditions.length - 1);
-    const retailValueCents = size.priceCents * studioEditions.length;
+    const priceCents = catalog.bundlePrices[size.id as keyof typeof catalog.bundlePrices];
+    const retailValueCents = size.priceCents * bundleEditions.length;
     return {
       id: `forest-collection-${size.id}`, sizeId: size.id, sizeLabel: size.label,
       priceCents, retailValueCents, savingsCents: retailValueCents - priceCents,
@@ -46,7 +51,7 @@ export const studioCollectionBundle = {
       revenueAllocation: {
         basis: 'relative-standalone-retail' as const,
         denominatorCents: retailValueCents,
-        lines: studioEditions.map(edition => ({ editionId: edition.id, artworkId: edition.artworkId,
+        lines: bundleEditions.map(edition => ({ editionId: edition.id, artworkId: edition.artworkId,
           quantity: 1, weightCents: size.priceCents, contribution: edition.contribution ?? null })),
       },
       profitCalculation: { status: 'blocked-pending-confirmed-expenses' as const,

@@ -84,15 +84,17 @@ export function studioConfig(env, deployContext, policy, { preflight = false } =
     issues.push('studio-policy.json: invalid destination policy');
   }
   const destinationQuotes = mode === 'live' && policy.destinationQuotes === true;
-  let taxOrigin;
   if (destinationQuotes) {
-    if (!/^\S+$/.test(env.TAXJAR_API_TOKEN ?? '')) issues.push('TAXJAR_API_TOKEN: missing or invalid');
-    try { taxOrigin = JSON.parse(env.STUDIO_TAX_ORIGIN ?? 'null'); } catch { /* report below */ }
-    if (!taxOrigin || !states.has(taxOrigin.state) || ['AK', 'HI'].includes(taxOrigin.state) ||
-        !/^\d{5}(-\d{4})?$/.test(taxOrigin.zip ?? '') ||
-        !['city', 'street'].every(field => typeof taxOrigin[field] === 'string' && taxOrigin[field].trim() &&
-          taxOrigin[field].length <= 100)) {
-      issues.push('STUDIO_TAX_ORIGIN: missing or invalid approved sourcing address');
+    if (!Array.isArray(policy.retailCollectionStates) || policy.retailCollectionStates.length !== 1 ||
+        policy.retailCollectionStates[0] !== 'PA') {
+      issues.push('studio-policy.json: retail collection states require review');
+    }
+    if (!integer(policy.standardShippingCents, 0, 10000) ||
+        Object.keys(catalog.prices).some(size =>
+          !integer(policy.productionCostCents?.[size], 1, 100000) ||
+          !integer(policy.individualSupplierAllowances?.[size],
+            policy.productionCostCents[size] + policy.standardShippingCents, policy.limits.supplierCents))) {
+      issues.push('studio-policy.json: invalid Standard shipping or supplier allowances');
     }
   }
   if (issues.length) throw new StudioConfigError(503, 'Studio Print configuration is incomplete.', issues);
@@ -106,7 +108,8 @@ export function studioConfig(env, deployContext, policy, { preflight = false } =
     artworkKey: derive('artwork signatures'), dataKey: derive('recipient encryption'),
     testInvite: createHmac('sha256', derive('test invites')).update(`${merchantId}:${policy.testRun}`).digest('hex'),
     testRun: policy.testRun, variants: catalog.variants, destinations,
-    destinationQuotes, taxOrigin, taxToken: env.TAXJAR_API_TOKEN,
+    destinationQuotes, retailCollectionStates: policy.retailCollectionStates, standardShippingCents: policy.standardShippingCents,
+    productionCostCents: policy.productionCostCents, individualSupplierAllowances: policy.individualSupplierAllowances,
     maxQuantity: 1, maxCustomerCents: mode === 'live-test' ? Math.min(6500, policy.limits.customerCents) : policy.limits.customerCents,
     maxCostCents: mode === 'live-test' ? Math.min(3500, policy.limits.supplierCents) : policy.limits.supplierCents,
   };

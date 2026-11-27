@@ -58,9 +58,8 @@ export function providers(config, fetcher = fetch, reportProvider = message => c
     quote: (body) => call('Prodigi', 'https://api.prodigi.com/v4.0', {
       'X-API-Key': config.prodigiKey.slice('live_'.length),
     }, '/quotes', body),
-    salesTax: body => call('Retail tax', 'https://api.taxjar.com/v2', {
-      Authorization: `Bearer ${config.taxToken}`,
-    }, '/taxes', body),
+    census: query => call('Address verification', 'https://geocoding.geo.census.gov', {},
+      '/geocoder/geographies/address?' + query),
     prodigi: async (path, body, extra, method) => (await call('Prodigi', 'https://api.prodigi.com/v5', {
       'X-API-Key': config.prodigiKey,
     }, path, body, extra, method)).data,
@@ -219,7 +218,7 @@ export async function studioPreflight(config, { square, prodigi, quote: requestQ
   return { results, artwork };
 }
 
-export function studioService(config, store, { square, prodigi, quote: requestQuote, salesTax }, artworkStore) {
+export function studioService(config, store, { square, prodigi, quote: requestQuote, census }, artworkStore) {
   async function enabled() {
     if (!config.destinationQuotes && !Object.keys(config.destinations).length) return false;
     const gate = await store.getWithMetadata(pauseKey, { type: 'json', consistency: 'strong' });
@@ -265,7 +264,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     }
     const { shippingCents, approvedSupplierCents, taxShipping, taxBps } = selected;
     const printCents = selected.unitCents * selected.quantity;
-    const taxCents = selected.expectedTaxCents ?? Math.round((printCents + (taxShipping ? shippingCents : 0)) * taxBps / 10000);
+    const taxCents = Math.round((printCents + (taxShipping ? shippingCents : 0)) * taxBps / 10000);
     const totalCents = printCents + shippingCents + taxCents;
     if (totalCents > config.maxCustomerCents || approvedSupplierCents > config.maxCostCents) {
       throw new StudioError(409, 'The order exceeds the approved spending limit.');
@@ -297,12 +296,12 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     let selected = selection({ ...input, attemptId: id }, config);
     await requireArtwork(selected.artwork);
     await variantFor(selected);
-    if (config.destinationQuotes) selected = await destinationOffer(prodigi, salesTax, config, selected);
+    if (config.destinationQuotes) selected = await destinationOffer(prodigi, census, config, selected);
     const estimate = checkOffer(selected);
     // Square may round tax on the print and shipping separately.
     const { order } = await square('/orders/calculate', { order: squareOrderFor(selected, estimate) });
     const tax = order?.total_tax_money;
-    const tolerance = !config.destinationQuotes && selected.taxShipping && estimate.shippingCents > 0 ? 1 : 0;
+    const tolerance = selected.taxShipping && estimate.shippingCents > 0 ? 1 : 0;
     if (!usdAmount(tax) || Math.abs(tax.amount - estimate.taxCents) > tolerance ||
         !isMoney(order.total_money, estimate.printCents + estimate.shippingCents + tax.amount)) {
       throw new Error('Unexpected Square tax calculation');
@@ -316,6 +315,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
       version: 2, orderId: id, artwork: selected.artwork, size: selected.size, quantity: selected.quantity,
       attemptId: id, sku: selected.sku, fileIdentity: fileIdentity(selected.file), unitCents: selected.unitCents,
       taxBps: selected.taxBps, taxShipping: selected.taxShipping, approvedSupplierCents: selected.approvedSupplierCents,
+      supplierQuoteCents: selected.supplierQuoteCents,
       ...offer, expires, recipientBox: encryptRecipient(selected.recipient, id, config.dataKey),
     }, { onlyIfNew: true });
     if (!saved.modified) throw new Error('Order review could not be saved');
@@ -332,7 +332,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
       throw new StudioError(409, 'The order review has expired. Review shipping and tax again.');
     }
     let selected = fulfillmentDetails(savedReview, config);
-    if (config.destinationQuotes) selected = await destinationOffer(prodigi, salesTax, config, selected);
+    if (config.destinationQuotes) selected = await destinationOffer(prodigi, census, config, selected);
     const offer = checkOffer(selected);
     await requireArtwork(selected.artwork);
     const { artwork, size, quantity, unitCents, taxBps, taxShipping, recipient, attemptId, sku, file } = selected;
@@ -340,9 +340,10 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     if (savedReview.orderId !== input.reviewId || savedReview.attemptId !== input.reviewId ||
         unitCents !== savedReview.unitCents || taxBps !== savedReview.taxBps || taxShipping !== savedReview.taxShipping ||
         selected.approvedSupplierCents !== savedReview.approvedSupplierCents ||
+        selected.supplierQuoteCents !== savedReview.supplierQuoteCents ||
         savedReview.printCents !== offer.printCents || savedReview.shippingCents !== offer.shippingCents ||
         !Number.isSafeInteger(savedReview.taxCents) || savedReview.taxCents < 0 ||
-        Math.abs(savedReview.taxCents - offer.taxCents) > (!config.destinationQuotes && taxShipping && shippingCents > 0 ? 1 : 0) ||
+        Math.abs(savedReview.taxCents - offer.taxCents) > (taxShipping && shippingCents > 0 ? 1 : 0) ||
         savedReview.totalCents !== offer.printCents + offer.shippingCents + savedReview.taxCents ||
         savedReview.totalCents > config.maxCustomerCents) {
       throw new StudioError(409, 'Pricing, shipping, or tax rules changed. Review the order again.');
@@ -377,6 +378,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     const record = {
       orderId: link.order_id, paymentLinkId: link.id, attemptId, artwork, size, quantity, unitCents, shippingCents,
       taxCents: tax.amount, totalCents: savedReview.totalCents, approvedSupplierCents: selected.approvedSupplierCents,
+      supplierQuoteCents: selected.supplierQuoteCents,
       lineName, version: 2, recipientBox: encryptRecipient(recipient, link.order_id, config.dataKey),
       sku, fileIdentity: fileIdentity(file), state: 'awaiting_payment', createdAt: now(),
     };

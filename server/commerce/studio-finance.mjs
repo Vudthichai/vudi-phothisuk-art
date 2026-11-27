@@ -36,8 +36,9 @@ export async function shippingQuote(quote, selected) {
 }
 
 // Require a full Standard quote, with the authoritative product, shipment and tax breakdown.
-export async function destinationOffer(prodigi, salesTax, config, selected) {
+export async function destinationOffer(prodigi, census, config, selected) {
   const address = selected.recipient.address;
+  const retailTax = await retailTaxFor(census, config, address);
   const quote = await prodigi('/quotes/order', {
     items: [{ catalogueVariantId: selected.sku, quantity: selected.quantity }],
     shippingAddress: address, shippingMethod: 'standard', currencyCode: 'USD',
@@ -57,36 +58,39 @@ export async function destinationOffer(prodigi, salesTax, config, selected) {
       total !== items + shipping + tax) {
     throw new StudioError(503, 'A verified destination-specific Standard shipping quote is unavailable.');
   }
-  if (total > config.maxCostCents) {
-    throw new StudioError(409, 'Current supplier costs exceed the approved amount.');
+  const approvedSupplierCents = config.individualSupplierAllowances[selected.size];
+  if (shipping !== config.standardShippingCents || items !== config.productionCostCents[selected.size] ||
+      total > approvedSupplierCents ||
+      quote.shipments.length !== 1 || quote.shipments[0].fulfillmentLocation?.countryCode !== 'US' ||
+      quote.shipments[0].fulfillmentLocation?.labCode !== 'prodigi_us') {
+    throw new StudioError(409, 'Current Standard shipping, supplier cost or fulfillment differs from the approved terms.');
   }
+  return { ...selected, ...retailTax, shippingCents: shipping, approvedSupplierCents, supplierQuoteCents: total };
+}
 
-  const origin = config.taxOrigin;
-  const merchandise = selected.unitCents * selected.quantity;
-  const result = await salesTax({
-    from_country: 'US', from_state: origin.state, from_zip: origin.zip,
-    from_city: origin.city, from_street: origin.street,
-    to_country: 'US', to_state: address.stateOrCounty, to_zip: address.postalOrZipCode,
-    to_city: address.townOrCity, to_street: [address.line1, address.line2].filter(Boolean).join(' '),
-    amount: merchandise / 100, shipping: shipping / 100,
-    line_items: [{ id: 'studio-print', quantity: selected.quantity, unit_price: selected.unitCents / 100 }],
-  });
-  const retail = result?.tax;
-  const cents = value => typeof value === 'number' && Number.isFinite(value) && value >= 0 &&
-    Math.abs(value * 100 - Math.round(value * 100)) < 0.000001 ? Math.round(value * 100) : null;
-  const expectedTaxCents = cents(retail?.amount_to_collect);
-  const taxable = cents(retail?.taxable_amount);
-  const taxBps = Math.round(retail?.rate * 1000000) / 100;
-  const taxShipping = shipping > 0 && taxable === merchandise + shipping;
-  if (typeof retail?.has_nexus !== 'boolean' || expectedTaxCents === null || taxable === null ||
-      cents(retail.order_total_amount) !== merchandise + shipping || cents(retail.shipping) !== shipping ||
-      !Number.isFinite(taxBps) || taxBps < 0 || taxBps > 2000 ||
-      (!retail.has_nexus && (expectedTaxCents !== 0 || address.stateOrCounty === 'PA')) ||
-      (expectedTaxCents > 0 && ![merchandise, merchandise + shipping].includes(taxable))) {
-    throw new StudioError(503, 'Retail sales tax could not be verified for this address.');
+
+// PA point-of-delivery local rates depend on county, and a ZIP can span counties.
+async function retailTaxFor(census, config, address) {
+  const result = await census(new URLSearchParams({
+    street: address.line1, city: address.townOrCity, state: address.stateOrCounty,
+    zip: address.postalOrZipCode.slice(0, 5),
+    benchmark: 'Public_AR_Current', vintage: 'Current_Current', format: 'json', layers: 'Counties',
+  }).toString());
+  const matches = result?.result?.addressMatches;
+  const match = matches?.[0];
+  if (!Array.isArray(matches) || matches.length !== 1 ||
+      match?.addressComponents?.state !== address.stateOrCounty ||
+      match?.addressComponents?.zip !== address.postalOrZipCode.slice(0, 5)) {
+    throw new StudioError(400, 'The shipping address could not be verified for sales tax.');
   }
-  return {
-    ...selected, shippingCents: shipping, approvedSupplierCents: total,
-    expectedTaxCents, taxShipping, taxBps: expectedTaxCents === 0 ? 0 : taxBps,
-  };
+  if (!config.retailCollectionStates.includes(address.stateOrCounty)) {
+    return { taxBps: 0, taxShipping: false };
+  }
+  const counties = match.geographies?.Counties;
+  const county = counties?.[0]?.GEOID;
+  if (!Array.isArray(counties) || counties.length !== 1 || typeof county !== 'string' ||
+      !/^42[0-9]{3}$/.test(county)) {
+    throw new StudioError(400, 'Pennsylvania sales tax could not be verified for this delivery address.');
+  }
+  return { taxBps: county === '42101' ? 800 : county === '42003' ? 700 : 600, taxShipping: true };
 }

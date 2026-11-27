@@ -97,7 +97,7 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
   }
   let destinationShipping = 1285;
   let destinationOptions = [{ method: 'standard' }];
-  let taxMismatch = false;
+  let county = '42003';
   const fetcher = async (address, init) => {
     const url = new URL(address);
     const body = init.body && JSON.parse(init.body);
@@ -139,24 +139,24 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
         shipments: [{ items: ['qit_fixture'], fulfillmentLocation: { countryCode: 'US' } }],
       }] });
     }
-    if (url.href === 'https://api.taxjar.com/v2/taxes') {
-      assert.equal(init.headers.Authorization, 'Bearer tax-fixture');
-      assert.equal(body.to_state, 'CA');
-      const taxable = (body.amount + body.shipping);
-      const tax = Math.round(taxable * 7) / 100;
-      return Response.json({ tax: {
-        has_nexus: true, order_total_amount: body.amount + body.shipping, shipping: body.shipping,
-        taxable_amount: taxable, rate: 0.07, amount_to_collect: taxMismatch ? tax + 0.02 : tax,
-      } });
+    if (url.hostname === 'geocoding.geo.census.gov') {
+      assert.equal(url.pathname, '/geocoder/geographies/address');
+      const state = url.searchParams.get('state');
+      const zip = url.searchParams.get('zip');
+      const match = state === 'PA' ? county : zip === '90012';
+      return Response.json({ result: { addressMatches: match ? [{
+        addressComponents: { state, zip },
+        geographies: { Counties: [{ GEOID: county }] },
+      }] : [] } });
     }
     if (url.href === 'https://api.prodigi.com/v5/quotes/order') {
       assert.equal(init.headers['X-API-Key'], 'live_fixture');
       assert.equal(body.shippingMethod, 'standard');
-      assert.equal(body.shippingAddress.stateOrCounty, 'CA');
+      assert(['PA', 'CA'].includes(body.shippingAddress.stateOrCounty));
       const [line] = body.items;
       const usd = cents => ({ amount: (cents / 100).toFixed(2), currency: 'USD' });
       return Response.json({ data: {
-        lineItems: [{ id: 'line', ...line }], shipments: [{ itemIds: ['line'] }],
+        lineItems: [{ id: 'line', ...line }], shipments: [{ itemIds: ['line'], fulfillmentLocation: { countryCode: 'US', labCode: 'prodigi_us' } }],
         shippingOptions: destinationOptions,
         items: usd(1400), shipping: usd(destinationShipping), tax: usd(180),
         total: usd(1580 + destinationShipping),
@@ -226,7 +226,7 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
     setQuoteCurrency: value => { quoteCurrency = value; }, setQuoteFailure: value => { quoteFailure = value; },
     setDestinationShipping: value => { destinationShipping = value; },
     setDestinationOptions: value => { destinationOptions = value; },
-    setTaxMismatch: value => { taxMismatch = value; },
+    setCounty: value => { county = value; },
     setFailDraft: value => { failDraft = value; }, setInvalidVariant: value => { invalidVariant = value; },
   };
 }
@@ -274,29 +274,34 @@ test('both sizes and all five artwork mappings use authoritative pricing and ori
   assert.equal(f.submits(), 0);
 });
 
-test('nationwide production requotes Standard shipping and exact destination tax before payment', async () => {
-  const auth = {
-    TAXJAR_API_TOKEN: 'tax-fixture',
-    STUDIO_TAX_ORIGIN: JSON.stringify({ state: 'PA', zip: '15201', city: 'Pittsburgh', street: '100 Test Street' }),
-  };
-  const nationwide = { ...policy, destinationQuotes: true };
+test('production quotes verified Standard shipping and calculates Pennsylvania-only destination tax', async () => {
+  const nationwide = { ...launchPolicy, square: policy.square, origins: policy.origins };
   const input = customer({ state: 'CA', city: 'Los Angeles', zip: '90012', size: '12x16' });
-  const missing = fixture({}, 'production', nationwide);
+  const missing = fixture({}, 'production', { ...nationwide, retailCollectionStates: [] });
   assert.equal((await missing.status()).status, 503);
-  const f = fixture(auth, 'production', nationwide);
+  const f = fixture({}, 'production', nationwide);
   for (const address of [{ state: 'HI', zip: '96801' }, { state: 'AK', zip: '99501' }, { zip: '96201' }]) {
     assert.equal((await f.post('review', { ...input, ...address })).status, 400);
   }
   f.setDestinationOptions([{ method: 'budget' }]);
   assert.equal((await f.post('review', input)).status, 503);
   f.setDestinationOptions([{ method: 'standard' }]);
-  f.setTaxMismatch(true);
-  assert.equal((await f.post('review', input)).status, 502);
-  f.setTaxMismatch(false);
+
+  const pa = customer({ zip: '15024', size: '12x16' });
+  for (const [county, tax] of [['42003', 755], ['42101', 863], ['42001', 647]]) {
+    f.setCounty(county);
+    const review = await (await f.post('review', pa)).json();
+    assert.equal(review.shippingCents, 1285);
+    assert.equal(review.taxCents, tax);
+  }
+  f.setCounty(null);
+  assert.equal((await f.post('review', pa)).status, 400);
+  assert.equal((await f.post('review', { ...input, zip: '15024' })).status, 400);
+
   const review = await (await f.post('review', input)).json();
   assert.equal(review.shippingCents, 1285);
-  assert.equal(review.taxCents, 755);
-  assert.equal(review.totalCents, 11540);
+  assert.equal(review.taxCents, 0);
+  assert.equal(review.totalCents, 10785);
   f.setDestinationShipping(1385);
   assert.equal((await f.post('checkout', { reviewId: review.reviewId })).status, 409);
   assert.equal(f.orders.size, 0);
@@ -310,7 +315,35 @@ test('nationwide production requotes Standard shipping and exact destination tax
   assert.equal(f.drafts.size, 1);
   assert.equal(f.draftCalls[0].shippingMethod, 'standard');
   assert.equal(f.draftCalls[0].items[0].sku, 'GLOBAL-PAP-12X16');
+  const record = f.records.get('order-' + orderId).data;
+  assert.equal(record.supplierQuoteCents, 2865);
+  assert.equal(record.approvedSupplierCents, 3100);
+  const supplier = [...f.drafts.values()][0];
+  supplier.status = 'in_production';
+  supplier.totals = { tax: { amount: '1.88', currency: 'USD' },
+    total: { amount: '28.73', currency: 'USD' } };
+  const reconciliation = await (await f.admin({ action: 'refresh', orderId })).json();
+  assert.equal(reconciliation.costs.total.amount, '28.73');
+  assert.equal(f.records.get('order-' + orderId).data.supplierQuoteCents, 2865);
+  assert.equal(f.drafts.size, 1);
   assert.equal(f.submits(), 0);
+});
+
+test('the two fixed bundle definitions bind five distinct private masters without enabling checkout', async () => {
+  assert.equal(catalog.bundleArtworkIds.length, 5);
+  assert.equal(new Set(catalog.bundleArtworkIds).size, 5);
+  assert.deepEqual(catalog.bundlePrices, { '9x12': 18000, '12x16': 38000 });
+  const f = fixture();
+  for (const size of Object.keys(catalog.bundlePrices)) {
+    const assets = catalog.bundleArtworkIds.map(id => artworkReference(base, id));
+    assert.equal(new Set(assets).size, 5);
+    assert(assets.every(url => url.startsWith(base + '/api/studio-print/artwork/')));
+    assert.equal((await f.post('review', customer({
+      artwork: 'studio-forest-and-flowers-collection', size,
+    }))).status, 400);
+  }
+  assert.equal(f.orders.size, 0);
+  assert.equal(f.drafts.size, 0);
 });
 
 test('invalid U.S. addresses and unconfigured variants fail before Square checkout', async () => {

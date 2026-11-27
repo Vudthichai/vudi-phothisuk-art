@@ -183,26 +183,25 @@ It does not contact Square or Prodigi, mint live checkout links, or create order
 
 ## Contiguous-US production candidate
 
-Production live mode uses a full-address Prodigi v5 Standard order quote. The
-customer pays the returned Standard shipping charge. The draft supplier
-allowance includes the tax returned by that quote and must fit the existing
-supplier cap. Checkout repeats the quote before creating a Square link;
-shipping, tax or price changes require a new review. The preview test stays on
-its existing destination policy and does not use this new tax integration.
+The approved Standard pass-through is $12.85. Production review and checkout
+each verify the exact address, Standard shipping, one US/prodigi_us shipment,
+and the verified supplier item amount using a Prodigi v5 quote. The production
+allowances are $30 for 9 × 12 and $31 for 12 × 16, under the unchanged $35
+global cap. Store the verified draft quote separately from this allowance and
+from actual supplier costs. No post-submission tax variance triggers a retry.
+Preview test settings remain independent.
 
-Production also requires an approved retail tax setup. Square calculates the
-taxes supplied on the order but does not establish the buyer's tax jurisdiction
-or seller nexus for this flow. The candidate supports TaxJar's Taxes API.
-Before activation, confirm registrations, nexus and the actual ship-from
-sourcing treatment with the merchant's tax adviser. Configure the verified
-nexus locations in the TaxJar account. Add `TAXJAR_API_TOKEN` and
-`STUDIO_TAX_ORIGIN` for Netlify Functions / Production only. The latter is a
-private JSON object with `state`, `zip`, `city` and `street` representing
-the tax-approved sourcing address; do not use a guessed origin. Confirm this
-single sourcing configuration is valid for the eligible destinations and
-Prodigi routing before activation. Additional paid tax service signup requires
-approval. Leave `STUDIO_MODE=off` until the live quote and tax checks pass.
+The seller confirmed Pennsylvania as the only retail sales tax collection
+state for direct online print sales. Verify the delivery address state and ZIP with
+the U.S. Census Geocoder. For Pennsylvania resolve the delivery county and apply 6%,
+7% for Allegheny County, or 8% for Philadelphia County, including shipping.
+Unmatched addresses require review. Outside Pennsylvania the
+configured policy collects no retail sales tax. Reassess before changing the
+seller's registrations or nexus. Square calculates and verifies the amount
+sent to its Orders API. No TaxJar account or credential is required.
 
-Production accepts one print per order and has no active promotion. Fixed
-Buy 4, Get 1 Free bundle terms are displayed as Coming Soon at $180 / $380.
-Both bundles require a dedicated purchase mapping and verified higher caps.
+One print per order remains in production. Buy 4, Get 1 Free bundles are
+displayed as Coming Soon at $180 and $380. Five-print quote baselines are
+$77.85 and $82.85, respectively, before any post-submit supplier tax.
+Proposed landed allowances of $90 and $95 require separate approval and
+are not active. Verify five separate artwork lines before enabling bundles.

@@ -4,6 +4,10 @@
   "testRun": "first-print-2026",
   "limits": { "customerCents": 15000, "supplierCents": 3500 },
   "destinationQuotes": true,
+  "retailCollectionStates": ["PA"],
+  "standardShippingCents": 1285,
+  "productionCostCents": { "9x12": 1300, "12x16": 1400 },
+  "individualSupplierAllowances": { "9x12": 3000, "12x16": 3100 },
   "destinations": {
     "PA-15024": {
       "shippingCents": { "9x12": 1285, "12x16": 1285 },

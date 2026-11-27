@@ -3,6 +3,8 @@
     "9x12": 4500,
     "12x16": 9500
   },
+  "bundlePrices": { "9x12": 18000, "12x16": 38000 },
+  "bundleArtworkIds": ["mother-nature", "ethereal-bloom", "tiger-lily", "75-leaves", "a-forest-forgotten"],
   "artworks": {
     "mother-nature": "Mother Nature",
     "ethereal-bloom": "Ethereal Bloom",
