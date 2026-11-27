@@ -9,17 +9,17 @@ it('presents both size bundles with confirmed retail values, prices and savings,
  const {container}=render(<MemoryRouter><StudioEditions/></MemoryRouter>);
  const options=[...container.querySelectorAll('.studio-bundle-option')];
  expect(options).toHaveLength(2);
- for(const [i,amounts] of [[0,['$225','$175','$50']],[1,['$475','$425','$50']]] as const){
+ for(const [i,amounts] of [[0,['$225','$180','$45']],[1,['$475','$380','$95']]] as const){
   amounts.forEach(amount=>expect(options[i].textContent).toContain(amount));
   expect(within(options[i] as HTMLElement).getByText('Coming Soon')).toBeTruthy();
  }
  expect(studioCollectionBundle.galleryWallImage).toBeNull();
  expect(container.querySelector('.studio-bundle-gallery')).toBeNull();
  expect(container.querySelector('form,a[href*="checkout"]')).toBeNull();
- expect(container.textContent).not.toMatch(/buy four|get one free/i);
+ expect(container.textContent).toMatch(/Buy 4, get 1 free/i);
 });
 it('records auditable proportional revenue weights and defers profit/donation calculations',()=>{
- const expected=[[22500,17500,5000,4500],[47500,42500,5000,9500]];
+ const expected=[[22500,18000,4500,4500],[47500,38000,9500,9500]];
  studioCollectionBundle.options.forEach((bundle,i)=>{
   const [retail,price,savings,weight]=expected[i];
   expect([bundle.retailValueCents,bundle.priceCents,bundle.savingsCents]).toEqual([retail,price,savings]);

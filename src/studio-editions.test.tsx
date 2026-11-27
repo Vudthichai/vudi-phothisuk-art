@@ -18,7 +18,7 @@ it('presents only the five approved reproductions with authentic photographs and
     expect(studioPrintImage(studioEditions[index]).variants.map(v => v.src)).toEqual([640,1280,1920].map(size => `/studio-editions/${artwork.id}-print-${size}.webp`));
     expect(within(card).getByRole('link',{name:artwork.title}).getAttribute('href')).toBe(`/studio-editions/${artwork.id}/`);
   });
-  expect(screen.getByText('$175')).toBeTruthy();
+  expect(screen.getByText('$180')).toBeTruthy();
   expect(studioCollectionBundle.editionIds).toEqual(studioEditions.map(edition => edition.id));
   expect(screen.queryByRole('button')).toBeNull();
   expect(document.querySelector('form, input, iframe, a[href^="mailto:"]')).toBeNull();

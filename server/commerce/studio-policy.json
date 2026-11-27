@@ -1,0 +1,15 @@
+{
+  "square": { "locationId": "LVMSNAYWPTM3E", "merchantId": "ML226Z6NATWR8" },
+  "origins": { "live-test": "https://deploy-preview-103--vudi-phothisuk-art.netlify.app", "live": "https://vudiphothisukart.com" },
+  "testRun": "first-print-2026",
+  "limits": { "customerCents": 15000, "supplierCents": 3500 },
+  "destinationQuotes": true,
+  "destinations": {
+    "PA-15024": {
+      "shippingCents": { "9x12": 1285, "12x16": 1285 },
+      "approvedSupplierCents": { "9x12": 2585, "12x16": 2685 },
+      "taxBps": 700,
+      "taxShipping": true
+    }
+  }
+}

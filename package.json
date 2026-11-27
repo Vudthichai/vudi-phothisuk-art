@@ -14,9 +14,11 @@
     "test:http": "node scripts/check-http.mjs",
     "test:browser": "node scripts/check-browser.mjs",
     "test:ar": "node scripts/check-ar-assets.mjs",
-    "test:ar:rainforest": "node scripts/check-rainforest.mjs"
+    "test:ar:rainforest": "node scripts/check-rainforest.mjs",
+    "test:studio": "node --test scripts/check-studio-launch.mjs"
   },
   "dependencies": {
+    "@netlify/blobs": "^11.1.11",
     "meshoptimizer": "0.22.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
