@@ -59,8 +59,8 @@ export async function destinationSupplierQuote(quoteOrder, config, selected) {
   if (!Array.isArray(quote.shipments) || !quote.shipments.length) fail('QUOTE_SHIPMENTS');
   if (quote.shipments.some(shipment => !Array.isArray(shipment?.itemIds) ||
       shipment.itemIds.length !== 1 || shipment.itemIds[0] !== line.id)) fail('QUOTE_SHIPMENT_ITEMS');
-  if (quote.shippingOptions != null && (!Array.isArray(quote.shippingOptions) ||
-      !quote.shippingOptions.some(option => option?.method === 'standard'))) fail('QUOTE_STANDARD_OPTION');
+  // v5 top-level totals and shipments describe the explicitly requested Standard
+  // method. shippingOptions describes alternatives and need not repeat it.
   if ([items, shipping, tax, total].some(cents => cents === null) || items <= 0 ||
       total !== items + shipping + tax) fail('QUOTE_TOTALS');
   const approvedSupplierCents = config.individualSupplierAllowances[selected.size];

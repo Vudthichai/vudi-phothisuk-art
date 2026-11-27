@@ -10,6 +10,7 @@ import { createArtworkUploader } from './upload-studio-masters.mjs';
 
 import { checkVariant } from '../server/commerce/studio-api.mjs';
 import { studioConfig } from '../server/commerce/studio-config.mjs';
+import { destinationSupplierQuote } from '../server/commerce/studio-finance.mjs';
 const base = 'https://vudiphothisukart.com';
 const preview = 'https://deploy-preview-199--vudi-phothisuk-art.netlify.app';
 const env = {
@@ -282,6 +283,43 @@ test('both sizes and all five artwork mappings use authoritative pricing and ori
   assert.equal(f.submits(), 0);
 });
 
+test('v5 Standard quotes use selected top-level totals and shipments, not alternative options', async () => {
+  const config = studioConfig(env, 'production', launchPolicy);
+  const usd = amount => ({ amount, currency: 'USD' });
+
+  for (const [size, production, total] of [['9x12', '13.00', '25.85'], ['12x16', '14.00', '26.85']]) {
+    const sku = catalog.variants[size];
+    const address = { line1: '4400 Forbes Avenue', townOrCity: 'Pittsburgh',
+      stateOrCounty: 'PA', postalOrZipCode: '15213', countryCode: 'US' };
+    const selected = { sku, size, quantity: 1, recipient: { address } };
+    const standard = {
+      items: usd(production), shipping: usd('12.85'), tax: usd('0.00'), total: usd(total),
+      lineItems: [{ id: 'line-1', catalogueVariantId: sku, quantity: 1 }],
+      shipments: [{ itemIds: ['line-1'], carrier: 'USPS', service: 'USPS Priority Mail',
+        fulfillmentLocation: { countryCode: 'US', labCode: 'prodigi_us' } }],
+    };
+    const run = data => destinationSupplierQuote(async request => {
+      assert.deepEqual(request, { items: [{ catalogueVariantId: sku, quantity: 1 }],
+        shippingAddress: address, shippingMethod: 'standard', currencyCode: 'USD' });
+      return { quote: data, upstreamStatus: 200 };
+    }, config, selected);
+
+    const alternatives = [{ method: 'budget', cost: usd('1.00') }, { method: 'express', cost: usd('90.00') }];
+    for (const shippingOptions of [undefined, [], alternatives]) {
+      const result = await run({ ...standard, shippingOptions });
+      assert.equal(result.shippingCents, 1285);
+      assert.equal(result.supplierQuoteCents, Math.round(Number(total) * 100));
+    }
+    await assert.rejects(run({ shippingOptions: alternatives }), { code: 'QUOTE_PRODUCT' });
+    await assert.rejects(run({ ...standard, shipping: { amount: '12.85', currency: 'CAD' } }),
+      { code: 'QUOTE_TOTALS' });
+    await assert.rejects(run({ ...standard, shipments: [{ ...standard.shipments[0], itemIds: ['unrelated'] }] }),
+      { code: 'QUOTE_SHIPMENT_ITEMS' });
+    await assert.rejects(run({ ...standard, shipments: [{ ...standard.shipments[0],
+      fulfillmentLocation: { countryCode: 'CA', labCode: 'other' } }] }), { status: 409 });
+  }
+});
+
 test('production quotes verified Standard shipping and calculates Pennsylvania-only destination tax', async () => {
   const nationwide = { ...launchPolicy, square: policy.square, origins: policy.origins };
   const input = customer({ state: 'CA', city: 'Los Angeles', zip: '90012', size: '12x16' });
@@ -292,8 +330,7 @@ test('production quotes verified Standard shipping and calculates Pennsylvania-o
     assert.equal((await f.post('review', { ...input, ...address })).status, 400);
   }
   f.setDestinationOptions([{ method: 'budget' }]);
-  assert.equal((await f.post('review', input)).status, 503);
-  f.setDestinationOptions([{ method: 'standard' }]);
+  assert.equal((await f.post('review', input)).status, 200);
 
   const pa = customer({ zip: '15024', size: '12x16' });
   for (const [county, tax] of [['42003', 755], ['42101', 863], ['42001', 647]]) {
