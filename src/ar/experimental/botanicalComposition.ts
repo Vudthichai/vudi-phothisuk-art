@@ -109,7 +109,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           lily = createLilyCinematics(composition.lilyCinematics, turn, upright, composition.entrance, composition.finalLilyLight);
         }
         if (composition.petalRain) {
-          petals = createEtherealPetals(upright, composition.creativeFinish === 'ethereal', canopy?.centers);
+          petals = createEtherealPetals(canopy ? turn : upright, composition.creativeFinish === 'ethereal', canopy?.centers);
         }
         if (composition.bloomOpening || composition.firstBreath) {
           bloom = createBloomOpening(turn, composition.firstBreath, composition.finalBloom);
@@ -149,7 +149,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           if (root.visible) {
             canopy.update(frame.elapsedSeconds, reduced);
             petals?.update(frame.elapsedSeconds, reduced);
-            entrance?.update(frame.elapsedSeconds, reduced);
+            turn.rotation.y = entrance?.update(frame.elapsedSeconds, reduced) ?? frame.turn;
           }
         } else {
           if (root.visible) {
