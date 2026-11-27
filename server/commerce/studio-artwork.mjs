@@ -120,6 +120,28 @@ export async function artworkReady(store, artwork) {
   return Boolean(artworkMetadata(entry, master));
 }
 
+// Check that production Functions can stream the private object, not just list it.
+export async function artworkReadable(store, artwork) {
+  const master = artworkMasters[artwork];
+  const entry = await store.getWithMetadata(master.key, { type: 'stream', consistency: 'strong' });
+  if (!artworkMetadata(entry, master) || !entry?.data) {
+    await entry?.data?.cancel();
+    return false;
+  }
+  const reader = entry.data.getReader();
+  try {
+    const prefix = [];
+    while (prefix.length < 3) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      prefix.push(...value.subarray(0, 3 - prefix.length));
+    }
+    return prefix[0] === 255 && prefix[1] === 216 && prefix[2] === 255;
+  } finally {
+    await reader.cancel();
+  }
+}
+
 function artworkHeaders() {
   return {
     'Cache-Control': 'private, no-store',

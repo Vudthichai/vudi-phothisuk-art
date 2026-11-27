@@ -143,10 +143,11 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
       assert.equal(url.pathname, '/geocoder/geographies/address');
       const state = url.searchParams.get('state');
       const zip = url.searchParams.get('zip');
-      const match = state === 'PA' ? county : zip === '90012';
+      const matchedCounty = { '15213': '42003', '19130': '42101', '17101': '42043' }[zip] ?? county;
+      const match = state === 'PA' ? matchedCounty : zip === '90012';
       return Response.json({ result: { addressMatches: match ? [{
         addressComponents: { state, zip },
-        geographies: { Counties: [{ GEOID: county }] },
+        geographies: { Counties: [{ GEOID: matchedCounty }] },
       }] : [] } });
     }
     if (url.href === 'https://api.prodigi.com/v5/quotes/order') {
@@ -155,11 +156,12 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
       assert(['PA', 'CA'].includes(body.shippingAddress.stateOrCounty));
       const [line] = body.items;
       const usd = cents => ({ amount: (cents / 100).toFixed(2), currency: 'USD' });
+      const production = line.catalogueVariantId.endsWith('9X12') ? 1300 : 1400;
       return Response.json({ data: {
         lineItems: [{ id: 'line', ...line }], shipments: [{ itemIds: ['line'], fulfillmentLocation: { countryCode: 'US', labCode: 'prodigi_us' } }],
         shippingOptions: destinationOptions,
-        items: usd(1400), shipping: usd(destinationShipping), tax: usd(180),
-        total: usd(1580 + destinationShipping),
+        items: usd(production), shipping: usd(destinationShipping), tax: usd(180),
+        total: usd(production + 180 + destinationShipping),
       } });
     }
     if (url.hostname === 'api.prodigi.com') {
@@ -896,9 +898,39 @@ test('off-mode preview exposes only authenticated read-only preflight at the pin
   const auth = { Authorization: 'Bearer ' + env.STUDIO_ADMIN_TOKEN };
   assert.equal((await f.request('admin', '{"action":"preflight"}', auth, base)).status, 404);
   assert.equal((await f.post('admin', { action: 'preflight' }, { ...auth, Origin: preview })).status, 401);
-  assert.equal((await fixture({ STUDIO_MODE: 'off' }).admin({ action: 'preflight' })).status, 404);
 });
 
+
+test('off-mode production preflight and signature diagnostics never process an event', async () => {
+  const productionPolicy = { ...launchPolicy, square: policy.square, origins: policy.origins };
+  const f = fixture({ STUDIO_MODE: 'off' }, 'production', productionPolicy);
+  assert.deepEqual(await (await f.status()).json(), { mode: 'off', checkout: false });
+  assert.equal((await f.post('admin', { action: 'preflight' })).status, 401);
+  assert.equal((await f.admin({ action: 'prepare-dashboard' })).status, 404);
+  assert.equal((await f.purchase(customer())).status, 404);
+  const response = await f.admin({ action: 'preflight' });
+  assert.equal(response.status, 200);
+  const report = await response.json();
+  assert.equal(report.ok, true);
+  assert.equal(report.checks.filter(check => check.name.startsWith('artwork:')).length, 5);
+  assert.equal(report.checks.filter(check => check.name.startsWith('prodigi-standard:')).length, 2);
+  assert.deepEqual(report.checks.filter(check => check.name.startsWith('census-and-retail-tax:'))
+    .map(check => check.taxBps), [700, 800, 600, 0]);
+  assert.equal(f.served(), 5);
+  f.setDestinationShipping(1385);
+  const mismatch = await f.admin({ action: 'preflight' });
+  assert.equal(mismatch.status, 503);
+  assert((await mismatch.json()).checks.some(check => check.name === 'prodigi-standard:9x12' && !check.ok));
+
+  const raw = JSON.stringify({ type: 'payment.updated', data: { object: { payment: { status: 'COMPLETED' } } } });
+  assert.equal((await f.request('webhook', raw)).status, 401);
+  const signed = createHmac('sha256', env.SQUARE_WEBHOOK_SIGNATURE_KEY)
+    .update(base + '/api/studio-print/webhook').update(raw).digest('base64');
+  const probe = await f.request('webhook', raw, { 'x-square-hmacsha256-signature': signed });
+  assert.equal(probe.status, 409);
+  assert.deepEqual(await probe.json(), { mode: 'off', signatureVerified: true, processed: false });
+  assert.equal(f.orders.size + f.drafts.size + f.records.size + f.submits(), 0);
+});
 
 test('private preflight logs distinguish Prodigi v5 catalogue 401 from v4 quote 401', async () => {
   for (const version of [4, 5]) {

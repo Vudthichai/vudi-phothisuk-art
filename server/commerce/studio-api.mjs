@@ -1,8 +1,8 @@
 import { createHash, createHmac, randomUUID } from 'node:crypto';
 import { decryptRecipient, encryptRecipient, equal, fileIdentity, fulfillmentDetails, selection, StudioError, validId } from './studio-config.mjs';
 
-import { prepareArtworkAccess, artworkMasters, artworkReady, createArtworkGrant, draftArtworkURL } from './studio-artwork.mjs';
-import { destinationOffer, shippingQuote, supplierCents } from './studio-finance.mjs';
+import { prepareArtworkAccess, artworkMasters, artworkReadable, artworkReady, createArtworkGrant, draftArtworkURL } from './studio-artwork.mjs';
+import { destinationOffer, destinationSupplierQuote, retailTaxFor, shippingQuote, supplierCents } from './studio-finance.mjs';
 
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const money = amount => ({ amount, currency: 'USD' });
@@ -208,6 +208,11 @@ export async function studioPreflight(config, { square, prodigi, quote: requestQ
     })),
     Promise.all(Object.keys(artworkMasters).map(async id => ({ artwork: id, ready: await artworkReady(artworkStore, id) }))),
   ]);
+  checkSquareIdentity(config, location, merchant);
+  return { results, artwork };
+}
+
+function checkSquareIdentity(config, location, merchant) {
   if (location.location?.id !== config.locationId || location.location.country !== 'US' ||
       location.location.currency !== 'USD' || location.location.status !== 'ACTIVE' ||
       location.location.merchant_id !== config.merchantId || merchant.merchant?.id !== config.merchantId ||
@@ -215,7 +220,91 @@ export async function studioPreflight(config, { square, prodigi, quote: requestQ
       merchant.merchant.currency !== 'USD' || merchant.merchant.main_location_id !== config.locationId) {
     throw new StudioError(409, 'Square merchant or location failed validation.');
   }
-  return { results, artwork };
+}
+
+export function assertSquareWebhookSignature(webhookUrl, webhookKey, raw, signature) {
+  const expected = createHmac('sha256', webhookKey).update(webhookUrl).update(raw).digest('base64');
+  if (!equal(expected, signature ?? '')) throw new StudioError(401, 'Invalid webhook signature.');
+}
+
+const diagnosticAddresses = [
+  ['allegheny', '4400 Forbes Avenue', 'Pittsburgh', 'PA', '15213', 700],
+  ['philadelphia', '2600 Benjamin Franklin Parkway', 'Philadelphia', 'PA', '19130', 800],
+  ['pennsylvania-state', '1 North Second Street', 'Harrisburg', 'PA', '17101', 600],
+  ['out-of-state', '111 S Grand Avenue', 'Los Angeles', 'CA', '90012', 0],
+];
+
+export async function productionPreflight(config, { square, prodigi, census }, artworkStore) {
+  if (!config.destinationQuotes) throw new StudioError(503, 'Production destination pricing is unavailable.');
+  const check = async (name, probe) => {
+    try { return { name, ok: true, ...await probe() }; }
+    catch (error) {
+      const status = error instanceof StudioError || error instanceof ProviderError ? error.status : undefined;
+      return { name, ok: false, ...(status && { status }) };
+    }
+  };
+  const sample = (size, [, line1, city, state, zip]) => selection({
+    artwork: 'mother-nature', size, quantity: 1, attemptId: randomUUID(),
+    name: 'Diagnostic', email: 'diagnostic@example.com', line1, city, state, zip, country: 'US',
+  }, config);
+  const checks = await Promise.all([
+    check('square-identity', async () => {
+      const [location, merchant] = await Promise.all([
+        square('/locations/' + config.locationId), square('/merchants/' + config.merchantId),
+      ]);
+      checkSquareIdentity(config, location, merchant);
+    }),
+    ...Object.keys(artworkMasters).map(artwork => check('artwork:' + artwork, async () => {
+      if (!await artworkReadable(artworkStore, artwork)) throw new StudioError(503, 'Artwork unavailable.');
+    })),
+    ...Object.entries(config.variants).flatMap(([size, sku]) => [
+      check('prodigi-catalogue:' + size, async () => {
+        checkVariant(await prodigi('/catalogue/variants/' + encodeURIComponent(sku)), { sku, size });
+      }),
+      check('prodigi-standard:' + size, async () => {
+        const result = await destinationSupplierQuote(prodigi, config, sample(size, diagnosticAddresses[0]));
+        return { shippingCents: result.shippingCents, supplierQuoteCents: result.supplierQuoteCents };
+      }),
+    ]),
+    ...diagnosticAddresses.map((address, index) =>
+      check('census-and-retail-tax:' + address[0], async () => {
+        const taxBps = address[5];
+        const size = index % 2 === 0 ? '9x12' : '12x16';
+        const print = sample(size, address);
+        const tax = await retailTaxFor(census, config, print.recipient.address);
+        const selected = { ...print, ...tax, shippingCents: config.standardShippingCents };
+        if (selected.taxBps !== taxBps || selected.taxShipping !== (taxBps > 0)) {
+          throw new StudioError(409, 'Unexpected retail tax jurisdiction.');
+        }
+        const base = selected.unitCents + (selected.taxShipping ? selected.shippingCents : 0);
+        const expected = Math.round(base * taxBps / 10000);
+        const { order } = await square('/orders/calculate', { order: squareOrderFor(config, selected) });
+        if (!usdAmount(order?.total_tax_money) ||
+            Math.abs(order.total_tax_money.amount - expected) > (selected.taxShipping ? 1 : 0) ||
+            !isMoney(order.total_money, selected.unitCents + selected.shippingCents + order.total_tax_money.amount)) {
+          throw new StudioError(409, 'Square calculation failed verification.');
+        }
+        return { size, shippingCents: selected.shippingCents, taxBps, taxCents: order.total_tax_money.amount };
+      })),
+  ]);
+  return { mode: 'off', checkout: false, ok: checks.every(check => check.ok), checks };
+}
+
+function squareOrderFor(config, selected) {
+  const { attemptId, size, title, quantity, unitCents, taxShipping, taxBps } = selected;
+  const lineName = `${title} · Studio Print · ${size.replace('x', ' × ')} in`;
+  const { shippingCents } = selected;
+  return {
+    location_id: config.locationId, reference_id: attemptId,
+    line_items: [{ uid: 'studio-print', name: lineName, quantity: String(quantity), base_price_money: money(unitCents) }],
+    ...(shippingCents > 0 && { service_charges: [{
+      uid: 'studio-shipping', name: 'U.S. shipping', amount_money: money(shippingCents),
+      calculation_phase: 'SUBTOTAL_PHASE', taxable: taxShipping,
+    }] }),
+    ...(taxBps > 0 && { taxes: [{
+      name: 'Sales tax', percentage: String(taxBps / 100), scope: 'ORDER', type: 'ADDITIVE',
+    }] }),
+  };
 }
 
 export function studioService(config, store, { square, prodigi, quote: requestQuote, census }, artworkStore) {
@@ -272,23 +361,6 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     return { printCents, shippingCents, taxCents, totalCents };
   }
 
-  function squareOrderFor(selected, offer) {
-    const { attemptId, size, title, quantity, unitCents, taxShipping, taxBps } = selected;
-    const lineName = `${title} · Studio Print · ${size.replace('x', ' × ')} in`;
-    const { shippingCents } = offer;
-    return {
-      location_id: config.locationId, reference_id: attemptId,
-      line_items: [{ uid: 'studio-print', name: lineName, quantity: String(quantity), base_price_money: money(unitCents) }],
-      ...(shippingCents > 0 && { service_charges: [{
-        uid: 'studio-shipping', name: 'U.S. shipping', amount_money: money(shippingCents),
-        calculation_phase: 'SUBTOTAL_PHASE', taxable: taxShipping,
-      }] }),
-      ...(taxBps > 0 && { taxes: [{
-        name: 'Sales tax', percentage: String(taxBps / 100), scope: 'ORDER', type: 'ADDITIVE',
-      }] }),
-    };
-  }
-
   async function review(input) {
     authorizeTest(input);
     await requireEnabled();
@@ -299,7 +371,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     if (config.destinationQuotes) selected = await destinationOffer(prodigi, census, config, selected);
     const estimate = checkOffer(selected);
     // Square may round tax on the print and shipping separately.
-    const { order } = await square('/orders/calculate', { order: squareOrderFor(selected, estimate) });
+    const { order } = await square('/orders/calculate', { order: squareOrderFor(config, selected) });
     const tax = order?.total_tax_money;
     const tolerance = selected.taxShipping && estimate.shippingCents > 0 ? 1 : 0;
     if (!usdAmount(tax) || Math.abs(tax.amount - estimate.taxCents) > tolerance ||
@@ -364,7 +436,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     await claimTest(attemptId);
     const { payment_link: link } = await square('/online-checkout/payment-links', {
       idempotency_key: attemptId,
-      order: squareOrderFor(selected, offer),
+      order: squareOrderFor(config, selected),
       checkout_options: { allow_tipping: false, ask_for_shipping_address: false },
       pre_populated_data: { buyer_email: recipient.email },
     });
@@ -474,8 +546,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
   }
 
   async function webhook(raw, signature) {
-    const expected = createHmac('sha256', config.webhookKey).update(config.webhookUrl).update(raw).digest('base64');
-    if (!equal(expected, signature ?? '')) throw new StudioError(401, 'Invalid webhook signature.');
+    assertSquareWebhookSignature(config.webhookUrl, config.webhookKey, raw, signature);
     let event;
     try {
       event = JSON.parse(raw);

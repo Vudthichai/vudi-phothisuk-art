@@ -36,9 +36,8 @@ export async function shippingQuote(quote, selected) {
 }
 
 // Require a full Standard quote, with the authoritative product, shipment and tax breakdown.
-export async function destinationOffer(prodigi, census, config, selected) {
+export async function destinationSupplierQuote(prodigi, config, selected) {
   const address = selected.recipient.address;
-  const retailTax = await retailTaxFor(census, config, address);
   const quote = await prodigi('/quotes/order', {
     items: [{ catalogueVariantId: selected.sku, quantity: selected.quantity }],
     shippingAddress: address, shippingMethod: 'standard', currencyCode: 'USD',
@@ -65,12 +64,18 @@ export async function destinationOffer(prodigi, census, config, selected) {
       quote.shipments[0].fulfillmentLocation?.labCode !== 'prodigi_us') {
     throw new StudioError(409, 'Current Standard shipping, supplier cost or fulfillment differs from the approved terms.');
   }
-  return { ...selected, ...retailTax, shippingCents: shipping, approvedSupplierCents, supplierQuoteCents: total };
+  return { shippingCents: shipping, approvedSupplierCents, supplierQuoteCents: total };
 }
 
 
+export async function destinationOffer(prodigi, census, config, selected) {
+  const retailTax = await retailTaxFor(census, config, selected.recipient.address);
+  const quote = await destinationSupplierQuote(prodigi, config, selected);
+  return { ...selected, ...retailTax, ...quote };
+}
+
 // PA point-of-delivery local rates depend on county, and a ZIP can span counties.
-async function retailTaxFor(census, config, address) {
+export async function retailTaxFor(census, config, address) {
   const result = await census(new URLSearchParams({
     street: address.line1, city: address.townOrCity, state: address.stateOrCounty,
     zip: address.postalOrZipCode.slice(0, 5),

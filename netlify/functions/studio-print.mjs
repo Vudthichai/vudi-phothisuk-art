@@ -3,7 +3,7 @@ import policy from '../../server/commerce/studio-policy.json' with { type: 'json
 import { getStore } from '@netlify/blobs';
 import { equal, studioConfig, StudioConfigError, StudioError } from '../../server/commerce/studio-config.mjs';
 import { artworkStoreName, downloadArtwork } from '../../server/commerce/studio-artwork.mjs';
-import { providers, studioPreflight, studioService } from '../../server/commerce/studio-api.mjs';
+import { assertSquareWebhookSignature, productionPreflight, providers, studioPreflight, studioService } from '../../server/commerce/studio-api.mjs';
 
 function reply(body, status = 200) {
   return Response.json(body, { status, headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } });
@@ -56,15 +56,31 @@ export function createHandler({ env = process.env, launchPolicy = policy, openSt
     try {
       const off = env.STUDIO_MODE === undefined || env.STUDIO_MODE === 'off';
       if (statusCheck && off) return reply({ mode: 'off', checkout: false });
+      const deployContext = context?.deploy?.context;
+      const production = deployContext === 'production' && url.origin === launchPolicy.origins.live;
+      const preview = deployContext === 'deploy-preview' && url.origin === launchPolicy.origins['live-test'];
+      if (off && request.method === 'POST' && production && url.pathname === '/api/studio-print/webhook') {
+        if (!/^\S+$/.test(env.SQUARE_WEBHOOK_SIGNATURE_KEY ?? '')) {
+          throw new StudioError(503, 'Production webhook signing key is unavailable.');
+        }
+        const raw = await readBody(request, 65536);
+        assertSquareWebhookSignature(url.origin + url.pathname, env.SQUARE_WEBHOOK_SIGNATURE_KEY, raw,
+          request.headers.get('x-square-hmacsha256-signature'));
+        // Off mode deliberately stops before parsing the event or opening any store.
+        // Leave delivery retryable while checkout is disabled.
+        return reply({ mode: 'off', signatureVerified: true, processed: false }, 409);
+      }
       if (off && request.method === 'POST' && url.pathname === '/api/studio-print/admin' &&
-          context?.deploy?.context === 'deploy-preview' && url.origin === launchPolicy.origins['live-test']) {
+          (production || preview)) {
         if (!authorizedAdmin(request, env.STUDIO_ADMIN_TOKEN)) return reply({ error: 'Unauthorized.' }, 401);
         if (json(await readBody(request, 8192)).action !== 'preflight') {
           return reply({ error: 'Studio Print checkout is unavailable.' }, 404);
         }
         preflightCheck = true;
-        const config = studioConfig(env, context.deploy.context, launchPolicy, { preflight: true });
-        return reply(await studioPreflight(config, providers(config, fetcher, reportProvider), openArtworkStore()));
+        const config = studioConfig(env, deployContext, launchPolicy, { preflight: true });
+        const report = await (production ? productionPreflight : studioPreflight)(
+          config, providers(config, fetcher, reportProvider), openArtworkStore());
+        return reply(report, production && !report.ok ? 503 : 200);
       }
       const config = studioConfig(env, context?.deploy?.context, launchPolicy);
       if (url.origin !== config.origin) {
