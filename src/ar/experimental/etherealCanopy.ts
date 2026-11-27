@@ -1,137 +1,161 @@
 import {
-  BufferAttribute, BufferGeometry, CatmullRomCurve3, Color, DoubleSide, Float32BufferAttribute,
-  Group, InstancedMesh, Matrix4, Mesh, MeshStandardMaterial, Object3D, TubeGeometry, Vector3,
+  Box3, BufferAttribute, BufferGeometry, DynamicDrawUsage, Group, InstancedMesh,
+  Matrix4, Mesh, MeshStandardMaterial, Object3D, Vector3,
 } from 'three';
-import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { MeshoptSimplifier } from 'meshoptimizer';
 
+// Projected from the blossom centers in the original painting: upper right,
+// upper left, middle, lower left and lower right. Depth makes the five forms independent.
 const placements = [
-  { position: [-.265, .37, .025], rotation: [-.24, -.28, .17], scale: .45 },
-  { position: [.23, .40, -.14], rotation: [-.33, .26, -.14], scale: .42 },
-  { position: [-.32, .085, .15], rotation: [-.13, -.41, -.14], scale: .43 },
-  { position: [.295, .095, .18], rotation: [-.25, .17, .16], scale: .45 },
-  { position: [.012, .61, -.038], rotation: [-.22, .10, -.08], scale: .43 },
+  { position: [.32, 1.11, -.045], rotation: [-.39, .09, -.23], size: [.304, .299, .322], rate: .65, phase: .23 },
+  { position: [-.163, .94, .13], rotation: [-.18, -.49, .19], size: [.298, .313, .286], rate: .82, phase: 1.74 },
+  { position: [-.035, .67, -.11], rotation: [-.33, .22, -.10], size: [.293, .278, .315], rate: .61, phase: 3.16 },
+  { position: [-.475, .408, .05], rotation: [-.43, -.25, .25], size: [.284, .299, .304], rate: .92, phase: 4.48 },
+  { position: [.079, .152, .15], rotation: [-.14, .37, -.19], size: [.312, .291, .301], rate: .73, phase: 5.21 },
 ] as const;
 
-function bloomDetail(geometry: BufferGeometry) {
+function flowerHead(geometry: BufferGeometry) {
   const index = geometry.getIndex();
   const positions = geometry.getAttribute('position');
-  if (!MeshoptSimplifier.supported || !index || index.count <= 66_000 ||
-      geometry.groups.length > 0 || !positions) return geometry;
+  if (!index || !positions || geometry.groups.length > 0) return geometry;
+
   const points = new Float32Array(positions.count * 3);
+  const stem = new Uint8Array(positions.count);
   for (let i = 0; i < positions.count; i++) {
-    points[i * 3] = positions.getX(i);
-    points[i * 3 + 1] = positions.getY(i);
-    points[i * 3 + 2] = positions.getZ(i);
+    const x = positions.getX(i), y = positions.getY(i), z = positions.getZ(i);
+    points[i * 3] = x;
+    points[i * 3 + 1] = y;
+    points[i * 3 + 2] = z;
+    // Measured on the ivory GLB. Low ivory petals sit outside this narrow
+    // stalk region, so a horizontal cut across the entire flower would damage them.
+    stem[i] = y < -.198 && x > -.24 && x < .08 && z > -.43 && z < -.135 ? 1 : 0;
   }
-  const indices = index.array instanceof Uint32Array ? index.array : Uint32Array.from(index.array);
-  // The five blooms are small on screen. Reuse the original vertices, normal map
-  // and UVs, while limiting deviation to 0.35% of the original bounding extent.
-  const [detail] = MeshoptSimplifier.simplify(indices, points, 3, 66_000, .0035);
-  const lod = new BufferGeometry();
-  for (const [key, attribute] of Object.entries(geometry.attributes)) lod.setAttribute(key, attribute);
-  lod.setIndex(new BufferAttribute(detail, 1));
-  return lod;
-}
+  const cropped = new Uint32Array(index.count);
+  let length = 0;
+  for (let i = 0; i < index.count; i += 3) {
+    const a = index.getX(i), b = index.getX(i + 1), c = index.getX(i + 2);
+    if (stem[a] || stem[b] || stem[c]) continue;
+    cropped[length++] = a;
+    cropped[length++] = b;
+    cropped[length++] = c;
+  }
+  if (!length) return geometry;
+  const trimmed = cropped.subarray(0, length);
+  const [detail] = MeshoptSimplifier.supported && length > 60_000
+    ? MeshoptSimplifier.simplify(trimmed, points, 3, 60_000, .004, ['LockBorder'])
+    : [trimmed];
 
-function sprigLeaf(base: Vector3, reach: Vector3, width: number, roll: number) {
-  const columns = 6, rows = 12;
-  const positions: number[] = [], colors: number[] = [], indices: number[] = [];
-  const side = new Vector3().crossVectors(new Vector3(.05, .27, 1), reach).normalize();
-  const up = new Vector3().crossVectors(reach, side).normalize();
-  const shade = new Color(0x536f5e), light = new Color(0xa0ae8c);
-  const sample = new Vector3();
-  const color = new Color();
-  for (let row = 0; row <= rows; row++) {
-    const u = (row + .02) / (rows + .04);
-    const shape = Math.sin(u * Math.PI) ** .77;
-    for (let column = 0; column <= columns; column++) {
-      const v = column / columns * 2 - 1;
-      const ridge = .021 * (1 - Math.abs(v)) ** 2;
-      const fold = .007 * Math.sin((u - .21 * Math.abs(v)) * 42) * Math.abs(v);
-      sample.copy(base).addScaledVector(reach, u)
-        .addScaledVector(side, width * v * shape)
-        .addScaledVector(up, shape * (ridge + fold + roll * v * u));
-      positions.push(sample.x, sample.y, sample.z);
-      color.copy(shade).lerp(light, .20 + .44 * (1 - Math.abs(v)) ** 2 + .12 * Math.sin(u * 33 - Math.abs(v) * 4));
-      colors.push(color.r, color.g, color.b);
-      if (row < rows && column < columns) {
-        const index = row * (columns + 1) + column;
-        const next = index + columns + 1;
-        indices.push(index, next, index + 1, index + 1, next, next + 1);
-      }
+  // Compact the simplified geometry so both the stem and its unused attribute
+  // data are gone. The original UVs, normals and material still describe each petal.
+  const remap = new Int32Array(positions.count).fill(-1);
+  const vertices: number[] = [];
+  const triangles = Uint32Array.from(detail, vertex => {
+    if (remap[vertex] === -1) {
+      remap[vertex] = vertices.length;
+      vertices.push(vertex);
     }
-  }
-  const blade = new BufferGeometry();
-  blade.setAttribute('position', new Float32BufferAttribute(positions, 3));
-  blade.setAttribute('color', new Float32BufferAttribute(colors, 3));
-  blade.setIndex(indices);
-  blade.computeVertexNormals();
-  return blade;
-}
-
-function buildFoliage() {
-  const base = new Vector3(.01, -.027, .055);
-  const stemColor = new Color(0x536d56);
-  const leaves = [
-    [.75, -.24, .13, .075, .053, -.11], [.76, .25, .13, .065, .059, .09],
-    [.52, -.19, .08, .035, .049, .11], [.50, .20, .12, .07, .042, -.07],
-    [.78, -.19, .09, -.035, .054, -.10],
-  ] as const;
-  const pieces: BufferGeometry[] = [];
-  placements.forEach(({ position }, i) => {
-    const end = new Vector3(...position).add(new Vector3(0, .047, 0));
-    const middle = base.clone().lerp(end, .62);
-    middle.x += i % 2 ? .039 : -.031;
-    middle.y -= .034;
-    const stem = new CatmullRomCurve3([base, middle, end]);
-    const tube = new TubeGeometry(stem, 12, .007 - .0004 * i, 5, false);
-    tube.deleteAttribute('uv');
-    const colors = new Float32Array(tube.getAttribute('position').count * 3);
-    for (let k = 0; k < colors.length; k += 3) stemColor.toArray(colors, k);
-    tube.setAttribute('color', new Float32BufferAttribute(colors, 3));
-    const [alongStem, x, y, z, width, roll] = leaves[i];
-    pieces.push(tube, sprigLeaf(stem.getPointAt(alongStem), new Vector3(x, y, z), width, roll));
+    return remap[vertex];
   });
-  const geometry = mergeGeometries(pieces)!;
-  for (const piece of pieces) piece.dispose();
-  const foliage = new Mesh(geometry, new MeshStandardMaterial({
-    vertexColors: true, side: DoubleSide, roughness: .82, metalness: 0,
-  }));
-  foliage.name = 'Ethereal canopy leaves and stems';
-  return foliage;
+  const head = new BufferGeometry();
+  for (const [key, attribute] of Object.entries(geometry.attributes)) {
+    const values = new Float32Array(vertices.length * attribute.itemSize);
+    vertices.forEach((vertex, i) => {
+      for (let component = 0; component < attribute.itemSize; component++) {
+        values[i * attribute.itemSize + component] = attribute.getComponent(vertex, component);
+      }
+    });
+    head.setAttribute(key, new BufferAttribute(values, attribute.itemSize));
+  }
+  head.setIndex(new BufferAttribute(vertices.length < 65_536 ? Uint16Array.from(triangles) : triangles, 1));
+  return head;
 }
 
-/** Build all five blooms from a single normalized, already-loaded ivory GLB. */
+function varyFlowerRims(material: MeshStandardMaterial) {
+  const compile = material.onBeforeCompile.bind(material);
+  const key = material.customProgramCacheKey();
+  material.onBeforeCompile = (shader, renderer) => {
+    compile(shader, renderer);
+    shader.vertexShader = shader.vertexShader.replace('#include <begin_vertex>', `
+      #include <begin_vertex>
+      #ifdef USE_INSTANCING
+        // The asset is welded. Bend only the outer petal margins while
+        // keeping the calyx, stamens and their original texture map intact.
+        vec2 wing = position.xz;
+        float rim = smoothstep(.36, .82, length(wing)) * smoothstep(-.37, -.07, position.y);
+        float angle = atan(wing.y, wing.x + .00001);
+        float form = float(gl_InstanceID) * 1.43 + .35;
+        transformed.y += .048 * rim * sin(4. * angle + form);
+        transformed.xz += .042 * rim * wing * sin(3. * angle - form);
+      #endif`);
+  };
+  material.customProgramCacheKey = () => `${key}|ethereal-head-rim`;
+  material.needsUpdate = true;
+}
+
+/** Five independent heads from one already-loaded ivory model. */
 export async function createEtherealCanopy(turn: Group, source: Group, signal: AbortSignal) {
   await MeshoptSimplifier.ready;
   signal.throwIfAborted();
   source.updateWorldMatrix(true, true);
   const sourceFrame = source.matrixWorld.clone().invert();
+  const sourceScale = source.scale.x;
   const pose = new Object3D();
   const matrix = new Matrix4();
+  const bounds = new Box3();
+  const centers = placements.map(({ position }) => new Vector3().fromArray(position));
   const flowers = new Group();
-  flowers.name = 'Ivory flower canopy';
+  flowers.name = 'Independent ivory flower heads';
+  const meshes: { batch: InstancedMesh; rest: Matrix4 }[] = [];
   source.traverse(object => {
     if (!(object instanceof Mesh)) return;
-    const detail = bloomDetail(object.geometry);
+    const detail = flowerHead(object.geometry);
+    detail.computeBoundingBox();
+    const rest = new Matrix4().multiplyMatrices(sourceFrame, object.matrixWorld);
+    bounds.union(detail.boundingBox!.clone().applyMatrix4(rest));
     const batch = new InstancedMesh(detail, object.material, placements.length);
     batch.name = 'Five ivory flowers';
+    batch.instanceMatrix.setUsage(DynamicDrawUsage);
     batch.frustumCulled = false;
-    const rest = new Matrix4().multiplyMatrices(sourceFrame, object.matrixWorld);
-    placements.forEach(({ position, rotation, scale }, i) => {
-      pose.position.fromArray(position);
-      pose.rotation.set(rotation[0], rotation[1], rotation[2]);
-      pose.scale.setScalar(source.scale.x * scale);
-      pose.updateMatrix();
-      batch.setMatrixAt(i, matrix.multiplyMatrices(pose.matrix, rest));
-    });
+    meshes.push({ batch, rest });
     flowers.add(batch);
     if (detail !== object.geometry) object.geometry.dispose();
   });
+  const center = bounds.getCenter(new Vector3());
+  for (const { rest } of meshes) {
+    const offset = new Vector3().setFromMatrixPosition(rest).sub(center);
+    rest.setPosition(offset);
+  }
+
+  function update(seconds: number, reduced: boolean) {
+    placements.forEach(({ position, rotation, size, rate, phase }, i) => {
+      const phaseTime = seconds * rate + phase;
+      const sway = reduced ? 0 : Math.sin(phaseTime);
+      const hover = reduced ? 0 : Math.sin(phaseTime * .79 + phase);
+      const depth = reduced ? 0 : Math.sin(phaseTime * .51 - phase);
+      const [x, y, z] = position;
+      centers[i].set(x + .020 * sway, y + .024 * hover, z + .031 * depth);
+      pose.position.copy(centers[i]);
+      pose.rotation.set(rotation[0] + .078 * hover, rotation[1] + .125 * depth, rotation[2] + .076 * sway);
+      pose.scale.fromArray(size).multiplyScalar(sourceScale);
+      pose.updateMatrix();
+      for (const { batch, rest } of meshes) batch.setMatrixAt(i, matrix.multiplyMatrices(pose.matrix, rest));
+    });
+    for (const { batch } of meshes) batch.instanceMatrix.needsUpdate = true;
+  }
+
   source.removeFromParent();
-  turn.add(flowers, buildFoliage());
-  return () => {
-    for (const batch of flowers.children as InstancedMesh[]) batch.dispose();
+  turn.add(flowers);
+  update(0, true);
+  return {
+    centers,
+    update,
+    varyShapedRims() {
+      for (const { batch } of meshes) {
+        if (batch.material instanceof MeshStandardMaterial) varyFlowerRims(batch.material);
+      }
+    },
+    dispose() {
+      for (const { batch } of meshes) batch.dispose();
+    },
   };
 }

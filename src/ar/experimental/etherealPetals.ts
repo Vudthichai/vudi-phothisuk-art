@@ -1,25 +1,26 @@
 import {
   BufferGeometry, Color, DoubleSide, DynamicDrawUsage, Float32BufferAttribute, Group,
-  InstancedMesh, MathUtils, MeshBasicMaterial, Object3D, Sprite,
+  InstancedMesh, MathUtils, MeshBasicMaterial, Object3D, Sprite, Vector3,
 } from 'three';
 import { createAtmosphereMist } from './atmosphereMist';
 
 const PETAL_COUNT = 11;
 const PETAL_COLORS = [0xffe1e7, 0xefafbf, 0xf7c9d5];
 
-function createPetalGeometry() {
+function createPetalGeometry(leaf = false) {
   const across = 6;
   const length = 8;
   const positions: number[] = [];
   const colors: number[] = [];
   const indices: number[] = [];
-  const center = new Color(0xfff7f7);
-  const edge = new Color(0xf7c7d4);
+  const center = new Color(leaf ? 0xb7c29a : 0xfff7f7);
+  const edge = new Color(leaf ? 0x677654 : 0xf7c7d4);
   const tint = new Color();
 
   for (let row = 0; row <= length; row++) {
     const t = row / length;
-    const halfWidth = .014 + .34 * Math.sin(Math.PI * t) ** .58 * (.52 + .68 * t);
+    const halfWidth = leaf ? .004 + .235 * Math.sin(Math.PI * t) ** .84
+      : .014 + .34 * Math.sin(Math.PI * t) ** .58 * (.52 + .68 * t);
     for (let col = 0; col <= across; col++) {
       const u = col / across * 2 - 1;
       positions.push(
@@ -49,31 +50,63 @@ function petalVariation(slot: number, offset: number) {
   return value - Math.floor(value);
 }
 
-/** Mount to the gravity-aligned root. The tracked clock owns pauses and resumes. */
-export function createEtherealPetals(upright: Group, serene = false, canopy = false) {
-  const geometry = createPetalGeometry();
+function mountBatch(upright: Group, count: number, name: string, singlePass: boolean, leaf = false) {
+  const geometry = createPetalGeometry(leaf);
   const material = new MeshBasicMaterial({
-    side: DoubleSide, vertexColors: true, transparent: true, opacity: .77, depthWrite: false, forceSinglePass: canopy,
+    side: DoubleSide, vertexColors: true, transparent: true, opacity: .77, depthWrite: false, forceSinglePass: singlePass,
   });
-  const petals = new InstancedMesh(geometry, material, PETAL_COUNT);
-  petals.name = 'Drifting blush petals';
-  petals.instanceMatrix.setUsage(DynamicDrawUsage);
-  petals.frustumCulled = false;
-  upright.add(petals);
+  const mesh = new InstancedMesh(geometry, material, count);
+  mesh.name = name;
+  mesh.instanceMatrix.setUsage(DynamicDrawUsage);
+  mesh.frustumCulled = false;
+  upright.add(mesh);
+  return mesh;
+}
+
+function disposeBatch(batch: InstancedMesh<BufferGeometry, MeshBasicMaterial>) {
+  batch.removeFromParent();
+  batch.dispose();
+  batch.geometry.dispose();
+  batch.material.dispose();
+}
+
+function createClusterRain(centers: readonly Vector3[]) {
+  return centers.flatMap((center, index) => [0, 1, 2].map(slot => {
+    const seed = index * 3 + slot;
+    const leaf = slot === 2;
+    const duration = (leaf ? 3.65 : 4.25) + petalVariation(seed, 1) * 2.6;
+    return {
+      center, leaf, instance: leaf ? index : index * 2 + slot, duration,
+      size: (leaf ? .049 : .034) + petalVariation(seed, 2) * .030,
+      start: duration * (.12 + .78 * petalVariation(seed, 3)),
+      side: slot === 0 || (leaf && index % 2 === 0) ? -1 : 1,
+      depth: (petalVariation(seed, 4) - .5) * .23,
+      phase: petalVariation(seed, 5) * 2 * Math.PI,
+      fall: .33 + .18 * petalVariation(seed, 6),
+      flutter: (leaf ? 1.56 : .96) + petalVariation(seed, 7) * .89,
+    };
+  }));
+}
+
+/** Mount to the gravity-aligned root. The tracked clock owns pauses and resumes. */
+export function createEtherealPetals(upright: Group, serene = false, centers?: readonly Vector3[]) {
+  const petals = mountBatch(upright, centers ? centers.length * 2 : PETAL_COUNT, 'Drifting blush petals', !!centers);
+  const leaves = centers && mountBatch(upright, centers.length, 'Falling sage leaves', true, true);
+  const rain = centers && createClusterRain(centers);
 
   const lanes = Array.from({ length: PETAL_COUNT }, (_, slot) => ({
     seconds: (serene ? 9.3 : 8.4) + petalVariation(slot, 1) * (serene ? 5.4 : 3.7),
     size: .065 + petalVariation(slot, 2) * .045,
-    x: canopy ? (slot % 2 ? 1 : -1) * (.22 + petalVariation(slot, 3) * .50)
-      : (petalVariation(slot, 3) - .5) * 1.17,
+    x: (petalVariation(slot, 3) - .5) * 1.17,
     z: (slot % 2 ? .22 : -.25) + (petalVariation(slot, 4) - .5) * (serene ? .53 : .39),
     phase: petalVariation(slot, 5) * Math.PI * 2,
     driftRate: serene ? .57 + .30 * petalVariation(slot, 6) : .87,
     flutterRate: serene ? .93 + .75 * petalVariation(slot, 7) : 2.12,
     arrival: serene ? .13 + .53 * petalVariation(slot, 8) : .16,
   }));
-  for (let slot = 0; slot < PETAL_COUNT; slot++) {
-    petals.setColorAt(slot, new Color(PETAL_COLORS[slot % PETAL_COLORS.length]));
+  const palette = centers ? [0xffe2d8, 0xf7c9d5, 0xffe4b4] : PETAL_COLORS;
+  for (let slot = 0; slot < petals.count; slot++) {
+    petals.setColorAt(slot, new Color(palette[slot % palette.length]));
   }
 
   const mist = createAtmosphereMist();
@@ -92,7 +125,28 @@ export function createEtherealPetals(upright: Group, serene = false, canopy = fa
   function update(elapsed: number, reduced: boolean) {
     if (disposed) return;
     petals.visible = !reduced;
-    if (!reduced) {
+    if (leaves) leaves.visible = !reduced;
+    if (!reduced && rain && leaves) {
+      const arrival = MathUtils.smoothstep(elapsed, .24, 1.8);
+      for (const lane of rain) {
+        const time = elapsed + lane.start;
+        const progress = (time % lane.duration) / lane.duration;
+        const flutter = lane.phase + time * lane.flutter;
+        const drift = lane.phase + time * .68;
+        const fade = MathUtils.smoothstep(progress, 0, .11) * (1 - MathUtils.smoothstep(progress, .78, 1));
+        pose.position.set(
+          lane.center.x + lane.side * (.11 + .065 * progress) + .044 * Math.sin(drift),
+          lane.center.y + .157 - lane.fall * (progress + .018 * Math.sin(progress * Math.PI * 2)),
+          lane.center.z + lane.depth + .056 * Math.sin(drift * 1.37),
+        );
+        pose.rotation.set(.82 * Math.sin(flutter), drift * .74 + .60 * Math.cos(flutter), lane.phase + .76 * Math.sin(drift * 1.27));
+        pose.scale.setScalar(lane.size * fade * arrival);
+        pose.updateMatrix();
+        (lane.leaf ? leaves : petals).setMatrixAt(lane.instance, pose.matrix);
+      }
+      petals.instanceMatrix.needsUpdate = true;
+      leaves.instanceMatrix.needsUpdate = true;
+    } else if (!reduced) {
       const arrivalScale = serene ? 1 : MathUtils.smoothstep(elapsed, .16, 1.3);
       lanes.forEach(({ seconds, size, x, z, phase, driftRate, flutterRate, arrival }, slot) => {
         const time = elapsed + seconds * (slot + .46) / PETAL_COUNT;
@@ -105,7 +159,7 @@ export function createEtherealPetals(upright: Group, serene = false, canopy = fa
         const descent = serene ? progress + .018 * Math.sin(progress * Math.PI * 2) : progress;
         pose.position.set(
           x + .14 * Math.sin(drift) + .032 * Math.sin(flutter),
-          (canopy ? 1.38 - 1.60 * descent : 1.27 - 1.48 * descent),
+          1.27 - 1.48 * descent,
           z + (serene ? .12 : .075) * Math.sin(drift * 1.19),
         );
         pose.rotation.set(
@@ -130,10 +184,8 @@ export function createEtherealPetals(upright: Group, serene = false, canopy = fa
     dispose() {
       if (disposed) return;
       disposed = true;
-      petals.removeFromParent();
-      petals.dispose();
-      geometry.dispose();
-      material.dispose();
+      disposeBatch(petals);
+      if (leaves) disposeBatch(leaves);
       mist.root.removeFromParent();
       mist.dispose();
     },

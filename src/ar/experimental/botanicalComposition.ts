@@ -8,6 +8,7 @@ import { createSculptureTimeline } from './sculptureTimeline';
 import { createLeafRain } from './leafRain';
 import { createGildedBotanical } from './gildedBotanical';
 import { createEtherealPetals } from './etherealPetals';
+import type { createEtherealCanopy } from './etherealCanopy';
 import { createBloomOpening } from './bloomOpening';
 import { createFirstBreathAtmosphere } from './firstBreathAtmosphere';
 import { createFallingBloomSparks } from './fallingBloomSparks';
@@ -46,7 +47,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
     let rebirth: ReturnType<typeof createStumpRebirth> | undefined;
     let entrance: ReturnType<typeof createSculptureEntrance> | undefined;
     let lily: ReturnType<typeof createLilyCinematics> | undefined;
-    let disposeCanopy: (() => void) | undefined;
+    let canopy: Awaited<ReturnType<typeof createEtherealCanopy>> | undefined;
     onState('loading');
 
     async function load() {
@@ -100,14 +101,15 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         }
         if (composition.finalCanopy === 'ethereal') {
           const { createEtherealCanopy } = await import('./etherealCanopy');
-          disposeCanopy = await createEtherealCanopy(turn, turn.children[0] as Group, pending.signal);
+          canopy = await createEtherealCanopy(turn, turn.children[0] as Group, pending.signal);
         }
         if (composition.entrance) entrance = createSculptureEntrance(composition.entrance, turn, upright, composition.creativeFinish === 'gilded');
+        canopy?.varyShapedRims();
         if (composition.lilyCinematics) {
           lily = createLilyCinematics(composition.lilyCinematics, turn, upright, composition.entrance, composition.finalLilyLight);
         }
         if (composition.petalRain) {
-          petals = createEtherealPetals(upright, composition.creativeFinish === 'ethereal', composition.finalCanopy === 'ethereal');
+          petals = createEtherealPetals(upright, composition.creativeFinish === 'ethereal', canopy?.centers);
         }
         if (composition.bloomOpening || composition.firstBreath) {
           bloom = createBloomOpening(turn, composition.firstBreath, composition.finalBloom);
@@ -143,6 +145,12 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
           turn.rotation.y = reduced ? 0 : mossTurn(frame.elapsedSeconds);
         } else if (rebirth) {
           if (root.visible) turn.rotation.y = rebirth.update(frame.elapsedSeconds, reduced);
+        } else if (canopy) {
+          if (root.visible) {
+            canopy.update(frame.elapsedSeconds, reduced);
+            petals?.update(frame.elapsedSeconds, reduced);
+            entrance?.update(frame.elapsedSeconds, reduced);
+          }
         } else {
           if (root.visible) {
             petals?.update(frame.elapsedSeconds, reduced);
@@ -172,7 +180,7 @@ export function createBotanicalComposition(composition: BotanicalComposition, ti
         rebirth?.dispose();
         entrance?.dispose();
         lily?.dispose();
-        disposeCanopy?.();
+        canopy?.dispose();
         disposeModel(root);
         root.clear();
       },
