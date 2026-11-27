@@ -22,9 +22,9 @@
 .coa-digital-record>div{padding:0 4px 20px}
 .coa-permanent-url{overflow-wrap:anywhere;font-size:.8rem!important}
 .coa-return{display:inline-flex;align-items:center;min-height:48px;padding:12px 0;text-decoration:underline;text-underline-offset:4px}
-.coa-ar-action{max-width:34rem;margin:20px auto 0}
-.coa-ar-action p{font-size:.95rem;line-height:1.6;margin:10px 0 0}
-.coa-ar-link{display:inline-flex;align-items:center;min-height:48px;padding:8px 20px;background:#12351d;color:#f7f5ef;border:1px solid #12351d;text-decoration:none}
+.coa-ar-action{max-width:30rem;margin:22px auto 0}
+.coa-ar-action p{font-size:.9rem;line-height:1.6;margin:10px auto 0;max-width:27rem}
+.coa-ar-link{display:inline-flex;align-items:center;justify-content:center;min-height:50px;max-width:100%;padding:10px clamp(12px,4vw,24px);background:#12351d;color:#f7f5ef;border:1px solid #12351d;font:500 clamp(1rem,3.8vw,1.25rem)/1.25 'Bodoni Moda',Didot,Georgia,serif;text-decoration:none}
 .coa-ar-link:hover{background:transparent;color:#12351d}
 .coa-page :focus-visible{outline:2px solid #12351d;outline-offset:4px}
 @media(max-width:700px){.coa-layout{grid-template-columns:minmax(0,1fr);gap:28px}.coa-heading{margin-bottom:28px}.coa-artwork img{max-height:none}}

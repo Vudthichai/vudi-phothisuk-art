@@ -1,14 +1,12 @@
 // @vitest-environment jsdom
 import { afterEach, expect, it, vi } from 'vitest';
 import { Box3, BufferGeometry, LineSegments } from 'three';
-import { arById, arForCertificate, arExperiences } from './ar/config';
+import { arById } from './ar/config';
 import { createRecognitionMarker, setupRecognition } from './ar/experimental/recognition';
 afterEach(()=>{document.body.innerHTML='';vi.restoreAllMocks();});
-it('registers Tiger Lily for explicit local recognition only and preserves the existing Mother Nature entry points',()=>{
- expect(arExperiences).toHaveLength(1);expect(arExperiences[0].id).toBe('mother-nature-original');
- expect(arForCertificate('/coa/forest-and-flowers/mother-nature/original/')).toBe(arForCertificate('/coa/forest-and-flowers/mother-nature/collectors-edition/'));
+it('retains the legacy standalone registry while protecting the hub from direct recognition URLs',()=>{
+ expect(arById('mother-nature-original')?.id).toBe('mother-nature-original');
  expect(arById('tiger-lily-original')).toBeUndefined();const tiger=arById('tiger-lily-original',true)!;expect(tiger).toMatchObject({artworkId:'tiger-lily',previewOnly:true,recognitionOnly:false,modelAsset:'/ar/models/tiger-lily-orange.glb',targetIndex:0,targetFile:'/ar/targets/tiger-lily-original.mind',targetAspect:756/1024,entryPaths:[]});
- expect(arForCertificate('/coa/forest-and-flowers/tiger-lily/original/')).toBeUndefined();expect(arForCertificate('/coa/forest-and-flowers/tiger-lily/collectors-edition/')).toBeUndefined();
 });
 it('shows a flat proportion-correct recognition anchor only while tracked and disposes it once',()=>{
  const marker=createRecognitionMarker(756/1024);marker.update(0,false,true);marker.root.updateMatrixWorld(true);const bounds=new Box3().setFromObject(marker.root);expect(bounds.min.x).toBeCloseTo(-.5);expect(bounds.max.x).toBeCloseTo(.5);expect(bounds.max.y-bounds.min.y).toBeCloseTo(1024/756);expect(bounds.min.z).toBeCloseTo(bounds.max.z);

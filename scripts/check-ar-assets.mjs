@@ -13,7 +13,7 @@ for(const experience of experiences) {
   const image=await readFile('public'+experience.targetImage),target=await readFile('public'+experience.targetFile);
   const meta=await load('public'+experience.targetImage.replace(/\.jpg$/,'.json'));
   if (experience.previewOnly) {
-    assert.equal(experience.entryPaths.length,0,'Previews must not enable certificate-page entry controls.');
+    assert.equal(experience.entryPaths.length,0,'Hub targets must not enable legacy standalone routes.');
     assert.equal(experience.targetAspect,meta.targetDimensions[0]/meta.targetDimensions[1]);
   }
   for (const key of ['modelAsset','rainforestV5','composition','previewComposition','previewV3Composition','previewFirstBreath','previewLabel','entrance','recognitionOnly']) {

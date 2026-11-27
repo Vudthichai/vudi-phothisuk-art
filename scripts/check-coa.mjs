@@ -23,10 +23,14 @@ for (const record of manifest.certificates) {
   assert(main.querySelector('.coa-digital-record summary').textContent.includes('View Digital Certificate'));
   assert(main.textContent.includes('unsigned digital reference record'));
   assert.equal(main.querySelectorAll('a[href$=".pdf"], iframe, input').length, 0);
-  const enabledAR = arExperiences.some(experience => (experience.entryPaths ?? experience.certificatePaths).includes(record.path));
-  if (!record.arUrl && !enabledAR) assert.equal(main.querySelector('.coa-ar-link'), null);
-  if (enabledAR && !record.arUrl) assert.equal(main.querySelector('.coa-ar-link').getAttribute('href'), record.path + '?ar=1');
+  const targets = arExperiences.filter(experience => experience.certificatePaths.includes(record.path));
+  assert.equal(targets.length, 1, record.path);
+  assert.equal(targets[0].artworkId, record.artworkId);
+  const launch = main.querySelector('.coa-ar-link');
+  assert.equal(launch?.textContent, 'Experience in Augmented Reality');
+  assert.equal(launch.getAttribute('href'), record.arUrl ?? record.path + '?ar=1');
+  assert(main.querySelector('#coa-ar-instructions').textContent.includes('Start camera'));
   if (record.reviewStatus === 'replacement-pending') assert(main.textContent.includes('Physical certificate update pending'));
   await access('dist' + main.querySelector('.coa-artwork img').getAttribute('src'));
 }
-console.log('All 15 decoded certificate routes have static HTML, exact canonical URLs, artwork facts, correct designations, and unsigned digital records. No production certificate PDF is linked.');
+console.log('All 15 printed QR paths retain their canonical certificate records and show the AR launch for the matching artwork and edition.');
