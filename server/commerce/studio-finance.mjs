@@ -36,27 +36,33 @@ export async function shippingQuote(quote, selected) {
 }
 
 // Require a full Standard quote, with the authoritative product, shipment and tax breakdown.
-export async function destinationSupplierQuote(prodigi, config, selected) {
-  const address = selected.recipient.address;
-  const quote = await prodigi('/quotes/order', {
+export async function destinationSupplierQuote(quoteOrder, config, selected) {
+  const { line2, ...address } = selected.recipient.address;
+  const { quote, upstreamStatus } = await quoteOrder({
     items: [{ catalogueVariantId: selected.sku, quantity: selected.quantity }],
-    shippingAddress: address, shippingMethod: 'standard', currencyCode: 'USD',
+    shippingAddress: line2 ? { ...address, line2 } : address,
+    shippingMethod: 'standard', currencyCode: 'USD',
   });
+  const fail = code => {
+    const error = new StudioError(503, 'A verified destination-specific Standard shipping quote is unavailable.',
+      code, 'supplier-quote');
+    error.upstreamStatus = upstreamStatus;
+    throw error;
+  };
   const line = quote?.lineItems?.[0];
   const [items, shipping, tax, total] = ['items', 'shipping', 'tax', 'total']
     .map(field => supplierCents(quote?.[field]));
   if (!Array.isArray(quote?.lineItems) || quote.lineItems.length !== 1 ||
       typeof line?.catalogueVariantId !== 'string' || line.catalogueVariantId.toUpperCase() !== selected.sku ||
-      line.quantity !== selected.quantity || !validId(line.id) ||
-      !Array.isArray(quote.shipments) || !quote.shipments.length ||
-      quote.shipments.some(shipment => !Array.isArray(shipment?.itemIds) ||
-        shipment.itemIds.length !== 1 || shipment.itemIds[0] !== line.id) ||
-      (quote.shippingOptions != null && (!Array.isArray(quote.shippingOptions) ||
-        !quote.shippingOptions.some(option => option?.method === 'standard'))) ||
-      [items, shipping, tax, total].some(cents => cents === null) || items <= 0 ||
-      total !== items + shipping + tax) {
-    throw new StudioError(503, 'A verified destination-specific Standard shipping quote is unavailable.');
-  }
+      line.quantity !== selected.quantity) fail('QUOTE_PRODUCT');
+  if (!validId(line.id)) fail('QUOTE_LINE_ID');
+  if (!Array.isArray(quote.shipments) || !quote.shipments.length) fail('QUOTE_SHIPMENTS');
+  if (quote.shipments.some(shipment => !Array.isArray(shipment?.itemIds) ||
+      shipment.itemIds.length !== 1 || shipment.itemIds[0] !== line.id)) fail('QUOTE_SHIPMENT_ITEMS');
+  if (quote.shippingOptions != null && (!Array.isArray(quote.shippingOptions) ||
+      !quote.shippingOptions.some(option => option?.method === 'standard'))) fail('QUOTE_STANDARD_OPTION');
+  if ([items, shipping, tax, total].some(cents => cents === null) || items <= 0 ||
+      total !== items + shipping + tax) fail('QUOTE_TOTALS');
   const approvedSupplierCents = config.individualSupplierAllowances[selected.size];
   if (shipping !== config.standardShippingCents || items !== config.productionCostCents[selected.size] ||
       total > approvedSupplierCents ||
@@ -64,13 +70,13 @@ export async function destinationSupplierQuote(prodigi, config, selected) {
       quote.shipments[0].fulfillmentLocation?.labCode !== 'prodigi_us') {
     throw new StudioError(409, 'Current Standard shipping, supplier cost or fulfillment differs from the approved terms.');
   }
-  return { shippingCents: shipping, approvedSupplierCents, supplierQuoteCents: total };
+  return { shippingCents: shipping, approvedSupplierCents, supplierQuoteCents: total, upstreamStatus };
 }
 
 
-export async function destinationOffer(prodigi, census, config, selected) {
+export async function destinationOffer(quoteOrder, census, config, selected) {
   const retailTax = await retailTaxFor(census, config, selected.recipient.address);
-  const quote = await destinationSupplierQuote(prodigi, config, selected);
+  const quote = await destinationSupplierQuote(quoteOrder, config, selected);
   return { ...selected, ...retailTax, ...quote };
 }
 
@@ -83,10 +89,15 @@ export async function retailTaxFor(census, config, address) {
   }).toString());
   const matches = result?.result?.addressMatches;
   const match = matches?.[0];
-  if (!Array.isArray(matches) || matches.length !== 1 ||
-      match?.addressComponents?.state !== address.stateOrCounty ||
+  if (!Array.isArray(matches) || matches.length !== 1) {
+    const code = !Array.isArray(matches) ? 'CENSUS_RESPONSE' :
+      matches.length === 0 ? 'CENSUS_NO_MATCH' : 'CENSUS_AMBIGUOUS';
+    throw new StudioError(400, 'The shipping address could not be verified for sales tax.', code, 'retail-tax');
+  }
+  if (match?.addressComponents?.state !== address.stateOrCounty ||
       match?.addressComponents?.zip !== address.postalOrZipCode.slice(0, 5)) {
-    throw new StudioError(400, 'The shipping address could not be verified for sales tax.');
+    throw new StudioError(400, 'The shipping address could not be verified for sales tax.',
+      'CENSUS_STATE_OR_ZIP', 'retail-tax');
   }
   if (!config.retailCollectionStates.includes(address.stateOrCounty)) {
     return { taxBps: 0, taxShipping: false };
@@ -95,7 +106,8 @@ export async function retailTaxFor(census, config, address) {
   const county = counties?.[0]?.GEOID;
   if (!Array.isArray(counties) || counties.length !== 1 || typeof county !== 'string' ||
       !/^42[0-9]{3}$/.test(county)) {
-    throw new StudioError(400, 'Pennsylvania sales tax could not be verified for this delivery address.');
+    throw new StudioError(400, 'Pennsylvania sales tax could not be verified for this delivery address.',
+      'CENSUS_COUNTY', 'retail-tax');
   }
   return { taxBps: county === '42101' ? 800 : county === '42003' ? 700 : 600, taxShipping: true };
 }

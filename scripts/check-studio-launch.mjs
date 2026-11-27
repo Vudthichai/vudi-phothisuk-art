@@ -98,6 +98,8 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
   let destinationShipping = 1285;
   let destinationOptions = [{ method: 'standard' }];
   let county = '42003';
+  let badQuoteLineId = false;
+  let rejectMuseum = false;
   const fetcher = async (address, init) => {
     const url = new URL(address);
     const body = init.body && JSON.parse(init.body);
@@ -143,8 +145,8 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
       assert.equal(url.pathname, '/geocoder/geographies/address');
       const state = url.searchParams.get('state');
       const zip = url.searchParams.get('zip');
-      const matchedCounty = { '15213': '42003', '19130': '42101', '17101': '42043' }[zip] ?? county;
-      const match = state === 'PA' ? matchedCounty : zip === '90012';
+      const matchedCounty = { '15213': '42003', '19130': '42101', '19106': '42101', '17101': '42043' }[zip] ?? county;
+      const match = state === 'PA' ? matchedCounty && !(rejectMuseum && zip === '19130') : zip === '90012';
       return Response.json({ result: { addressMatches: match ? [{
         addressComponents: { state, zip },
         geographies: { Counties: [{ GEOID: matchedCounty }] },
@@ -153,12 +155,14 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
     if (url.href === 'https://api.prodigi.com/v5/quotes/order') {
       assert.equal(init.headers['X-API-Key'], 'live_fixture');
       assert.equal(body.shippingMethod, 'standard');
+      assert.notEqual(body.shippingAddress.line2, '');
+      if (quoteFailure) return new Response('sensitive upstream response fixture', { status: 503 });
       assert(['PA', 'CA'].includes(body.shippingAddress.stateOrCounty));
       const [line] = body.items;
       const usd = cents => ({ amount: (cents / 100).toFixed(2), currency: 'USD' });
       const production = line.catalogueVariantId.endsWith('9X12') ? 1300 : 1400;
       return Response.json({ data: {
-        lineItems: [{ id: 'line', ...line }], shipments: [{ itemIds: ['line'], fulfillmentLocation: { countryCode: 'US', labCode: 'prodigi_us' } }],
+        lineItems: [{ id: badQuoteLineId ? null : 'line', ...line }], shipments: [{ itemIds: ['line'], fulfillmentLocation: { countryCode: 'US', labCode: 'prodigi_us' } }],
         shippingOptions: destinationOptions,
         items: usd(production), shipping: usd(destinationShipping), tax: usd(180),
         total: usd(production + 180 + destinationShipping),
@@ -226,6 +230,8 @@ function fixture(overrides = {}, context = 'production', launchPolicy = policy) 
     status: () => handler(new Request(endpoint + 'status'), deployContext), diagnostics, providerDiagnostics,
     denyCatalogue: () => { catalogueUnauthorized = true; },
     setQuoteCurrency: value => { quoteCurrency = value; }, setQuoteFailure: value => { quoteFailure = value; },
+    invalidateQuoteLineId: () => { badQuoteLineId = true; },
+    rejectMuseumAddress: () => { rejectMuseum = true; },
     setDestinationShipping: value => { destinationShipping = value; },
     setDestinationOptions: value => { destinationOptions = value; },
     setCounty: value => { county = value; },
@@ -929,6 +935,29 @@ test('off-mode production preflight and signature diagnostics never process an e
   const probe = await f.request('webhook', raw, { 'x-square-hmacsha256-signature': signed });
   assert.equal(probe.status, 409);
   assert.deepEqual(await probe.json(), { mode: 'off', signatureVerified: true, processed: false });
+  assert.equal(f.orders.size + f.drafts.size + f.records.size + f.submits(), 0);
+});
+
+test('production readiness distinguishes an upstream 503, a rejected HTTP 200 quote and a Philadelphia no-match', async () => {
+  const productionPolicy = { ...launchPolicy, square: policy.square, origins: policy.origins };
+  const f = fixture({ STUDIO_MODE: 'off' }, 'production', productionPolicy);
+  f.invalidateQuoteLineId();
+  f.rejectMuseumAddress();
+  const response = await f.admin({ action: 'preflight' });
+  assert.equal(response.status, 503);
+  const report = await response.json();
+  assert.deepEqual(report.checks.find(check => check.name === 'prodigi-standard:9x12'), {
+    name: 'prodigi-standard:9x12', ok: false, status: 503, code: 'QUOTE_LINE_ID', upstreamStatus: 200,
+  });
+  const philadelphia = report.checks.find(check => check.name === 'census-and-retail-tax:philadelphia');
+  assert.equal(philadelphia.ok, true);
+  assert.equal(philadelphia.taxBps, 800);
+  assert.equal(philadelphia.originalSampleCode, 'CENSUS_NO_MATCH');
+  f.setQuoteFailure(true);
+  const upstream = await (await f.admin({ action: 'preflight' })).json();
+  assert.deepEqual(upstream.checks.find(check => check.name === 'prodigi-standard:12x16'), {
+    name: 'prodigi-standard:12x16', ok: false, status: 503, upstreamStatus: 503,
+  });
   assert.equal(f.orders.size + f.drafts.size + f.records.size + f.submits(), 0);
 });
 

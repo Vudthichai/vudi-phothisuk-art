@@ -29,7 +29,7 @@ export function providers(config, fetcher = fetch, reportProvider = message => c
     }
   }
 
-  async function call(provider, base, headers, path, body, extra, method = body === undefined ? 'GET' : 'POST') {
+  async function call(provider, base, headers, path, body, extra, method = body === undefined ? 'GET' : 'POST', includeStatus = false) {
     let result;
     try {
       result = await fetcher(base + path, {
@@ -49,7 +49,8 @@ export function providers(config, fetcher = fetch, reportProvider = message => c
       const reference = validId(correlation) ? ` (request ${correlation})` : '';
       throw new ProviderError(provider, result.status, reference);
     }
-    return result.json();
+    const payload = await result.json();
+    return includeStatus ? { payload, upstreamStatus: result.status } : payload;
   }
   return {
     square: (path, body) => call('Square', 'https://connect.squareup.com/v2', {
@@ -60,6 +61,12 @@ export function providers(config, fetcher = fetch, reportProvider = message => c
     }, '/quotes', body),
     census: query => call('Address verification', 'https://geocoding.geo.census.gov', {},
       '/geocoder/geographies/address?' + query),
+    quoteOrder: async body => {
+      const { payload, upstreamStatus } = await call('Prodigi', 'https://api.prodigi.com/v5', {
+        'X-API-Key': config.prodigiKey,
+      }, '/quotes/order', body, {}, 'POST', true);
+      return { quote: payload?.data, upstreamStatus };
+    },
     prodigi: async (path, body, extra, method) => (await call('Prodigi', 'https://api.prodigi.com/v5', {
       'X-API-Key': config.prodigiKey,
     }, path, body, extra, method)).data,
@@ -234,13 +241,16 @@ const diagnosticAddresses = [
   ['out-of-state', '111 S Grand Avenue', 'Los Angeles', 'CA', '90012', 0],
 ];
 
-export async function productionPreflight(config, { square, prodigi, census }, artworkStore) {
+export async function productionPreflight(config, { square, prodigi, quoteOrder, census }, artworkStore) {
   if (!config.destinationQuotes) throw new StudioError(503, 'Production destination pricing is unavailable.');
   const check = async (name, probe) => {
     try { return { name, ok: true, ...await probe() }; }
     catch (error) {
       const status = error instanceof StudioError || error instanceof ProviderError ? error.status : undefined;
-      return { name, ok: false, ...(status && { status }) };
+      const upstreamStatus = error instanceof ProviderError ? error.status : error.upstreamStatus;
+      return { name, ok: false, ...(status && { status }),
+        ...(error.code && { code: error.code }), ...(upstreamStatus && { upstreamStatus }),
+        ...(error.originalSampleCode && { originalSampleCode: error.originalSampleCode }) };
     }
   };
   const sample = (size, [, line1, city, state, zip]) => selection({
@@ -262,8 +272,9 @@ export async function productionPreflight(config, { square, prodigi, census }, a
         checkVariant(await prodigi('/catalogue/variants/' + encodeURIComponent(sku)), { sku, size });
       }),
       check('prodigi-standard:' + size, async () => {
-        const result = await destinationSupplierQuote(prodigi, config, sample(size, diagnosticAddresses[0]));
-        return { shippingCents: result.shippingCents, supplierQuoteCents: result.supplierQuoteCents };
+        const result = await destinationSupplierQuote(quoteOrder, config, sample(size, diagnosticAddresses[0]));
+        return { shippingCents: result.shippingCents, supplierQuoteCents: result.supplierQuoteCents,
+          upstreamStatus: result.upstreamStatus };
       }),
     ]),
     ...diagnosticAddresses.map((address, index) =>
@@ -271,7 +282,21 @@ export async function productionPreflight(config, { square, prodigi, census }, a
         const taxBps = address[5];
         const size = index % 2 === 0 ? '9x12' : '12x16';
         const print = sample(size, address);
-        const tax = await retailTaxFor(census, config, print.recipient.address);
+        let tax;
+        let originalSampleCode;
+        try {
+          tax = await retailTaxFor(census, config, print.recipient.address);
+        } catch (error) {
+          if (address[0] !== 'philadelphia' || !(error instanceof StudioError) || error.status !== 400) throw error;
+          originalSampleCode = error.code;
+          const alternate = sample(size, ['philadelphia', '520 Chestnut Street', 'Philadelphia', 'PA', '19106']);
+          try {
+            tax = await retailTaxFor(census, config, alternate.recipient.address);
+          } catch (alternateError) {
+            alternateError.originalSampleCode = originalSampleCode;
+            throw alternateError;
+          }
+        }
         const selected = { ...print, ...tax, shippingCents: config.standardShippingCents };
         if (selected.taxBps !== taxBps || selected.taxShipping !== (taxBps > 0)) {
           throw new StudioError(409, 'Unexpected retail tax jurisdiction.');
@@ -284,7 +309,8 @@ export async function productionPreflight(config, { square, prodigi, census }, a
             !isMoney(order.total_money, selected.unitCents + selected.shippingCents + order.total_tax_money.amount)) {
           throw new StudioError(409, 'Square calculation failed verification.');
         }
-        return { size, shippingCents: selected.shippingCents, taxBps, taxCents: order.total_tax_money.amount };
+        return { size, shippingCents: selected.shippingCents, taxBps, taxCents: order.total_tax_money.amount,
+          ...(originalSampleCode && { originalSampleCode }) };
       })),
   ]);
   return { mode: 'off', checkout: false, ok: checks.every(check => check.ok), checks };
@@ -307,7 +333,7 @@ function squareOrderFor(config, selected) {
   };
 }
 
-export function studioService(config, store, { square, prodigi, quote: requestQuote, census }, artworkStore) {
+export function studioService(config, store, { square, prodigi, quote: requestQuote, quoteOrder, census }, artworkStore) {
   async function enabled() {
     if (!config.destinationQuotes && !Object.keys(config.destinations).length) return false;
     const gate = await store.getWithMetadata(pauseKey, { type: 'json', consistency: 'strong' });
@@ -368,7 +394,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
     let selected = selection({ ...input, attemptId: id }, config);
     await requireArtwork(selected.artwork);
     await variantFor(selected);
-    if (config.destinationQuotes) selected = await destinationOffer(prodigi, census, config, selected);
+    if (config.destinationQuotes) selected = await destinationOffer(quoteOrder, census, config, selected);
     const estimate = checkOffer(selected);
     // Square may round tax on the print and shipping separately.
     const { order } = await square('/orders/calculate', { order: squareOrderFor(config, selected) });
@@ -404,7 +430,7 @@ export function studioService(config, store, { square, prodigi, quote: requestQu
       throw new StudioError(409, 'The order review has expired. Review shipping and tax again.');
     }
     let selected = fulfillmentDetails(savedReview, config);
-    if (config.destinationQuotes) selected = await destinationOffer(prodigi, census, config, selected);
+    if (config.destinationQuotes) selected = await destinationOffer(quoteOrder, census, config, selected);
     const offer = checkOffer(selected);
     await requireArtwork(selected.artwork);
     const { artwork, size, quantity, unitCents, taxBps, taxShipping, recipient, attemptId, sku, file } = selected;
