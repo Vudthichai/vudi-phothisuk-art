@@ -44,8 +44,9 @@ const registeredExperiences: readonly ARExperience[] = experiences.map(certifica
   return { ...certificate, ...presentation, recognitionOnly: !presentation, previewFirstBreathComposition };
 });
 export const certificateARPreviews = registeredExperiences;
-export const arExperiences: readonly ARExperience[] = registeredExperiences.filter(experience=>!experience.previewOnly);
-// Entry pages may offer an AR experience without being separately compiled image targets.
-// certificatePaths remains the strictly verified provenance for tracked physical certificate fronts.
-export function arForCertificate(path:string) { return arExperiences.find(experience => !experience.previewOnly && (experience.entryPaths ?? experience.certificatePaths).includes(path)); }
+// Certificate pages and the hub share the same edition-specific image targets.
+// The legacy standalone camera still has a separate allowlist in arById.
+export function arForCertificate(path: string) {
+  return registeredExperiences.find(experience => !experience.recognitionOnly && experience.certificatePaths.includes(path));
+}
 export function arById(id:string|null, includePreview=false) { return registeredExperiences.find(experience => experience.id === id && (!experience.previewOnly || includePreview)); }

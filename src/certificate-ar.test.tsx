@@ -4,7 +4,8 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { MemoryRouter, Routes, Route } from 'react-router-dom';
 import { CertificatePage } from './coa/CertificatePage';
 import { certificateRecords } from './coa/records';
-import { arForCertificate, arExperiences } from './ar/config';
+import { arForCertificate } from './ar/config';
+import { artworkHubEntries, finalCameraPath } from './ar/finalExperiences';
 import { createBotanicalSculpture } from './ar/botanical';
 import { ImagePoseFilter } from './ar/pose';
 import { Matrix4, Vector3, Quaternion, Mesh } from 'three';
@@ -15,38 +16,41 @@ beforeAll(()=>{
 });
 afterEach(cleanup);
 const path='/coa/forest-and-flowers/mother-nature/original/';
+const launchLabel = 'Experience in Augmented Reality';
 function page(url=path){return render(<MemoryRouter initialEntries={[url]}><Routes><Route path="/coa/forest-and-flowers/:artworkSlug/:designation" element={<CertificatePage/>}/></Routes></MemoryRouter>);}
-it('enables Mother Nature AR from original and Collector’s Edition pages without changing QR paths',()=>{
- const collectorPath='/coa/forest-and-flowers/mother-nature/collectors-edition/';
- expect(arExperiences).toHaveLength(1);
- expect(certificateRecords.filter(record=>arForCertificate(record.path)).map(record=>record.path)).toEqual([collectorPath,path]);
- expect(arForCertificate(collectorPath)?.id).toBe('mother-nature-original');
- expect(arExperiences[0].certificatePaths).toEqual([path]);
- expect(arExperiences[0].entryPaths).toEqual([path,collectorPath]);
- expect(certificateRecords).toHaveLength(15);
+it('maps all 15 permanent certificate paths to the exact editions used by the ten hub experiences',()=>{
+ const hubTargets = artworkHubEntries().flatMap(artwork => artwork.certificates);
+ expect(hubTargets).toHaveLength(15);
+ for (const record of certificateRecords) {
+  const target = arForCertificate(record.path);
+  expect(target).toBe(hubTargets.find(experience => experience.certificatePaths.includes(record.path)));
+  expect(target).toMatchObject({ artworkId: record.artworkId, certificatePaths: [record.path] });
+  expect(target?.id).toMatch(new RegExp(`-${record.designation}$`));
+ }
+ expect(arForCertificate('/coa/forest-and-flowers/dragon-lily/collectors-edition/')).toBeUndefined();
 });
-it('opens the existing AR experience from the Collector’s Edition certificate and returns to that certificate',async()=>{
+it('opens the approved V5 scene with the Collector’s Edition tracking target and returns to that certificate',async()=>{
  const collectorPath='/coa/forest-and-flowers/mother-nature/collectors-edition/';
  page(collectorPath);
- expect(screen.getByText(/Use the Mother Nature original certificate/)).toBeTruthy();
- fireEvent.click(screen.getByRole('link',{name:'Experience in AR'}));
+ fireEvent.click(screen.getByRole('link',{name:launchLabel}));
  const iframe=screen.getByTitle('Mother Nature augmented reality camera');
- expect(iframe.getAttribute('src')).toBe('/rainforest-v5.html');
+ expect(iframe.getAttribute('src')).toBe('/ar-camera.html?hub=1&experience=mother-nature-collectors-edition&variant=final');
  fireEvent(window,new MessageEvent('message',{origin:location.origin,source:(iframe as HTMLIFrameElement).contentWindow,data:{type:'vpa-ar-exit'}}));
  await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
  expect(screen.getByText('Collector’s Edition')).toBeTruthy();
 });
 it('opens an isolated, camera-capable AR frame only on request and exits back to the same certificate',async()=>{
- page();expect(document.querySelector('iframe')).toBeNull();
- expect(screen.getByText('Turn your certificate artwork-side up, allow camera access, and point your phone at the artwork.')).toBeTruthy();
- fireEvent.click(screen.getByRole('link',{name:'Experience in AR'}));
+ const leavesPath='/coa/forest-and-flowers/75-leaves/original/';
+ page(leavesPath);expect(document.querySelector('iframe')).toBeNull();
+ expect(screen.getByText(/tap Start camera/)).toBeTruthy();
+ fireEvent.click(screen.getByRole('link',{name:launchLabel}));
  expect(screen.getByRole('dialog')).toBeTruthy();
- const iframe=screen.getByTitle('Mother Nature augmented reality camera');
- expect(iframe.getAttribute('src')).toBe('/rainforest-v5.html');
+ const iframe=screen.getByTitle('75 Leaves augmented reality camera');
+ expect(iframe.getAttribute('src')).toBe(finalCameraPath(arForCertificate(leavesPath)!));
  expect(iframe.getAttribute('allow')).toBe('camera; accelerometer; gyroscope; web-share');
  fireEvent(window,new MessageEvent('message',{origin:location.origin,source:(iframe as HTMLIFrameElement).contentWindow,data:{type:'vpa-ar-exit'}}));
  await waitFor(()=>expect(screen.queryByRole('dialog')).toBeNull());
- expect(screen.getByRole('heading',{level:1,name:'Mother Nature'})).toBeTruthy();
+ expect(screen.getByRole('heading',{level:1,name:'75 Leaves'})).toBeTruthy();
  expect(document.body.style.overflow).toBe('');
 });
 it('supports direct AR links, Escape, and rejects exit messages from an unrelated window',async()=>{

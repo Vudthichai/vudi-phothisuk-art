@@ -37,12 +37,8 @@ export function CertificateView({ record }: { record: CertificateRecord }) {
       {!original && <p className="coa-edition-label">Collector’s Edition</p>}
       {record.reviewStatus === 'replacement-pending' && <p className="coa-update-note">Physical certificate update pending. This permanent artwork URL is unchanged.</p>}
       {(record.arUrl || experience) && <div className="coa-ar-action">
-        {record.arUrl
-          ? <a className="coa-ar-link" href={record.arUrl}>Experience in AR</a>
-          : <Link className="coa-ar-link" to={`${record.path}?ar=1`}>Experience in AR</Link>}
-        <p>{experience && !experience.certificatePaths.includes(record.path)
-          ? 'Use the Mother Nature original certificate or the matching image shown in the AR viewer.'
-          : 'Turn your certificate artwork-side up, allow camera access, and point your phone at the artwork.'}</p>
+        <Link className="coa-ar-link" reloadDocument={Boolean(record.arUrl)} to={record.arUrl ?? `${record.path}?ar=1`} aria-describedby="coa-ar-instructions">Experience in Augmented Reality</Link>
+        <p id="coa-ar-instructions">See this artwork as an animated 3D sculpture. In the viewer, tap Start camera, allow access if asked, and point at the artwork on this certificate.</p>
         <noscript>AR requires JavaScript. The digital certificate remains available without AR.</noscript>
       </div>}
     </header>

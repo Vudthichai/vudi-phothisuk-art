@@ -36,15 +36,14 @@ it('rejects partial, mismatched, duplicate, and unverified route evidence rather
   expect(() => validateCertificateManifest(wrongDimensions)).toThrow(/dimensions/);
 });
 
-it('displays original details, an unsigned digital reference, and no inactive AR control or production PDF', () => {
+it('displays original details, the AR launch, and an unsigned digital reference', () => {
   view(fixture());
   expect(screen.getByRole('heading',{level:1,name:'Mother Nature'})).toBeTruthy();
   expect(screen.getAllByText('Original · 1 of 1')).toHaveLength(2);
   expect(screen.getByText('Forest & Flowers — 2026')).toBeTruthy();
   expect(screen.getByText('24 × 36 in.')).toBeTruthy();
   expect(screen.getByRole('img',{name:/Mother Nature/})).toBeTruthy();
-  expect(screen.getByRole('link',{name:'Experience in AR'}).getAttribute('href')).toBe('/coa/forest-and-flowers/mother-nature/original/?ar=1');
-  expect(screen.queryByRole('button',{name:'Experience in AR'})).toBeNull();
+  expect(screen.getByRole('link',{name:'Experience in Augmented Reality'}).getAttribute('href')).toBe('/coa/forest-and-flowers/mother-nature/original/?ar=1');
   const disclosure = screen.getByText('View Digital Certificate');
   fireEvent.click(disclosure);
   expect(disclosure.closest('details')?.open).toBe(true);
@@ -80,9 +79,9 @@ it('publishes the finalized Dragon Lily facts and artwork description at its per
   expect(screen.queryByText(/awaiting artist confirmation|physical certificate update pending/i)).toBeNull();
 });
 
-it('only renders AR when an HTTPS experience has been explicitly configured', () => {
+it('honors an explicitly configured HTTPS AR link', () => {
   view({ ...fixture(), arUrl:'https://example.invalid/test-only-ar' });
-  expect(screen.getByRole('link',{name:'Experience in AR'}).getAttribute('href')).toBe('https://example.invalid/test-only-ar');
+  expect(screen.getByRole('link',{name:'Experience in Augmented Reality'}).getAttribute('href')).toBe('https://example.invalid/test-only-ar');
   const unsafe = completeFixture(); unsafe.certificates[0].arUrl = 'javascript:alert(1)';
   expect(() => validateCertificateManifest(unsafe)).toThrow(/HTTPS/);
 });
@@ -109,6 +108,7 @@ it('renders all 15 verified records with the correct artwork, designation, dimen
     expect(screen.getByText(record.dimensions)).toBeTruthy();
     expect(screen.getByText(record.medium ?? 'Awaiting artist confirmation')).toBeTruthy();
     expect(rendered.container.querySelector('.coa-artwork img')?.getAttribute('alt')).toContain(artwork.title);
+    expect(screen.getByRole('link',{name:'Experience in Augmented Reality'}).getAttribute('href')).toBe(`${record.path}?ar=1`);
     expect(metadata(record.path).url).toBe(record.source.qrUrl);
     expect(metadata(record.path.slice(0,-1)).url).toBe(record.source.qrUrl);
     expect(metadata(record.path).graph[0].identifier).toBe(record.reference);

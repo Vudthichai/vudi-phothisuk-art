@@ -66,3 +66,33 @@ it('varies the optional petal paths without adding draws or changing the reduced
   refined.dispose();
   original.dispose();
 });
+
+it('uses one petal and one leaf batch to continuously fall around five independent flower heads', () => {
+  const upright = new Group();
+  const centers = Array.from({ length: 5 }, (_, i) => new Vector3(i * .4, i * .25, .15 * i));
+  const rain = createEtherealPetals(upright, true, centers);
+  const [petals, leaves] = upright.children as InstancedMesh[];
+  expect(petals.count).toBe(10);
+  expect(leaves.count).toBe(5);
+  const transform = new Matrix4();
+  for (const seconds of [2, 4, 7, 11, 16]) {
+    rain.update(seconds, false);
+    for (let flower = 0; flower < centers.length; flower++) {
+      for (const [batch, index] of [[petals, flower * 2], [petals, flower * 2 + 1], [leaves, flower]] as const) {
+        batch.getMatrixAt(index, transform);
+        expect(new Vector3().setFromMatrixPosition(transform).distanceTo(centers[flower])).toBeLessThan(.42);
+      }
+    }
+    expect(petals.visible && leaves.visible).toBe(true);
+  }
+  leaves.getMatrixAt(1, transform);
+  const original = new Vector3().setFromMatrixPosition(transform);
+  centers[1].y += .07;
+  rain.update(16, false);
+  leaves.getMatrixAt(1, transform);
+  expect(new Vector3().setFromMatrixPosition(transform).y - original.y).toBeCloseTo(.07);
+  rain.update(17, true);
+  expect(petals.visible || leaves.visible).toBe(false);
+  rain.dispose();
+  expect(upright.children).toHaveLength(0);
+});
